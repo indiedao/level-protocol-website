@@ -3,9 +3,9 @@ import { ThemeProvider } from 'styled-components'
 import { ApolloProvider } from '@apollo/react-hooks'
 
 import { useApollo } from '../util/apolloClient'
-import theme, { queries } from '../util/theme'
+import theme from '../util/theme'
 import GlobalStyles from '../components/ui/GlobalStyles'
-import { BreakpointProvider } from '../components/context/BreakpointContext'
+import Web3Layout from '../components/layouts/Web3Layout'
 
 function MyApp({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps)
@@ -21,9 +21,9 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <GlobalStyles />
         <ApolloProvider client={apolloClient}>
-          <BreakpointProvider queries={queries}>
+          <Web3Layout>
             <Component {...pageProps} />
-          </BreakpointProvider>
+          </Web3Layout>
         </ApolloProvider>
       </ThemeProvider>
     </>

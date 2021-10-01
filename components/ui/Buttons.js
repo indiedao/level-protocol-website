@@ -2,15 +2,15 @@ import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
 const BaseTextStyles = css`
-  font-family: Work Sans;
-  font-weight: 500;
-  font-size: 1.4rem;
-  line-height: 2rem;
+  font-family: 'Matter';
+  font-weight: 600;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
 `
 
 export const TextButton = styled.div`
   ${BaseTextStyles}
-  color: ${props => props.theme.colors.primary500};
+  color: ${props => props.theme.colors.base900};
   cursor: pointer;
   padding: 10px 14px;
   border-radius: 8px;
@@ -18,39 +18,42 @@ export const TextButton = styled.div`
   transition: all 300ms;
 
   &:hover {
-    background-color: ${props => props.theme.colors.primary050};
+    background-color: ${props => props.theme.colors.base050};
   }
 
   &:focus {
-    background-color: ${props => props.theme.colors.primary100};
+    background-color: ${props => props.theme.colors.base100};
   }
 
   &:active {
-    background-color: ${props => props.theme.colors.primary100};
+    background-color: ${props => props.theme.colors.base100};
   }
 `
 
 export const Button = styled.div`
   ${BaseTextStyles}
-  background-color: ${props => props.theme.colors.primary500};
-  color: white;
+  background-color: white;
+  color: ${props => props.theme.colors.base900};
   cursor: pointer;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 12px 28px;
+  width: 100%;
+  text-align: center;
+  border-radius: 16px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border: 4px solid white;
 
-  transition: background-color 300ms;
+  transition: all 300ms;
 
   &:hover {
-    background-color: ${props => props.theme.colors.primary400};
+    background-color: ${props => props.theme.colors.base400};
+    border-color: ${props => props.theme.colors.base100};
   }
-
   &:focus {
-    background-color: ${props => props.theme.colors.primary300};
+    background-color: ${props => props.theme.colors.base300};
   }
 
   &:active {
-    background-color: ${props => props.theme.colors.primary200};
+    background-color: ${props => props.theme.colors.base200};
   }
 
   ${props =>
@@ -62,7 +65,6 @@ export const Button = styled.div`
       &:active {
         background-color: ${props => props.theme.colors.neutral100};
       }
-      color: ${props => props.theme.colors.neutral300};
       box-shadow: none;
     `}
 `

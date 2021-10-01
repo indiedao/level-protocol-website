@@ -15,12 +15,19 @@ import {
 
 const GlobalStyles = createGlobalStyle`
   html, body {
-    height: 100%;
     padding: 0;
     margin: 0;
-    background-color: ${props => props.theme.colors.neutral050};
-    color: ${props => props.theme.colors.neutral800};
+    background-color: ${props => props.theme.colors.base100};
+    color: ${props => props.theme.colors.primary100};
     font-size: 62.5%; /* base 10 rems */
+    min-height: 100vh;
+
+    :root {
+      --hue: 0;
+    }
+  }
+  body.animate {
+    background-color: hsl(var(--hue), 100%, 50%);
   }
   * {
     box-sizing: border-box;
@@ -61,11 +68,20 @@ const GlobalStyles = createGlobalStyle`
     ${AStyles}
   }
   input {
-    padding: 40px;
+    padding: 20px;
     width: 100%;
+    font-size: 2rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+  }
+  button {
+    padding: 20px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid gray;
   }
   ::selection {
-    background: ${props => props.theme.colors.primary050};
+    background: ${props => props.theme.colors.primary100};
   }
   /* NProgress loader bar plugin: */
   #nprogress {
