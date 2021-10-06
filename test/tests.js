@@ -79,23 +79,70 @@ describe('$LEVEL', function () {
       it('should initialize base URI to the correct gateway', async function () {
         await contract.mint()
         const uri = await contract.tokenURI(0)
-        expect(uri).to.equal('https://level.2c.io/api/token/0')
+        expect(uri).to.equal('https://level.2c.io/api/level/token/0')
       })
       it('should allow owner to change base URI', async function () {
         // Mint token:
         await contract.mint()
         const uri = await contract.tokenURI(0)
-        expect(uri).to.equal('https://level.2c.io/api/token/0')
+        expect(uri).to.equal('https://level.2c.io/api/level/token/0')
         // Change base URI:
-        await contract.setBaseURI('https://newapi.2c.io/api/token/')
+        await contract.setBaseURI('https://newapi.2c.io/api/level/token/')
         const newUri = await contract.tokenURI(0)
-        expect(newUri).to.equal('https://newapi.2c.io/api/token/0')
+        expect(newUri).to.equal('https://newapi.2c.io/api/level/token/0')
       })
       it('should not allow non-owners to set base URI', async function () {
         await expect(
           contract.connect(addr1).setBaseURI('https://newapi.2c.io/api/token/'),
         ).to.be.revertedWith('Ownable: caller is not the owner')
       })
+    })
+  })
+})
+
+describe.only('$REP', function () {
+  beforeEach(async () => {
+    const Contract = await ethers.getContractFactory('Rep')
+    contract = await Contract.deploy()
+    await contract.deployed()
+    const [o, a1, a2, a3] = await ethers.getSigners()
+    owner = o
+    addr1 = a1
+    addr2 = a2
+    addr3 = a3
+  })
+
+  describe('ERC-1155 token', function () {
+    it('should be initialized with a base URI', async function () {
+      const uri = await contract.uri(0)
+      expect(uri).to.equal('https://level.2c.io/api/rep/token/{id}')
+    })
+  })
+
+  describe('minting', function () {
+    it('should allow minting a token to a single address', async function () {
+      await contract.mint(addr1.address, 0, 5, '0x')
+      const balance = await contract.balanceOf(addr1.address, 0)
+      expect(balance).to.equal(5)
+    })
+
+    it('should allow batch minting a token to a single address', async function () {
+      const idsToMint = []
+      const valuesToMint = []
+      // Mint 100 values for a single address:
+      for (var i = 0; i < 100; i++) {
+        idsToMint.push(i)
+        valuesToMint.push(100 + i)
+      }
+      await contract.mintBatch(addr1.address, idsToMint, valuesToMint, '0x')
+      // Check the first set of balance:
+      const balances = await contract.balanceOfBatch(
+        [addr1.address, addr1.address, addr1.address],
+        [0, 1, 2],
+      )
+      expect(Number(balances[0])).to.equal(100)
+      expect(Number(balances[1])).to.equal(101)
+      expect(Number(balances[2])).to.equal(102)
     })
   })
 })
