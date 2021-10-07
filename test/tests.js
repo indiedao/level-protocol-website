@@ -157,5 +157,26 @@ describe.only('$REP', function () {
         expect(value24).to.equal(123)
       })
     })
+    it('should be settable in bulk', async function () {
+      // Create 100 skillSets to update:
+      const skillSets = []
+      const values = []
+      for (var i = 0; i < 100; i++) {
+        skillSets[i] = i
+        values[i] =
+          '0x' +
+          [...Array(64)] // 64 nibbles => uint256
+            .map(() => Math.floor(Math.random() * 16).toString(16))
+            .join('')
+      }
+
+      await contract.setSkillSets(addr1.address, skillSets, values)
+
+      // Verify each value was stored in the correct skill slot:
+      for (var i = 0; i < 32; i++) {
+        const value = await contract.skillSetOf(addr1.address, i)
+        expect(value).to.equal(values[i])
+      }
+    })
   })
 })

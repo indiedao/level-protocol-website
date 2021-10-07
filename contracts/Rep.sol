@@ -90,6 +90,24 @@ contract Rep {
     _skills[skillSet][to] = value;
   }
 
+  function setSkillSets(
+    address to,
+    uint256[] memory skillSets,
+    uint256[] memory values
+  ) public {
+    // Simple iteration through skillSet setter:
+    for (uint256 i = 0; i < skillSets.length; i++) {
+      setSkillSet(to, skillSets[i], values[i]);
+    }
+  }
+
+  function skillSetOf(
+    address owner,
+    uint256 skillSet
+  ) public view returns (uint256) {
+    return _skills[skillSet][owner];
+  }
+
   function getSkill(address owner, uint256 skillSet, uint256 skill) public view returns (uint256) {
 
     // 1. Bitwise & the skill slot to filter only the skill slot's value:
