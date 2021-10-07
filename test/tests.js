@@ -112,37 +112,16 @@ describe.only('$REP', function () {
     addr3 = a3
   })
 
-  describe('ERC-1155 token', function () {
-    it('should be initialized with a base URI', async function () {
-      const uri = await contract.uri(0)
-      expect(uri).to.equal('https://level.2c.io/api/rep/token/{id}')
-    })
-  })
-
-  describe('minting', function () {
-    it('should allow minting a token to a single address', async function () {
-      await contract.mint(addr1.address, 0, 5, '0x')
-      const balance = await contract.balanceOf(addr1.address, 0)
-      expect(balance).to.equal(5)
-    })
-
-    it('should allow batch minting a token to a single address', async function () {
-      const idsToMint = []
-      const valuesToMint = []
-      // Mint 100 values for a single address:
-      for (var i = 0; i < 100; i++) {
-        idsToMint.push(i)
-        valuesToMint.push(100 + i)
-      }
-      await contract.mintBatch(addr1.address, idsToMint, valuesToMint, '0x')
-      // Check the first set of balance:
-      const balances = await contract.balanceOfBatch(
-        [addr1.address, addr1.address, addr1.address],
-        [0, 1, 2],
-      )
-      expect(Number(balances[0])).to.equal(100)
-      expect(Number(balances[1])).to.equal(101)
-      expect(Number(balances[2])).to.equal(102)
+  describe('skills', function () {
+    it('should be settable', async function () {
+      // Set skillSet 0, skill 3:
+      await contract.setSkill(addr1.address, 0, 3, 42)
+      const value = await contract.getSkill(addr1.address, 0, 3)
+      expect(value).to.equal(42)
+      // Set skillSet 23, skill 1:
+      await contract.setSkill(addr1.address, 23, 1, 123)
+      const value2 = await contract.getSkill(addr1.address, 23, 1)
+      expect(value2).to.equal(123)
     })
   })
 })
