@@ -6,23 +6,8 @@ import "hardhat/console.sol";
 contract Rep {
 
   mapping(uint256 => mapping(address => uint256)) private _skills;
-  mapping(uint256 => uint256) private _masks;
-  mapping(uint256 => uint256) private _inverseMasks;
 
-  constructor() {
-
-    // Generate bit masks for each of 32 skill slots:
-    //
-    // _masks[0] = 0x00000000000000000000000000000000000000000000000000000000000000ff;
-    // _masks[1] = 0x000000000000000000000000000000000000000000000000000000000000ff00;
-    // _masks[2] = 0x0000000000000000000000000000000000000000000000000000000000ff0000;
-    // ...
-    // _masks[31] = 0xff00000000000000000000000000000000000000000000000000000000000000;
-    for (uint256 i = 0; i < 32; i++) {
-      _masks[i] = 0xff << i*8;
-    }
-
-  }
+  constructor() {}
 
   function _getSkillSlotBitmask(uint256 skill) private pure returns (uint256) {
     // Shift a 1-byte bitmask to the provided skill slot:
