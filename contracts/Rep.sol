@@ -9,50 +9,38 @@ contract Rep {
 
   constructor() {}
 
-  function _getSkillSlotBitmask(uint256 skill) private pure returns (uint256) {
-    // Shift a 1-byte bitmask to the provided skill slot:
-    // ie. skill = 3
-    // 0x00000000000000000000000000000000000000000000000000000000000000ff < 0xff
-    // 0x00000000000000000000000000000000000000000000000000000000ff000000 < shifted 3 * 8 bits
-    return 0xff << skill * 8;
-  }
-
   function setSkill(
     address to,
     uint256 skillSet,
     uint256 skill,
     uint256 value
   ) public {
-    // Shift 8bit value by skill offset:
-    // ie. skill = 3, value = 42
-    // ........ 00101010 00000000 00000000 00000000
-    uint256 shiftedValue = value << ( skill * 8 );
 
     // Create inverse mask for skill offset:
-    //
-    // 0xff << skill * 8 yields a bitmask for the provided skill slot
     //
     // ie. skill = 3
     // ........ 11111111 00000000 00000000 00000000 < skill mask (slot 3)
     // ........ 11111111 11111111 11111111 11111111 < xor mask (0xff...ff)
+    // xor
     // ........ 00000000 11111111 11111111 11111111 < inverse mask (slot 3)
-    uint256 inverseMask = _getSkillSlotBitmask(skill) ^ 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+    uint256 inverseMask = 0xff << skill * 8 ^ 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
 
-    // Use inverse mask to mask out previous value in skill slot:
+    // Use inverse mask to empty previous value in skill slot:
+    //
     // ie. skill = 3
     // ........ xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx < old value
     // ........ 00000000 11111111 11111111 11111111 < inverse mask (slot 3)
+    // and
     // ........ 00000000 xxxxxxxx xxxxxxxx xxxxxxxx < template
-    //
-    // This template includes all old values except the skill slot being set:
     uint256 template = _skills[skillSet][to] & inverseMask;
 
-    // Add new shifted skill slot value to old value template:
+    // Shift and add new skill value to the empty skill slot:
+    //
     // ie. skill = 3, value = 42
     // ........ 00000000 xxxxxxxx xxxxxxxx xxxxxxxx < template
     // ........ 00101010 00000000 00000000 00000000 < shifted value
     // ........ 00101010 xxxxxxxx xxxxxxxx xxxxxxxx < new value
-   _skills[skillSet][to] = template | shiftedValue;
+   _skills[skillSet][to] = template | (value << skill * 8);
   }
 
   function setSkills(
@@ -94,19 +82,10 @@ contract Rep {
   }
 
   function getSkill(address owner, uint256 skillSet, uint256 skill) public view returns (uint256) {
-
-    // 1. Bitwise & the skill slot to filter only the skill slot's value:
-    // ie. skill = 3, value = 42
-    // ........ 00101010 xxxxxxxx xxxxxxxx xxxxxxxx < value
-    // ........ 11111111 00000000 00000000 00000000 < skill mask (slot 3)
-    // ........ 00101010 00000000 00000000 00000000 < filtered skill value (slot 3)
-    uint256 filteredValue = _skills[skillSet][owner] & _getSkillSlotBitmask(skill);
-    // 2. Shift >> the skill slot by it's offset to get it's value:
-    // ie. skill = 3, value = 42
-    // ........ 00101010 00000000 00000000 00000000 < filtered skill value (slot 3)
-    // ........ 00000000 00000000 00000000 00101010 < shifted skill value (42)
-    uint256 value = filteredValue >> (skill * 8);
-    return value;
+    // Shift bits to put skill in first byte:
+    uint256 shiftedValue = _skills[skillSet][owner] >> (skill * 8);
+    // Chop all bits to the left of the first byte:
+    return uint256(uint8(shiftedValue));
   }
 
 }
