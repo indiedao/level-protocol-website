@@ -100,83 +100,70 @@ describe('$LEVEL', function () {
   })
 })
 
-describe.only('$REP', function () {
-  beforeEach(async () => {
-    const Contract = await ethers.getContractFactory('Rep')
-    contract = await Contract.deploy()
-    await contract.deployed()
-    const [o, a1, a2, a3] = await ethers.getSigners()
-    owner = o
-    addr1 = a1
-    addr2 = a2
-    addr3 = a3
-  })
-
-  describe('skillSets', function () {
-    describe('skills', function () {
-      it('should be settable individually', async function () {
-        // Set skillSet 0, skill 3:
-        await contract.setSkill(addr1.address, 0, 3, 42)
-        const value = await contract.getSkill(addr1.address, 0, 3)
-        expect(value).to.equal(42)
-        // Set skillSet 23, skill 1:
-        await contract.setSkill(addr1.address, 23, 1, 123)
-        const value2 = await contract.getSkill(addr1.address, 23, 1)
-        expect(value2).to.equal(123)
-      })
-      it('should be settable in bulk by looping', async function () {
-        // Create a random skill value for each slot:
-        const skills = []
-        const values = []
-        for (var i = 0; i < 32; i++) {
-          skills[i] = i
-          values[i] = Math.floor(Math.random() * 255)
-        }
-
-        // Set skills using a loop that calls setSkill internally:
-        await contract.setSkills(addr1.address, 0, skills, values)
-
-        // Verify each value was stored in the correct skill slot:
-        for (var i = 0; i < 32; i++) {
-          const value = await contract.getSkill(addr1.address, 0, i)
-          expect(value).to.equal(values[i])
-        }
-      })
-      it('should be settable in bulk by setting whole skillSet value', async function () {
-        // Set skillSet 0, skill 3=42, skill 13=69, skill 24=123:
-        // 0x00000000000000xx00000000000000000000xx000000000000000000xx000000;
-        //                 ^24(123 => 0x7b)      ^13(69 => 0x45)     ^3(42 => 0x2a)
-        const skillSet =
-          '0x000000000000007b00000000000000000000450000000000000000002a000000'
-        await contract.setSkillSet(addr1.address, 0, skillSet)
-        const value3 = await contract.getSkill(addr1.address, 0, 3)
-        expect(value3).to.equal(42)
-        const value13 = await contract.getSkill(addr1.address, 0, 13)
-        expect(value13).to.equal(69)
-        const value24 = await contract.getSkill(addr1.address, 0, 24)
-        expect(value24).to.equal(123)
-      })
+describe('Skills', function () {
+  describe('skills', function () {
+    it('should be settable individually', async function () {
+      // Set skillSet 0, skill 3:
+      await contract.setSkill(addr1.address, 0, 3, 42)
+      const value = await contract.getSkill(addr1.address, 0, 3)
+      expect(value).to.equal(42)
+      // Set skillSet 23, skill 1:
+      await contract.setSkill(addr1.address, 23, 1, 123)
+      const value2 = await contract.getSkill(addr1.address, 23, 1)
+      expect(value2).to.equal(123)
     })
-    it('should be settable in bulk', async function () {
-      // Create 100 skillSets to update:
-      const skillSets = []
+    it('should be settable in bulk by looping', async function () {
+      // Create a random skill value for each slot:
+      const skills = []
       const values = []
-      for (var i = 0; i < 100; i++) {
-        skillSets[i] = i
-        values[i] =
-          '0x' +
-          [...Array(64)] // 64 nibbles => uint256
-            .map(() => Math.floor(Math.random() * 16).toString(16))
-            .join('')
+      for (var i = 0; i < 32; i++) {
+        skills[i] = i
+        values[i] = Math.floor(Math.random() * 255)
       }
 
-      await contract.setSkillSets(addr1.address, skillSets, values)
+      // Set skills using a loop that calls setSkill internally:
+      await contract.setSkills(addr1.address, 0, skills, values)
 
       // Verify each value was stored in the correct skill slot:
       for (var i = 0; i < 32; i++) {
-        const value = await contract.skillSetOf(addr1.address, i)
+        const value = await contract.getSkill(addr1.address, 0, i)
         expect(value).to.equal(values[i])
       }
     })
+    it('should be settable in bulk by setting whole skillSet value', async function () {
+      // Set skillSet 0, skill 3=42, skill 13=69, skill 24=123:
+      // 0x00000000000000xx00000000000000000000xx000000000000000000xx000000;
+      //                 ^24(123 => 0x7b)      ^13(69 => 0x45)     ^3(42 => 0x2a)
+      const skillSet =
+        '0x000000000000007b00000000000000000000450000000000000000002a000000'
+      await contract.setSkillSet(addr1.address, 0, skillSet)
+      const value3 = await contract.getSkill(addr1.address, 0, 3)
+      expect(value3).to.equal(42)
+      const value13 = await contract.getSkill(addr1.address, 0, 13)
+      expect(value13).to.equal(69)
+      const value24 = await contract.getSkill(addr1.address, 0, 24)
+      expect(value24).to.equal(123)
+    })
+  })
+  it('should be settable in bulk', async function () {
+    // Create 100 skillSets to update:
+    const skillSets = []
+    const values = []
+    for (var i = 0; i < 100; i++) {
+      skillSets[i] = i
+      values[i] =
+        '0x' +
+        [...Array(64)] // 64 nibbles => uint256
+          .map(() => Math.floor(Math.random() * 16).toString(16))
+          .join('')
+    }
+
+    await contract.setSkillSets(addr1.address, skillSets, values)
+
+    // Verify each value was stored in the correct skill slot:
+    for (var i = 0; i < 32; i++) {
+      const value = await contract.skillSetOf(addr1.address, i)
+      expect(value).to.equal(values[i])
+    }
   })
 })

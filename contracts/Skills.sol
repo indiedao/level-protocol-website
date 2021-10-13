@@ -3,9 +3,11 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 
-contract Rep {
+contract Skills {
 
-  mapping(uint256 => mapping(address => uint256)) private _skills;
+  // _skillSets[skillSetId][ownerAddress] => 32 byte skillset:
+  // Each skillset contains 32 [8bit] skill values, per $LEVEL owner address:
+  mapping(uint256 => mapping(address => uint256)) private _skillSets;
 
   constructor() {}
 
@@ -32,7 +34,7 @@ contract Rep {
     // ........ 00000000 11111111 11111111 11111111 < inverse mask (slot 3)
     // and
     // ........ 00000000 xxxxxxxx xxxxxxxx xxxxxxxx < template
-    uint256 template = _skills[skillSet][to] & inverseMask;
+    uint256 template = _skillSets[skillSet][to] & inverseMask;
 
     // Shift and add new skill value to the empty skill slot:
     //
@@ -40,7 +42,7 @@ contract Rep {
     // ........ 00000000 xxxxxxxx xxxxxxxx xxxxxxxx < template
     // ........ 00101010 00000000 00000000 00000000 < shifted value
     // ........ 00101010 xxxxxxxx xxxxxxxx xxxxxxxx < new value
-   _skills[skillSet][to] = template | (value << skill * 8);
+   _skillSets[skillSet][to] = template | (value << skill * 8);
   }
 
   function setSkills(
@@ -60,7 +62,7 @@ contract Rep {
     uint256 skillSet,
     uint256 value
   ) public {
-    _skills[skillSet][to] = value;
+    _skillSets[skillSet][to] = value;
   }
 
   function setSkillSets(
@@ -78,12 +80,12 @@ contract Rep {
     address owner,
     uint256 skillSet
   ) public view returns (uint256) {
-    return _skills[skillSet][owner];
+    return _skillSets[skillSet][owner];
   }
 
   function getSkill(address owner, uint256 skillSet, uint256 skill) public view returns (uint256) {
     // Shift bits to put skill in first byte:
-    uint256 shiftedValue = _skills[skillSet][owner] >> (skill * 8);
+    uint256 shiftedValue = _skillSets[skillSet][owner] >> (skill * 8);
     // Chop all bits to the left of the first byte:
     return uint256(uint8(shiftedValue));
   }

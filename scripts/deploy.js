@@ -18,11 +18,6 @@ async function main() {
   const level = await Level.deploy()
   await level.deployed()
   console.log('Level deployed to:', level.address)
-
-  const Rep = await hre.ethers.getContractFactory('Rep')
-  const rep = await Rep.deploy()
-  await rep.deployed()
-  console.log('Rep deployed to:', rep.address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
