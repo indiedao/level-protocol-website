@@ -1,15 +1,45 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
-
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract Skills {
+  using Counters for Counters.Counter;
 
-  // _skillSets[skillSetId][ownerAddress] => 32 byte skillset:
-  // Each skillset contains 32 [8bit] skill values, per $LEVEL owner address:
+  // Tracks next skillSet ID:
+  Counters.Counter private _currentSkillSetId;
+
+  // _skillSets[skillSetId][ownerAddress] => 32 byte skillSet:
+  // Each skillSet contains 32 [8bit] skill values, per $LEVEL owner address:
   mapping(uint256 => mapping(address => uint256)) private _skillSets;
 
+  // Map owner to skillSet:
+  mapping(uint256 => address) private _ownerBySkillSet;
+
+  // Map skillSets to owner:
+  mapping(address => uint256[]) private _skillSetsByOwner;
+
   constructor() {}
+
+  function registerSkillSet(address to) public returns (uint256) {
+    // Get current skillSet ID:
+    uint256 skillSetId = _currentSkillSetId.current();
+    // Associate owner to skillSet:
+    _ownerBySkillSet[skillSetId] = to;
+    // Associate skillSet to owner:
+    _skillSetsByOwner[to].push(skillSetId);
+    // Increment current token ID:
+    _currentSkillSetId.increment();
+    return skillSetId;
+  }
+
+  function ownerBySkillSet(uint256 skillSetId) public view returns (address) {
+    return _ownerBySkillSet[skillSetId];
+  }
+
+  function skillSetsByOwner(address owner) public view returns (uint256[] memory) {
+    return _skillSetsByOwner[owner];
+  }
 
   function setSkill(
     address to,
@@ -76,7 +106,7 @@ contract Skills {
     }
   }
 
-  function skillSetOf(
+  function skillSetValueOf(
     address owner,
     uint256 skillSet
   ) public view returns (uint256) {
