@@ -99,6 +99,27 @@ describe('$LEVEL', function () {
     })
   })
 
+  describe('Metadata', function () {
+    describe('baseURI', function () {
+      it('should be writable and readable by an owner', async function () {
+        await contract
+          .connect(addr1)
+          .setMetadataBaseURI(
+            'ipfs://QmQC8pH4xEzLAPreuYcokifrtxTfeD7v7buCywHAF3B7cY/level',
+          )
+        const baseURI = await contract.metadataBaseURIByOwner(addr1.address)
+        expect(baseURI).to.equal(
+          'ipfs://QmQC8pH4xEzLAPreuYcokifrtxTfeD7v7buCywHAF3B7cY/level',
+        )
+        await contract.connect(addr1).setMetadataBaseURI('ipfs://newhash/level')
+        const updatedBaseURI = await contract.metadataBaseURIByOwner(
+          addr1.address,
+        )
+        expect(updatedBaseURI).to.equal('ipfs://newhash/level')
+      })
+    })
+  })
+
   describe('Skillsets', function () {
     it('should be registerable', async function () {
       // Register first skillset (0)

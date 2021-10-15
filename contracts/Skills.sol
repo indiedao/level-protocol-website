@@ -19,8 +19,12 @@ contract Skills {
   // Map skillSets to owner:
   mapping(address => uint256[]) private _skillSetsByOwner;
 
+  // Map metadataBaseURI to owner:
+  mapping(address => string) private _metadataBaseURIByOwner;
+
   constructor() {}
 
+  // Register a skillSet by owner:
   function registerSkillSet(address to) public returns (uint256) {
     // Get current skillSet ID:
     uint256 skillSetId = _currentSkillSetId.current();
@@ -33,12 +37,24 @@ contract Skills {
     return skillSetId;
   }
 
+  // Lookup an owner by a skillSet ID:
   function ownerBySkillSet(uint256 skillSetId) public view returns (address) {
     return _ownerBySkillSet[skillSetId];
   }
 
+  // Lookup a list of skillSet IDs by an owner:
   function skillSetsByOwner(address owner) public view returns (uint256[] memory) {
     return _skillSetsByOwner[owner];
+  }
+
+  // Set a metadataBaseURI for an owner:
+  function setMetadataBaseURI(string memory baseURI) public {
+    _metadataBaseURIByOwner[msg.sender] = baseURI;
+  }
+
+  // Lookup a metadataBaseURI by owner:
+  function metadataBaseURIByOwner(address owner) public view returns (string memory) {
+    return _metadataBaseURIByOwner[owner];
   }
 
   function setSkill(
