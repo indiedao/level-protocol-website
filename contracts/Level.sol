@@ -2,10 +2,11 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Multicall.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Skills.sol";
 
-contract Level is ERC721, Skills, Ownable {
+contract Level is ERC721, Skills, Multicall, Ownable {
   using Counters for Counters.Counter;
 
   // Tracks next token ID:

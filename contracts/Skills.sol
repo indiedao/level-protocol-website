@@ -19,8 +19,8 @@ contract Skills {
   // Map skillSets to owner:
   mapping(address => uint256[]) private _skillSetsByOwner;
 
-  // Map metadataBaseURI to owner:
-  mapping(address => string) private _metadataBaseURIByOwner;
+  // Map off-chain URI to owner:
+  mapping(address => string) private _offChainURIByOwner;
 
   constructor() {}
 
@@ -47,14 +47,14 @@ contract Skills {
     return _skillSetsByOwner[owner];
   }
 
-  // Set a metadataBaseURI for an owner:
-  function setMetadataBaseURI(string memory baseURI) public {
-    _metadataBaseURIByOwner[msg.sender] = baseURI;
+  // Set an off-chain URI for an owner:
+  function setOffChainURI(string memory uri) public {
+    _offChainURIByOwner[msg.sender] = uri;
   }
 
-  // Lookup a metadataBaseURI by owner:
-  function metadataBaseURIByOwner(address owner) public view returns (string memory) {
-    return _metadataBaseURIByOwner[owner];
+  // Lookup an off-chain URI by owner:
+  function offChainURIByOwner(address owner) public view returns (string memory) {
+    return _offChainURIByOwner[owner];
   }
 
   function setSkill(
