@@ -17,10 +17,10 @@ const Home = () => {
           </H1>
           <LinkLayout>
             <A
-              href="https://docs.google.com/document/d/1hK_w_HT--Vau45nTBR2EdPuiOaSYaWw6wLXEi1rFJqo/edit#"
+              href="https://docs.google.com/document/d/1mv4vfrYRBwc8nI7jGBoqDITV-desH_UhFNA3UW8dUnw/edit#"
               target="_blank"
             >
-              Read White Paper
+              Read White Paper (v1.1)
             </A>
           </LinkLayout>
         </Layout>
