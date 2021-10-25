@@ -19,7 +19,7 @@ contract Level is ERC721, Skills, Multicall, Ownable {
   mapping(address => uint256) private _tokenByOwner;
 
   constructor() ERC721("Level", "LEVEL") {
-    _baseURIExtended = "https://level.2c.io/api/level/token/";
+    _baseURIExtended = "https://level.2c.io/api/token/";
   }
 
   function _baseURI() internal view override returns (string memory) {

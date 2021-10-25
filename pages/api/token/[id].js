@@ -3,7 +3,8 @@ const Metadata = (req, res) => {
 
   res.statusCode = 200
   return res.json({
-    success: false,
+    id,
+    animation_url: `https://level.2c.io/token/${id}`,
   })
 }
 

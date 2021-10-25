@@ -78,17 +78,17 @@ describe('(ERC-721) $LEVEL token', function () {
     it('should initialize base URI to the correct gateway', async function () {
       await contract.mint()
       const uri = await contract.tokenURI(0)
-      expect(uri).to.equal('https://level.2c.io/api/level/token/0')
+      expect(uri).to.equal('https://level.2c.io/api/token/0')
     })
     it('should allow owner to change base URI', async function () {
       // Mint token:
       await contract.mint()
       const uri = await contract.tokenURI(0)
-      expect(uri).to.equal('https://level.2c.io/api/level/token/0')
+      expect(uri).to.equal('https://level.2c.io/api/token/0')
       // Change base URI:
-      await contract.setBaseURI('https://newapi.2c.io/api/level/token/')
+      await contract.setBaseURI('https://newapi.2c.io/api/token/')
       const newUri = await contract.tokenURI(0)
-      expect(newUri).to.equal('https://newapi.2c.io/api/level/token/0')
+      expect(newUri).to.equal('https://newapi.2c.io/api/token/0')
     })
     it('should not allow non-owners to set base URI', async function () {
       await expect(
