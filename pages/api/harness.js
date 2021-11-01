@@ -9,28 +9,27 @@ function makeStorageClient() {
   return new Web3Storage({ token: getAccessToken() })
 }
 
-function makeFileObjects(cid, data) {
+function makeFileObjects(data) {
   const buffer = Buffer.from(JSON.stringify(data))
 
-  const files = [new File([buffer], `test.json`)]
-
+  const files = [
+    new File(['level'], 'plain-utf8.txt'),
+    new File([buffer], 'level.json'),
+  ]
   return files
 }
 
 async function storeFiles(files) {
   const client = makeStorageClient()
-  const cid = await client.put('test')
+  const cid = await client.put(files)
   return cid
 }
 
-export default (req, res) => {
+export default async (req, res) => {
   if (req.method === 'POST') {
-    console.log(req.body)
-    const { data, cid } = req.body
-    const files = makeFileObjects(cid, data)
-    console.log('files', files)
-    const newCid = storeFiles(files)
+    const files = makeFileObjects(req.body)
+    const cid = await storeFiles(files)
     res.statusCode = 200
-    res.json({ newCid })
+    res.json({ cid })
   }
 }
