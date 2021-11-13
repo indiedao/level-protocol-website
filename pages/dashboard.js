@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { CSVReader } from 'react-papaparse'
 import Head from 'next/head'
 
+import { mapCoordinapeData } from '../util/coordinape'
 import { H2, H6, Body1 } from '../components/ui/Typography'
 import { Button } from '../components/ui/Buttons'
 import Web3Layout from '../components/layouts/Web3Layout'
@@ -24,7 +25,7 @@ const Dashboard = () => {
   }
 
   const handleOnFileLoad = data => {
-    setCsvData(data)
+    setCsvData(mapCoordinapeData(data))
   }
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -45,19 +46,17 @@ const Dashboard = () => {
     }
   }
 
-  const handleSubmit = () => {
-    // TODO: move this to a separate file.
-    // also save it using IPNS
-    const coordinapeMappedData = csvData
-      ? csvData.map(item => ({
-          name: item.data[1],
-          address: item.data[2],
-          cred: item.data[3],
-          epoch: item.data[5],
-        }))
-      : []
-
-    console.log(coordinapeMappedData)
+  const handleSubmit = async () => {
+    const res = await fetch('/api/harness', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(csvData),
+    })
+    handleRemoveFile()
+    console.log('data uploaded', res.json())
   }
 
   return (

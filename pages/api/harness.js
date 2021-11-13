@@ -44,6 +44,7 @@ export default async (req, res) => {
     const cid = await storeFiles(files)
     // const ipsn = await assignIpsn(cid)
     res.statusCode = 200
+    console.log('cid', cid)
     res.json({ cid })
   }
 }
