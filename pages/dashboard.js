@@ -25,6 +25,7 @@ const Dashboard = () => {
   }
 
   const handleOnFileLoad = data => {
+    console.log('data', data)
     setCsvData(mapCoordinapeData(data))
   }
 
@@ -47,6 +48,7 @@ const Dashboard = () => {
   }
 
   const handleSubmit = async () => {
+    console.log('csvData', csvData)
     const res = await fetch('/api/harness', {
       method: 'POST',
       headers: {

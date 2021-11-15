@@ -1,3 +1,5 @@
+import { Web3Storage, File } from 'web3.storage'
+
 export function getAccessToken() {
   return process.env.WEB3STORAGE_TOKEN
 }
