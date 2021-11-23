@@ -1,0 +1,8 @@
+type ecosystems {
+  id: String!
+  cid: String!
+}
+
+type Query {
+  allEcosystems: [ecosystems!]
+}
