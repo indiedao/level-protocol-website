@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const StoryGrid = styled.div`
+  color: ${props => props.theme.colors.black};
   display: grid;
   padding: 40px;
   grid-row-gap: 20px;

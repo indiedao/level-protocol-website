@@ -20,6 +20,7 @@ const ColorBlock = styled.div`
     padding: 2px 3px;
     bottom: 10px;
     left: 10px;
+    color: ${props => props.theme.colors.black};
   }
 `
 

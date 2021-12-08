@@ -2,7 +2,7 @@ import React from 'react'
 
 import StoryGrid from './StoryGrid'
 
-import { TextButton, Button } from '../components/ui/Buttons'
+import { TextButton, Button, RetroButton } from '../components/ui/Buttons'
 
 export const All = () => (
   <StoryGrid columns={6}>
@@ -14,6 +14,15 @@ export const All = () => (
     </div>
     <div>
       <Button isDisabled={true}>Disabled Button</Button>
+    </div>
+
+  </StoryGrid>
+)
+
+export const Retro = () => (
+  <StoryGrid columns={4}>
+    <div>
+      <RetroButton>Retro Button</RetroButton>
     </div>
   </StoryGrid>
 )
