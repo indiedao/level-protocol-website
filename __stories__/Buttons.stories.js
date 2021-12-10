@@ -13,9 +13,8 @@ export const All = () => (
       <Button>Button</Button>
     </div>
     <div>
-      <Button isDisabled={true}>Disabled Button</Button>
+      <Button isDisabled>Disabled Button</Button>
     </div>
-
   </StoryGrid>
 )
 
@@ -27,6 +26,8 @@ export const Retro = () => (
   </StoryGrid>
 )
 
-export default {
+const Story = {
   title: 'Buttons',
 }
+
+export default Story

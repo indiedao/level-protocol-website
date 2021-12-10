@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { H6Styles } from './Typography'
 
@@ -20,5 +19,3 @@ export const Input = styled.input`
     color: ${props => props.theme.colors.primary100};
   }
 `
-
-export default {}

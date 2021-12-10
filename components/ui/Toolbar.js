@@ -1,7 +1,9 @@
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Chevron as ChevronIcon } from "./icons";
+import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import styled from 'styled-components'
+
+import { Chevron as ChevronIcon } from './icons'
 
 const Wrapper = styled.nav`
   display: flex;
@@ -53,7 +55,6 @@ const Wrapper = styled.nav`
         margin-left: 8px;
       }
     }
-
   }
 
   ul:first-child li {
@@ -63,29 +64,44 @@ const Wrapper = styled.nav`
   ul:last-child li {
     border-left: 1px solid ${props => props.theme.colors.vibrantBlack};
   }
-`;
+`
 
 const Toolbar = ({ brand, children }) => {
-  const [currentDate, setCurrentDate ] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
     setInterval(() => {
       setCurrentDate(new Date())
-    }, 1000);
+    }, 1000)
   }, [])
 
   return (
     <Wrapper>
       <ul>
-        <li class="brand"><a href="#">{brand}<ChevronIcon /></a></li>
+        <li className="brand">
+          <Link href="/" passHref>
+            <>
+              {brand}
+              <ChevronIcon />
+            </>
+          </Link>
+        </li>
         {children}
       </ul>
       <ul>
-        <li><a href="#">{format(currentDate, 'h:mm a')}</a></li>
-        <li><a href="#">{format(currentDate, 'E MMM d y')}</a></li>
+        <li>
+          <Link href="/one" passHref>
+            {format(currentDate, 'h:mm a')}
+          </Link>
+        </li>
+        <li>
+          <Link href="/two" passHref>
+            {format(currentDate, 'E MMM d y')}
+          </Link>
+        </li>
       </ul>
     </Wrapper>
   )
 }
 
-export default Toolbar;
+export default Toolbar

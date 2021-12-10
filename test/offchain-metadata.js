@@ -1,22 +1,20 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
+import { expect } from 'chai'
+import { ethers } from 'hardhat'
 
-let contract, owner, addr1, addr2, addr3
+let contract
+let addr1
 
-describe('Off-Chain Metadata', function () {
+describe('Off-Chain Metadata', () => {
   beforeEach(async () => {
     const Contract = await ethers.getContractFactory('Level')
     contract = await Contract.deploy()
     await contract.deployed()
-    const [o, a1, a2, a3] = await ethers.getSigners()
-    owner = o
+    const [, a1] = await ethers.getSigners()
     addr1 = a1
-    addr2 = a2
-    addr3 = a3
   })
 
-  describe('offChainURI', function () {
-    it('should be configurable by owner', async function () {
+  describe('offChainURI', () => {
+    it('should be configurable by owner', async () => {
       await contract
         .connect(addr1)
         .setOffChainURI(

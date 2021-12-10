@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+// TODO: MISSING CONSTANT
+// eslint-disable-next-line import/no-unresolved,import/extensions
 import { IndieAddress } from '../../util/constants'
 import { A } from './Typography'
 

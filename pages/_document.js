@@ -30,20 +30,22 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    const { isProduction } = this.props
-
     return (
       <Html>
         <Head>
           <link
             href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap"
             rel="stylesheet"
-          ></link>
-          <link rel="stylesheet" href="https://fontlibrary.org//face/chicagoflf" type="text/css"></link>
+          />
+          <link
+            rel="stylesheet"
+            href="https://fontlibrary.org//face/chicagoflf"
+            type="text/css"
+          />
           <link
             href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap"
             rel="stylesheet"
-          ></link>
+          />
         </Head>
         <body>
           <Main />
