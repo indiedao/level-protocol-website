@@ -41,10 +41,10 @@ const Nav = () => {
       <Link href="/" passHref>
         <div>
           <DesktopLogo>
-            <Image alt="logo" height={40} src="/images/logo.svg" />
+            <Image alt="logo" height={40} width={397} src="/images/logo.svg" />
           </DesktopLogo>
           <MobileLogo>
-            <Image alt="svg" height={60} src="/images/star.svg" />
+            <Image alt="svg" height={60} width={60} src="/images/star.svg" />
           </MobileLogo>
         </div>
       </Link>
