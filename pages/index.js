@@ -16,7 +16,12 @@ const Home = () => {
         <Web3Layout>
           <Layout>
             <H1>
-              <Image alt="logo" height={60} src="/images/logo.svg" />
+              <Image
+                alt="logo"
+                height={60}
+                width={595}
+                src="/images/logo.svg"
+              />
             </H1>
             <LinkLayout>
               <A
