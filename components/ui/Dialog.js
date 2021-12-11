@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components"
-import { Close as CloseIcon, Collapse as CollapseIcon, Zoom as ZoomIcon } from "./icons";
+import { CloseIcon, CollapseIcon, ZoomIcon } from "./icons";
 
 const Container = styled.div`
   position: fixed;

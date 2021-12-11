@@ -1,15 +1,15 @@
 import withSvg from '../../hoc/withSvg';
 
-import LevelLogoIcon from './LevelLogo.svg';
+import LevelLogoSvg from './LevelLogo.svg';
 
-import CollapseIcon from './Collapse.svg';
-import ChevronIcon from './Chevron.svg';
-import CloseIcon from './Close.svg';
-import ZoomIcon from './Zoom.svg';
+import CollapseSvg from './Collapse.svg';
+import ChevronSvg from './Chevron.svg';
+import CloseSvg from './Close.svg';
+import ZoomSvg from './Zoom.svg';
 
-export const LevelLogo = withSvg(LevelLogoIcon, 17, 23);
+export const LevelLogoIcon = withSvg(LevelLogoSvg, 17, 23);
 
-export const Collapse = withSvg(CollapseIcon, 12, 12);
-export const Chevron = withSvg(ChevronIcon, 12, 12);
-export const Close = withSvg(CloseIcon, 12, 12);
-export const Zoom = withSvg(ZoomIcon, 12, 12);
+export const CollapseIcon = withSvg(CollapseSvg, 12, 12);
+export const ChevronIcon = withSvg(ChevronSvg, 12, 12);
+export const CloseIcon = withSvg(CloseSvg, 12, 12);
+export const ZoomIcon = withSvg(ZoomSvg, 12, 12);

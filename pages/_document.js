@@ -39,11 +39,48 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap"
             rel="stylesheet"
           ></link>
-          <link rel="stylesheet" href="https://fontlibrary.org//face/chicagoflf" type="text/css"></link>
+          <link rel="stylesheet" href="https://fontlibrary.org/face/chicagoflf" type="text/css"></link>
           <link
             href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap"
             rel="stylesheet"
           ></link>
+          <link
+            rel="preload"
+            href="/fonts/Geneva-Bold-Italic.ttf"
+            as="font"
+            crossOrigin=""
+          ></link>
+          <link
+            rel="preload"
+            href="/fonts/Geneva-Bold.ttf"
+            as="font"
+            crossOrigin=""
+          ></link>
+          <link
+            rel="preload"
+            href="/fonts/Geneva-Normal-Italic.ttf"
+            as="font"
+            crossOrigin=""
+          ></link>
+          <link
+            rel="preload"
+            href="/fonts/Geneva-Normal-Italic.ttf"
+            as="font"
+            crossOrigin=""
+          ></link>
+          <link
+            rel="preload"
+            href="/fonts/Geneva-Normal.ttf"
+            as="font"
+            crossOrigin=""
+          ></link>
+          <link
+            rel="preload"
+            href="/fonts/Geneva-Regular.ttf"
+            as="font"
+            crossOrigin=""
+          ></link>
+          {/* yo mismo pegue las fuentes geneva aqui!! vvvvvvvv */}
         </Head>
         <body>
           <Main />

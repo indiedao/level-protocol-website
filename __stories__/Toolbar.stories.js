@@ -1,11 +1,11 @@
 import React from 'react';
 import Toolbar from '../components/ui/Toolbar';
-import { LevelLogo } from '../components/ui/icons';
+import { LevelLogoIcon } from '../components/ui/icons';
 
 export const All = () => (
   <Toolbar brand={
     <>
-      <LevelLogo />
+      <LevelLogoIcon />
       Level Protocol
     </>
   }>

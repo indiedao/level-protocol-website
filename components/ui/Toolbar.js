@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Chevron as ChevronIcon } from "./icons";
+import { ChevronIcon } from "./icons";
 
 const Wrapper = styled.nav`
   display: flex;
@@ -77,7 +77,7 @@ const Toolbar = ({ brand, children }) => {
   return (
     <Wrapper>
       <ul>
-        <li class="brand"><a href="#">{brand}<ChevronIcon /></a></li>
+        <li className="brand"><a href="#">{brand}<ChevronIcon /></a></li>
         {children}
       </ul>
       <ul>

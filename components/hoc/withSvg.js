@@ -18,14 +18,12 @@ const withSvg = (icon, width, height) => {
 
       ${(strokeColor || color) &&
       css`
-        --icon-stroke: ${theme.colors[strokeColor || color] ||
-        strokeColor ||
-        color};
+        --icon-stroke: ${theme.colors[strokeColor || color]};
       `}
 
       ${(fillColor || color) &&
       css`
-        --icon-fill: ${theme.colors[fillColor || color] || fillColor || color};
+        --icon-fill: ${theme.colors[fillColor || color]};
       `}
     `}
   `;
