@@ -5,14 +5,22 @@ export const graphQLClient = new faunadb.Client({
   domain: 'db.us.fauna.com',
 })
 
+export const getEcosystems = async address => {
+  const query = await graphQLClient.query(
+    q.Map(
+      q.Paginate(q.Documents(q.Collection('ecosystems'))),
+      q.Lambda(ecosystem => q.Get(ecosystem)),
+    ),
+  )
+
+  return query.data
+}
+
 export const createEcosystem = async ecosystem => {
   const { name, address, cid } = ecosystem
-  graphQLClient
-    .query(
-      q.Create(q.Collection('ecosystems'), {
-        data: { name, address, cid },
-      }),
-    )
-    .then(ret => console.log(ret))
-    .catch(err => console.error('Error: %s', err))
+  await graphQLClient.query(
+    q.Create(q.Collection('ecosystems'), {
+      data: { name, address, cid },
+    }),
+  )
 }

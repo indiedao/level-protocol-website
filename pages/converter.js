@@ -1,20 +1,15 @@
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { CSVReader } from 'react-papaparse'
 import Head from 'next/head'
 
 import { mapCoordinapeData } from '../util/coordinape'
+import { getEcosystems } from '../util/fauna'
 import { H2, H6, Body1 } from '../components/ui/Typography'
-import { Button } from '../components/ui/Buttons'
+import FileUploader from '../components/ui/FileUploader'
 import Web3Layout from '../components/layouts/Web3Layout'
+import { entropyToMnemonic } from '@ethersproject/hdnode'
 
-const ProcessFileControlsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const Dashboard = () => {
+const Dashboard = ({ communities }) => {
   const [csvData, setCsvData] = useState([])
   const buttonRef = useRef()
 
@@ -71,31 +66,15 @@ const Dashboard = () => {
         <Web3Layout>
           <Layout>
             <H2>Dashboard</H2>
-            <H6>Submit your Coordinape epoch CSV</H6>
-            <CSVReader
-              ref={buttonRef}
-              onFileLoad={handleOnFileLoad}
-              onError={handleOnError}
-              noClick
-              noDrag
-              onRemoveFile={handleOnRemoveFile}
-            >
-              {({ file }) => (
-                <div>
-                  {file && file.name ? (
-                    <>
-                      <ProcessFileControlsContainer>
-                        <Button onClick={handleRemoveFile}>Remove</Button>
-                        <Button onClick={handleSubmit}>Submit</Button>
-                      </ProcessFileControlsContainer>
-                      <Body1>You are uploading {file && file.name}</Body1>
-                    </>
-                  ) : (
-                    <Button onClick={handleOpenDialog}>Browse file</Button>
-                  )}
-                </div>
-              )}
-            </CSVReader>
+            <FileUploader
+              title={'Upload your Coordinape Data File'}
+              buttonRef={buttonRef}
+              handleOnFileLoad={handleOnFileLoad}
+              handleOnError={handleOnError}
+              handleSubmit={handleSubmit}
+              handleOnRemoveFile={handleOnRemoveFile}
+              handleOpenDialog={handleOpenDialog}
+            />
           </Layout>
         </Web3Layout>
       </main>
@@ -117,3 +96,14 @@ const LinkLayout = styled.div`
   justify-content: center;
 `
 export default Dashboard
+
+export async function getServerSideProps(context) {
+  // Query all entries from Fauna
+  const entries = await getEcosystems('Ox')
+  const ecosystems = entries.map(entry => entry.data)
+
+  // Pass entry data to the page via props
+  return {
+    props: { ecosystems },
+  }
+}
