@@ -81,6 +81,15 @@ const theme = {
     supportOrange050: '#F9EAEA',
     supportYellow500: '#ECDF6D',
     white: '#ffffff',
+    pink: '#F070AB',
+    green: '#B4E80A',
+    vibrantGreen: '#76F651',
+    blue: '#0F75BB',
+    yellow: '#DDCE22',
+    cream: '#D6D1BE',
+    vibrantCream: '#EFECD3',
+    black: '#302F2C',
+    vibrantBlack: '#212125',
   },
 }
 

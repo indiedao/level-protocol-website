@@ -29,6 +29,35 @@ const GlobalStyles = createGlobalStyle`
   body.animate {
     background-color: hsl(var(--hue), 100%, 50%);
   }
+
+  @font-face {
+    font-family: "Geneva";
+    src: url("/fonts/Geneva-Normal-Italic.ttf");
+    font-style: italic, oblique;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Geneva";
+    src: url("/fonts/Geneval-Bold-Italic.ttf");
+    font-style: italic, oblique;
+    font-weight: bold;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Geneva";
+    src: url("/fonts/Geneva-Normal.ttf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Geneva";
+    src: url("/fonts/Geneva-Bold.ttf");
+    font-weight: 700;
+    font-style: bold;
+    font-display: swap;
+  }
+
   * {
     box-sizing: border-box;
     font-family: 'Work Sans', sans-serif;
