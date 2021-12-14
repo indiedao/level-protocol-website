@@ -210,5 +210,3 @@ export const PreCodeStyles = css`
 export const Code = styled.p`
   ${PreCodeStyles}
 `
-
-export default {}

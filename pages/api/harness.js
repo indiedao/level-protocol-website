@@ -1,36 +1,38 @@
-import { Web3Storage } from 'web3.storage'
-import { File } from 'web3.storage'
+import { Web3Storage, File } from 'web3.storage'
 
-function getAccessToken() {
+const getAccessToken = () => {
   return process.env.WEB3STORAGE_TOKEN
 }
 
-function makeStorageClient() {
+const makeStorageClient = () => {
   return new Web3Storage({ token: getAccessToken() })
 }
 
-function makeFileObjects(cid, data) {
+const makeFileObjects = (cid, data) => {
   const buffer = Buffer.from(JSON.stringify(data))
 
-  const files = [new File([buffer], `test.json`)]
+  const files = [new File([buffer], 'test.json')]
 
   return files
 }
 
-async function storeFiles(files) {
+const storeFiles = async files => {
+  console.log(files) // eslint-disable-line no-console
   const client = makeStorageClient()
   const cid = await client.put('test')
   return cid
 }
 
-export default (req, res) => {
+const handler = (req, res) => {
   if (req.method === 'POST') {
-    console.log(req.body)
+    console.log(req.body) // eslint-disable-line no-console
     const { data, cid } = req.body
     const files = makeFileObjects(cid, data)
-    console.log('files', files)
+    console.log('files', files) // eslint-disable-line no-console
     const newCid = storeFiles(files)
     res.statusCode = 200
     res.json({ newCid })
   }
 }
+
+export default handler

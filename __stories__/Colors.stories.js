@@ -34,6 +34,8 @@ export const All = () => (
   </StoryGrid>
 )
 
-export default {
+const Story = {
   title: 'Colors',
 }
+
+export default Story

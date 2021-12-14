@@ -3,11 +3,9 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
 import Animation from '../../util/animation'
-import { useRouter } from 'next/dist/client/router'
 
 const Level = () => {
   const [animation, setAnimation] = useState()
-  const router = useRouter()
 
   useEffect(() => {
     setAnimation(new Animation())
@@ -20,9 +18,7 @@ const Level = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {animation && (
-          <ClickWrapper onClick={animation.rotatePyramid}></ClickWrapper>
-        )}
+        {animation && <ClickWrapper onClick={animation.rotatePyramid} />}
       </main>
     </div>
   )

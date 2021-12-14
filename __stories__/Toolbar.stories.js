@@ -1,19 +1,31 @@
-import React from 'react';
-import Toolbar from '../components/ui/Toolbar';
-import { LevelLogoIcon } from '../components/ui/icons';
+import React from 'react'
+import Link from 'next/link'
+
+import Toolbar from '../components/ui/Toolbar'
+import { LevelLogoIcon } from '../components/ui/icons'
 
 export const All = () => (
-  <Toolbar brand={
+  <Toolbar
+    brand={
+      <>
+        <LevelLogoIcon />
+        Level Protocol
+      </>
+    }
+  >
     <>
-      <LevelLogoIcon />
-      Level Protocol
+      <li>
+        <Link href="/about">About</Link>
+      </li>
+      <li>
+        <Link href="/join">Join</Link>
+      </li>
     </>
-  }>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Join</a></li>
   </Toolbar>
 )
 
-export default {
+const Story = {
   title: 'Toolbar',
 }
+
+export default Story

@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { hexToRgba } from '../../util/colors';
+import PropTypes from 'prop-types'
+import styled, { css } from 'styled-components'
+
+import { hexToRgba } from '../../util/colors'
 
 const BaseTextStyles = css`
   font-family: 'Matter';
@@ -44,7 +45,9 @@ export const RetroButton = styled.div`
   font-size: 20px;
   line-height: 20px;
   border: 2px solid ${props => props.theme.black};
-  box-shadow: inset -2px -2px 0px ${props => hexToRgba(props.theme.colors.black, 0.5)}, 6px 6px 0px ${props => props.theme.colors.vibrantBlack};
+  box-shadow: inset -2px -2px 0px
+      ${props => hexToRgba(props.theme.colors.black, 0.5)},
+    6px 6px 0px ${props => props.theme.colors.vibrantBlack};
 
   transition: all 100ms;
 
@@ -58,9 +61,11 @@ export const RetroButton = styled.div`
   }
 
   &:active {
-    box-shadow: inset -2px -2px 0px ${props => hexToRgba(props.theme.colors.black, 0.5)}, 2px 2px 0px ${props => props.theme.colors.vibrantBlack};
+    box-shadow: inset -2px -2px 0px
+        ${props => hexToRgba(props.theme.colors.black, 0.5)},
+      2px 2px 0px ${props => props.theme.colors.vibrantBlack};
   }
-`;
+`
 
 export const Button = styled.div`
   ${BaseTextStyles}
@@ -95,12 +100,10 @@ export const Button = styled.div`
       &:hover,
       &:focus,
       &:active {
-        background-color: ${props => props.theme.colors.neutral100};
+        background-color: ${props.theme.colors.neutral100};
       }
       box-shadow: none;
     `}
 `
 Button.propTypes = { isDisabled: PropTypes.bool }
 Button.defaultProps = { isDisabled: false }
-
-export default {}

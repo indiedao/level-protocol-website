@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Head from 'next/head'
+import Image from 'next/image'
 
 import { H1, A } from '../components/ui/Typography'
 import Web3Layout from '../components/layouts/Web3Layout'
@@ -15,7 +16,12 @@ const Home = () => {
         <Web3Layout>
           <Layout>
             <H1>
-              <img height={60} src="/images/logo.svg" />
+              <Image
+                alt="logo"
+                height={60}
+                width={595}
+                src="/images/logo.svg"
+              />
             </H1>
             <LinkLayout>
               <A

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 
@@ -11,11 +12,11 @@ const withAuth = WrappedComponent => {
         props = await WrappedComponent.getInitialProps(ctx)
       }
 
-      let token = ctx.req.cookies.token
+      const { token } = ctx.req.cookies
       if (!token) {
         ctx.res.writeHead(302, { Location: '/401' })
         ctx.res.end()
-        return
+        return { ...props }
       }
 
       const tokenData = jwt.decode(token, { complete: true })
@@ -29,7 +30,8 @@ const withAuth = WrappedComponent => {
     }
 
     render() {
-      let auth = this.props.auth
+      let { auth } = this.props
+      const { auth: _auth, children, ...props } = this.props
 
       // SSR yielded no auth, check client cookies:
       if (!auth) {
@@ -38,7 +40,7 @@ const withAuth = WrappedComponent => {
         // No auth, redirect to 401:
         if (!token) {
           document.location.pathname = '/401'
-          return <></>
+          return null
         }
 
         const tokenData = jwt.decode(token, { complete: true })
@@ -49,11 +51,24 @@ const withAuth = WrappedComponent => {
       }
 
       return (
-        <WrappedComponent {...this.props} {...auth}>
-          {this.props.children}
+        <WrappedComponent {...props} auth={auth}>
+          {children}
         </WrappedComponent>
       )
     }
+  }
+
+  AuthComponent.propTypes = {
+    auth: PropTypes.shape({
+      token: PropTypes.string,
+      email: PropTypes.string,
+    }),
+    children: PropTypes.node,
+  }
+
+  AuthComponent.defaultProps = {
+    auth: undefined,
+    children: undefined,
   }
 
   return AuthComponent

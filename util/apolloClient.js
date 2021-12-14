@@ -10,8 +10,8 @@ let apolloClient
 
 function createApolloClient(token) {
   // Set auth token:
-  let headers = {}
-  headers['Authorization'] = `Bearer ${token}`
+  const headers = {}
+  headers.Authorization = `Bearer ${token}`
 
   // Configure Apollo Client:
   return new ApolloClient({
@@ -20,23 +20,24 @@ function createApolloClient(token) {
       onError(({ graphQLErrors, networkError }) => {
         // GQL Errors:
         if (graphQLErrors) {
-          graphQLErrors.map(({ message, locations, path }) => {
+          graphQLErrors.forEach(({ message, locations, path }) => {
+            // eslint-disable-next-line no-console
             console.log(
               `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
             )
 
             // Unauthorized errors:
             if (message.match(/401/)) {
-              if (typeof window != 'undefined') window.location = '/401'
+              if (typeof window !== 'undefined') window.location = '/401'
             }
           })
         }
 
         // Network Errors:
-        if (networkError) console.log(`[Network error]: ${networkError}`)
+        if (networkError) console.log(`[Network error]: ${networkError}`) // eslint-disable-line no-console
       }),
       new HttpLink({
-        uri: process.env.NEXT_PUBLIC_API_PATH + '/graphql',
+        uri: `${process.env.NEXT_PUBLIC_API_PATH}/graphql`,
         headers,
       }),
     ]),
@@ -63,32 +64,38 @@ function createApolloClient(token) {
   })
 }
 
-export function initializeApollo(initialState = null, token) {
-  const _apolloClient = apolloClient ?? createApolloClient(token)
+export function initializeApollo(token, initialState = null) {
+  const client = apolloClient ?? createApolloClient(token)
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
   if (initialState) {
     // Get existing cache, loaded during client side data fetching
-    const existingCache = _apolloClient.extract()
+    const existingCache = client.extract()
 
     // Merge the existing cache into data passed from getStaticProps/getServerSideProps
     const data = merge(initialState, existingCache)
 
     // Restore the cache with the merged data
-    _apolloClient.cache.restore(data)
+    client.cache.restore(data)
   }
   // For SSG and SSR always create a new Apollo Client
-  if (typeof window === 'undefined') return _apolloClient
+  if (typeof window === 'undefined') return client
   // Create the Apollo Client once in the client
-  if (!apolloClient) apolloClient = _apolloClient
+  if (!apolloClient) apolloClient = client
 
-  return _apolloClient
+  return client
 }
 
 export function addApolloState(client, pageProps) {
   if (pageProps?.props) {
-    pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
+    return {
+      ...pageProps,
+      props: {
+        ...pageProps.props,
+        [APOLLO_STATE_PROP_NAME]: client.cache.extract(),
+      },
+    }
   }
 
   return pageProps
@@ -97,6 +104,6 @@ export function addApolloState(client, pageProps) {
 export function useApollo(pageProps) {
   const state = pageProps[APOLLO_STATE_PROP_NAME]
   const token = pageProps.auth?.token
-  const store = useMemo(() => initializeApollo(state, token), [state])
+  const store = useMemo(() => initializeApollo(token, state), [state, token])
   return store
 }

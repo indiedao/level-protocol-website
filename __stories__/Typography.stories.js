@@ -14,7 +14,6 @@ import {
   Caption,
   Overline1,
   Overline2,
-  Hyperlink,
   Code,
   InlineCode,
 } from '../components/ui/Typography'
@@ -55,9 +54,6 @@ export const All = () => (
       <Overline2>Overline 2</Overline2>
     </div>
     <div>
-      <Hyperlink href="#">Hyperlink</Hyperlink>
-    </div>
-    <div>
       <Code>Code</Code>
     </div>
     <div>
@@ -66,6 +62,8 @@ export const All = () => (
   </StoryGrid>
 )
 
-export default {
+const Story = {
   title: 'Typography',
 }
+
+export default Story

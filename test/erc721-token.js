@@ -1,29 +1,31 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
+import { expect } from 'chai'
+import { ethers } from 'hardhat'
 
-let contract, owner, addr1, addr2, addr3
+let contract
+let addr1
+let addr2
+let addr3
 
-describe('(ERC-721) $LEVEL token', function () {
+describe('(ERC-721) $LEVEL token', () => {
   beforeEach(async () => {
     const Contract = await ethers.getContractFactory('Level')
     contract = await Contract.deploy()
     await contract.deployed()
-    const [o, a1, a2, a3] = await ethers.getSigners()
-    owner = o
+    const [, a1, a2, a3] = await ethers.getSigners()
     addr1 = a1
     addr2 = a2
     addr3 = a3
   })
 
-  it('should be initialized with a name and symbol', async function () {
+  it('should be initialized with a name and symbol', async () => {
     const name = await contract.name()
     const symbol = await contract.symbol()
     expect(name).to.equal('Level')
     expect(symbol).to.equal('LEVEL')
   })
 
-  describe('minting', function () {
-    it('should start at token id 0, and increment each mint', async function () {
+  describe('minting', () => {
+    it('should start at token id 0, and increment each mint', async () => {
       await contract.connect(addr1).mint()
       const owner1 = await contract.ownerOf(0)
       expect(owner1).to.equal(addr1.address)
@@ -34,13 +36,15 @@ describe('(ERC-721) $LEVEL token', function () {
       const owner3 = await contract.ownerOf(2)
       expect(owner3).to.equal(addr3.address)
     })
-    it('should only allow one token per address', async function () {
+
+    it('should only allow one token per address', async () => {
       await contract.connect(addr1).mint()
       await expect(contract.connect(addr1).mint()).to.be.revertedWith(
         'Address can only have one LEVEL token!',
       )
     })
-    it('should only allow transfer during mint', async function () {
+
+    it('should only allow transfer during mint', async () => {
       await contract.connect(addr1).mint()
       await expect(
         contract.connect(addr1).transferFrom(addr1.address, addr2.address, 0),
@@ -48,9 +52,9 @@ describe('(ERC-721) $LEVEL token', function () {
     })
   })
 
-  describe('enumerability', function () {
-    describe('tokenOfOwner', function () {
-      it('should show which token id belongs to an address', async function () {
+  describe('enumerability', () => {
+    describe('tokenOfOwner', () => {
+      it('should show which token id belongs to an address', async () => {
         await contract.connect(addr1).mint()
         const tokenId = await contract.tokenOfOwner(addr1.address)
         expect(tokenId).to.equal(0)
@@ -58,12 +62,14 @@ describe('(ERC-721) $LEVEL token', function () {
         const tokenId2 = await contract.tokenOfOwner(addr2.address)
         expect(tokenId2).to.equal(1)
       })
-      it('should require that owner address owns a token', async function () {
+
+      it('should require that owner address owns a token', async () => {
         await expect(contract.tokenOfOwner(addr1.address)).to.be.revertedWith(
           'Address does not own a token!',
         )
       })
-      it('should show which address owns a token', async function () {
+
+      it('should show which address owns a token', async () => {
         await contract.connect(addr1).mint()
         const owner1 = await contract.ownerOf(0)
         expect(owner1).to.equal(addr1.address)
@@ -74,13 +80,14 @@ describe('(ERC-721) $LEVEL token', function () {
     })
   })
 
-  describe('metadata', function () {
-    it('should initialize base URI to the correct gateway', async function () {
+  describe('metadata', () => {
+    it('should initialize base URI to the correct gateway', async () => {
       await contract.mint()
       const uri = await contract.tokenURI(0)
       expect(uri).to.equal('https://level.2c.io/api/token/0')
     })
-    it('should allow owner to change base URI', async function () {
+
+    it('should allow owner to change base URI', async () => {
       // Mint token:
       await contract.mint()
       const uri = await contract.tokenURI(0)
@@ -90,7 +97,8 @@ describe('(ERC-721) $LEVEL token', function () {
       const newUri = await contract.tokenURI(0)
       expect(newUri).to.equal('https://newapi.2c.io/api/token/0')
     })
-    it('should not allow non-owners to set base URI', async function () {
+
+    it('should not allow non-owners to set base URI', async () => {
       await expect(
         contract.connect(addr1).setBaseURI('https://newapi.2c.io/api/token/'),
       ).to.be.revertedWith('Ownable: caller is not the owner')

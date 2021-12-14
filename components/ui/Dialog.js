@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import styled, { css } from "styled-components"
-import { CloseIcon, CollapseIcon, ZoomIcon } from "./icons";
+import { useState } from 'react'
+import styled, { css } from 'styled-components'
+import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
 
 const Container = styled.div`
   position: fixed;
@@ -11,16 +11,19 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const Wrapper = styled.div`
-  ${props => props.zoom ? css`
-    width: 100%; 
-    height: 100vh;
-  ` : css`
-    width: 800px;
-    height: 80%;
-  ` }
+  ${props =>
+    props.zoom
+      ? css`
+          width: 100%;
+          height: 100vh;
+        `
+      : css`
+          width: 800px;
+          height: 80%;
+        `}
   display: flex;
   flex-direction: column;
 
@@ -28,7 +31,7 @@ const Wrapper = styled.div`
   color: ${props => props.theme.colors.black};
   border: 2px solid ${props => props.theme.colors.vibrantBlack};
   box-shadow: 16px 16px 0px ${props => props.theme.colors.vibrantBlack};
-`;
+`
 
 const Title = styled.div`
   display: flex;
@@ -65,7 +68,7 @@ const Title = styled.div`
     justify-content: space-arround;
     align-items: center;
   }
-`;
+`
 
 const Content = styled.div`
   overflow: auto;
@@ -85,56 +88,63 @@ const Content = styled.div`
     background: ${props => props.theme.colors.vibrantBlack};
   }
 
-  ${props => props.collapsed ? css`
-    height: 5px;
-    display: hidden;
-  ` : css`
-    padding: 16px;
-  `}
-`;
+  ${props =>
+    props.collapsed
+      ? css`
+          height: 5px;
+          display: hidden;
+        `
+      : css`
+          padding: 16px;
+        `}
+`
 
 export const Dialog = ({ children, title, handleClose, open = false }) => {
-  const [show, setShow] = useState(open);
-  const [zoom, setZoom] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [show, setShow] = useState(open)
+  const [zoom, setZoom] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
 
   const closeDialog = () => {
-    setShow(false);
+    setShow(false)
 
     if (handleClose) {
-      handleClose();
+      handleClose()
     }
   }
 
   const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
+    setCollapsed(!collapsed)
   }
 
   const toggleZoom = () => {
-    setZoom(!zoom);
+    setZoom(!zoom)
   }
 
-  return (
-    <>
-    {show && (
+  if (show) {
+    return (
       <Container>
         <Wrapper zoom={zoom}>
           <Title>
             <div>
-              <a onClick={closeDialog}><CloseIcon /></a>
+              <button onClick={closeDialog} type="button">
+                <CloseIcon />
+              </button>
             </div>
-            <div>
-              {title}
-            </div>
+            <div>{title}</div>
             <div className="title-actions">
-              <a onClick={toggleZoom}><ZoomIcon /></a>
-              <a onClick={toggleCollapsed}><CollapseIcon /></a>
+              <button onClick={toggleZoom} type="button">
+                <ZoomIcon />
+              </button>
+              <button onClick={toggleCollapsed} type="button">
+                <CollapseIcon />
+              </button>
             </div>
           </Title>
           <Content collapsed={collapsed}>{children}</Content>
         </Wrapper>
       </Container>
-    )}
-    </>
-  )
-} 
+    )
+  }
+
+  return null
+}

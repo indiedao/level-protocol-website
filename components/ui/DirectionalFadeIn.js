@@ -1,6 +1,5 @@
-import { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import styled, { keyframes, css } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 const Wrapper = styled.div`
   position: relative;
@@ -101,8 +100,9 @@ const WRAPPERS = {
 }
 
 const DirectionalFadeIn = props => {
-  const Wrapper = WRAPPERS[props.direction]
-  return <Wrapper {...props} />
+  const { direction } = props
+  const FadeWrapper = WRAPPERS[direction]
+  return <FadeWrapper {...props} />
 }
 
 DirectionalFadeIn.propTypes = {

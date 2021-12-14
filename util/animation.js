@@ -2,6 +2,44 @@ import * as THREE from 'three'
 
 const PYRAMID_ROTATION_OFFSET = (Math.PI * 2) / 10 // Half side turn
 
+const createAvatar = () => {
+  const geometry = new THREE.CylinderGeometry(
+    1, // Top slice
+    1, // Width
+    0.1, // Height
+    10, // Number of sides
+  )
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x0099ff,
+    wireframe: true,
+  })
+  const avatar = new THREE.Mesh(geometry, material)
+  // Flip upward on it's side:
+  avatar.rotation.x = Math.PI / 2
+  // Offset up from center:
+  avatar.position.y = 1
+  return avatar
+}
+
+const createPyramid = () => {
+  const geometry = new THREE.CylinderGeometry(
+    0, // Top slice
+    1, // Width
+    1.25, // Height
+    5, // Number of sides
+  )
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffff00,
+    wireframe: true,
+  })
+  const pyramid = new THREE.Mesh(geometry, material)
+  // Offset down from center:
+  pyramid.position.y = -1
+  // Half turn:
+  pyramid.rotation.y = PYRAMID_ROTATION_OFFSET
+  return pyramid
+}
+
 class Animation {
   constructor() {
     // Setup scene:
@@ -22,20 +60,20 @@ class Animation {
     document.body.appendChild(this.renderer.domElement)
 
     // Shapes:
-    this.pyramid = this._createPyramid()
+    this.pyramid = createPyramid()
     this.scene.add(this.pyramid)
-    this.avatar = this._createAvatar()
+    this.avatar = createAvatar()
     this.scene.add(this.avatar)
 
     // Begin animation:
-    this._tick()
+    this.tick()
 
     // Adjustable settings:
     this.pyramidSide = 0
     this.pyramidPosition = PYRAMID_ROTATION_OFFSET
   }
 
-  _tick() {
+  #tick() {
     // Rotate pyramid:
     if (
       this.pyramidPosition <
@@ -50,49 +88,11 @@ class Animation {
 
     // Render:
     this.renderer.render(this.scene, this.camera)
-    requestAnimationFrame(this._tick.bind(this))
-  }
-
-  _createAvatar() {
-    const geometry = new THREE.CylinderGeometry(
-      1, // Top slice
-      1, // Width
-      0.1, // Height
-      10, // Number of sides
-    )
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x0099ff,
-      wireframe: true,
-    })
-    const avatar = new THREE.Mesh(geometry, material)
-    // Flip upward on it's side:
-    avatar.rotation.x = Math.PI / 2
-    // Offset up from center:
-    avatar.position.y = 1
-    return avatar
-  }
-
-  _createPyramid() {
-    const geometry = new THREE.CylinderGeometry(
-      0, // Top slice
-      1, // Width
-      1.25, // Height
-      5, // Number of sides
-    )
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xffff00,
-      wireframe: true,
-    })
-    const pyramid = new THREE.Mesh(geometry, material)
-    // Offset down from center:
-    pyramid.position.y = -1
-    // Half turn:
-    pyramid.rotation.y = PYRAMID_ROTATION_OFFSET
-    return pyramid
+    requestAnimationFrame(this.tick.bind(this))
   }
 
   rotatePyramid = () => {
-    this.pyramidSide++
+    this.pyramidSide += 1
   }
 }
 
