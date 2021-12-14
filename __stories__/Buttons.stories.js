@@ -15,15 +15,6 @@ export const All = () => (
     <div>
       <Button isDisabled>Disabled Button</Button>
     </div>
-
-  </StoryGrid>
-)
-
-export const Retro = () => (
-  <StoryGrid columns={4}>
-    <div>
-      <RetroButton>Retro Button</RetroButton>
-    </div>
   </StoryGrid>
 )
 
