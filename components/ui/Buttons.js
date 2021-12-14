@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { hexToRgba } from '../../util/colors'
+=======
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
+import { hexToRgba } from '../../util/colors';
+>>>>>>> main
 
 const BaseTextStyles = css`
   font-family: 'Matter';
@@ -44,9 +50,13 @@ export const RetroButton = styled.div`
   font-size: 20px;
   line-height: 20px;
   border: 2px solid ${props => props.theme.black};
+<<<<<<< HEAD
   box-shadow: inset -2px -2px 0px
       ${props => hexToRgba(props.theme.colors.black, 0.5)},
     6px 6px 0px ${props => props.theme.colors.vibrantBlack};
+=======
+  box-shadow: inset -2px -2px 0px ${props => hexToRgba(props.theme.colors.black, 0.5)}, 6px 6px 0px ${props => props.theme.colors.vibrantBlack};
+>>>>>>> main
 
   transition: all 100ms;
 
@@ -60,11 +70,17 @@ export const RetroButton = styled.div`
   }
 
   &:active {
+<<<<<<< HEAD
     box-shadow: inset -2px -2px 0px
         ${props => hexToRgba(props.theme.colors.black, 0.5)},
       2px 2px 0px ${props => props.theme.colors.vibrantBlack};
   }
 `
+=======
+    box-shadow: inset -2px -2px 0px ${props => hexToRgba(props.theme.colors.black, 0.5)}, 2px 2px 0px ${props => props.theme.colors.vibrantBlack};
+  }
+`;
+>>>>>>> main
 
 export const Button = styled.div`
   ${BaseTextStyles}

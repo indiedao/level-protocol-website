@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import styled, { css } from 'styled-components'
 import {
-  Close as CloseIcon,
-  Collapse as CollapseIcon,
-  Zoom as ZoomIcon,
+  CloseIcon,
+  CollapseIcon,
+  ZoomIcon,
 } from './icons'
 
 const Container = styled.div`

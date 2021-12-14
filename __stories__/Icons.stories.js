@@ -7,7 +7,6 @@ import * as icons from '../components/ui/icons'
 const IconWrapper = styled.div`
   font-size: 12px;
   border: 1px solid ${props => props.theme.colors.vibrantBlack};
-
   display: flex;
   flex-direction: column;
   justify-content: space-around;

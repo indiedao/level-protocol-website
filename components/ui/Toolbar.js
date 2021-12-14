@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { Chevron as ChevronIcon } from './icons'
+import { ChevronIcon } from './icons'
 
 const Wrapper = styled.nav`
   display: flex;
