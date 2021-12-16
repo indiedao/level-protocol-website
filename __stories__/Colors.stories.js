@@ -7,14 +7,25 @@ import theme from '../util/theme'
 
 const SectionTitle = styled(H2)`
   grid-column: 1 / 6;
+  font-family: ChicagoFLFRegular;
+  font-size: 6.4rem;
+  line-height: 8.173rem;
   border-bottom: 2px solid black;
 `
 
 const Swatch = styled.div`
-  background-color: ${props => props.theme.colors[props.colorName]};
   height: 161.8px;
   width: 100px;
   border: 1px solid #eeeeee;
+`
+
+const ColorSwatch = styled(Swatch)`
+  background-color: ${props => props.theme.colors[props.colorName]};
+`
+
+const HalftoneSwatch = styled(Swatch)`
+  background: ${props => props.theme.colors[props.backgroundColor || 'white']}
+    ${props => props.theme.halftones[props.halftoneName]};
 `
 
 const Info = styled.p`
@@ -22,15 +33,19 @@ const Info = styled.p`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 0.34rem;
-  font-family: ChicagoFLFRegular;
 
   &:before {
-    content: '${props => props.colorName.replace(props.term, '')}';
+    content: '${props => props.name.replace(props.term, '')}';
+    font-family: ChicagoFLFRegular;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
   }
 
   &:after {
-    content: '${props => props.theme.colors[props.colorName]}';
+    content: '${props => props.theme.colors[props.name]}';
     font-family: Geneva, Verdana;
+    font-size: 2rem;
+    line-height: 2.8rem;
   }
 `
 
@@ -54,12 +69,22 @@ const mutedColors = Object.keys(theme.colors).filter(colorName =>
 
 const ColorBlock = ({ colorName, term }) => (
   <Color>
-    <Swatch colorName={colorName} />
-    <Info colorName={colorName} term={term} />
+    <ColorSwatch colorName={colorName} />
+    <Info name={colorName} term={term} />
   </Color>
 )
 
-export const All = () => (
+const HalftoneBlock = ({ backgroundColor, halftoneName }) => (
+  <Color>
+    <HalftoneSwatch
+      backgroundColor={backgroundColor}
+      halftoneName={halftoneName}
+    />
+    <Info name={halftoneName.toUpperCase()} />
+  </Color>
+)
+
+const Template = ({ halftoneBackgroundColor }) => (
   <>
     <StoryGrid columns={5} columnWidth="100px">
       <SectionTitle>True</SectionTitle>
@@ -79,11 +104,40 @@ export const All = () => (
         <ColorBlock colorName={colorName} term="muted" key={colorName} />
       ))}
     </StoryGrid>
+    <StoryGrid columns={5} columnWidth="100px">
+      <SectionTitle>Halftones</SectionTitle>
+      {Object.keys(theme.halftones).map(halftoneName => (
+        <HalftoneBlock
+          halftoneName={halftoneName}
+          key={halftoneName}
+          backgroundColor={halftoneBackgroundColor}
+        />
+      ))}
+    </StoryGrid>
   </>
 )
 
+export const Colors = Template.bind({})
+Colors.args = {
+  halftoneBackgroundColor: 'white',
+}
+
 const Story = {
-  title: 'Colors',
+  title: 'Design System / Colors',
+  argTypes: {
+    halftoneBackgroundColor: {
+      options: [
+        ...trueColors,
+        ...vibrantColors,
+        ...mutedColors,
+        'black',
+        'white',
+      ],
+      control: {
+        type: 'select',
+      },
+    },
+  },
 }
 
 export default Story

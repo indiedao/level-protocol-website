@@ -1,3 +1,12 @@
+const checkerboardSvgUrl =
+  'url(\'data:image/svg+xml;utf8,<svg height="4" viewBox="0 0 4 4" width="4" xmlns="http://www.w3.org/2000/svg"><g fill="%23000" fill-rule="evenodd"><path d="m0 0h2v2h-2z"/><path d="m2 2h2v2h-2z"/></g></svg>\')'
+
+const offsetDotSvgUrl =
+  'url(\'data:image/svg+xml;utf8,<svg height="4" viewBox="0 0 8 4" width="8" xmlns="http://www.w3.org/2000/svg"><g fill="%23000" fill-rule="evenodd"><path d="m0 0h2v2h-2z"/><path d="m4 2h2v2h-2z"/></g></svg>\')'
+
+const offsetRoundedDotSvgUrl =
+  'url(\'data:image/svg+xml;utf8,<svg height="15" viewBox="0 0 10 15" width="10" xmlns="http://www.w3.org/2000/svg"><g fill="%23000" fill-rule="evenodd"><rect height="5" rx="1" width="5"/><rect height="5" rx="1" width="5" x="5" y="7.5"/></g></svg>\')'
+
 const theme = {
   bp: {
     sm: style => `@media only screen and (max-width: 767px) { ${style} }`,
@@ -27,6 +36,13 @@ const theme = {
     base700: '#3b4472', // deprecated
     base100: '#e1e4f0', // deprecated
     primary100: '#cafee8', // deprecated
+  },
+
+  halftones: {
+    xs: `left top/0.1rem ${checkerboardSvgUrl}`,
+    sm: `left top/0.3rem ${checkerboardSvgUrl}`,
+    md: `left top/0.8rem ${offsetDotSvgUrl}`,
+    lg: `left top/1rem ${offsetRoundedDotSvgUrl}`,
   },
 }
 
