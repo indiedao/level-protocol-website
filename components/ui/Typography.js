@@ -10,7 +10,7 @@ export const H1Styles = css`
     font-size: 12rem;
     line-height: 12rem;
     margin: 0;
-    color: ${props.theme.colors[props.color || 'base900']};
+    color: ${props.theme.colors[props.color || 'black']};
 
     ${props.theme.bp.sm`
       font-size: 8rem;
@@ -22,14 +22,14 @@ export const H1 = styled.h1`
   ${H1Styles};
 `
 H1.propTypes = { ...propTypesColor }
-H1.defaultProps = { color: 'base900' }
+H1.defaultProps = { color: 'black' }
 
 export const H2Styles = css`
   font-family: 'Montaga', serif;
   font-size: 8rem;
   line-height: 7rem;
   margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 export const H2 = styled.h2`
   ${H2Styles}
@@ -40,7 +40,7 @@ export const H3Styles = css`
   font-size: 4.8rem;
   line-height: 4.8rem;
   margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 export const H3 = styled.h3`
   ${H3Styles}
@@ -52,7 +52,7 @@ export const H4Styles = css`
   font-size: 3.6rem;
   line-height: 3.6rem;
   margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 export const H4 = styled.h4`
   ${H4Styles}
@@ -64,7 +64,7 @@ export const H5Styles = css`
   font-size: 2.4rem;
   line-height: 2.4rem;
   margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 export const H5 = styled.h5`
   ${H5Styles}
@@ -76,7 +76,7 @@ export const H6Styles = css`
   font-size: 1.8rem;
   line-height: 2.2rem;
   margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
   ${props => props.theme.bp.sm`
     font-size: 1.2rem;
     line-height: 1.2rem;
@@ -93,18 +93,18 @@ export const PStyles = css`
   line-height: 2rem;
   margin: 0;
   padding: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 export const Body1 = styled.p`
   ${PStyles}
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 
 export const Body2 = styled.p`
   ${PStyles}
   font-size: 1.3rem;
   line-height: 1.8rem;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 
 export const Caption = styled.p`
@@ -122,7 +122,7 @@ export const Overline1 = styled.p`
   text-transform: uppercase;
   margin: 0;
   padding: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 
 export const Overline2 = styled.p`
@@ -134,7 +134,7 @@ export const Overline2 = styled.p`
   text-transform: uppercase;
   margin: 0;
   padding: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 
 export const AStyles = css`
@@ -154,7 +154,7 @@ export const AStyles = css`
   display: inline-block;
   vertical-align: middle;
   overflow: hidden;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  color: ${props => props.theme.colors[props.color || 'black']};
 `
 
 export const A = styled.a`
@@ -165,7 +165,8 @@ export const A = styled.a`
     bottom: 0;
     width: 100%;
     height: 0%;
-    background-color: ${props => props.theme.colors.base700};
+    background-color: ${props =>
+      props.theme.colors[props.backgroundColor || 'white']};
     transition: all 500ms;
     cursor: pointer;
     z-index: -1;
@@ -187,9 +188,9 @@ export const PCodeStyles = css`
   margin: 0;
   padding: 2px 5px;
   border-radius: 4px;
-  color: ${props => props.theme.colors[props.color || 'primary600']};
-  background-color: ${props => props.theme.colors.primary100};
-  border: 1px solid ${props => props.theme.colors.primary050};
+  color: ${props => props.theme.colors[props.color || 'black']};
+  background-color: ${props => props.theme.colors.white};
+  border: 1px solid ${props => props.theme.colors.black};
 `
 export const InlineCode = styled.p`
   ${PCodeStyles}
@@ -204,8 +205,8 @@ export const PreCodeStyles = css`
   margin: 0;
   padding: 10px;
   border-radius: 8px;
-  color: ${props => props.theme.colors[props.color || 'primary100']};
-  background-color: ${props => props.theme.colors.primary100};
+  color: ${props => props.theme.colors[props.color || 'black']};
+  background-color: ${props => props.theme.colors.white};
 `
 export const Code = styled.p`
   ${PreCodeStyles}
