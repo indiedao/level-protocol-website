@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   left: 0;
   height: 75px;
   width: 100%;
-  background-color: ${props => props.theme.colors.base900};
+  background-color: ${props => props.theme.colors.black};
   display: flex;
   align-items: center;
   justify-content: center;

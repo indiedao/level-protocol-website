@@ -12,7 +12,7 @@ const BaseTextStyles = css`
 
 export const TextButton = styled.div`
   ${BaseTextStyles}
-  color: ${props => props.theme.colors.base900};
+  color: ${props => props.theme.colors.black};
   cursor: pointer;
   padding: 10px 14px;
   border-radius: 8px;
@@ -20,15 +20,15 @@ export const TextButton = styled.div`
   transition: all 300ms;
 
   &:hover {
-    background-color: ${props => props.theme.colors.base050};
+    background-color: ${props => props.theme.colors.white};
   }
 
   &:focus {
-    background-color: ${props => props.theme.colors.base100};
+    background-color: ${props => props.theme.colors.white};
   }
 
   &:active {
-    background-color: ${props => props.theme.colors.base100};
+    background-color: ${props => props.theme.colors.white};
   }
 `
 
@@ -70,7 +70,7 @@ export const RetroButton = styled.div`
 export const Button = styled.div`
   ${BaseTextStyles}
   background-color: white;
-  color: ${props => props.theme.colors.base900};
+  color: ${props => props.theme.colors.black};
   cursor: pointer;
   padding: 12px 28px;
   width: 100%;
@@ -82,15 +82,15 @@ export const Button = styled.div`
   transition: all 300ms;
 
   &:hover {
-    background-color: ${props => props.theme.colors.base400};
-    border-color: ${props => props.theme.colors.base100};
+    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
+    border-color: ${props => props.theme.colors.white};
   }
   &:focus {
-    background-color: ${props => props.theme.colors.base300};
+    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
   }
 
   &:active {
-    background-color: ${props => props.theme.colors.base200};
+    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
   }
 
   ${props =>
@@ -100,7 +100,7 @@ export const Button = styled.div`
       &:hover,
       &:focus,
       &:active {
-        background-color: ${props.theme.colors.neutral100};
+        background-color: ${props.theme.colors.white};
       }
       box-shadow: none;
     `}

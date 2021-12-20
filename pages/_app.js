@@ -18,7 +18,7 @@ const MyApp = ({ Component, pageProps }) => {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <GlobalStyles />
+        <GlobalStyles bodyColor="primary100" bodyBackgroundColor="base100" />
         <ApolloProvider client={apolloClient}>
           <Component {...pageProps} />
         </ApolloProvider>

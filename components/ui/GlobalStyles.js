@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
+import { hexToRgba } from '../../util/colors'
 import {
   H1Styles,
   H2Styles,
@@ -17,8 +18,9 @@ const GlobalStyles = createGlobalStyle`
   html, body {
     padding: 0;
     margin: 0;
-    background-color: ${props => props.theme.colors.base100};
-    color: ${props => props.theme.colors.primary100};
+    background-color: ${props =>
+      props.theme.colors[props.bodyBackgroundColor || 'white']};
+    color: ${props => props.theme.colors[props.bodyColor || 'black']};
     font-size: 62.5%; /* base 10 rems */
     min-height: 100vh;
 
@@ -110,7 +112,7 @@ const GlobalStyles = createGlobalStyle`
     border: 1px solid gray;
   }
   ::selection {
-    background: ${props => props.theme.colors.primary100};
+    background: ${props => props.theme.colors.black};
   }
   /* NProgress loader bar plugin: */
   #nprogress {
@@ -118,7 +120,7 @@ const GlobalStyles = createGlobalStyle`
     position: absolute;
     top: 0;
     .bar {
-      background-color: ${props => props.theme.colors.primary500};
+      background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
       height: 4px;
     }
   }

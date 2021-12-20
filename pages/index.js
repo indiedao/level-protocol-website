@@ -15,7 +15,7 @@ const Home = () => {
       <main>
         <Web3Layout>
           <Layout>
-            <H1>
+            <H1 color="base900">
               <Image
                 alt="logo"
                 height={60}
@@ -27,6 +27,8 @@ const Home = () => {
               <A
                 href="https://docs.google.com/document/d/1mv4vfrYRBwc8nI7jGBoqDITV-desH_UhFNA3UW8dUnw/edit#"
                 target="_blank"
+                color="base900"
+                backgroundColor="base700"
               >
                 Read White Paper (v1.1)
               </A>

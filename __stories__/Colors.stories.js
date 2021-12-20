@@ -2,40 +2,142 @@ import React from 'react'
 import styled from 'styled-components'
 
 import StoryGrid from './StoryGrid'
+import { H2 } from '../components/ui/Typography'
 import theme from '../util/theme'
 
-const ColorBlock = styled.div`
-  position: relative;
-  background-color: ${props => props.theme.colors[props.color]};
-  height: 100px;
+const SectionTitle = styled(H2)`
+  grid-column: 1 / 6;
+  font-family: ChicagoFLFRegular;
+  font-size: 6.4rem;
+  line-height: 8.173rem;
+  border-bottom: 2px solid black;
+`
+
+const Swatch = styled.div`
+  height: 161.8px;
   width: 100px;
-  border-radius: 8px;
-  border: 1px solid #eee;
+  border: 1px solid #eeeeee;
+`
+
+const ColorSwatch = styled(Swatch)`
+  background-color: ${props => props.theme.colors[props.colorName]};
+`
+
+const HalftoneSwatch = styled(Swatch)`
+  background: ${props => props.theme.colors[props.backgroundColor || 'white']}
+    ${props => props.theme.halftones[props.halftoneName]};
+`
+
+const Info = styled.p`
+  color: ${props => props.theme.colors.black};
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.34rem;
+
+  &:before {
+    content: '${props => props.name.replace(props.term, '')}';
+    font-family: ChicagoFLFRegular;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+  }
 
   &:after {
-    content: '${props => props.color}';
-    position: absolute;
-    background-color: white;
-    border-radius: 3px;
-    padding: 2px 3px;
-    bottom: 10px;
-    left: 10px;
-    color: ${props => props.theme.colors.black};
+    content: '${props => props.theme.colors[props.name]}';
+    font-family: Geneva, Verdana;
+    font-size: 2rem;
+    line-height: 2.8rem;
   }
 `
 
-export const All = () => (
-  <StoryGrid columns={10}>
-    {Object.keys(theme.colors).map(color => (
-      <div key={color}>
-        <ColorBlock color={color} />
-      </div>
-    ))}
-  </StoryGrid>
+const Color = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1.44rem;
+`
+
+const trueColors = Object.keys(theme.colors).filter(colorName =>
+  /^true/.test(colorName),
 )
 
+const vibrantColors = Object.keys(theme.colors).filter(colorName =>
+  /^vibrant/.test(colorName),
+)
+
+const mutedColors = Object.keys(theme.colors).filter(colorName =>
+  /^muted/.test(colorName),
+)
+
+const ColorBlock = ({ colorName, term }) => (
+  <Color>
+    <ColorSwatch colorName={colorName} />
+    <Info name={colorName} term={term} />
+  </Color>
+)
+
+const HalftoneBlock = ({ backgroundColor, halftoneName }) => (
+  <Color>
+    <HalftoneSwatch
+      backgroundColor={backgroundColor}
+      halftoneName={halftoneName}
+    />
+    <Info name={halftoneName.toUpperCase()} />
+  </Color>
+)
+
+const Template = ({ halftoneBackgroundColor }) => (
+  <>
+    <StoryGrid columns={5} columnWidth="100px">
+      <SectionTitle>True</SectionTitle>
+      {trueColors.map(colorName => (
+        <ColorBlock colorName={colorName} term="true" key={colorName} />
+      ))}
+    </StoryGrid>
+    <StoryGrid columns={5} columnWidth="100px">
+      <SectionTitle>Vibrant</SectionTitle>
+      {vibrantColors.map(colorName => (
+        <ColorBlock colorName={colorName} term="vibrant" key={colorName} />
+      ))}
+    </StoryGrid>
+    <StoryGrid columns={5} columnWidth="100px">
+      <SectionTitle>Muted</SectionTitle>
+      {mutedColors.map(colorName => (
+        <ColorBlock colorName={colorName} term="muted" key={colorName} />
+      ))}
+    </StoryGrid>
+    <StoryGrid columns={5} columnWidth="100px">
+      <SectionTitle>Halftones</SectionTitle>
+      {Object.keys(theme.halftones).map(halftoneName => (
+        <HalftoneBlock
+          halftoneName={halftoneName}
+          key={halftoneName}
+          backgroundColor={halftoneBackgroundColor}
+        />
+      ))}
+    </StoryGrid>
+  </>
+)
+
+export const Colors = Template.bind({})
+Colors.args = {
+  halftoneBackgroundColor: 'white',
+}
+
 const Story = {
-  title: 'Colors',
+  title: 'Design System / Colors',
+  argTypes: {
+    halftoneBackgroundColor: {
+      options: [
+        ...trueColors,
+        ...vibrantColors,
+        ...mutedColors,
+        'black',
+        'white',
+      ],
+      control: {
+        type: 'select',
+      },
+    },
+  },
 }
 
 export default Story
