@@ -1,17 +1,20 @@
+import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { ChevronIcon } from './icons'
+import { LevelLogoIcon } from './icons'
 
 const Wrapper = styled.nav`
   display: flex;
   justify-content: space-between;
-  background-color: ${props => props.theme.colors.cream};
+  position: fixed;
+  width: 100%;
+  background-color: ${props => props.theme.colors.vibrantCream};
   padding: 0;
   margin: 0;
-  border-bottom: 2px solid ${props => props.theme.colors.vibrantBlack};
+  box-shadow: 0 2px 0 ${props => props.theme.colors.black};
 
   ul {
     list-style-type: none;
@@ -23,50 +26,49 @@ const Wrapper = styled.nav`
       display: flex;
       &:hover {
         filter: brightness(95%);
-        background-color: ${props => props.theme.colors.cream};
+        background-color: ${props => props.theme.colors.vibrantCream};
       }
 
       &:active {
         filter: contrast(115%);
-        background-color: ${props => props.theme.colors.cream};
+        background-color: ${props => props.theme.colors.vibrantCream};
       }
-
-      padding: 4px 12px;
+      padding: 0;
+      margin: 0;
     }
 
+    li.brand,
     a {
       display: flex;
       align-items: center;
       font-family: 'ChicagoFLFRegular';
       font-weight: 400;
       font-style: normal;
-      font-size: 16px;
-      line-height: 26px;
+      font-size: 20px;
+      line-height: 20px;
       text-decoration: none;
       border: none;
+      padding: 16px;
+      margin: 0;
     }
 
-    li.brand a {
+    li.brand {
       svg:first-child {
-        margin-right: 12px;
-      }
-
-      svg:last-child {
-        margin-left: 8px;
+        margin-right: 14px;
       }
     }
   }
 
   ul:first-child li {
-    border-right: 1px solid ${props => props.theme.colors.vibrantBlack};
+    border-right: 1px solid ${props => props.theme.colors.mutedBlack};
   }
 
   ul:last-child li {
-    border-left: 1px solid ${props => props.theme.colors.vibrantBlack};
+    border-left: 1px solid ${props => props.theme.colors.mutedBlack};
   }
 `
 
-const Toolbar = ({ brand, children }) => {
+const Toolbar = ({ children }) => {
   const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
@@ -81,8 +83,8 @@ const Toolbar = ({ brand, children }) => {
         <li className="brand">
           <Link href="/" passHref>
             <>
-              {brand}
-              <ChevronIcon />
+              <LevelLogoIcon />
+              Level Protocol
             </>
           </Link>
         </li>
@@ -102,6 +104,10 @@ const Toolbar = ({ brand, children }) => {
       </ul>
     </Wrapper>
   )
+}
+
+Toolbar.propTypes = {
+  children: PropTypes.element.isRequired,
 }
 
 export default Toolbar
