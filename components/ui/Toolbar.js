@@ -37,7 +37,7 @@ const Wrapper = styled.nav`
     a {
       display: flex;
       align-items: center;
-      font-family: 'ChicagoFLFRegular';
+      font-family: ${props => props.theme.fontStacks.chicago};
       font-weight: 400;
       font-style: normal;
       font-size: 16px;

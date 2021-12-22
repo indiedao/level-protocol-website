@@ -37,7 +37,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: ChicagoFLF;
+  font-family: ${props => props.theme.fontStacks.chicago};
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
@@ -73,7 +73,7 @@ const Title = styled.div`
 const Content = styled.div`
   overflow: auto;
   font-size: 24px;
-  font-family: 'Geneva', serif;
+  font-family: ${props => props.theme.fontStacks.geneva};
   font-weight: 400;
 
   ::-webkit-scrollbar {
