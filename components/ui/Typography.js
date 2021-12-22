@@ -102,22 +102,22 @@ const sharedActionStyles = css`
   `}
 `
 
-export const StyledButton = styled.button`
+export const StyledButtonText = styled.button`
   ${sharedActionStyles}
   font-size: 2rem;
   line-height: 2rem;
   text-align: center;
 `
 
-StyledButton.propTypes = { ...propTypesColor }
-StyledButton.defaultProps = { color: 'trueWhite' }
+StyledButtonText.propTypes = { ...propTypesColor }
+StyledButtonText.defaultProps = { color: 'trueWhite' }
 
-export const StyledLink = styled.span`
+export const StyledLinkText = styled.span`
   ${sharedActionStyles}
   font-size: inherit;
   line-height: inherit;
   display: inline-block;
 `
 
-StyledLink.propTypes = { ...propTypesColor }
-StyledLink.defaultProps = { color: 'vibrantGreen' }
+StyledLinkText.propTypes = { ...propTypesColor }
+StyledLinkText.defaultProps = { color: 'vibrantGreen' }

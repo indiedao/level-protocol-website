@@ -10,8 +10,8 @@ import {
   H4,
   Body1,
   Body2,
-  StyledButton,
-  StyledLink,
+  StyledButtonText,
+  StyledLinkText,
 } from '../components/ui/Typography'
 
 const linkContainers = {
@@ -23,7 +23,7 @@ const linkContainers = {
   Body2,
 }
 
-const Template = ({ linkContainerName }) => {
+const Template = ({ 'Element Containing Link': linkContainerName }) => {
   const LinkContainer = linkContainers[linkContainerName]
   return (
     <StoryGrid>
@@ -46,15 +46,15 @@ const Template = ({ linkContainerName }) => {
         <Body2>Body 2</Body2>
       </div>
       <div>
-        <StyledButton
+        <StyledButtonText
           style={{ backgroundColor: '#4a4a4a', borderColor: '#4a4a4a' }}
         >
           Button Text
-        </StyledButton>
+        </StyledButtonText>
       </div>
       <LinkContainer>
         <Link href="/#" passHref>
-          <StyledLink>Link Text</StyledLink>
+          <StyledLinkText>Link Text</StyledLinkText>
         </Link>
       </LinkContainer>
     </StoryGrid>
@@ -63,13 +63,13 @@ const Template = ({ linkContainerName }) => {
 
 export const Typography = Template.bind({})
 Typography.args = {
-  linkContainerName: 'Body1',
+  'Element Containing Link': 'Body1',
 }
 
 const Story = {
   title: 'Design System / Typography',
   argTypes: {
-    linkContainerName: {
+    'Element Containing Link': {
       options: Object.keys(linkContainers),
       control: {
         type: 'select',
