@@ -3,7 +3,7 @@ import { Window as WindowUI } from '../components/ui/Window'
 import StoryGrid from './StoryGrid'
 
 const LongContent = styled.div`
-  height: 800px;
+  height: 900px;
 `
 
 export const Window = ({ title, scrollbars }) => (

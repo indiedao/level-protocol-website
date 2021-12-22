@@ -94,9 +94,8 @@ const Content = styled.div`
   }
 
   ::-webkit-scrollbar-track-piece {
-    background-color: ${props => props.theme.colors.vibrantCream};
-    background-image: url('/images/scrollbar-pattern.png');
-    background-repeat: repeat;
+    background: ${props => props.theme.colors.vibrantCream}
+      ${props => props.theme.halftones.md};
   }
 
   ::-webkit-scrollbar-thumb {
