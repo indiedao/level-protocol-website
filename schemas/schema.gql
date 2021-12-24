@@ -1,8 +1,14 @@
-type ecosystems {
-  id: String!
+type communities {
+  name: String!
+  address: String!
   cid: String!
+  members: {
+    username: String!
+    address: String!
+    ens: String!
+  }
 }
 
 type Query {
-  allEcosystems: [ecosystems!]
+  allCommunities: [communities!]
 }

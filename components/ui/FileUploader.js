@@ -15,6 +15,7 @@ const FileUploader = ({
   handleOnError,
   handleSubmit,
   handleOnRemoveFile,
+  handleRemoveFile,
   handleOpenDialog,
 }) => (
   <>

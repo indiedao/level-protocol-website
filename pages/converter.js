@@ -3,13 +3,11 @@ import styled from 'styled-components'
 import Head from 'next/head'
 
 import { mapCoordinapeData } from '../util/coordinape'
-import { getEcosystems } from '../util/fauna'
-import { H2, H6, Body1 } from '../components/ui/Typography'
+import { H2 } from '../components/ui/Typography'
 import FileUploader from '../components/ui/FileUploader'
 import Web3Layout from '../components/layouts/Web3Layout'
-import { entropyToMnemonic } from '@ethersproject/hdnode'
 
-const Dashboard = ({ communities }) => {
+const Converter = ({ communities }) => {
   const [csvData, setCsvData] = useState([])
   const buttonRef = useRef()
 
@@ -37,23 +35,15 @@ const Dashboard = ({ communities }) => {
   }
 
   const handleRemoveFile = e => {
-    if (buttonRef.current) {
+    if (buttonRef.current && csvData) {
       buttonRef.current.removeFile(e)
+      setCsvData(null)
     }
   }
 
   const handleSubmit = async () => {
     console.log('csvData', csvData)
-    const res = await fetch('/api/harness', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(csvData),
-    })
-    handleRemoveFile()
-    console.log('data uploaded', res.json())
+    //handleRemoveFile()
   }
 
   return (
@@ -65,16 +55,18 @@ const Dashboard = ({ communities }) => {
       <main>
         <Web3Layout>
           <Layout>
-            <H2>Dashboard</H2>
+            <H2>Upload Coordinape Data</H2>
             <FileUploader
               title={'Upload your Coordinape Data File'}
               buttonRef={buttonRef}
               handleOnFileLoad={handleOnFileLoad}
               handleOnError={handleOnError}
               handleSubmit={handleSubmit}
+              handleRemoveFile={handleRemoveFile}
               handleOnRemoveFile={handleOnRemoveFile}
               handleOpenDialog={handleOpenDialog}
             />
+            {csvData && <p>{JSON.stringify(csvData)}</p>}
           </Layout>
         </Web3Layout>
       </main>
@@ -91,19 +83,4 @@ const Layout = styled.div`
   padding-top: 180px;
 `
 
-const LinkLayout = styled.div`
-  display: flex;
-  justify-content: center;
-`
-export default Dashboard
-
-export async function getServerSideProps(context) {
-  // Query all entries from Fauna
-  const entries = await getEcosystems('Ox')
-  const ecosystems = entries.map(entry => entry.data)
-
-  // Pass entry data to the page via props
-  return {
-    props: { ecosystems },
-  }
-}
+export default Converter

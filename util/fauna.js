@@ -1,26 +1,15 @@
-import faunadb, { query as q } from 'faunadb'
+import faunadb, { query } from 'faunadb'
 
-export const graphQLClient = new faunadb.Client({
+export const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET,
-  domain: 'db.us.fauna.com',
 })
 
-export const getEcosystems = async address => {
-  const query = await graphQLClient.query(
-    q.Map(
-      q.Paginate(q.Documents(q.Collection('ecosystems'))),
-      q.Lambda(ecosystem => q.Get(ecosystem)),
-    ),
-  )
+export const getCommunities = async name => {
+  const q = query.Paginate(query.Match(query.Ref('indexes/allCommunities')))
+  const response = await client.query(q)
+  const refs = response.data
+  const communitiesQuery = refs.map(ref => query.Get(ref))
+  const communities = await client.query(communitiesQuery)
 
-  return query.data
-}
-
-export const createEcosystem = async ecosystem => {
-  const { name, address, cid } = ecosystem
-  await graphQLClient.query(
-    q.Create(q.Collection('ecosystems'), {
-      data: { name, address, cid },
-    }),
-  )
+  return communities
 }
