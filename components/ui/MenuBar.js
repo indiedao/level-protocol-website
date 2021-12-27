@@ -59,6 +59,13 @@ const Wrapper = styled.nav`
         margin-right: 14px;
       }
     }
+
+    .tray-item {
+      &:hover,
+      &:active {
+        filter: none;
+      }
+    }
   }
 
   ul:first-child li {
