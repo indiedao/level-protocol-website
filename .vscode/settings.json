@@ -1,6 +1,11 @@
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "eslint.format.enable": true,
+  "eslint.runtime": "/Users/$USER/.nvm/versions/node/v14.18.1/bin/node",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

@@ -7,16 +7,17 @@
     "npm": "8.1.3"
   },
   "scripts": {
-    "test": "jest",
+    "test": "npm run test:jest && npm run test:hardhat",
+    "test:jest": "jest",
+    "test:hardhat": "NODE_ENV=test npx hardhat test",
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "publish": "chromatic",
-    "lint": "next lint",
-    "lint:eslint": "eslint --ext .js --ext .jsx .",
-    "lint:eslint:fix": "eslint --fix --ext .js --ext .jsx .",
+    "lint": "eslint --ext .js --ext .jsx .",
+    "lint:fix": "eslint --fix --ext .js --ext .jsx .",
     "compile": "npx hardhat compile"
   },
   "dependencies": {

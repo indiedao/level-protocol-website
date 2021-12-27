@@ -2,7 +2,8 @@ const { expect } = require('chai')
 const { ethers } = require('hardhat')
 
 let contract
-let owner, addr1
+let owner
+let addr1
 
 describe('Skills', () => {
   beforeEach(async () => {
@@ -29,7 +30,7 @@ describe('Skills', () => {
     expect(value2).to.equal(123)
   })
 
-  it("should not allow addresses to set a skill they don't own", async () => {
+  it('should not allow addresses to set a skill they don’t own', async () => {
     // Try to set skillSet 401, skill 3:
     await expect(
       contract.setSkill(addr1.address, 401, 3, 42),
@@ -52,6 +53,7 @@ describe('Skills', () => {
 
     // Verify each value was stored in the correct skill slot:
     for (let i = 0; i < 32; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
       const result = await contract.getSkill(addr1.address, 0, i)
       expect(result).to.equal(values[i])
     }
