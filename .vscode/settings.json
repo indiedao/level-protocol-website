@@ -1,6 +1,5 @@
 {
   "eslint.format.enable": true,
-  "eslint.runtime": "/Users/$USER/.nvm/versions/node/v14.18.1/bin/node",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
