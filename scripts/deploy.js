@@ -15,10 +15,10 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contracts to deploy
-  const Level = await hre.ethers.getContractFactory('Level')
-  const level = await Level.deploy()
-  await level.deployed()
-  console.log('Level deployed to:', level.address)
+  const Lvl = await hre.ethers.getContractFactory('Lvl')
+  const lvl = await Lvl.deploy()
+  await lvl.deployed()
+  console.log('Lvl deployed to:', lvl.address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

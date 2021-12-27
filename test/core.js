@@ -1,11 +1,11 @@
-import { expect } from 'chai'
-import { ethers } from 'hardhat'
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
 let contract
 
 describe('Core', () => {
   beforeEach(async () => {
-    const Contract = await ethers.getContractFactory('Level')
+    const Contract = await ethers.getContractFactory('LvlV1')
     contract = await Contract.deploy()
     await contract.deployed()
     await ethers.getSigners()
@@ -51,18 +51,10 @@ describe('Core', () => {
     await contract.multicall(encodedCalls)
 
     // Verify each value was stored in the correct skill slot:
-    const results = []
-    for (let h = 0; h < NUMBER_OF_ACCOUNTS; h += 1) {
-      for (let i = 0; i < NUMBER_OF_SKILLSETS; i += 1) {
-        results.push(contract.skillSetValueOf(accounts[h].address, i))
-      }
-    }
-
-    await Promise.all(results)
-
-    for (let h = 0; h < NUMBER_OF_ACCOUNTS; h += 1) {
-      for (let i = 0; i < NUMBER_OF_SKILLSETS; i += 1) {
-        expect(results[h * i + i]).to.equal(calls[h].values[i])
+    for (var h = 0; h < NUMBER_OF_ACCOUNTS; h++) {
+      for (var i = 0; i < NUMBER_OF_SKILLSETS; i++) {
+        const value = await contract.skillSetValueOf(accounts[h].address, i)
+        expect(value).to.equal(calls[h].values[i])
       }
     }
   })

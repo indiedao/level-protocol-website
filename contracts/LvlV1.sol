@@ -4,9 +4,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./Skills.sol";
+import "./SkillsV1.sol";
 
-contract Level is ERC721, Skills, Multicall, Ownable {
+contract LvlV1 is ERC721, SkillsV1, Multicall, Ownable {
   using Counters for Counters.Counter;
 
   // Tracks next token ID:
@@ -18,8 +18,8 @@ contract Level is ERC721, Skills, Multicall, Ownable {
   // Mapping of token IDs by owner address:
   mapping(address => uint256) private _tokenByOwner;
 
-  constructor() ERC721("Level", "LEVEL") {
-    _baseURIExtended = "https://level.2c.io/api/token/";
+  constructor() ERC721("Lvl", "LVL") {
+    _baseURIExtended = "https://lvl.2c.io/api/token/";
   }
 
   function _baseURI() internal view override returns (string memory) {
@@ -44,7 +44,7 @@ contract Level is ERC721, Skills, Multicall, Ownable {
 
   function mint() external payable returns (uint256) {
     // Enforce one token per address:
-    require(balanceOf(msg.sender) == 0, "Address can only have one LEVEL token!");
+    require(balanceOf(msg.sender) == 0, "Address can only have one LVL token!");
 
     // Get current token ID:
     uint256 tokenId = _currentTokenId.current();

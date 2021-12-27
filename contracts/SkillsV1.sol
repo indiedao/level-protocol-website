@@ -3,14 +3,14 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Skills {
+contract SkillsV1 {
   using Counters for Counters.Counter;
 
   // Tracks next skillSet ID:
   Counters.Counter private _currentSkillSetId;
 
   // _skillSets[skillSetId][ownerAddress] => 32 byte skillSet:
-  // Each skillSet contains 32 [8bit] skill values, per $LEVEL owner address:
+  // Each skillSet contains 32 [8bit] skill values, per $LVL owner address:
   mapping(uint256 => mapping(address => uint256)) private _skillSets;
 
   // Map owner to skillSet:

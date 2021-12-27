@@ -1,12 +1,12 @@
-import { expect } from 'chai'
-import { ethers } from 'hardhat'
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
 let contract
 let addr1
 
 describe('Skills', () => {
   beforeEach(async () => {
-    const Contract = await ethers.getContractFactory('Level')
+    const Contract = await ethers.getContractFactory('LvlV1')
     contract = await Contract.deploy()
     await contract.deployed()
     const [, a1] = await ethers.getSigners()
@@ -37,15 +37,9 @@ describe('Skills', () => {
     await contract.setSkills(addr1.address, 0, skills, values)
 
     // Verify each value was stored in the correct skill slot:
-    const results = []
     for (let i = 0; i < 32; i += 1) {
-      results.push(contract.getSkill(addr1.address, 0, i))
-    }
-
-    await Promise.all(results)
-
-    for (let i = 0; i < 32; i += 1) {
-      expect(results[i]).to.equal(values[i])
+      const result = await contract.getSkill(addr1.address, 0, i)
+      expect(result).to.equal(values[i])
     }
   })
 })
