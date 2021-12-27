@@ -71,7 +71,7 @@ const Title = styled.div`
     line-height: 0;
     background-color: transparent;
 
-    &:hover {
+    &:hover:enabled {
       opacity: 0.8;
       cursor: pointer;
     }
