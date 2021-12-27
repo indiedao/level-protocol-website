@@ -36,14 +36,15 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   display: flex;
+  user-select: none;
   justify-content: space-between;
   align-items: center;
-  font-family: ChicagoFLF;
+  font-family: ChicagoFLFRegular;
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
-  line-height: 41px;
-  padding: 13px 20px;
+  height: 6.6rem;
+  padding: 0 20px;
   background-color: ${props => props.theme.colors.vibrantCream};
   border-radius: 16px 16px 0 0;
   color: ${props => props.theme.colors.black};
@@ -52,6 +53,14 @@ const Title = styled.div`
   div {
     display: flex;
     align-items: center;
+  }
+
+  .title-content {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0 13px;
   }
 
   button {
@@ -121,7 +130,7 @@ const Content = styled.div`
         `}
 `
 
-export const Window = ({
+export const LevelWindow = ({
   children,
   title,
   handleClose,
@@ -164,7 +173,9 @@ export const Window = ({
                 <CloseIcon />
               </button>
             </div>
-            <div>{title}</div>
+            <div className="title-content" title={title}>
+              {title}
+            </div>
             <div className="title-actions">
               <button onClick={toggleZoom} type="button">
                 <ZoomIcon />
@@ -183,7 +194,7 @@ export const Window = ({
   return null
 }
 
-Window.propTypes = {
+LevelWindow.propTypes = {
   children: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
   enableActions: PropTypes.bool,
@@ -191,7 +202,7 @@ Window.propTypes = {
   handleClose: PropTypes.func,
 }
 
-Window.defaultProps = {
+LevelWindow.defaultProps = {
   enableActions: false,
   handleClose: undefined,
   open: false,

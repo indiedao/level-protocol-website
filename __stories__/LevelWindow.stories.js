@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Window as WindowUI } from '../components/ui/Window'
+import { LevelWindow } from '../components/ui/LevelWindow'
 import StoryGrid from './StoryGrid'
 
 const LongContent = styled.div`
@@ -8,9 +8,9 @@ const LongContent = styled.div`
 
 export const Window = ({ title, scrollbars }) => (
   <StoryGrid columns={1}>
-    <WindowUI title={title} open>
+    <LevelWindow title={title} open>
       {scrollbars && <LongContent />}
-    </WindowUI>
+    </LevelWindow>
   </StoryGrid>
 )
 
