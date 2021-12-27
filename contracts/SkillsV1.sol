@@ -25,13 +25,13 @@ contract SkillsV1 {
   constructor() {}
 
   // Register a skillSet by owner:
-  function registerSkillSet(address to) public returns (uint256) {
+  function registerSkillSet(address owner) public returns (uint256) {
     // Get current skillSet ID:
     uint256 skillSetId = _currentSkillSetId.current();
     // Associate owner to skillSet:
-    _ownerBySkillSet[skillSetId] = to;
+    _ownerBySkillSet[skillSetId] = owner;
     // Associate skillSet to owner:
-    _skillSetsByOwner[to].push(skillSetId);
+    _skillSetsByOwner[owner].push(skillSetId);
     // Increment current token ID:
     _currentSkillSetId.increment();
     return skillSetId;
@@ -57,12 +57,18 @@ contract SkillsV1 {
     return _offChainURIByOwner[owner];
   }
 
+  // Only allow the owner of a skillSet to call method:
+  modifier onlySkillSetOwner(uint256 skillSet) {
+    require(msg.sender == _ownerBySkillSet[skillSet], "Auth: caller is not the owner of this skillset");
+    _;
+  }
+
   function setSkill(
     address to,
     uint256 skillSet,
     uint256 skill,
     uint256 value
-  ) public {
+  ) public onlySkillSetOwner(skillSet) {
 
     // Create inverse mask for skill offset:
     //
@@ -107,7 +113,7 @@ contract SkillsV1 {
     address to,
     uint256 skillSet,
     uint256 value
-  ) public {
+  ) public onlySkillSetOwner(skillSet) {
     _skillSets[skillSet][to] = value;
   }
 

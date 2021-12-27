@@ -18,14 +18,14 @@ describe('Skillsets', () => {
   })
 
   it('should be registerable', async () => {
-    // Register first skillset (0)
+    // Register first skillset (0):
     await contract.connect(addr1).registerSkillSet(addr1.address)
     owner = await contract.ownerBySkillSet(0)
     expect(owner).to.equal(addr1.address)
   })
 
   it('should be enumerable by owner', async () => {
-    // Register skillets (addr1 => 0,2 / addr2 => 1,3):
+    // Register skillsets (addr1 => 0,2 / addr2 => 1,3):
     await contract.connect(addr1).registerSkillSet(addr1.address)
     await contract.connect(addr2).registerSkillSet(addr2.address)
     await contract.connect(addr1).registerSkillSet(addr1.address)
@@ -39,6 +39,8 @@ describe('Skillsets', () => {
   })
 
   it('should be settable for an address', async () => {
+    // Register skillSet 0:
+    await contract.registerSkillSet(owner.address)
     // Set skillSet 0, skill 3=42, skill 13=69, skill 24=123:
     // 0x00000000000000xx00000000000000000000xx000000000000000000xx000000;
     //                 ^24(123 => 0x7b)      ^13(69 => 0x45)     ^3(42 => 0x2a)
@@ -53,11 +55,23 @@ describe('Skillsets', () => {
     expect(value24).to.equal(123)
   })
 
+  it("should not allow addresses to set a skillset they don't own", async () => {
+    // Try to set skillSet 0, skill 3=42, skill 13=69, skill 24=123:
+    const skillSet =
+      '0x000000000000007b00000000000000000000450000000000000000002a000000'
+    await expect(
+      contract.setSkillSet(addr1.address, 0, skillSet),
+    ).to.be.revertedWith('Auth: caller is not the owner of this skillset')
+  })
+
   it('should be settable for an address in bulk', async () => {
     // Create 100 random skillSet values to update:
     const skillSets = []
     const values = []
     for (let i = 0; i < 100; i += 1) {
+      // Register skillSet 0-99:
+      await contract.registerSkillSet(owner.address)
+
       skillSets[i] = i
       values[i] = `0x${[...Array(64)] // 64 nibbles => uint256
         .map(() => Math.floor(Math.random() * 16).toString(16))

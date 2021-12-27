@@ -1,7 +1,7 @@
 const { expect } = require('chai')
 const { ethers } = require('hardhat')
 
-let contract
+let owner, contract
 
 describe('Core', () => {
   beforeEach(async () => {
@@ -9,6 +9,8 @@ describe('Core', () => {
     contract = await Contract.deploy()
     await contract.deployed()
     await ethers.getSigners()
+    const [o] = await ethers.getSigners()
+    owner = o
   })
 
   it('should support multicall', async () => {
@@ -18,6 +20,11 @@ describe('Core', () => {
     const accounts = []
     const NUMBER_OF_ACCOUNTS = 100
     const NUMBER_OF_SKILLSETS = 1
+
+    for (let i = 0; i < NUMBER_OF_SKILLSETS; i += 1) {
+      // Register skillSet i:
+      await contract.registerSkillSet(owner.address)
+    }
 
     // Setup 1000 community member addresses:
     for (let h = 0; h < NUMBER_OF_ACCOUNTS; h += 1) {
