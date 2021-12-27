@@ -21,6 +21,7 @@ const Wrapper = styled.nav`
     margin: 0;
     padding: 0;
     display: flex;
+    user-select: none;
 
     li {
       display: flex;
@@ -38,7 +39,8 @@ const Wrapper = styled.nav`
     }
 
     li.brand,
-    a {
+    a,
+    .tray-item {
       display: flex;
       align-items: center;
       font-family: 'ChicagoFLFRegular';
@@ -91,16 +93,8 @@ const Toolbar = ({ children }) => {
         {children}
       </ul>
       <ul>
-        <li>
-          <Link href="/one" passHref>
-            {format(currentDate, 'h:mm a')}
-          </Link>
-        </li>
-        <li>
-          <Link href="/two" passHref>
-            {format(currentDate, 'E MMM d y')}
-          </Link>
-        </li>
+        <li className="tray-item">{format(currentDate, 'h:mm a')}</li>
+        <li className="tray-item">{format(currentDate, 'E MMM d y')}</li>
       </ul>
     </Wrapper>
   )
