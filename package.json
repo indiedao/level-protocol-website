@@ -12,6 +12,7 @@
     "compile": "npx hardhat compile"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.16",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
     "apollo-cache-inmemory": "^1.6.6",
