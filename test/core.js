@@ -1,7 +1,8 @@
 const { expect } = require('chai')
 const { ethers } = require('hardhat')
 
-let owner, contract
+let owner
+let contract
 
 describe('Core', () => {
   beforeEach(async () => {
@@ -23,6 +24,7 @@ describe('Core', () => {
 
     for (let i = 0; i < NUMBER_OF_SKILLSETS; i += 1) {
       // Register skillSet i:
+      // eslint-disable-next-line no-await-in-loop
       await contract.registerSkillSet(owner.address)
     }
 
@@ -58,8 +60,9 @@ describe('Core', () => {
     await contract.multicall(encodedCalls)
 
     // Verify each value was stored in the correct skill slot:
-    for (var h = 0; h < NUMBER_OF_ACCOUNTS; h++) {
-      for (var i = 0; i < NUMBER_OF_SKILLSETS; i++) {
+    for (let h = 0; h < NUMBER_OF_ACCOUNTS; h += 1) {
+      for (let i = 0; i < NUMBER_OF_SKILLSETS; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
         const value = await contract.skillSetValueOf(accounts[h].address, i)
         expect(value).to.equal(calls[h].values[i])
       }

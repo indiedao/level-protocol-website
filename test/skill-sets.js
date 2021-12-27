@@ -55,7 +55,7 @@ describe('Skillsets', () => {
     expect(value24).to.equal(123)
   })
 
-  it("should not allow addresses to set a skillset they don't own", async () => {
+  it('should not allow addresses to set a skillset they don’t own', async () => {
     // Try to set skillSet 0, skill 3=42, skill 13=69, skill 24=123:
     const skillSet =
       '0x000000000000007b00000000000000000000450000000000000000002a000000'
@@ -70,6 +70,7 @@ describe('Skillsets', () => {
     const values = []
     for (let i = 0; i < 100; i += 1) {
       // Register skillSet 0-99:
+      // eslint-disable-next-line no-await-in-loop
       await contract.registerSkillSet(owner.address)
 
       skillSets[i] = i
@@ -82,6 +83,7 @@ describe('Skillsets', () => {
 
     // Verify each value was stored in the correct skill slot:
     for (let i = 0; i < 32; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
       const result = await contract.skillSetValueOf(addr1.address, i)
       expect(result).to.equal(values[i])
     }
