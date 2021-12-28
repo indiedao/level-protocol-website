@@ -18,8 +18,8 @@ const Converter = ({ communities }) => {
   }
 
   const handleOnFileLoad = data => {
-    console.log('data', data)
     setCsvData(mapCoordinapeData(data))
+    console.log('csvData', csvData)
   }
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -42,8 +42,13 @@ const Converter = ({ communities }) => {
   }
 
   const handleSubmit = async () => {
-    console.log('csvData', csvData)
-    //handleRemoveFile()
+    fetch('/api/harness', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(csvData),
+    })
   }
 
   return (
