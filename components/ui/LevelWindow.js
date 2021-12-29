@@ -35,7 +35,9 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-rows: 6.6rem 1fr;
+  grid-template-columns: repeat(3, auto);
   user-select: none;
   justify-content: space-between;
   align-items: center;
@@ -43,7 +45,6 @@ const Title = styled.div`
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
-  height: 6.6rem;
   padding: 0 20px;
   background-color: ${props => props.theme.colors.vibrantCream};
   border-radius: 16px 16px 0 0;
