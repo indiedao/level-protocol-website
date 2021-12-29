@@ -82,7 +82,6 @@ export default class MyDocument extends Document {
             as="font"
             crossOrigin=""
           />
-          {/* yo mismo pegue las fuentes geneva aqui!! vvvvvvvv */}
         </Head>
         <body>
           <Main />

@@ -1,72 +1,83 @@
+import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { ChevronIcon } from './icons'
+import { LevelLogoIcon } from './icons'
 
 const Wrapper = styled.nav`
   display: flex;
   justify-content: space-between;
-  background-color: ${props => props.theme.colors.cream};
+  position: fixed;
+  width: 100%;
+  background-color: ${props => props.theme.colors.vibrantCream};
   padding: 0;
   margin: 0;
-  border-bottom: 2px solid ${props => props.theme.colors.vibrantBlack};
+  box-shadow: 0 2px 0 ${props => props.theme.colors.black};
 
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
+    user-select: none;
 
     li {
       display: flex;
       &:hover {
         filter: brightness(95%);
-        background-color: ${props => props.theme.colors.cream};
+        background-color: ${props => props.theme.colors.vibrantCream};
       }
 
       &:active {
         filter: contrast(115%);
-        background-color: ${props => props.theme.colors.cream};
+        background-color: ${props => props.theme.colors.vibrantCream};
       }
-
-      padding: 4px 12px;
+      padding: 0;
+      margin: 0;
     }
 
-    a {
+    li.brand,
+    a,
+    .tray-item {
       display: flex;
       align-items: center;
       font-family: ${props => props.theme.fontStacks.chicago};
       font-weight: 400;
       font-style: normal;
-      font-size: 16px;
-      line-height: 26px;
+      font-size: 20px;
+      line-height: 20px;
       text-decoration: none;
       border: none;
+      padding: 16px;
+      margin: 0;
     }
 
-    li.brand a {
+    li.brand {
       svg:first-child {
-        margin-right: 12px;
+        margin-right: 14px;
       }
+    }
 
-      svg:last-child {
-        margin-left: 8px;
+    .tray-item {
+      &:hover,
+      &:active {
+        filter: none;
       }
     }
   }
 
   ul:first-child li {
-    border-right: 1px solid ${props => props.theme.colors.vibrantBlack};
+    border-right: 1px solid ${props => props.theme.colors.mutedBlack};
   }
 
   ul:last-child li {
-    border-left: 1px solid ${props => props.theme.colors.vibrantBlack};
+    border-left: 1px solid ${props => props.theme.colors.mutedBlack};
   }
 `
 
-const Toolbar = ({ brand, children }) => {
+const Toolbar = ({ children }) => {
   const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
@@ -81,27 +92,23 @@ const Toolbar = ({ brand, children }) => {
         <li className="brand">
           <Link href="/" passHref>
             <>
-              {brand}
-              <ChevronIcon />
+              <LevelLogoIcon />
+              Level Protocol
             </>
           </Link>
         </li>
         {children}
       </ul>
       <ul>
-        <li>
-          <Link href="/one" passHref>
-            {format(currentDate, 'h:mm a')}
-          </Link>
-        </li>
-        <li>
-          <Link href="/two" passHref>
-            {format(currentDate, 'E MMM d y')}
-          </Link>
-        </li>
+        <li className="tray-item">{format(currentDate, 'h:mm a')}</li>
+        <li className="tray-item">{format(currentDate, 'E MMM d y')}</li>
       </ul>
     </Wrapper>
   )
+}
+
+Toolbar.propTypes = {
+  children: PropTypes.element.isRequired,
 }
 
 export default Toolbar
