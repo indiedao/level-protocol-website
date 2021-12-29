@@ -41,11 +41,7 @@ const Title = styled.div`
   user-select: none;
   justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD:components/ui/Dialog.js
   font-family: ${props => props.theme.fontStacks.chicago};
-=======
-  font-family: ChicagoFLFRegular;
->>>>>>> main:components/ui/LevelWindow.js
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
@@ -99,12 +95,7 @@ const Content = styled.div`
   background-color: ${props => props.theme.colors.vibrantCream};
   overflow: auto;
   font-size: 24px;
-<<<<<<< HEAD:components/ui/Dialog.js
   font-family: ${props => props.theme.fontStacks.geneva};
-=======
-  font-family: 'Geneva', serif;
-  border-radius: 0 0 16px 16px;
->>>>>>> main:components/ui/LevelWindow.js
   font-weight: 400;
 
   ::-webkit-scrollbar {
