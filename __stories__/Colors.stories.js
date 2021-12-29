@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import StoryGrid from './StoryGrid'
@@ -84,7 +83,7 @@ const HalftoneBlock = ({ backgroundColor, halftoneName }) => (
   </Color>
 )
 
-const Template = ({ halftoneBackgroundColor }) => (
+const Template = ({ 'Halftone Background Color': halftoneBackgroundColor }) => (
   <>
     <StoryGrid columns={5} columnWidth="100px">
       <SectionTitle>True</SectionTitle>
@@ -119,13 +118,13 @@ const Template = ({ halftoneBackgroundColor }) => (
 
 export const Colors = Template.bind({})
 Colors.args = {
-  halftoneBackgroundColor: 'white',
+  'Halftone Background Color': 'white',
 }
 
 const Story = {
   title: 'Design System / Colors',
   argTypes: {
-    halftoneBackgroundColor: {
+    'Halftone Background Color': {
       options: [
         ...trueColors,
         ...vibrantColors,
