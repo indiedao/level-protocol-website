@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
 
@@ -26,7 +27,7 @@ const Wrapper = styled.div`
         `}
   display: flex;
   flex-direction: column;
-
+  background-color: ${props => props.theme.colors.vibrantCream};
   border-radius: 16px;
   color: ${props => props.theme.colors.black};
   border: 2px solid ${props => props.theme.colors.vibrantBlack};
@@ -34,27 +35,46 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-rows: 6.6rem 1fr;
+  grid-template-columns: repeat(3, auto);
+  user-select: none;
   justify-content: space-between;
   align-items: center;
-  font-family: ChicagoFLF;
+  font-family: ChicagoFLFRegular;
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
-  line-height: 41px;
-  padding: 16px;
+  padding: 0 20px;
   background-color: ${props => props.theme.colors.vibrantCream};
   border-radius: 16px 16px 0 0;
   color: ${props => props.theme.colors.black};
   border-bottom: 2px solid ${props => props.theme.colors.vibrantBlack};
 
-  a {
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  .title-content {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0 13px;
+  }
+
+  button {
+    padding: 0;
+    margin: 0;
     border: none;
     text-decoration: none;
     line-height: 0;
+    background-color: transparent;
 
-    &:hover {
+    &:hover:enabled {
       opacity: 0.8;
+      cursor: pointer;
     }
   }
 
@@ -65,15 +85,18 @@ const Title = styled.div`
 
   .title-actions {
     display: flex;
+    gap: 16px;
     justify-content: space-arround;
     align-items: center;
   }
 `
 
 const Content = styled.div`
+  background-color: ${props => props.theme.colors.vibrantCream};
   overflow: auto;
   font-size: 24px;
   font-family: 'Geneva', serif;
+  border-radius: 0 0 16px 16px;
   font-weight: 400;
 
   ::-webkit-scrollbar {
@@ -81,11 +104,20 @@ const Content = styled.div`
   }
 
   ::-webkit-scrollbar-track-piece {
-    background-color: ${props => props.theme.colors.cream};
+    background: ${props => props.theme.colors.vibrantCream}
+      ${props => props.theme.halftones.md};
   }
 
   ::-webkit-scrollbar-thumb {
     background: ${props => props.theme.colors.vibrantBlack};
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: ${props => props.theme.colors.mutedBlack};
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background-color: ${props => props.theme.colors.mutedBlack};
   }
 
   ${props =>
@@ -99,12 +131,20 @@ const Content = styled.div`
         `}
 `
 
-export const Dialog = ({ children, title, handleClose, open = false }) => {
+export const LevelWindow = ({
+  children,
+  title,
+  handleClose,
+  enableActions = false,
+  open = false,
+}) => {
   const [show, setShow] = useState(open)
   const [zoom, setZoom] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
 
-  const closeDialog = () => {
+  const closeWindow = () => {
+    if (!enableActions) return
+
     setShow(false)
 
     if (handleClose) {
@@ -113,10 +153,14 @@ export const Dialog = ({ children, title, handleClose, open = false }) => {
   }
 
   const toggleCollapsed = () => {
+    if (!enableActions) return
+
     setCollapsed(!collapsed)
   }
 
   const toggleZoom = () => {
+    if (!enableActions) return
+
     setZoom(!zoom)
   }
 
@@ -126,11 +170,13 @@ export const Dialog = ({ children, title, handleClose, open = false }) => {
         <Wrapper zoom={zoom}>
           <Title>
             <div>
-              <button onClick={closeDialog} type="button">
+              <button onClick={closeWindow} type="button">
                 <CloseIcon />
               </button>
             </div>
-            <div>{title}</div>
+            <div className="title-content" title={title}>
+              {title}
+            </div>
             <div className="title-actions">
               <button onClick={toggleZoom} type="button">
                 <ZoomIcon />
@@ -147,4 +193,18 @@ export const Dialog = ({ children, title, handleClose, open = false }) => {
   }
 
   return null
+}
+
+LevelWindow.propTypes = {
+  children: PropTypes.element.isRequired,
+  title: PropTypes.string.isRequired,
+  enableActions: PropTypes.bool,
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
+}
+
+LevelWindow.defaultProps = {
+  enableActions: false,
+  handleClose: undefined,
+  open: false,
 }
