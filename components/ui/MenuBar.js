@@ -2,82 +2,96 @@ import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
+import { ButtonStyles, LinkStyles, StyledLinkText } from './Typography'
 import { LevelLogoIcon } from './icons'
 
-const Wrapper = styled.nav`
+const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   position: fixed;
-  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
   background-color: ${props => props.theme.colors.vibrantCream};
-  padding: 0;
-  margin: 0;
   box-shadow: 0 2px 0 ${props => props.theme.colors.black};
+`
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    user-select: none;
+const sharedMenuContainerStyles = css`
+  display: flex;
+  justify-content: center;
+  min-height: 4.8rem;
+  max-height: 4.8rem;
+`
 
-    li {
-      display: flex;
-      &:hover {
-        filter: brightness(95%);
-        background-color: ${props => props.theme.colors.vibrantCream};
-      }
+const sharedMenuItemStyles = css`
+  ${LinkStyles}
+  padding: 0 1.6rem;
+  color: ${props => props.theme.colors.mutedBlack};
+  border-right: 1px solid ${props => props.theme.colors.mutedBlack};
+  text-decoration: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  user-select: none;
 
-      &:active {
-        filter: contrast(115%);
-        background-color: ${props => props.theme.colors.vibrantCream};
-      }
-      padding: 0;
-      margin: 0;
-    }
-
-    li.brand,
-    a,
-    .tray-item {
-      display: flex;
-      align-items: center;
-      font-family: ${props => props.theme.fontStacks.chicago};
-      font-weight: 400;
-      font-style: normal;
-      font-size: 20px;
-      line-height: 20px;
-      text-decoration: none;
-      border: none;
-      padding: 16px;
-      margin: 0;
-    }
-
-    li.brand {
-      svg:first-child {
-        margin-right: 14px;
-      }
-    }
-
-    .tray-item {
-      &:hover,
-      &:active {
-        filter: none;
-      }
-    }
+  &:hover {
+    filter: brightness(95%);
+    background-color: ${props => props.theme.colors.vibrantCream};
   }
 
-  ul:first-child li {
-    border-right: 1px solid ${props => props.theme.colors.mutedBlack};
-  }
-
-  ul:last-child li {
-    border-left: 1px solid ${props => props.theme.colors.mutedBlack};
+  &:active {
+    filter: contrast(115%);
+    background-color: ${props => props.theme.colors.vibrantCream};
   }
 `
 
-const Toolbar = ({ children }) => {
+const Menu = styled.nav`
+  ${sharedMenuContainerStyles}
+  font-size: 2rem;
+  line-height: 2rem;
+
+  a {
+    ${sharedMenuItemStyles}
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
+const Brand = styled.a`
+  ${sharedMenuItemStyles}
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  grid-gap: 1.24rem;
+
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    object-fit: contain;
+  }
+`
+
+const Tray = styled.ul`
+  ${sharedMenuContainerStyles}
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+`
+
+const TrayItem = styled.li`
+  ${ButtonStyles}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.6rem;
+  user-select: none;
+  cursor: default;
+  border-left: 1px solid ${props => props.theme.colors.mutedBlack};
+`
+
+const MenuBar = ({ children }) => {
   const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
@@ -88,27 +102,27 @@ const Toolbar = ({ children }) => {
 
   return (
     <Wrapper>
-      <ul>
-        <li className="brand">
-          <Link href="/" passHref>
+      <Menu>
+        <Link href="/" passHref>
+          <Brand>
             <>
               <LevelLogoIcon />
-              Level Protocol
+              <StyledLinkText color="mutedBlack">Level Protocol</StyledLinkText>
             </>
-          </Link>
-        </li>
+          </Brand>
+        </Link>
         {children}
-      </ul>
-      <ul>
-        <li className="tray-item">{format(currentDate, 'h:mm a')}</li>
-        <li className="tray-item">{format(currentDate, 'E MMM d y')}</li>
-      </ul>
+      </Menu>
+      <Tray>
+        <TrayItem>{format(currentDate, 'h:mm a')}</TrayItem>
+        <TrayItem>{format(currentDate, 'E MMM d y')}</TrayItem>
+      </Tray>
     </Wrapper>
   )
 }
 
-Toolbar.propTypes = {
-  children: PropTypes.element.isRequired,
+MenuBar.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
-export default Toolbar
+export default MenuBar

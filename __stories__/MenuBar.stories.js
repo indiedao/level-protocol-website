@@ -5,14 +5,8 @@ import MenubarUI from '../components/ui/MenuBar'
 
 const Template = () => (
   <MenubarUI>
-    <>
-      <li>
-        <Link href="/about">About</Link>
-      </li>
-      <li>
-        <Link href="/join">Join</Link>
-      </li>
-    </>
+    <Link href="/about">About</Link>
+    <Link href="/join">Join</Link>
   </MenubarUI>
 )
 

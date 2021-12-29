@@ -80,14 +80,22 @@ const sharedBodyStyles = css`
   `}
 `
 
-export const Body1 = styled.p`
+export const Body1Styles = css`
   ${sharedBodyStyles}
   font-size: 2rem;
 `
 
-export const Body2 = styled.p`
+export const Body1 = styled.p`
+  ${Body1Styles}
+`
+
+export const Body2Styles = css`
   ${sharedBodyStyles}
   font-size: 1.8rem;
+`
+
+export const Body2 = styled.p`
+  ${Body2Styles}
 `
 
 const sharedActionStyles = css`
@@ -102,21 +110,29 @@ const sharedActionStyles = css`
   `}
 `
 
-export const StyledButtonText = styled.button`
+export const ButtonStyles = css`
   ${sharedActionStyles}
   font-size: 2rem;
   line-height: 2rem;
   text-align: center;
 `
 
+export const StyledButtonText = styled.button`
+  ${ButtonStyles}
+`
+
 StyledButtonText.propTypes = { ...propTypesColor }
 StyledButtonText.defaultProps = { color: 'trueWhite' }
 
-export const StyledLinkText = styled.span`
+export const LinkStyles = css`
   ${sharedActionStyles}
   font-size: inherit;
   line-height: inherit;
   display: inline-block;
+`
+
+export const StyledLinkText = styled.span`
+  ${LinkStyles}
 `
 
 StyledLinkText.propTypes = { ...propTypesColor }
