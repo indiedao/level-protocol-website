@@ -110,7 +110,7 @@ const sharedActionStyles = css`
   `}
 `
 
-export const ButtonStyles = css`
+export const ButtonTextStyles = css`
   ${sharedActionStyles}
   font-size: 2rem;
   line-height: 2rem;
@@ -118,7 +118,7 @@ export const ButtonStyles = css`
 `
 
 export const StyledButtonText = styled.button`
-  ${ButtonStyles}
+  ${ButtonTextStyles}
 `
 
 StyledButtonText.propTypes = { ...propTypesColor }

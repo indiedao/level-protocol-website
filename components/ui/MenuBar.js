@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
-import { ButtonStyles, LinkStyles, StyledLinkText } from './Typography'
+import { ButtonTextStyles, LinkStyles, StyledLinkText } from './Typography'
 import { LevelLogoIcon } from './icons'
 
 const Wrapper = styled.div`
@@ -81,7 +81,7 @@ const Tray = styled.ul`
 `
 
 const TrayItem = styled.li`
-  ${ButtonStyles}
+  ${ButtonTextStyles}
   display: flex;
   justify-content: center;
   align-items: center;
