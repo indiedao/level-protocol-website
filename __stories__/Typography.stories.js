@@ -45,9 +45,7 @@ const Template = ({ 'Element Containing Link': linkContainerName }) => {
         <Body2>Body 2</Body2>
       </div>
       <div>
-        <Button>
-          Button Text
-        </Button>
+        <Button>Button Text</Button>
       </div>
       <LinkContainer>
         <Link href="/#" passHref>

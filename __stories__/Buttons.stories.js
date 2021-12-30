@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Button from '../components/ui/Buttons'
 import { Body1, H3 } from '../components/ui/Typography'
@@ -16,26 +16,18 @@ const Template = ({ 'Button Text': children }) => (
   <StoryGrid columns={2}>
     <H3>Functional</H3>
     <H3>Static States</H3>
-    <Button>
-      {children}
-    </Button>
+    <Button>{children}</Button>
     <StoryGrid style={{ padding: 0 }}>
       <StateExample>
-        <Button stateOverride="resting">
-          {children}
-        </Button>
+        <Button stateOverride="resting">{children}</Button>
         <Body1>Resting</Body1>
       </StateExample>
       <StateExample>
-        <Button stateOverride="hover">
-          {children}
-        </Button>
+        <Button stateOverride="hover">{children}</Button>
         <Body1>Hover</Body1>
       </StateExample>
       <StateExample>
-        <Button stateOverride="active">
-          {children}
-        </Button>
+        <Button stateOverride="active">{children}</Button>
         <Body1>Active</Body1>
       </StateExample>
     </StoryGrid>
