@@ -1,103 +1,128 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
+
+import { H2 } from './Typography'
 import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
 
 const Container = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+  align-self: start;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6.6rem 1fr;
+  min-height: calc(6.6rem + 0.4rem * 2);
+  max-height: ${({ maxHeight }) => maxHeight};
+  background-color: ${props => props.theme.colors.vibrantCream};
+  border: 0.4rem solid ${props => props.theme.colors.vibrantBlack};
+  border-radius: 1.6rem;
+  box-shadow: 1.6rem 1.6rem 0 ${props => props.theme.colors.vibrantBlack};
+  transition: width 233ms ease, max-width 233ms ease;
+  transition-origin: center top;
 
-const Wrapper = styled.div`
-  ${props =>
-    props.zoom
+  ${({ isZoomed, maxWidth, theme: { bp } }) =>
+    isZoomed
       ? css`
-          width: 100%;
-          height: 100vh;
+          width: ${maxWidth};
+          max-width: ${maxWidth};
         `
       : css`
-          width: 800px;
-          height: 80%;
+          ${bp.sm(' width: 80vw; max-width: 60rem; ')}
+          ${bp.md(' width: 60rem; max-width: 120rem; ')}
+          ${bp.lg(' width: 120rem; max-width: 156rem; ')}
+          ${bp.xl(' width: 144rem; max-width: 80vw; ')}
         `}
-  display: flex;
-  flex-direction: column;
-  background-color: ${props => props.theme.colors.vibrantCream};
-  border-radius: 16px;
-  color: ${props => props.theme.colors.black};
-  border: 2px solid ${props => props.theme.colors.vibrantBlack};
-  box-shadow: 16px 16px 0px ${props => props.theme.colors.vibrantBlack};
 `
 
-const Title = styled.div`
+const TitleBar = styled.div`
   display: grid;
-  grid-template-rows: 6.6rem 1fr;
-  grid-template-columns: repeat(3, auto);
-  user-select: none;
-  justify-content: space-between;
+  grid-template-columns: min-content 1fr min-content min-content;
+  justify-items: center;
   align-items: center;
-  font-family: ChicagoFLFRegular;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 32px;
-  padding: 0 20px;
-  background-color: ${props => props.theme.colors.vibrantCream};
-  border-radius: 16px 16px 0 0;
-  color: ${props => props.theme.colors.black};
-  border-bottom: 2px solid ${props => props.theme.colors.vibrantBlack};
+  grid-gap: 1.6rem;
+  padding: 0 1.8rem;
+  color: ${props => props.theme.colors.mutedBlack};
+  border-top-right-radius: 1.05rem;
+  border-top-left-radius: 1.05rem;
+  user-select: none;
+`
 
-  div {
-    display: flex;
-    align-items: center;
-  }
+const Title = styled(H2)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
 
-  .title-content {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin: 0 13px;
-  }
-
-  button {
-    padding: 0;
-    margin: 0;
-    border: none;
-    text-decoration: none;
-    line-height: 0;
-    background-color: transparent;
-
-    &:hover:enabled {
-      opacity: 0.8;
-      cursor: pointer;
-    }
-  }
+const TitleBarButton = styled.button`
+  padding: 0;
+  height: 4rem;
+  width: 4rem;
+  border: none;
+  background: none;
 
   svg {
-    height: 40px;
-    width: 40px;
+    width: inherit;
+    height: inherit;
+    object-fit: contain;
   }
 
-  .title-actions {
-    display: flex;
-    gap: 16px;
-    justify-content: space-arround;
-    align-items: center;
+  &:hover:not(:disabled) {
+    filter: brightness(95%);
+    background-color: ${props => props.theme.colors.vibrantCream};
   }
+
+  &:active:not(:disabled) {
+    filter: contrast(115%);
+    background-color: ${props => props.theme.colors.vibrantCream};
+  }
+`
+
+const sharedScrollButtonStyles = css`
+  display: block;
+  width: inherit;
+  height: 4.4rem;
+  background-color: ${props => props.theme.colors.vibrantBlack};
+  background-repeat: no-repeat, no-repeat;
+`
+
+const sharedScrollButtonHoverStyles = css`
+  background-color: ${props => props.theme.colors.mutedBlack};
+`
+
+const sharedStartScrollButtonStyles = css`
+  ${sharedScrollButtonStyles}
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAIAQAAAABGt0WaAAAAEUlEQVR4AWMIhQOGVXBAuSgAkMYn2b1UVnQAAAAASUVORK5CYII='), url('data:image/svg+xml;utf8,<svg fill="none" height="14" viewBox="0 0 19 14" width="19" xmlns="http://www.w3.org/2000/svg"><path d="m10.7163 1.53979 6.9155 9.58241c.716.992.0071 2.3778-1.2163 2.3778h-13.831c-1.22341 0-1.932276-1.3858-1.21633-2.3778l6.9155-9.58241c.59871-.829585 1.83393-.829585 2.43263 0z" fill="%23efecd3" stroke="%23efecd3"/></svg>');
+  background-position: left bottom, center calc(50% - 0.4rem);
+  background-size: 4rem 0.4rem, 1.9rem 1.4rem;
+`
+
+const sharedEndScrollButtonStyles = css`
+  ${sharedScrollButtonStyles}
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAIAQAAAABGt0WaAAAAEUlEQVR4AWMIhQOGVXBAuSgAkMYn2b1UVnQAAAAASUVORK5CYII='), url('data:image/svg+xml;utf8,<svg fill="none" height="14" viewBox="0 0 19 14" width="19" xmlns="http://www.w3.org/2000/svg"><path d="m10.7163 12.4602c-.5987.8296-1.83392.8296-2.43263 0l-6.9155-9.58239c-.715943-.99205-.00708-2.377812 1.21633-2.377812l13.831.000002c1.2234 0 1.9323 1.38576 1.2163 2.37781z" fill="%23efecd3" stroke="%23efecd3"/></svg>');
+  background-position: left top, center calc(50% + 0.4rem);
+  background-size: 4rem 0.4rem, 1.9rem 1.4rem;
 `
 
 const Content = styled.div`
-  background-color: ${props => props.theme.colors.vibrantCream};
-  overflow: auto;
-  font-size: 24px;
-  font-family: 'Geneva', serif;
-  border-radius: 0 0 16px 16px;
-  font-weight: 400;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-top-style: solid;
+  border-top-color: ${props => props.theme.colors.vibrantBlack};
+  border-bottom-left-radius: 1.05rem;
+  transition-origin: center top;
+
+  ${({ isCollapsed, maxHeight }) =>
+    isCollapsed
+      ? css`
+          max-height: 0;
+          border-top-width: 0;
+          transition: max-height 233ms ease, border-top-width 34ms ease 233ms;
+        `
+      : css`
+          max-height: calc(${maxHeight} - 6.6rem - 0.4rem * 2);
+          border-top-width: 0.4rem;
+          transition: max-height 233ms ease 34ms, border-top-width 34ms ease;
+        `}
 
   ::-webkit-scrollbar {
     width: 40px;
@@ -120,74 +145,72 @@ const Content = styled.div`
     background-color: ${props => props.theme.colors.mutedBlack};
   }
 
-  ${props =>
-    props.collapsed
-      ? css`
-          height: 5px;
-          display: hidden;
-        `
-      : css`
-          padding: 16px;
-        `}
+  ::-webkit-scrollbar-button:vertical:start:decrement {
+    ${sharedStartScrollButtonStyles}
+  }
+
+  ::-webkit-scrollbar-button:vertical:start:decrement:hover {
+    ${sharedScrollButtonHoverStyles}
+  }
+
+  ::-webkit-scrollbar-button:vertical:end:increment {
+    ${sharedEndScrollButtonStyles}
+  }
+
+  ::-webkit-scrollbar-button:vertical:end:increment:hover {
+    ${sharedScrollButtonHoverStyles}
+  }
 `
 
-export const LevelWindow = ({
+const LevelWindow = ({
   children,
-  title,
+  collapsed,
+  enableActions,
   handleClose,
-  enableActions = false,
-  open = false,
+  maxHeight,
+  maxWidth,
+  title,
+  zoomed,
 }) => {
-  const [show, setShow] = useState(open)
-  const [zoom, setZoom] = useState(false)
-  const [collapsed, setCollapsed] = useState(false)
+  const [isVisible, setVisible] = useState(true)
+  const [isZoomed, setZoomed] = useState(zoomed)
+  const [isCollapsed, setCollapsed] = useState(collapsed)
 
   const closeWindow = () => {
-    if (!enableActions) return
-
-    setShow(false)
-
-    if (handleClose) {
-      handleClose()
-    }
+    setVisible(!isVisible)
+    handleClose()
   }
 
-  const toggleCollapsed = () => {
-    if (!enableActions) return
-
-    setCollapsed(!collapsed)
-  }
-
-  const toggleZoom = () => {
-    if (!enableActions) return
-
-    setZoom(!zoom)
-  }
-
-  if (show) {
+  if (isVisible) {
     return (
-      <Container>
-        <Wrapper zoom={zoom}>
-          <Title>
-            <div>
-              <button onClick={closeWindow} type="button">
-                <CloseIcon />
-              </button>
-            </div>
-            <div className="title-content" title={title}>
-              {title}
-            </div>
-            <div className="title-actions">
-              <button onClick={toggleZoom} type="button">
-                <ZoomIcon />
-              </button>
-              <button onClick={toggleCollapsed} type="button">
-                <CollapseIcon />
-              </button>
-            </div>
-          </Title>
-          <Content collapsed={collapsed}>{children}</Content>
-        </Wrapper>
+      <Container isZoomed={isZoomed} maxHeight={maxHeight} maxWidth={maxWidth}>
+        <TitleBar>
+          <TitleBarButton
+            onClick={closeWindow}
+            type="button"
+            disabled={!enableActions}
+          >
+            <CloseIcon />
+          </TitleBarButton>
+          <Title>{title}</Title>
+          <TitleBarButton
+            onClick={() => setZoomed(!isZoomed)}
+            type="button"
+            disabled={!enableActions}
+          >
+            <ZoomIcon />
+          </TitleBarButton>
+          <TitleBarButton
+            onClick={() => setCollapsed(!isCollapsed)}
+            type="button"
+            disabled={!enableActions}
+          >
+            <CollapseIcon />
+          </TitleBarButton>
+        </TitleBar>
+        <Content isCollapsed={isCollapsed} maxHeight={maxHeight}>
+          {children}
+        </Content>
       </Container>
     )
   }
@@ -197,14 +220,22 @@ export const LevelWindow = ({
 
 LevelWindow.propTypes = {
   children: PropTypes.element.isRequired,
-  title: PropTypes.string.isRequired,
+  collapsed: PropTypes.bool,
   enableActions: PropTypes.bool,
-  open: PropTypes.bool,
   handleClose: PropTypes.func,
+  maxHeight: PropTypes.string,
+  maxWidth: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  zoomed: PropTypes.bool,
 }
 
 LevelWindow.defaultProps = {
-  enableActions: false,
-  handleClose: undefined,
-  open: false,
+  collapsed: false,
+  enableActions: true,
+  handleClose: () => null,
+  maxHeight: '80vh',
+  maxWidth: '80vw',
+  zoomed: false,
 }
+
+export default LevelWindow

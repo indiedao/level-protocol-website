@@ -44,6 +44,11 @@ const theme = {
     md: `left top/0.8rem ${offsetDotSvgUrl}`,
     lg: `left top/1rem ${offsetRoundedDotSvgUrl}`,
   },
+
+  fontStacks: {
+    chicago: 'ChicagoFLFRegular, sans-serif',
+    geneva: 'Geneva, Verdana',
+  },
 }
 
 export default theme

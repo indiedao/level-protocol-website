@@ -1,26 +1,35 @@
 import styled from 'styled-components'
-import { LevelWindow } from '../components/ui/LevelWindow'
-import StoryGrid from './StoryGrid'
 
-const LongContent = styled.div`
-  height: 900px;
+import LevelWindowUI from '../components/ui/LevelWindow'
+
+const ShortContent = styled.div`
+  height: 50vh;
 `
 
-export const Window = ({ title, scrollbars }) => (
-  <StoryGrid columns={1}>
-    <LevelWindow title={title} open>
-      {scrollbars && <LongContent />}
-    </LevelWindow>
-  </StoryGrid>
+const LongContent = styled.div`
+  height: 150vh;
+`
+
+const Template = ({
+  'Buttons Enabled': enableActions,
+  'Tall Content': scrollbars,
+  Title,
+}) => (
+  <LevelWindowUI enableActions={enableActions} title={Title}>
+    {scrollbars ? <LongContent /> : <ShortContent />}
+  </LevelWindowUI>
 )
 
-Window.args = {
-  title: 'Level Protocol',
-  scrollbars: false,
+export const LevelWindow = Template.bind({})
+
+LevelWindow.args = {
+  Title: 'Level Protocol',
+  'Tall Content': false,
+  'Buttons Enabled': true,
 }
 
 const Story = {
-  title: 'Design System / Window',
+  title: 'Design System / Level Window',
   control: {
     type: 'checkbox',
   },

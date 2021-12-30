@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import { hexToRgba } from '../../util/colors'
 
 const BaseTextStyles = css`
-  font-family: 'Matter';
+  font-family: ${props => props.theme.fontStacks.geneva};
   font-weight: 600;
   font-size: 1.8rem;
   line-height: 2.4rem;
@@ -33,7 +33,7 @@ export const TextButton = styled.div`
 `
 
 export const RetroButton = styled.div`
-  font-family: 'ChicagoFLFRegular';
+  font-family: ${props => props.theme.fontStacks.chicago};
   font-weight: normal;
   font-style: normal;
   color: ${props => props.theme.colors.black};

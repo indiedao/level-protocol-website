@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
 import StoryGrid from './StoryGrid'
-import { H2 } from '../components/ui/Typography'
 import theme from '../util/theme'
 
-const SectionTitle = styled(H2)`
+const SectionTitle = styled.h2`
   grid-column: 1 / 6;
-  font-family: ChicagoFLFRegular;
+  font-family: ${props => props.theme.fontStacks.chicago};
   font-size: 6.4rem;
   line-height: 8.173rem;
   border-bottom: 2px solid black;
@@ -35,14 +34,14 @@ const Info = styled.p`
 
   &:before {
     content: '${props => props.name.replace(props.term, '')}';
-    font-family: ChicagoFLFRegular;
+    font-family: ${props => props.theme.fontStacks.chicago};
     font-size: 2.4rem;
     line-height: 3.2rem;
   }
 
   &:after {
     content: '${props => props.theme.colors[props.name]}';
-    font-family: Geneva, Verdana;
+    font-family: ${props => props.theme.fontStacks.geneva};
     font-size: 2rem;
     line-height: 2.8rem;
   }

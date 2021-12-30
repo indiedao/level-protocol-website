@@ -1,18 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-import { hexToRgba } from '../../util/colors'
-import {
-  H1Styles,
-  H2Styles,
-  H3Styles,
-  H4Styles,
-  H5Styles,
-  H6Styles,
-  PStyles,
-  AStyles,
-  PCodeStyles,
-  PreCodeStyles,
-} from './Typography'
+import { H1Styles, H2Styles, H3Styles, H4Styles, Body1 } from './Typography'
 
 const GlobalStyles = createGlobalStyle`
   html, body {
@@ -69,24 +57,14 @@ const GlobalStyles = createGlobalStyle`
   h2 { ${H2Styles} }
   h3 { ${H3Styles} }
   h4 { ${H4Styles} }
-  h5 { ${H5Styles} }
-  h6 { ${H6Styles} }
   p {
     margin: 0;
-    ${PStyles}
+    ${Body1}
   }
   li {
-    ${PStyles}
+    ${Body1}
     padding: 5px 0;
     overflow: display;
-  }
-  /* Inline code block: */
-  p > code {
-    ${PCodeStyles}
-  }
-  /* Multiline code block: */
-  pre > code {
-    ${PreCodeStyles}
   }
   a:focus,
   input:focus,
@@ -94,9 +72,6 @@ const GlobalStyles = createGlobalStyle`
   textarea:focus,
   button:focus {
     outline: none;
-  }
-  a {
-    ${AStyles}
   }
   input {
     padding: 20px;
@@ -113,16 +88,6 @@ const GlobalStyles = createGlobalStyle`
   }
   ::selection {
     background: ${props => props.theme.colors.black};
-  }
-  /* NProgress loader bar plugin: */
-  #nprogress {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    .bar {
-      background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
-      height: 4px;
-    }
   }
 `
 
