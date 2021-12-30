@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
@@ -26,10 +26,10 @@ const Container = styled.div`
           max-width: ${maxWidth};
         `
       : css`
-          ${bp.sm(` width: 80vw; max-width: 60rem; `)}
-          ${bp.md(` width: 60rem; max-width: 120rem; `)}
-          ${bp.lg(` width: 120rem; max-width: 156rem;`)}
-          ${bp.xl(` width: 144rem; max-width: 80vw; `)}
+          ${bp.sm(' width: 80vw; max-width: 60rem; ')}
+          ${bp.md(' width: 60rem; max-width: 120rem; ')}
+          ${bp.lg(' width: 120rem; max-width: 156rem; ')}
+          ${bp.xl(' width: 144rem; max-width: 80vw; ')}
         `}
 `
 
@@ -122,8 +122,7 @@ const Content = styled.div`
           max-height: calc(${maxHeight} - 6.6rem - 0.4rem * 2);
           border-top-width: 0.4rem;
           transition: max-height 233ms ease 34ms, border-top-width 34ms ease;
-        `
-  }
+        `}
 
   ::-webkit-scrollbar {
     width: 40px;
