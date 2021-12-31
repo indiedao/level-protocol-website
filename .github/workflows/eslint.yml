@@ -1,0 +1,22 @@
+# Workflow name
+name: 'Eslint'
+
+# Event for the workflow
+on: push
+
+# List of jobs
+jobs:
+  lint:
+    # Operating System
+    runs-on: ubuntu-latest
+    # Job steps
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup node from node version file
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint:eslint

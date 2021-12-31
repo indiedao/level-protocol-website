@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { hexToRgba } from '../../util/colors';
+import PropTypes from 'prop-types'
+import styled, { css } from 'styled-components'
+
+import { hexToRgba } from '../../util/colors'
 
 const BaseTextStyles = css`
-  font-family: 'Matter';
+  font-family: ${props => props.theme.fontStacks.geneva};
   font-weight: 600;
   font-size: 1.8rem;
   line-height: 2.4rem;
@@ -11,7 +12,7 @@ const BaseTextStyles = css`
 
 export const TextButton = styled.div`
   ${BaseTextStyles}
-  color: ${props => props.theme.colors.base900};
+  color: ${props => props.theme.colors.black};
   cursor: pointer;
   padding: 10px 14px;
   border-radius: 8px;
@@ -19,20 +20,20 @@ export const TextButton = styled.div`
   transition: all 300ms;
 
   &:hover {
-    background-color: ${props => props.theme.colors.base050};
+    background-color: ${props => props.theme.colors.white};
   }
 
   &:focus {
-    background-color: ${props => props.theme.colors.base100};
+    background-color: ${props => props.theme.colors.white};
   }
 
   &:active {
-    background-color: ${props => props.theme.colors.base100};
+    background-color: ${props => props.theme.colors.white};
   }
 `
 
 export const RetroButton = styled.div`
-  font-family: 'ChicagoFLFRegular';
+  font-family: ${props => props.theme.fontStacks.chicago};
   font-weight: normal;
   font-style: normal;
   color: ${props => props.theme.colors.black};
@@ -44,7 +45,9 @@ export const RetroButton = styled.div`
   font-size: 20px;
   line-height: 20px;
   border: 2px solid ${props => props.theme.black};
-  box-shadow: inset -2px -2px 0px ${props => hexToRgba(props.theme.colors.black, 0.5)}, 6px 6px 0px ${props => props.theme.colors.vibrantBlack};
+  box-shadow: inset -2px -2px 0px
+      ${props => hexToRgba(props.theme.colors.black, 0.5)},
+    6px 6px 0px ${props => props.theme.colors.vibrantBlack};
 
   transition: all 100ms;
 
@@ -58,14 +61,16 @@ export const RetroButton = styled.div`
   }
 
   &:active {
-    box-shadow: inset -2px -2px 0px ${props => hexToRgba(props.theme.colors.black, 0.5)}, 2px 2px 0px ${props => props.theme.colors.vibrantBlack};
+    box-shadow: inset -2px -2px 0px
+        ${props => hexToRgba(props.theme.colors.black, 0.5)},
+      2px 2px 0px ${props => props.theme.colors.vibrantBlack};
   }
-`;
+`
 
 export const Button = styled.div`
   ${BaseTextStyles}
   background-color: white;
-  color: ${props => props.theme.colors.base900};
+  color: ${props => props.theme.colors.black};
   cursor: pointer;
   padding: 12px 28px;
   width: 100%;
@@ -77,15 +82,15 @@ export const Button = styled.div`
   transition: all 300ms;
 
   &:hover {
-    background-color: ${props => props.theme.colors.base400};
-    border-color: ${props => props.theme.colors.base100};
+    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
+    border-color: ${props => props.theme.colors.white};
   }
   &:focus {
-    background-color: ${props => props.theme.colors.base300};
+    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
   }
 
   &:active {
-    background-color: ${props => props.theme.colors.base200};
+    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
   }
 
   ${props =>
@@ -95,12 +100,10 @@ export const Button = styled.div`
       &:hover,
       &:focus,
       &:active {
-        background-color: ${props => props.theme.colors.neutral100};
+        background-color: ${props.theme.colors.white};
       }
       box-shadow: none;
     `}
 `
 Button.propTypes = { isDisabled: PropTypes.bool }
 Button.defaultProps = { isDisabled: false }
-
-export default {}

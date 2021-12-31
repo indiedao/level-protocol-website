@@ -1,4 +1,6 @@
-export default (req, res) => {
+const versionResponse = (req, res) => {
   res.statusCode = 200
-  res.json({ COMMIT_HASH: process.env.VERCEL_GITHUB_COMMIT_SHA || "LOCAL" })
+  res.json({ COMMIT_HASH: process.env.VERCEL_GITHUB_COMMIT_SHA || 'LOCAL' })
 }
+
+export default versionResponse

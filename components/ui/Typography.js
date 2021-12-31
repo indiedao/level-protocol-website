@@ -1,214 +1,139 @@
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
+
 import theme from '../../util/theme'
 
 const propTypesColor = { color: PropTypes.oneOf(Object.keys(theme.colors)) }
 
-export const H1Styles = css`
+const sharedHeaderStyles = css`
   ${props => css`
-    font-family: 'Montaga', serif;
-    font-size: 12rem;
-    line-height: 12rem;
     margin: 0;
-    color: ${props.theme.colors[props.color || 'base900']};
-
-    ${props.theme.bp.sm`
-      font-size: 8rem;
-      line-height: 8rem;
-    `}
+    color: ${props.theme.colors[props.color]};
+    font-family: ${props.theme.fontStacks.chicago};
+    font-weight: 400;
   `}
 `
+
+export const H1Styles = css`
+  ${sharedHeaderStyles}
+  font-size: 4.8rem;
+  line-height: 5.6rem;
+`
+
 export const H1 = styled.h1`
   ${H1Styles};
 `
 H1.propTypes = { ...propTypesColor }
-H1.defaultProps = { color: 'base900' }
+H1.defaultProps = { color: 'trueBlack' }
 
 export const H2Styles = css`
-  font-family: 'Montaga', serif;
-  font-size: 8rem;
-  line-height: 7rem;
-  margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  ${sharedHeaderStyles}
+  font-size: 3.2rem;
+  line-height: 4rem;
 `
+
 export const H2 = styled.h2`
   ${H2Styles}
 `
 
+H2.propTypes = { ...propTypesColor }
+H2.defaultProps = { color: 'trueBlack' }
+
 export const H3Styles = css`
-  font-family: 'Montaga', serif;
-  font-size: 4.8rem;
-  line-height: 4.8rem;
-  margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  ${sharedHeaderStyles}
+  font-size: 2.4rem;
+  line-height: 3.2rem;
 `
+
 export const H3 = styled.h3`
   ${H3Styles}
 `
 
+H3.propTypes = { ...propTypesColor }
+H3.defaultProps = { color: 'trueBlack' }
+
 export const H4Styles = css`
-  font-family: 'Matter';
-  font-weight: bold;
-  font-size: 3.6rem;
-  line-height: 3.6rem;
-  margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  ${props => css`
+    margin: 0;
+    color: ${props.theme.colors[props.color]};
+    font-family: ${props.theme.fontStacks.geneva};
+    font-weight: 400;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+  `}
 `
+
 export const H4 = styled.h4`
   ${H4Styles}
 `
 
-export const H5Styles = css`
-  font-family: 'Matter';
-  font-weight: bold;
-  font-size: 2.4rem;
-  line-height: 2.4rem;
-  margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
-`
-export const H5 = styled.h5`
-  ${H5Styles}
-`
+H4.propTypes = { ...propTypesColor }
+H4.defaultProps = { color: 'trueBlack' }
 
-export const H6Styles = css`
-  font-family: 'Matter';
-  font-weight: 600;
-  font-size: 1.8rem;
-  line-height: 2.2rem;
-  margin: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
-  ${props => props.theme.bp.sm`
-    font-size: 1.2rem;
-    line-height: 1.2rem;
+const sharedBodyStyles = css`
+  ${props => css`
+    margin: 0;
+    color: ${props.theme.colors[props.color]};
+    font-family: ${props.theme.fontStacks.geneva};
+    font-weight: 400;
+    line-height: 2.8rem;
   `}
 `
-export const H6 = styled.h6`
-  ${H6Styles}
+
+export const Body1Styles = css`
+  ${sharedBodyStyles}
+  font-size: 2rem;
 `
 
-export const PStyles = css`
-  font-family: 'Matter';
-  font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 2rem;
-  margin: 0;
-  padding: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
-`
 export const Body1 = styled.p`
-  ${PStyles}
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  ${Body1Styles}
+`
+
+export const Body2Styles = css`
+  ${sharedBodyStyles}
+  font-size: 1.8rem;
 `
 
 export const Body2 = styled.p`
-  ${PStyles}
-  font-size: 1.3rem;
-  line-height: 1.8rem;
-  color: ${props => props.theme.colors[props.color || 'base900']};
+  ${Body2Styles}
 `
 
-export const Caption = styled.p`
-  ${PStyles}
-  font-size: 1.5rem;
-  line-height: 3.2rem;
-`
-
-export const Overline1 = styled.p`
-  font-family: 'Matter';
-  font-weight: 600;
-  font-size: 1.2rem;
-  line-height: 1.4rem;
-  letter-spacing: 0.07rem;
-  text-transform: uppercase;
-  margin: 0;
-  padding: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
-`
-
-export const Overline2 = styled.p`
-  font-family: 'Matter';
-  font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.2rem;
-  letter-spacing: 0.07rem;
-  text-transform: uppercase;
-  margin: 0;
-  padding: 0;
-  color: ${props => props.theme.colors[props.color || 'base900']};
-`
-
-export const AStyles = css`
-  position: relative;
-  font-family: 'Matter';
-  font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 2rem;
-  text-decoration-line: none;
-  margin: 0 6px;
-  padding-bottom: 3px;
-  border-bottom: 1px solid white;
-  cursor: pointer;
-
-  /* Truncate long links inside of overflow hidden parents: */
-  text-overflow: ellipsis;
-  display: inline-block;
-  vertical-align: middle;
-  overflow: hidden;
-  color: ${props => props.theme.colors[props.color || 'base900']};
-`
-
-export const A = styled.a`
-  ${AStyles}
-  ::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 0%;
-    background-color: ${props => props.theme.colors.base700};
-    transition: all 500ms;
+const sharedActionStyles = css`
+  ${props => css`
+    margin: 0;
+    color: ${props.theme.colors[props.color]};
+    font-family: ${props.theme.fontStacks.chicago};
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
     cursor: pointer;
-    z-index: -1;
-  }
-
-  &:hover {
-    ::before {
-      content: '';
-      height: 100%;
-    }
-  }
+  `}
 `
 
-export const PCodeStyles = css`
-  font-family: 'Ubuntu Mono', monospace;
-  font-weight: 400;
-  font-size: 1.8rem;
-  line-height: 3.2rem;
-  margin: 0;
-  padding: 2px 5px;
-  border-radius: 4px;
-  color: ${props => props.theme.colors[props.color || 'primary600']};
-  background-color: ${props => props.theme.colors.primary100};
-  border: 1px solid ${props => props.theme.colors.primary050};
-`
-export const InlineCode = styled.p`
-  ${PCodeStyles}
-`
-
-export const PreCodeStyles = css`
-  display: block;
-  font-family: 'Ubuntu Mono', monospace;
-  font-weight: 400;
-  font-size: 1.6rem;
+export const ButtonStyles = css`
+  ${sharedActionStyles}
+  font-size: 2rem;
   line-height: 2rem;
-  margin: 0;
-  padding: 10px;
-  border-radius: 8px;
-  color: ${props => props.theme.colors[props.color || 'primary100']};
-  background-color: ${props => props.theme.colors.primary100};
-`
-export const Code = styled.p`
-  ${PreCodeStyles}
+  text-align: center;
 `
 
-export default {}
+export const StyledButtonText = styled.button`
+  ${ButtonStyles}
+`
+
+StyledButtonText.propTypes = { ...propTypesColor }
+StyledButtonText.defaultProps = { color: 'trueWhite' }
+
+export const LinkStyles = css`
+  ${sharedActionStyles}
+  font-size: inherit;
+  line-height: inherit;
+  display: inline-block;
+`
+
+export const StyledLinkText = styled.span`
+  ${LinkStyles}
+`
+
+StyledLinkText.propTypes = { ...propTypesColor }
+StyledLinkText.defaultProps = { color: 'vibrantGreen' }

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types'
 
 const withSvg = (icon, width, height) => {
   const SvgIcon = styled(icon)`
@@ -11,7 +11,7 @@ const withSvg = (icon, width, height) => {
         fillColor,
         color,
       },
-      theme: {...theme},
+      theme: { ...theme },
     }) => css`
       width: ${overrideWidth}px;
       height: ${overrideHeight}px;
@@ -26,7 +26,7 @@ const withSvg = (icon, width, height) => {
         --icon-fill: ${theme.colors[fillColor || color]};
       `}
     `}
-  `;
+  `
 
   SvgIcon.propTypes = {
     override: PropTypes.shape({
@@ -36,19 +36,18 @@ const withSvg = (icon, width, height) => {
       fillColor: PropTypes.string,
       color: PropTypes.string,
     }),
-  };
+  }
 
   SvgIcon.defaultProps = {
     override: {
       width,
       height: height || width,
     },
-  };
+  }
 
+  SvgIcon.displayName = `Icon(${icon.name})`
 
-  SvgIcon.displayName = `Icon(${icon.name})`;
+  return SvgIcon
+}
 
-  return SvgIcon;
-};
-
-export default withSvg;
+export default withSvg

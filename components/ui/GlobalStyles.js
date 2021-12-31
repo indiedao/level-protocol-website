@@ -1,24 +1,14 @@
 import { createGlobalStyle } from 'styled-components'
 
-import {
-  H1Styles,
-  H2Styles,
-  H3Styles,
-  H4Styles,
-  H5Styles,
-  H6Styles,
-  PStyles,
-  AStyles,
-  PCodeStyles,
-  PreCodeStyles,
-} from './Typography'
+import { H1Styles, H2Styles, H3Styles, H4Styles, Body1 } from './Typography'
 
 const GlobalStyles = createGlobalStyle`
   html, body {
     padding: 0;
     margin: 0;
-    background-color: ${props => props.theme.colors.base100};
-    color: ${props => props.theme.colors.primary100};
+    background-color: ${props =>
+      props.theme.colors[props.bodyBackgroundColor || 'white']};
+    color: ${props => props.theme.colors[props.bodyColor || 'black']};
     font-size: 62.5%; /* base 10 rems */
     min-height: 100vh;
 
@@ -67,24 +57,14 @@ const GlobalStyles = createGlobalStyle`
   h2 { ${H2Styles} }
   h3 { ${H3Styles} }
   h4 { ${H4Styles} }
-  h5 { ${H5Styles} }
-  h6 { ${H6Styles} }
   p {
     margin: 0;
-    ${PStyles}
+    ${Body1}
   }
   li {
-    ${PStyles}
+    ${Body1}
     padding: 5px 0;
     overflow: display;
-  }
-  /* Inline code block: */
-  p > code {
-    ${PCodeStyles}
-  }
-  /* Multiline code block: */
-  pre > code {
-    ${PreCodeStyles}
   }
   a:focus,
   input:focus,
@@ -92,9 +72,6 @@ const GlobalStyles = createGlobalStyle`
   textarea:focus,
   button:focus {
     outline: none;
-  }
-  a {
-    ${AStyles}
   }
   input {
     padding: 20px;
@@ -110,17 +87,7 @@ const GlobalStyles = createGlobalStyle`
     border: 1px solid gray;
   }
   ::selection {
-    background: ${props => props.theme.colors.primary100};
-  }
-  /* NProgress loader bar plugin: */
-  #nprogress {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    .bar {
-      background-color: ${props => props.theme.colors.primary500};
-      height: 4px;
-    }
+    background: ${props => props.theme.colors.black};
   }
 `
 

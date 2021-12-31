@@ -7,7 +7,10 @@ const StoryGrid = styled.div`
   padding: 40px;
   grid-row-gap: 20px;
   grid-column-gap: 20px;
-  grid-template-columns: repeat(${props => props.columns}, 1fr);
+  grid-template-columns: repeat(
+    ${props => props.columns},
+    ${props => props.columnWidth || '1fr'}
+  );
   > div {
     min-height: ${props => props.height};
   }

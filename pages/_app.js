@@ -6,7 +6,7 @@ import { useApollo } from '../util/apolloClient'
 import theme from '../util/theme'
 import GlobalStyles from '../components/ui/GlobalStyles'
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   const apolloClient = useApollo(pageProps)
   return (
     <>
@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <GlobalStyles />
+        <GlobalStyles bodyColor="primary100" bodyBackgroundColor="base100" />
         <ApolloProvider client={apolloClient}>
           <Component {...pageProps} />
         </ApolloProvider>
