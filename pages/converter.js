@@ -11,16 +11,13 @@ const Converter = ({ communities }) => {
   const [csvData, setCsvData] = useState([])
   const buttonRef = useRef()
 
-  const handleOpenDialog = e => {
+  const handleOpenDialog = event => {
     if (buttonRef.current) {
-      buttonRef.current.open(e)
+      buttonRef.current.open(event)
     }
   }
 
-  const handleOnFileLoad = data => {
-    setCsvData(mapCoordinapeData(data))
-    console.log('csvData', csvData)
-  }
+  const handleOnFileLoad = data => setCsvData(mapCoordinapeData(data))
 
   const handleOnError = (err, file, inputElem, reason) => {
     console.log('---------------------------')
@@ -34,9 +31,9 @@ const Converter = ({ communities }) => {
     console.log('---------------------------')
   }
 
-  const handleRemoveFile = e => {
+  const handleRemoveFile = event => {
     if (buttonRef.current && csvData) {
-      buttonRef.current.removeFile(e)
+      buttonRef.current.removeFile(event)
       setCsvData(null)
     }
   }
