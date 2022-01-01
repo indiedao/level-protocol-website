@@ -7,7 +7,7 @@ import { H2 } from '../components/ui/Typography'
 import FileUploader from '../components/ui/FileUploader'
 import Web3Layout from '../components/layouts/Web3Layout'
 
-const Converter = ({ communities }) => {
+const Converter = () => {
   const [csvData, setCsvData] = useState([])
   const buttonRef = useRef()
 
@@ -19,7 +19,7 @@ const Converter = ({ communities }) => {
 
   const handleOnFileLoad = data => setCsvData(mapCoordinapeData(data))
 
-  const handleOnError = (err, file, inputElem, reason) => {
+  const handleOnError = err => {
     console.log('---------------------------')
     console.log(err)
     console.log('---------------------------')
@@ -59,7 +59,7 @@ const Converter = ({ communities }) => {
           <Layout>
             <H2>Upload Coordinape Data</H2>
             <FileUploader
-              title={'Upload your Coordinape Data File'}
+              title="Upload your Coordinape Data File"
               buttonRef={buttonRef}
               handleOnFileLoad={handleOnFileLoad}
               handleOnError={handleOnError}
