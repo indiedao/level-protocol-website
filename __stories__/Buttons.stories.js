@@ -1,33 +1,46 @@
 import React from 'react'
+import styled from 'styled-components'
 
+import Button from '../components/ui/Buttons'
+import { Body1, H3 } from '../components/ui/Typography'
 import StoryGrid from './StoryGrid'
 
-import { TextButton, Button, RetroButton } from '../components/ui/Buttons'
+const StateExample = styled.div`
+  justify-self: start;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+`
 
-export const All = () => (
-  <StoryGrid columns={6}>
-    <div>
-      <TextButton>Text Button</TextButton>
-    </div>
-    <div>
-      <Button>Button</Button>
-    </div>
-    <div>
-      <Button isDisabled>Disabled Button</Button>
-    </div>
+const Template = ({ 'Button Text': children }) => (
+  <StoryGrid columns={2}>
+    <H3>Functional</H3>
+    <H3>Static States</H3>
+    <Button>{children}</Button>
+    <StoryGrid style={{ padding: 0 }}>
+      <StateExample>
+        <Button stateOverride="resting">{children}</Button>
+        <Body1>Resting</Body1>
+      </StateExample>
+      <StateExample>
+        <Button stateOverride="hover">{children}</Button>
+        <Body1>Hover</Body1>
+      </StateExample>
+      <StateExample>
+        <Button stateOverride="active">{children}</Button>
+        <Body1>Active</Body1>
+      </StateExample>
+    </StoryGrid>
   </StoryGrid>
 )
 
-export const Retro = () => (
-  <StoryGrid columns={4}>
-    <div>
-      <RetroButton>Retro Button</RetroButton>
-    </div>
-  </StoryGrid>
-)
+export const Buttons = Template.bind({})
+Buttons.args = {
+  'Button Text': 'Button Text',
+}
 
 const Story = {
-  title: 'Buttons',
+  title: 'Design System / Buttons',
 }
 
 export default Story

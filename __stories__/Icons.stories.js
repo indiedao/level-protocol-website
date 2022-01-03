@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import StoryGrid from './StoryGrid'
 import * as icons from '../components/ui/icons'
+import StoryGrid from './StoryGrid'
 
 const IconWrapper = styled.div`
   font-size: 12px;
