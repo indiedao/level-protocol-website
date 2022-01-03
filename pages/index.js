@@ -87,7 +87,7 @@ const Home = () => {
                 color="base900"
                 backgroundColor="base700"
               >
-                Read White Paper (v1.1)
+                Read (Brief) Technical Specification (v1.1)
               </A>
             </LinkLayout>
           </Layout>
