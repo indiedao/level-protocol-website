@@ -7,14 +7,14 @@ import useTimeout from '../../hooks/useTimeout'
 import { CHARACTER_SEQUENCE, CHARACTERS, COLUMNS, ROWS } from './characters'
 import { COLORS, COLOR_SEQUENCE } from './colors'
 import {
-  DEGRADE_FACTOR,
-  FLASH_IMPACT_THRESHOLD,
-  FLASH_THRESHOLD,
-  GLITCH_BOUNCE_MAXIMUM_IMPACT_THRESHOLD,
-  GLITCH_BOUNCE_THRESHOLD,
+  DE_GLITCH_FACTOR,
+  FLASH_MINIMUM_THRESHOLD,
+  FLASH_PROBABILITY,
+  GLITCH_BOUNCE_MAXIMUM,
+  GLITCH_BOUNCE_PROBABILITY,
   GLITCH_SETTLED_THRESHOLD,
   GLITCH_SPEED,
-  START_DIFFERENTIAL,
+  INITIAL_GLITCHY_NESS,
 } from './glitchy-ness'
 
 const Wrapper = styled.div`
@@ -48,23 +48,27 @@ const durstenfeldShuffle = array => {
 }
 
 const Hero = ({
-  degradeFactor,
-  flashImpactThreshold,
-  flashThreshold,
-  glitchBounceMaximumImpactThreshold,
-  glitchBounceThreshold,
+  deGlitchFactor,
+  flashMinimumThreshold,
+  flashProbability,
+  glitchBounceMaximum,
+  glitchBounceProbability,
   glitchSettledThreshold,
   glitchSpeed,
+  initialGlitchyNess,
   pausedAtStart,
-  startDifferential,
 }) => {
   const heroEl = useRef(null)
   const [paused, setPaused] = useState(pausedAtStart)
   const [difference, setDifference] = useState(
-    Math.floor(ROWS * COLUMNS * startDifferential),
+    Math.floor(ROWS * COLUMNS * initialGlitchyNess),
   )
   const [characters, setCharacters] = useState(CHARACTER_SEQUENCE)
   const [colors, setColors] = useState(COLOR_SEQUENCE)
+
+  useEffect(() => {
+    setDifference(Math.floor(ROWS * COLUMNS * initialGlitchyNess))
+  }, [deGlitchFactor, initialGlitchyNess])
 
   useSimpleObserver(
     heroEl,
@@ -82,12 +86,10 @@ const Hero = ({
   useTimeout(
     () => {
       if (difference > ROWS * COLUMNS * glitchSettledThreshold) {
-        setDifference(Math.floor(difference * degradeFactor))
-      } else if (Math.random() > 1 - glitchBounceThreshold) {
+        setDifference(Math.floor(difference * deGlitchFactor))
+      } else if (Math.random() < glitchBounceProbability) {
         setDifference(
-          Math.floor(
-            ROWS * COLUMNS * glitchBounceMaximumImpactThreshold * Math.random(),
-          ),
+          Math.floor(ROWS * COLUMNS * glitchBounceMaximum * Math.random()),
         )
       } else {
         setDifference(
@@ -103,8 +105,8 @@ const Hero = ({
     field.length = ROWS * COLUMNS
     durstenfeldShuffle(field)
     if (
-      difference > ROWS * COLUMNS * flashImpactThreshold &&
-      Math.random() > flashThreshold
+      difference > ROWS * COLUMNS * flashMinimumThreshold &&
+      Math.random() < flashProbability
     ) {
       setColors(field.fill(COLORS[Math.floor(Math.random() * COLORS.length)]))
     } else if (Math.random() >= 0.5) {
@@ -126,7 +128,7 @@ const Hero = ({
         }),
       )
     }
-  }, [difference, flashImpactThreshold, flashThreshold])
+  }, [difference, flashMinimumThreshold, flashProbability])
 
   return (
     <Wrapper ref={heroEl}>
@@ -138,27 +140,27 @@ const Hero = ({
 }
 
 Hero.propTypes = {
-  degradeFactor: PropTypes.number,
-  flashImpactThreshold: PropTypes.number,
-  flashThreshold: PropTypes.number,
-  glitchBounceMaximumImpactThreshold: PropTypes.number,
-  glitchBounceThreshold: PropTypes.number,
+  deGlitchFactor: PropTypes.number,
+  flashMinimumThreshold: PropTypes.number,
+  flashProbability: PropTypes.number,
+  glitchBounceMaximum: PropTypes.number,
+  glitchBounceProbability: PropTypes.number,
   glitchSettledThreshold: PropTypes.number,
   glitchSpeed: PropTypes.number,
+  initialGlitchyNess: PropTypes.number,
   pausedAtStart: PropTypes.bool,
-  startDifferential: PropTypes.number,
 }
 
 Hero.defaultProps = {
-  degradeFactor: DEGRADE_FACTOR,
-  flashImpactThreshold: FLASH_IMPACT_THRESHOLD,
-  flashThreshold: FLASH_THRESHOLD,
-  glitchBounceMaximumImpactThreshold: GLITCH_BOUNCE_MAXIMUM_IMPACT_THRESHOLD,
-  glitchBounceThreshold: GLITCH_BOUNCE_THRESHOLD,
+  deGlitchFactor: DE_GLITCH_FACTOR,
+  flashMinimumThreshold: FLASH_MINIMUM_THRESHOLD,
+  flashProbability: FLASH_PROBABILITY,
+  glitchBounceMaximum: GLITCH_BOUNCE_MAXIMUM,
+  glitchBounceProbability: GLITCH_BOUNCE_PROBABILITY,
   glitchSettledThreshold: GLITCH_SETTLED_THRESHOLD,
   glitchSpeed: GLITCH_SPEED,
+  initialGlitchyNess: INITIAL_GLITCHY_NESS,
   pausedAtStart: false,
-  startDifferential: START_DIFFERENTIAL,
 }
 
 export default Hero

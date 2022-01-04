@@ -14,4 +14,5 @@ addDecorator(storyFn => (
 
 addParameters({
   viewport: {},
+  controls: { expanded: true },
 })
