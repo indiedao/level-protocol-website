@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import HeroUI from '../components/ui/Hero'
+import HeroUI from '../components/ui/Hero/Hero'
 
 const Container = styled.div`
   min-height: 300vh;
