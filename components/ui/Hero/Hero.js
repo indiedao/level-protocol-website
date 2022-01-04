@@ -10,6 +10,7 @@ import {
   FLASH_THRESHOLD,
   GLITCH_BOUNCE_MAXIMUM_IMPACT_THRESHOLD,
   GLITCH_BOUNCE_THRESHOLD,
+  GLITCH_SETTLED_THRESHOLD,
   GLITCH_SPEED,
   START_DIFFERENTIAL,
 } from './glitchy-ness'
@@ -117,6 +118,7 @@ const Hero = ({
   flashThreshold,
   glitchBounceMaximumImpactThreshold,
   glitchBounceThreshold,
+  glitchSettledThreshold,
   glitchSpeed,
   pausedAtStart,
   startDifferential,
@@ -144,16 +146,18 @@ const Hero = ({
 
   useTimeout(
     () => {
-      if (difference > 10) {
+      if (difference > ROWS * COLUMNS * glitchSettledThreshold) {
         setDifference(Math.floor(difference * degradeFactor))
-      } else if (Math.random() > glitchBounceThreshold) {
+      } else if (Math.random() > 1 - glitchBounceThreshold) {
         setDifference(
           Math.floor(
             ROWS * COLUMNS * glitchBounceMaximumImpactThreshold * Math.random(),
           ),
         )
       } else {
-        setDifference(Math.floor(Math.random() * 10))
+        setDifference(
+          Math.floor(Math.random() * ROWS * COLUMNS * glitchSettledThreshold),
+        )
       }
     },
     paused ? 0 : glitchSpeed,
@@ -204,6 +208,7 @@ Hero.propTypes = {
   flashThreshold: PropTypes.number,
   glitchBounceMaximumImpactThreshold: PropTypes.number,
   glitchBounceThreshold: PropTypes.number,
+  glitchSettledThreshold: PropTypes.number,
   glitchSpeed: PropTypes.number,
   pausedAtStart: PropTypes.bool,
   startDifferential: PropTypes.number,
@@ -215,6 +220,7 @@ Hero.defaultProps = {
   flashThreshold: FLASH_THRESHOLD,
   glitchBounceMaximumImpactThreshold: GLITCH_BOUNCE_MAXIMUM_IMPACT_THRESHOLD,
   glitchBounceThreshold: GLITCH_BOUNCE_THRESHOLD,
+  glitchSettledThreshold: GLITCH_SETTLED_THRESHOLD,
   glitchSpeed: GLITCH_SPEED,
   pausedAtStart: false,
   startDifferential: START_DIFFERENTIAL,
