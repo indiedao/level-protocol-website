@@ -17,14 +17,14 @@ const Container = styled.div`
 `
 
 const Template = ({
-  'De-glitch Factor (.%)': deGlitchFactor,
-  'Flash Minimum Threshold (.%)': flashMinimumThreshold,
-  'Flash Probability (.%)': flashProbability,
-  'Glitch Settled Threshold (.%)': glitchSettledThreshold,
-  'Glitch Bounce Maximum (.%)': glitchBounceMaximum,
-  'Glitch Bounce Probability (.%)': glitchBounceProbability,
-  'Glitch Speed (ms)': glitchSpeed,
-  'Initial Glitchy-ness (.%)': initialGlitchyNess,
+  deGlitchFactor,
+  flashMinimumThreshold,
+  flashProbability,
+  glitchSettledThreshold,
+  glitchBounceMaximum,
+  glitchBounceProbability,
+  glitchSpeed,
+  initialGlitchyNess,
 }) => (
   <Container>
     <HeroUI
@@ -42,23 +42,26 @@ const Template = ({
 
 export const Hero = Template.bind({})
 Hero.args = {
-  'Glitch Speed (ms)': GLITCH_SPEED,
-  'Initial Glitchy-ness (.%)': INITIAL_GLITCHY_NESS,
-  'De-glitch Factor (.%)': DE_GLITCH_FACTOR,
-  'Glitch Settled Threshold (.%)': GLITCH_SETTLED_THRESHOLD,
-  'Glitch Bounce Maximum (.%)': GLITCH_BOUNCE_MAXIMUM,
-  'Glitch Bounce Probability (.%)': GLITCH_BOUNCE_PROBABILITY,
-  'Flash Minimum Threshold (.%)': FLASH_MINIMUM_THRESHOLD,
-  'Flash Probability (.%)': FLASH_PROBABILITY,
+  glitchSpeed: GLITCH_SPEED,
+  initialGlitchyNess: INITIAL_GLITCHY_NESS,
+  deGlitchFactor: DE_GLITCH_FACTOR,
+  glitchSettledThreshold: GLITCH_SETTLED_THRESHOLD,
+  glitchBounceMaximum: GLITCH_BOUNCE_MAXIMUM,
+  glitchBounceProbability: GLITCH_BOUNCE_PROBABILITY,
+  flashMinimumThreshold: FLASH_MINIMUM_THRESHOLD,
+  flashProbability: FLASH_PROBABILITY,
 }
 
 const Story = {
   title: 'Sections / Hero',
   component: Hero,
   argTypes: {
-    'Glitch Speed (ms)': {
+    glitchSpeed: {
       description: 'The glitch speed is the milliseconds between iterations.',
       table: {
+        type: {
+          summary: '(1ms - 250ms)',
+        },
         defaultValue: {
           summary: GLITCH_SPEED,
         },
@@ -70,10 +73,13 @@ const Story = {
         step: 1,
       },
     },
-    'Initial Glitchy-ness (.%)': {
+    initialGlitchyNess: {
       description:
         'The initial glitchy-ness is what decimal percent of the available field should be glitched upon first render.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: INITIAL_GLITCHY_NESS,
         },
@@ -85,10 +91,13 @@ const Story = {
         step: 0.01,
       },
     },
-    'De-glitch Factor (.%)': {
+    deGlitchFactor: {
       description:
         'The de-glitch factor is how fast the glitchy-ness cleans itself up, per iteration.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: DE_GLITCH_FACTOR,
         },
@@ -100,10 +109,13 @@ const Story = {
         step: 0.0001,
       },
     },
-    'Glitch Settled Threshold (.%)': {
+    glitchSettledThreshold: {
       description:
         'The glitch settled threshold is the decimal glitchy-ness that is allowed to persist always.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: GLITCH_SETTLED_THRESHOLD,
         },
@@ -115,10 +127,13 @@ const Story = {
         step: 0.01,
       },
     },
-    'Glitch Bounce Maximum (.%)': {
+    glitchBounceMaximum: {
       description:
         'The glitch bounce maximum is the highest decimal percent of the available field that can be re-glitched.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: GLITCH_BOUNCE_MAXIMUM,
         },
@@ -130,10 +145,13 @@ const Story = {
         step: 0.01,
       },
     },
-    'Glitch Bounce Probability (.%)': {
+    glitchBounceProbability: {
       description:
         'The glitch bounce probability is the decimal percent chance that re-glitching will occur when the glitch has settled.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: GLITCH_BOUNCE_PROBABILITY,
         },
@@ -145,10 +163,13 @@ const Story = {
         step: 0.01,
       },
     },
-    'Flash Minimum Threshold (.%)': {
+    flashMinimumThreshold: {
       description:
         'The flash minimum threshold is the decimal percent of field that must be available to glitch such that all characters may be “flashed” in the same color.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: FLASH_MINIMUM_THRESHOLD,
         },
@@ -160,10 +181,13 @@ const Story = {
         step: 0.01,
       },
     },
-    'Flash Probability (.%)': {
+    flashProbability: {
       description:
         'The flash probability is the decimal percentage chance that a flash can be shown when the minimum threshold has been met.',
       table: {
+        type: {
+          summary: '(0.0 - 1.0)',
+        },
         defaultValue: {
           summary: FLASH_PROBABILITY,
         },
