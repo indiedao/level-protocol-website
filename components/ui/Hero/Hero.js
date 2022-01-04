@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import useSimpleObserver from '../../hooks/useSimpleObserver'
+import useTimeout from '../../hooks/useTimeout'
 import { CHARACTER_SEQUENCE, CHARACTERS, COLUMNS, ROWS } from './characters'
 import { COLORS, COLOR_SEQUENCE } from './colors'
 import {
@@ -35,73 +37,6 @@ const character = (index, char, color) => {
       {char}
     </WrappedCharacter>
   )
-}
-
-const useTimeout = (callback, delay) => {
-  const savedCallback = useRef(callback)
-
-  useEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
-
-  useEffect(() => {
-    let timerId = null
-
-    const tick = () => {
-      const ret = savedCallback.current()
-
-      if (ret instanceof Promise) {
-        ret
-          .then(() => {
-            if (delay > 0) {
-              timerId = setTimeout(tick, delay)
-            }
-          })
-          .catch(error => {
-            console.log(error) // eslint-disable-line no-console
-            if (timerId) {
-              clearTimeout(timerId)
-            }
-          })
-      } else if (delay > 0) {
-        timerId = setTimeout(tick, delay)
-      }
-    }
-
-    if (delay > 0) {
-      timerId = setTimeout(tick, delay)
-    }
-
-    return () => timerId && clearTimeout(timerId)
-  }, [delay])
-}
-
-const useSimpleObserver = (ref, callback, deps) => {
-  useEffect(() => {
-    let observer = null
-    let el = null
-
-    if (ref.current) {
-      el = ref.current
-      observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => callback(entry))
-        },
-        {
-          threshold: 0,
-        },
-      )
-
-      observer.observe(el)
-    }
-
-    return () => {
-      if (observer && el) {
-        observer.unobserve(el)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callback, ref, ...deps])
 }
 
 const durstenfeldShuffle = array => {
@@ -164,17 +99,17 @@ const Hero = ({
   )
 
   useEffect(() => {
-    const chars = Array(difference).fill(true)
-    chars.length = ROWS * COLUMNS
-    durstenfeldShuffle(chars)
+    const field = Array(difference).fill(true)
+    field.length = ROWS * COLUMNS
+    durstenfeldShuffle(field)
     if (
       difference > ROWS * COLUMNS * flashImpactThreshold &&
       Math.random() > flashThreshold
     ) {
-      setColors(chars.fill(COLORS[Math.floor(Math.random() * COLORS.length)]))
+      setColors(field.fill(COLORS[Math.floor(Math.random() * COLORS.length)]))
     } else if (Math.random() >= 0.5) {
       setCharacters(
-        chars.map((char, index) => {
+        field.map((char, index) => {
           if (char) {
             return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
           }
@@ -183,7 +118,7 @@ const Hero = ({
       )
     } else {
       setColors(
-        chars.map((char, index) => {
+        field.map((char, index) => {
           if (char) {
             return COLORS[Math.floor(Math.random() * COLORS.length)]
           }
