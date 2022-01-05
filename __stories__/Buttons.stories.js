@@ -19,15 +19,21 @@ const Template = ({ 'Button Text': children }) => (
     <Button>{children}</Button>
     <StoryGrid style={{ padding: 0 }}>
       <StateExample>
-        <Button stateOverride="resting">{children}</Button>
+        <Button stateOverride="resting" disabled>
+          {children}
+        </Button>
         <Body1>Resting</Body1>
       </StateExample>
       <StateExample>
-        <Button stateOverride="hover">{children}</Button>
+        <Button stateOverride="hover" disabled>
+          {children}
+        </Button>
         <Body1>Hover</Body1>
       </StateExample>
       <StateExample>
-        <Button stateOverride="active">{children}</Button>
+        <Button stateOverride="active" disabled>
+          {children}
+        </Button>
         <Body1>Active</Body1>
       </StateExample>
     </StoryGrid>

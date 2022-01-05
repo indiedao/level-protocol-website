@@ -73,7 +73,7 @@ const StyledButton = styled.button`
     z-index: 1;
   }
 
-  &:not([data-state]):hover,
+  &:not([data-state]):hover:not(:active),
   &[data-state='hover'] {
     box-shadow: 1rem 1rem 0 ${props => props.theme.colors.trueBlack};
   }
@@ -91,12 +91,17 @@ const StyledButton = styled.button`
       filter: invert(1);
     }
   }
+
+  &[disabled] {
+    cursor: default;
+  }
 `
 
 const ButtonContent = styled.span`
   ${ButtonTextStyles}
   position: relative;
   z-index: 2;
+  cursor: inherit;
 `
 
 const Button = ({ children, color, disabled, onClick, stateOverride }) => (
