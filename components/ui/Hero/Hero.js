@@ -47,6 +47,7 @@ const WrappedCharacter = styled.span`
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   font-size: 1.16vw;
   line-height: calc(1.867 / 1.4);
+  user-select: none;
 
   ${({ theme }) => theme.bp.lgPlus('font-size: 1.4rem;')}
 `
