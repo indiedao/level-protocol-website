@@ -1,3 +1,5 @@
+// adapted from:
+// https://www.aaron-powell.com/posts/2019-09-23-recursive-settimeout-with-react-hooks/
 import { useEffect, useRef } from 'react'
 
 const useTimeout = (callback, delay) => {
