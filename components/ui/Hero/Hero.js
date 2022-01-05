@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import useSimpleObserver from '../../hooks/useSimpleObserver'
 import useTimeout from '../../hooks/useTimeout'
+import { H1 } from '../Typography'
 import { CHARACTER_SEQUENCE, CHARACTERS, COLUMNS, ROWS } from './characters'
 import { COLORS, COLOR_SEQUENCE } from './colors'
 import {
@@ -17,18 +18,37 @@ import {
   INITIAL_GLITCHY_NESS,
 } from './glitchy-ness'
 
-const Wrapper = styled.div`
+const HeroSection = styled.section`
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  grid-gap: 0.8rem;
+  padding: calc(75 / 1159 * 100%);
+  background-color: ${({ theme }) => theme.colors.vibrantBlack};
+
+  ${({ theme }) => theme.bp.lgPlus('padding: 7.5rem;')}
+`
+
+const Banner = styled.div`
   display: grid;
   justify-items: start;
   align-items: baseline;
   grid-template-columns: repeat(${COLUMNS}, 1fr);
   grid-template-rows: repeat(${ROWS}, 1fr);
-  background-color: ${({ theme }) => theme.colors.vibrantBlack};
+  max-width: 100.9rem;
+`
+
+const Title = styled(H1)`
+  margin: 0;
 `
 
 const WrappedCharacter = styled.span`
   color: ${({ color, theme }) => theme.colors[color || 'vibrantRed']};
   font-family: monaco, Consolas, 'Lucida Console', monospace;
+  font-size: 1.16vw;
+  line-height: calc(1.867 / 1.4);
+
+  ${({ theme }) => theme.bp.lgPlus('font-size: 1.4rem;')}
 `
 
 const character = (index, char, color) => {
@@ -131,11 +151,14 @@ const Hero = ({
   }, [difference, flashMinimumThreshold, flashProbability])
 
   return (
-    <Wrapper ref={heroEl}>
-      {characters.map((char, index) => {
-        return character(index, char, colors[index])
-      })}
-    </Wrapper>
+    <HeroSection>
+      <Banner ref={heroEl}>
+        {characters.map((char, index) => {
+          return character(index, char, colors[index])
+        })}
+      </Banner>
+      <Title color="trueWhite">Level Protocol</Title>
+    </HeroSection>
   )
 }
 
