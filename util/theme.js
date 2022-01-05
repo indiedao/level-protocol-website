@@ -7,6 +7,15 @@ const offsetDotSvgUrl =
 const offsetRoundedDotSvgUrl =
   'url(\'data:image/svg+xml;utf8,<svg height="15" viewBox="0 0 10 15" width="10" xmlns="http://www.w3.org/2000/svg"><g fill="%23000" fill-rule="evenodd"><rect height="5" rx="1" width="5"/><rect height="5" rx="1" width="5" x="5" y="7.5"/></g></svg>\')'
 
+export const defaultPointerUrl =
+  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAABACAYAAABhspUgAAAAzklEQVRoge3Zyw6DIBRFUWj6/79Mp+3R8Ige4dK9Z8aADFauMeZSSkn1cuP+o71WOkxPHNjdW/fP+ZfsifGppiHhLr5hbTXTkHC3n2FttmlIuNvfsPa0aUi4+z/Dmts0JNxhWLvbNCTcYbjVVdOQcIfh0UZNQ8IdhrX2L5T2Ft8XkHC3v2E1qXO0I77pli7cgQ//mk/e7Yc1cl1dr3XsVw0S7uLP4avG3EHCXfw5fINZ61yGhLuQc3ipOdsKEu5CzmH3M0YfwByeWqwDp5Q+NylFhR7a21kAAAAASUVORK5CYII=')"
+
+export const selectPointerUrl =
+  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABACAYAAABGHBTIAAABA0lEQVRoge2aUQ7CIBAFwXgNjfc/ldGD4K/dNsVtt4CvM39GK93kTVg25OTkcbtPnnm+X8X8g/1sca8ZyaXn4j2gYHUifJo4W8q6wjnPlmzqNJFWh4LVoWB1KFgdClbndAVfB3iH2vm5hqsXJ9LqnM/hH2ZUh+I9P9vf55xdMzQirQ4zrQ1z5V0zrQCHXd8TaXVO6fDeufKE2vOtweEB3qEpnIdr1Pa50SHS6tBLe/dl94LBvbG3byDS6rAPW6/tzGi0XtkLkVYHh/+d2j0wIq0ODi8gtS8TaXU4D2+gq9Pe+9dEWh0cDiDUae+MC4cNFKzO4Q4HsHqnZAEc/oaCpUkpfQBcC0+GZGwPugAAAABJRU5ErkJggg==')"
+
+export const busyPointerUrl =
+  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABhklEQVR4Xu2a4RKDIAyD9f0f2t3uNk/FEWpb0fnt58AqaZJWcBzif1NwyDE43ipcRnAACM5YRpLmR8wI/vcMCF3gNNXDjaPMkZxQY+SRiwEgUuMw4AYSCKX8lj2KAYptOx5hknXLZABQWfCMwwDhAQrcDAmkUj7aA7bxrIDseQAAKNpFjns9AAZsEEAC5btDtdTjATt6xgQjTU7FuoIJnprx7D7AWhXeHgAAiqaZ49ESgAHGvgAJ4AGYIFWgaxnMrDA/Yq/a/+4mCADnIwADlpgXEujQmZ3NgToDAMC5Ta3S2XDaq0J4x2EAHrBAABPcvgxhgg80wWKbbvlHNCM6VAHfuQAABEsCBujP3ryNTrEvWgsoj8aQABKI3TDCA27gAal9wQkMaPn0b15jy+SVBrymCAD5EmhJKgz4ImBC63NRtSwoiSRI4MgaTAyomqL1gwcAiPcAGOB5eXCh9+PGsa3jMGQ8o8sDFOAAoBAyjsMAI2Cm6anomp6k02QA6AT8ZW77eAa8AJt0zEEhpQYlAAAAAElFTkSuQmCC')"
+
 const theme = {
   bp: {
     sm: style => `@media only screen and (max-width: 767px) { ${style} }`,
@@ -48,6 +57,12 @@ const theme = {
   fontStacks: {
     chicago: 'ChicagoFLFRegular, sans-serif',
     geneva: 'Geneva, Verdana',
+  },
+
+  cursors: {
+    default: `${defaultPointerUrl}, default`,
+    select: `${selectPointerUrl}, pointer`,
+    busy: `${busyPointerUrl}, wait`,
   },
 }
 

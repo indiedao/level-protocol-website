@@ -19,6 +19,7 @@ const StyledButton = styled.button`
   user-select: none;
   transition: box-shadow 233ms ease;
   box-sizing: content-box;
+  cursor: ${props => props.theme.cursors.select};
 
   &::before,
   &::after {
@@ -75,12 +76,14 @@ const StyledButton = styled.button`
 
   &:not([data-state]):hover,
   &[data-state='hover'] {
+    cursor: ${props => props.theme.cursors.select};
     box-shadow: 1rem 1rem 0 ${props => props.theme.colors.trueBlack};
   }
 
   &:active,
   &[data-state='active'] {
     background-color: ${props => props.theme.colors.vibrantBlue};
+    cursor: ${props => props.theme.cursors.select};
 
     &::before {
       filter: invert(0);
