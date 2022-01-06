@@ -24,7 +24,7 @@ const Template = ({ 'Background Color': backgroundColor }) => (
 
 export const Footer = Template.bind({})
 Footer.args = {
-  'Background Color': `${theme.colors.vibrantBlack}`
+  'Background Color': `${theme.colors.vibrantBlack}`,
 }
 
 const Story = {
