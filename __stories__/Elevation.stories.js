@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import StoryGrid from './StoryGrid'
 
 import ElevationUI from '../components/ui/Elevation'
-import { H3 } from '../components/ui/Typography'
 
 const Card = styled(ElevationUI)`
   display: flex;
@@ -16,13 +15,7 @@ const Card = styled(ElevationUI)`
 
 const Template = ({ Elevation: elevation }) => (
   <StoryGrid columns={2}>
-    <H3>Fuctional</H3>
-    <H3>Static</H3>
     <Card elevation={elevation}>{elevation}pt</Card>
-    <StoryGrid style={{ padding: 0 }}>
-      <Card elevation="12">12pt</Card>
-      <Card elevation="16">16pt</Card>
-    </StoryGrid>
   </StoryGrid>
 )
 

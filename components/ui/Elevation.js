@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components'
 
 const Elevation = styled.div`
   ${({ theme, elevation }) => css`
-    border-radius: 8px;
-    border: 4px solid black;
-    box-shadow: ${elevation}px ${elevation}px 0px ${theme.colors.trueBlack};
+    border-radius: 0.8rem;
+    border: 0.4rem solid black;
+    box-shadow: ${elevation / 10}rem ${elevation / 10}rem 0
+      ${theme.colors.trueBlack};
   `}
 } 
 `
