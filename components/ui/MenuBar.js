@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
-import { ButtonTextStyles, LinkStyles, StyledLinkText } from './Typography'
+import { buttonStyles, linkStyles, StyledLinkText } from './Typography'
 import { LevelLogoIcon } from './icons'
 
 const Wrapper = styled.div`
@@ -26,7 +26,7 @@ const sharedMenuContainerStyles = css`
 `
 
 const sharedMenuItemStyles = css`
-  ${LinkStyles}
+  ${linkStyles}
   padding: 0 1.6rem;
   color: ${props => props.theme.colors.mutedBlack};
   border-right: 1px solid ${props => props.theme.colors.mutedBlack};
@@ -81,7 +81,7 @@ const Tray = styled.ul`
 `
 
 const TrayItem = styled.li`
-  ${ButtonTextStyles}
+  ${buttonStyles}
   display: flex;
   justify-content: center;
   align-items: center;

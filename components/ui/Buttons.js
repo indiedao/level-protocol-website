@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { ButtonTextStyles } from './Typography'
+import { buttonStyles } from './Typography'
 import theme from '../../util/theme'
 
 const StyledButton = styled.button`
@@ -97,7 +97,7 @@ const StyledButton = styled.button`
 `
 
 const ButtonContent = styled.span`
-  ${ButtonTextStyles}
+  ${buttonStyles}
   position: relative;
   z-index: 2;
 `

@@ -27,6 +27,7 @@ const theme = {
       `@media only screen and (min-width: 768px) and (max-width: 1279px) { ${style} }`,
     lg: style =>
       `@media only screen and (min-width: 1280px) and (max-width: 1560px) { ${style} }`,
+    lgPlus: style => `@media only screen and (min-width: 1280px) { ${style} }`,
     xl: style => `@media only screen and (min-width: 1560px) { ${style} }`,
   },
 

@@ -110,7 +110,7 @@ const sharedActionStyles = css`
   `}
 `
 
-export const ButtonTextStyles = css`
+export const buttonStyles = css`
   ${sharedActionStyles}
   font-size: 2rem;
   line-height: 2rem;
@@ -118,13 +118,13 @@ export const ButtonTextStyles = css`
 `
 
 export const StyledButtonText = styled.button`
-  ${ButtonTextStyles}
+  ${buttonStyles}
 `
 
 StyledButtonText.propTypes = { ...propTypesColor }
 StyledButtonText.defaultProps = { color: 'trueWhite' }
 
-export const LinkStyles = css`
+export const linkStyles = css`
   ${sharedActionStyles}
   font-size: inherit;
   line-height: inherit;
@@ -132,8 +132,22 @@ export const LinkStyles = css`
 `
 
 export const StyledLinkText = styled.span`
-  ${LinkStyles}
+  ${linkStyles}
 `
 
 StyledLinkText.propTypes = { ...propTypesColor }
 StyledLinkText.defaultProps = { color: 'vibrantGreen' }
+
+export const screenReaderTextStyles = css`
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+`
+
+export const ScreenReaderText = styled.span`
+  ${screenReaderTextStyles}
+`
