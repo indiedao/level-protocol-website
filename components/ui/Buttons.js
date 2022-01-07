@@ -1,109 +1,128 @@
 import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import { hexToRgba } from '../../util/colors'
+import { ButtonTextStyles } from './Typography'
+import theme from '../../util/theme'
 
-const BaseTextStyles = css`
-  font-family: ${props => props.theme.fontStacks.geneva};
-  font-weight: 600;
-  font-size: 1.8rem;
-  line-height: 2.4rem;
+const StyledButton = styled.button`
+  position: relative;
+  justify-self: start;
+  align-self: start;
+  margin: 0 auto 0 0;
+  padding: 0 2rem;
+  width: auto;
+  min-height: 4.4rem;
+  background-color: ${props => props.theme.colors.vibrantRed};
+  border: 0.25rem solid ${props => props.theme.colors.trueBlack};
+  border-radius: 0;
+  box-shadow: 0.6rem 0.6rem 0 ${props => props.theme.colors.trueBlack};
+  user-select: none;
+  transition: box-shadow 233ms ease;
+  box-sizing: content-box;
+
+  &::before,
+  &::after {
+    filter: invert(0);
+    transition: filter 233ms ease;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -0.05rem;
+    right: -0.05rem;
+    bottom: -0.05rem;
+    left: -0.05rem;
+    background: ${props => props.theme.halftones.sm};
+    z-index: 0;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 0.2rem,
+      0.2rem 0.2rem,
+      0.2rem 100%,
+      0 100%,
+      0 0
+    );
+    filter: invert(1);
+    mix-blend-mode: overlay;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -0.05rem;
+    right: -0.05rem;
+    bottom: -0.05rem;
+    left: -0.05rem;
+    background: ${props => props.theme.halftones.sm};
+    z-index: 0;
+    clip-path: polygon(
+      100% 100%,
+      0 100%,
+      0 calc(100% - 0.4rem),
+      calc(100% - 0.4rem) calc(100% - 0.4rem),
+      calc(100% - 0.4rem) 0,
+      100% 0,
+      100% 100%
+    );
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:not([data-state]):hover,
+  &[data-state='hover'] {
+    box-shadow: 1rem 1rem 0 ${props => props.theme.colors.trueBlack};
+  }
+
+  &:active,
+  &[data-state='active'] {
+    background-color: ${props => props.theme.colors.vibrantBlue};
+
+    &::before {
+      filter: invert(0);
+      mix-blend-mode: normal;
+    }
+
+    &::after {
+      filter: invert(1);
+    }
+  }
 `
 
-export const TextButton = styled.div`
-  ${BaseTextStyles}
-  color: ${props => props.theme.colors.black};
-  cursor: pointer;
-  padding: 10px 14px;
-  border-radius: 8px;
-
-  transition: all 300ms;
-
-  &:hover {
-    background-color: ${props => props.theme.colors.white};
-  }
-
-  &:focus {
-    background-color: ${props => props.theme.colors.white};
-  }
-
-  &:active {
-    background-color: ${props => props.theme.colors.white};
-  }
+const ButtonContent = styled.span`
+  ${ButtonTextStyles}
+  position: relative;
+  z-index: 2;
 `
 
-export const RetroButton = styled.div`
-  font-family: ${props => props.theme.fontStacks.chicago};
-  font-weight: normal;
-  font-style: normal;
-  color: ${props => props.theme.colors.black};
-  background-color: ${props => props.theme.colors.vibrantGreen};
-  padding: 12px;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  line-height: 20px;
-  border: 2px solid ${props => props.theme.black};
-  box-shadow: inset -2px -2px 0px
-      ${props => hexToRgba(props.theme.colors.black, 0.5)},
-    6px 6px 0px ${props => props.theme.colors.vibrantBlack};
+const Button = ({ children, color, disabled, onClick, stateOverride }) => (
+  <StyledButton
+    disabled={disabled}
+    onClick={onClick}
+    type="button"
+    data-state={stateOverride}
+  >
+    <ButtonContent color={color}>{children}</ButtonContent>
+  </StyledButton>
+)
 
-  transition: all 100ms;
+Button.propTypes = {
+  color: PropTypes.oneOf(Object.keys(theme.colors)),
+  children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  stateOverride: PropTypes.oneOf(['resting', 'hover', 'active']),
+}
 
-  &:hover {
-    filter: brightness(95%);
-    background-color: ${props => props.theme.colors.vibrantGreen};
-  }
+Button.defaultProps = {
+  color: 'trueWhite',
+  disabled: false,
+  onClick: () => null,
+  stateOverride: undefined,
+}
 
-  &:focus {
-    border: 4px solid ${props => props.theme.black};
-  }
-
-  &:active {
-    box-shadow: inset -2px -2px 0px
-        ${props => hexToRgba(props.theme.colors.black, 0.5)},
-      2px 2px 0px ${props => props.theme.colors.vibrantBlack};
-  }
-`
-
-export const Button = styled.div`
-  ${BaseTextStyles}
-  background-color: white;
-  color: ${props => props.theme.colors.black};
-  cursor: pointer;
-  padding: 12px 28px;
-  width: 100%;
-  text-align: center;
-  border-radius: 16px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
-  border: 4px solid white;
-
-  transition: all 300ms;
-
-  &:hover {
-    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
-    border-color: ${props => props.theme.colors.white};
-  }
-  &:focus {
-    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
-  }
-
-  &:active {
-    background-color: ${props => hexToRgba(props.theme.colors.black, 0.5)};
-  }
-
-  ${props =>
-    props.isDisabled &&
-    css`
-      &,
-      &:hover,
-      &:focus,
-      &:active {
-        background-color: ${props.theme.colors.white};
-      }
-      box-shadow: none;
-    `}
-`
-Button.propTypes = { isDisabled: PropTypes.bool }
-Button.defaultProps = { isDisabled: false }
+export default Button

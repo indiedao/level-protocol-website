@@ -1,14 +1,14 @@
-import { expect } from 'chai'
-import { ethers } from 'hardhat'
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
 let contract
 let addr1
 let addr2
 let addr3
 
-describe('(ERC-721) $LEVEL token', () => {
+describe('(ERC-721) $LVL token', () => {
   beforeEach(async () => {
-    const Contract = await ethers.getContractFactory('Level')
+    const Contract = await ethers.getContractFactory('LvlV1')
     contract = await Contract.deploy()
     await contract.deployed()
     const [, a1, a2, a3] = await ethers.getSigners()
@@ -20,8 +20,8 @@ describe('(ERC-721) $LEVEL token', () => {
   it('should be initialized with a name and symbol', async () => {
     const name = await contract.name()
     const symbol = await contract.symbol()
-    expect(name).to.equal('Level')
-    expect(symbol).to.equal('LEVEL')
+    expect(name).to.equal('Lvl')
+    expect(symbol).to.equal('LVL')
   })
 
   describe('minting', () => {
@@ -40,7 +40,7 @@ describe('(ERC-721) $LEVEL token', () => {
     it('should only allow one token per address', async () => {
       await contract.connect(addr1).mint()
       await expect(contract.connect(addr1).mint()).to.be.revertedWith(
-        'Address can only have one LEVEL token!',
+        'Address can only have one LVL token!',
       )
     })
 
@@ -84,14 +84,14 @@ describe('(ERC-721) $LEVEL token', () => {
     it('should initialize base URI to the correct gateway', async () => {
       await contract.mint()
       const uri = await contract.tokenURI(0)
-      expect(uri).to.equal('https://level.2c.io/api/token/0')
+      expect(uri).to.equal('https://lvl.2c.io/api/token/0')
     })
 
     it('should allow owner to change base URI', async () => {
       // Mint token:
       await contract.mint()
       const uri = await contract.tokenURI(0)
-      expect(uri).to.equal('https://level.2c.io/api/token/0')
+      expect(uri).to.equal('https://lvl.2c.io/api/token/0')
       // Change base URI:
       await contract.setBaseURI('https://newapi.2c.io/api/token/')
       const newUri = await contract.tokenURI(0)

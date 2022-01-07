@@ -3,14 +3,14 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Skills {
+contract SkillsV1 {
   using Counters for Counters.Counter;
 
   // Tracks next skillSet ID:
   Counters.Counter private _currentSkillSetId;
 
   // _skillSets[skillSetId][ownerAddress] => 32 byte skillSet:
-  // Each skillSet contains 32 [8bit] skill values, per $LEVEL owner address:
+  // Each skillSet contains 32 [8bit] skill values, per $LVL owner address:
   mapping(uint256 => mapping(address => uint256)) private _skillSets;
 
   // Map owner to skillSet:
@@ -25,13 +25,13 @@ contract Skills {
   constructor() {}
 
   // Register a skillSet by owner:
-  function registerSkillSet(address to) public returns (uint256) {
+  function registerSkillSet(address owner) public returns (uint256) {
     // Get current skillSet ID:
     uint256 skillSetId = _currentSkillSetId.current();
     // Associate owner to skillSet:
-    _ownerBySkillSet[skillSetId] = to;
+    _ownerBySkillSet[skillSetId] = owner;
     // Associate skillSet to owner:
-    _skillSetsByOwner[to].push(skillSetId);
+    _skillSetsByOwner[owner].push(skillSetId);
     // Increment current token ID:
     _currentSkillSetId.increment();
     return skillSetId;
@@ -57,12 +57,18 @@ contract Skills {
     return _offChainURIByOwner[owner];
   }
 
+  // Only allow the owner of a skillSet to call method:
+  modifier onlySkillSetOwner(uint256 skillSet) {
+    require(msg.sender == _ownerBySkillSet[skillSet], "Auth: caller is not the owner of this skillset");
+    _;
+  }
+
   function setSkill(
     address to,
     uint256 skillSet,
     uint256 skill,
     uint256 value
-  ) public {
+  ) public onlySkillSetOwner(skillSet) {
 
     // Create inverse mask for skill offset:
     //
@@ -107,7 +113,7 @@ contract Skills {
     address to,
     uint256 skillSet,
     uint256 value
-  ) public {
+  ) public onlySkillSetOwner(skillSet) {
     _skillSets[skillSet][to] = value;
   }
 
