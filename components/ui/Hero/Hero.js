@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import useSimpleObserver from '../../hooks/useSimpleObserver'
 import useTimeout from '../../hooks/useTimeout'
-import { H1 } from '../Typography'
+import { H1, screenReaderTextStyles } from '../Typography'
 import { CHARACTER_SEQUENCE, CHARACTERS, COLUMNS, ROWS } from './characters'
 import { COLORS, COLOR_SEQUENCE } from './colors'
 import {
@@ -40,6 +40,10 @@ const Banner = styled.div`
 
 const Title = styled(H1)`
   margin: 0;
+`
+
+const ScreenReaderAbbreviation = styled.abbr`
+  ${screenReaderTextStyles}
 `
 
 const WrappedCharacter = styled.span`
@@ -153,12 +157,15 @@ const Hero = ({
 
   return (
     <HeroSection>
-      <Banner ref={heroEl}>
+      <Banner ref={heroEl} aria-hidden="true">
         {characters.map((char, index) => {
           return character(index, char, colors[index])
         })}
       </Banner>
-      <Title color="trueWhite">Level Protocol</Title>
+      <Title color="trueWhite">
+        <ScreenReaderAbbreviation title="Level">LVL</ScreenReaderAbbreviation>
+        Protocol
+      </Title>
     </HeroSection>
   )
 }
