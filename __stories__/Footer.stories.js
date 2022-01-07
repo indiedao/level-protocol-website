@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import FooterUI from '../components/ui/Footer'
 import StoryGrid from './StoryGrid'
@@ -16,9 +17,15 @@ const mutedColors = Object.keys(theme.colors).filter(colorName =>
   /^muted/.test(colorName),
 )
 
+const FooterBackground = styled.div`
+  background-color: ${props => props.backgroundColor};
+`
+
 const Template = ({ 'Background Color': backgroundColor }) => (
   <StoryGrid columns={1}>
-    <FooterUI backgroundColor={theme.colors[backgroundColor]} />
+    <FooterBackground backgroundColor={theme.colors[backgroundColor]}>
+      <FooterUI />
+    </FooterBackground>
   </StoryGrid>
 )
 

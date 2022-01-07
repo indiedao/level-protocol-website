@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { StyledLinkText, Body1 } from './Typography'
@@ -11,8 +10,7 @@ const FooterContainer = styled.div`
   align-items: center;
   padding: 8rem;
 
-  background: ${props => props.backgroundColor}
-    ${props => props.theme.halftones.md};
+  background: transparent ${props => props.theme.halftones.md};
 `
 
 const FooterLinksContainer = styled.nav`
@@ -37,8 +35,8 @@ const Copyright = styled.div`
   color: ${theme.colors.white};
 `
 
-const Footer = ({ backgroundColor }) => (
-  <FooterContainer backgroundColor={backgroundColor}>
+const Footer = () => (
+  <FooterContainer>
     <FooterLinksContainer>
       <A
         href="https://docs.google.com/document/d/1mv4vfrYRBwc8nI7jGBoqDITV-desH_UhFNA3UW8dUnw/edit#"
@@ -75,12 +73,8 @@ const Footer = ({ backgroundColor }) => (
   </FooterContainer>
 )
 
-Footer.propTypes = {
-  backgroundColor: PropTypes.string,
-}
+Footer.propTypes = {}
 
-Footer.defaultProps = {
-  backgroundColor: `${theme.colors.vibrantBlack}`,
-}
+Footer.defaultProps = {}
 
 export default Footer
