@@ -42,11 +42,6 @@ const Footer = ({ backgroundColor }) => (
   <FooterContainer backgroundColor={backgroundColor}>
     <FooterLinksContainer>
       <FooterLink>
-        <Link href="#TODO" passHref>
-          <StyledLinkText>Website</StyledLinkText>
-        </Link>
-      </FooterLink>
-      <FooterLink>
         <a
           href="https://docs.google.com/document/d/1mv4vfrYRBwc8nI7jGBoqDITV-desH_UhFNA3UW8dUnw/edit#"
           target="_blank"
@@ -57,7 +52,7 @@ const Footer = ({ backgroundColor }) => (
       </FooterLink>
       <FooterLink>
         <a
-          href="https://twitter.com/theindiedao"
+          href="https://twitter.com/lvlprotocol"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -65,9 +60,22 @@ const Footer = ({ backgroundColor }) => (
         </a>
       </FooterLink>
       <FooterLink>
-        <Link href="#TODO" passHref>
-          <StyledLinkText>Discord</StyledLinkText>
-        </Link>
+        <a
+          href="https://twitter.com/theindiedao"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <StyledLinkText>IndieDAO</StyledLinkText>
+        </a>
+      </FooterLink>
+      <FooterLink>
+        <a
+          href="https://indiedao.gitbook.io/indiedao"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <StyledLinkText>Gitbook</StyledLinkText>
+        </a>
       </FooterLink>
     </FooterLinksContainer>
     <Copyright>
