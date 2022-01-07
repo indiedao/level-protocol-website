@@ -87,7 +87,7 @@ const TrayItem = styled.li`
   align-items: center;
   padding: 0 1.6rem;
   user-select: none;
-  cursor: default;
+  cursor: ${props => props.theme.cursors.default};
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
 `
 

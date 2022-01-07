@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 import { H1Styles, H2Styles, H3Styles, H4Styles, Body1 } from './Typography'
 
 const GlobalStyles = createGlobalStyle`
+
   html, body {
     padding: 0;
     margin: 0;
@@ -15,6 +16,7 @@ const GlobalStyles = createGlobalStyle`
     :root {
       --hue: 0;
     }
+    cursor: ${props => props.theme.cursors.default}; 
   }
   body.animate {
     background-color: hsl(var(--hue), 100%, 50%);
@@ -72,6 +74,7 @@ const GlobalStyles = createGlobalStyle`
   textarea:focus,
   button:focus {
     outline: none;
+    cursor: ${props => props.theme.cursors.select};
   }
   input {
     padding: 20px;
@@ -85,6 +88,7 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     border-radius: 5px;
     border: 1px solid gray;
+    cursor: ${props => props.theme.cursors.select};
   }
   ::selection {
     background: ${props => props.theme.colors.black};

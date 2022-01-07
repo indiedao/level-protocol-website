@@ -106,7 +106,7 @@ const sharedActionStyles = css`
     font-weight: 400;
     text-overflow: ellipsis;
     overflow: hidden;
-    cursor: pointer;
+    cursor: ${theme.cursors.select};
   `}
 `
 
