@@ -28,7 +28,7 @@ Footer.args = {
 }
 
 const Story = {
-  title: 'Design System / Footer',
+  title: 'Sections / Footer',
   argTypes: {
     'Background Color': {
       options: [
