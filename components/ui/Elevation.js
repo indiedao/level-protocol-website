@@ -12,7 +12,7 @@ const Elevation = styled.div`
 `
 
 Elevation.propTypes = {
-  elevation: PropTypes.oneOfType(['12', '16', null]),
+  elevation: PropTypes.oneOf(['12', '16', null]),
 }
 
 Elevation.defaultProps = {

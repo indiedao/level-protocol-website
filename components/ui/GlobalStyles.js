@@ -1,6 +1,12 @@
 import { createGlobalStyle } from 'styled-components'
 
-import { H1Styles, H2Styles, H3Styles, H4Styles, Body1 } from './Typography'
+import {
+  H1Styles,
+  H2Styles,
+  H3Styles,
+  H4Styles,
+  body1Styles,
+} from './Typography'
 
 const GlobalStyles = createGlobalStyle`
 
@@ -16,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     :root {
       --hue: 0;
     }
-    cursor: ${props => props.theme.cursors.default}; 
+    cursor: ${props => props.theme.cursors.default};
   }
   body.animate {
     background-color: hsl(var(--hue), 100%, 50%);
@@ -51,9 +57,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   * {
+    ${body1Styles}
     box-sizing: border-box;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 500;
   }
   h1 { ${H1Styles} }
   h2 { ${H2Styles} }
@@ -61,10 +66,10 @@ const GlobalStyles = createGlobalStyle`
   h4 { ${H4Styles} }
   p {
     margin: 0;
-    ${Body1}
+    ${body1Styles}
   }
   li {
-    ${Body1}
+    ${body1Styles}
     padding: 5px 0;
     overflow: display;
   }
@@ -91,7 +96,7 @@ const GlobalStyles = createGlobalStyle`
     cursor: ${props => props.theme.cursors.select};
   }
   ::selection {
-    background: ${props => props.theme.colors.black};
+    background: ${props => props.theme.colors.vibrantGreen};
   }
 `
 

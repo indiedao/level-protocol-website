@@ -80,13 +80,13 @@ const sharedBodyStyles = css`
   `}
 `
 
-export const Body1Styles = css`
+export const body1Styles = css`
   ${sharedBodyStyles}
   font-size: 2rem;
 `
 
 export const Body1 = styled.p`
-  ${Body1Styles}
+  ${body1Styles}
 `
 
 export const Body2Styles = css`
@@ -99,15 +99,11 @@ export const Body2 = styled.p`
 `
 
 const sharedActionStyles = css`
-  ${props => css`
-    margin: 0;
-    color: ${props.theme.colors[props.color]};
-    font-family: ${props.theme.fontStacks.chicago};
-    font-weight: 400;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    cursor: ${theme.cursors.select};
-  `}
+  color: ${props => props.theme.colors[props.color]};
+  font-family: ${props => props.theme.fontStacks.chicago};
+  font-weight: 400;
+  text-decoration: none;
+  cursor: inherit;
 `
 
 export const buttonStyles = css`
@@ -115,20 +111,15 @@ export const buttonStyles = css`
   font-size: 2rem;
   line-height: 2rem;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
-
-export const StyledButtonText = styled.button`
-  ${buttonStyles}
-`
-
-StyledButtonText.propTypes = { ...propTypesColor }
-StyledButtonText.defaultProps = { color: 'trueWhite' }
 
 export const linkStyles = css`
   ${sharedActionStyles}
   font-size: inherit;
   line-height: inherit;
-  display: inline-block;
+  display: inline;
 `
 
 export const StyledLinkText = styled.span`
