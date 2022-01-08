@@ -21,6 +21,7 @@ const StateExample = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
+  grid-gap: 1.5rem;
 `
 
 const hrefExamples = {

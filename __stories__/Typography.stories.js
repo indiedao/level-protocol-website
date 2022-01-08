@@ -1,16 +1,8 @@
 import React from 'react'
-import Link from 'next/link'
 
-import {
-  H1,
-  H2,
-  H3,
-  H4,
-  Body1,
-  Body2,
-  StyledLinkText,
-} from '../components/ui/Typography'
-import Button from '../components/ui/Buttons'
+import Button from '../components/ui/Button'
+import Link from '../components/ui/Link'
+import { H1, H2, H3, H4, Body1, Body2 } from '../components/ui/Typography'
 import StoryGrid from './StoryGrid'
 
 const linkContainers = {
@@ -48,9 +40,7 @@ const Template = ({ 'Element Containing Link': linkContainerName }) => {
         <Button>Button Text</Button>
       </div>
       <LinkContainer>
-        <Link href="/#" passHref>
-          <StyledLinkText>Link Text</StyledLinkText>
-        </Link>
+        <Link href="/">Link Text</Link>
       </LinkContainer>
     </StoryGrid>
   )
