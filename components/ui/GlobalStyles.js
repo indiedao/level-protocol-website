@@ -1,10 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 
 import {
-  H1Styles,
-  H2Styles,
-  H3Styles,
-  H4Styles,
+  h1Styles,
+  h2Styles,
+  h3Styles,
+  h4Styles,
   body1Styles,
 } from './Typography'
 
@@ -60,10 +60,10 @@ const GlobalStyles = createGlobalStyle`
     ${body1Styles}
     box-sizing: border-box;
   }
-  h1 { ${H1Styles} }
-  h2 { ${H2Styles} }
-  h3 { ${H3Styles} }
-  h4 { ${H4Styles} }
+  h1 { ${h1Styles} }
+  h2 { ${h2Styles} }
+  h3 { ${h3Styles} }
+  h4 { ${h4Styles} }
   p {
     margin: 0;
     ${body1Styles}
