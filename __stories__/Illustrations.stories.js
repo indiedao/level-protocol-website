@@ -16,7 +16,7 @@ const Example = styled.div`
 
 const Template = () => (
   <StoryGrid columns={5}>
-    <SectionTitle>Illustrations</SectionTitle>
+    <SectionTitle>Small Panel Illustrations</SectionTitle>
     {Object.keys(illustrations).map(illustrationName => {
       const Illustration = illustrations[illustrationName]
       return (
