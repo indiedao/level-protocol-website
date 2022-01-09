@@ -10,7 +10,7 @@ const Example = styled.div`
   justify-self: start;
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 1rem;
+  grid-gap: 2rem;
   justify-items: center;
 `
 
