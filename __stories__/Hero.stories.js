@@ -53,7 +53,7 @@ Hero.args = {
 }
 
 const Story = {
-  title: 'Sections / Hero',
+  title: 'Marketing / Hero',
   component: Hero,
   argTypes: {
     glitchSpeed: {
