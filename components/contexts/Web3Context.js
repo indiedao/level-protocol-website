@@ -1,4 +1,4 @@
-import { useEffect, createContext, useState } from 'react'
+import { useMemo, useCallback, useEffect, createContext, useState } from 'react'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
@@ -46,63 +46,84 @@ export const Web3Provider = ({ children }) => {
     }
   }, [networkId])
 
-  async function connect() {
-    const providerInstance = await web3Modal.connect()
-    const web3Instance = new Web3(providerInstance)
+  const connect = useCallback(
+    async function connect() {
+      const providerInstance = await web3Modal.connect()
+      const web3Instance = new Web3(providerInstance)
 
-    // Set provider:
-    setProvider(providerInstance)
-    setWeb3(web3Instance)
+      // Set provider:
+      setProvider(providerInstance)
+      setWeb3(web3Instance)
 
-    // Set accounts:
-    setAccounts(await web3Instance.eth.getAccounts())
+      // Set accounts:
+      setAccounts(await web3Instance.eth.getAccounts())
 
-    // Set network:
-    setNetworkId(web3Instance.currentProvider.chainId)
+      // Set network:
+      setNetworkId(web3Instance.currentProvider.chainId)
 
-    // Initialize contracts:
-    const LvlV1Contract = new web3Instance.eth.Contract(LvlV1ABI, LvlV1Address)
-    setContracts({
-      ...contracts,
-      LvlV1Contract,
-    })
+      // Initialize contracts:
+      const LvlV1Contract = new web3Instance.eth.Contract(
+        LvlV1ABI,
+        LvlV1Address,
+      )
+      setContracts({
+        ...contracts,
+        LvlV1Contract,
+      })
 
-    // Watch for address changes:
-    providerInstance.on('accountsChanged', newAccounts => {
-      setAccounts(newAccounts)
-    })
+      // Watch for address changes:
+      providerInstance.on('accountsChanged', newAccounts => {
+        setAccounts(newAccounts)
+        setError(null)
+      })
 
-    // Watch for network changes:
-    providerInstance.on('chainChanged', newNetworkId => {
-      setNetworkId(newNetworkId)
-    })
-  }
+      // Watch for network changes:
+      providerInstance.on('chainChanged', newNetworkId => {
+        setNetworkId(newNetworkId)
+        setError(null)
+      })
+    },
+    [contracts, web3Modal],
+  )
 
-  async function disconnect() {
-    await web3Modal.clearCachedProvider()
+  const disconnect = useCallback(
+    async function disconnect() {
+      await web3Modal.clearCachedProvider()
 
-    if (provider?.disconnect && typeof provider.disconnect === 'function') {
-      await provider.disconnect()
+      if (provider?.disconnect && typeof provider.disconnect === 'function') {
+        await provider.disconnect()
+      }
+
+      setProvider(null)
+      setAccounts([])
+    },
+    [web3Modal, provider, setAccounts, setProvider],
+  )
+
+  const memoizedData = useMemo(() => {
+    return {
+      connect,
+      disconnect,
+      accounts,
+      networkId,
+      contracts,
+      web3,
+      error,
+      provider,
     }
-
-    setProvider(null)
-    setAccounts([])
-  }
+  }, [
+    accounts,
+    contracts,
+    error,
+    provider,
+    networkId,
+    web3,
+    connect,
+    disconnect,
+  ])
 
   return (
-    <Web3Context.Provider
-      value={{
-        connect,
-        disconnect,
-        accounts,
-        networkId,
-        contracts,
-        web3,
-        error,
-      }}
-    >
-      {children}
-    </Web3Context.Provider>
+    <Web3Context.Provider value={memoizedData}>{children}</Web3Context.Provider>
   )
 }
 
