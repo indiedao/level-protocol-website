@@ -96,7 +96,7 @@ const StyledButton = styled.button`
   }
 
   &[disabled] {
-    cursor: default;
+    cursor: ${props => props.theme.cursors.default};
   }
 `
 

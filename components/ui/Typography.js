@@ -14,45 +14,45 @@ const sharedHeaderStyles = css`
   `}
 `
 
-export const H1Styles = css`
+export const h1Styles = css`
   ${sharedHeaderStyles}
   font-size: 4.8rem;
   line-height: 5.6rem;
 `
 
 export const H1 = styled.h1`
-  ${H1Styles};
+  ${h1Styles};
 `
 H1.propTypes = { ...propTypesColor }
 H1.defaultProps = { color: 'trueBlack' }
 
-export const H2Styles = css`
+export const h2Styles = css`
   ${sharedHeaderStyles}
   font-size: 3.2rem;
   line-height: 4rem;
 `
 
 export const H2 = styled.h2`
-  ${H2Styles}
+  ${h2Styles}
 `
 
 H2.propTypes = { ...propTypesColor }
 H2.defaultProps = { color: 'trueBlack' }
 
-export const H3Styles = css`
+export const h3Styles = css`
   ${sharedHeaderStyles}
   font-size: 2.4rem;
   line-height: 3.2rem;
 `
 
 export const H3 = styled.h3`
-  ${H3Styles}
+  ${h3Styles}
 `
 
 H3.propTypes = { ...propTypesColor }
 H3.defaultProps = { color: 'trueBlack' }
 
-export const H4Styles = css`
+export const h4Styles = css`
   ${props => css`
     margin: 0;
     color: ${props.theme.colors[props.color]};
@@ -64,7 +64,7 @@ export const H4Styles = css`
 `
 
 export const H4 = styled.h4`
-  ${H4Styles}
+  ${h4Styles}
 `
 
 H4.propTypes = { ...propTypesColor }
@@ -80,34 +80,30 @@ const sharedBodyStyles = css`
   `}
 `
 
-export const Body1Styles = css`
+export const body1Styles = css`
   ${sharedBodyStyles}
   font-size: 2rem;
 `
 
 export const Body1 = styled.p`
-  ${Body1Styles}
+  ${body1Styles}
 `
 
-export const Body2Styles = css`
+export const body2Styles = css`
   ${sharedBodyStyles}
   font-size: 1.8rem;
 `
 
 export const Body2 = styled.p`
-  ${Body2Styles}
+  ${body2Styles}
 `
 
 const sharedActionStyles = css`
-  ${props => css`
-    margin: 0;
-    color: ${props.theme.colors[props.color]};
-    font-family: ${props.theme.fontStacks.chicago};
-    font-weight: 400;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    cursor: ${theme.cursors.select};
-  `}
+  color: ${props => props.theme.colors[props.color]};
+  font-family: ${props => props.theme.fontStacks.chicago};
+  font-weight: 400;
+  text-decoration: none;
+  cursor: inherit;
 `
 
 export const buttonStyles = css`
@@ -115,28 +111,16 @@ export const buttonStyles = css`
   font-size: 2rem;
   line-height: 2rem;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
-
-export const StyledButtonText = styled.button`
-  ${buttonStyles}
-`
-
-StyledButtonText.propTypes = { ...propTypesColor }
-StyledButtonText.defaultProps = { color: 'trueWhite' }
 
 export const linkStyles = css`
   ${sharedActionStyles}
   font-size: inherit;
   line-height: inherit;
-  display: inline-block;
+  display: inline;
 `
-
-export const StyledLinkText = styled.span`
-  ${linkStyles}
-`
-
-StyledLinkText.propTypes = { ...propTypesColor }
-StyledLinkText.defaultProps = { color: 'vibrantGreen' }
 
 export const screenReaderTextStyles = css`
   clip: rect(0 0 0 0);
