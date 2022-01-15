@@ -13,7 +13,7 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "publish": "chromatic",
     "lint": "eslint --ext .js --ext .jsx .",
