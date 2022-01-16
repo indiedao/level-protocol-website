@@ -1,5 +1,7 @@
 import { COLOR_NAMES } from '../util/theme'
-import NonInteractiveWindowUI from '../components/ui/NonInteractiveWindow'
+import NonInteractiveWindowUI, {
+  OVERFLOWS,
+} from '../components/ui/NonInteractiveWindow'
 
 const Template = ({
   caption,
@@ -32,6 +34,7 @@ NonInteractiveWindow.args = {
   contentBackgroundColor: 'vibrantCream',
   width: 50,
   height: 50,
+  overflow: 'hidden',
 }
 
 const Story = {
@@ -97,6 +100,14 @@ const Story = {
         min: 1,
         max: 100,
         step: 0.1,
+      },
+    },
+    overflow: {
+      description:
+        'Allow the content in the window to overflow the content bounds.',
+      control: {
+        options: OVERFLOWS,
+        type: 'select',
       },
     },
   },

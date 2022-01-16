@@ -5,6 +5,7 @@ import ShortUniqueId from 'short-unique-id'
 import { H3, screenReaderTextStyles } from './Typography'
 import { CloseBoldIcon, CollapseBoldIcon, ZoomBoldIcon } from './icons'
 
+export const OVERFLOWS = ['hidden', 'visible']
 const uid = new ShortUniqueId()
 
 const Container = styled.figure`
@@ -14,7 +15,7 @@ const Container = styled.figure`
   grid-template-rows: 5.2rem 1fr;
   width: ${({ width }) => width}rem;
   height: ${({ height }) => height}rem;
-  background-color: ${props => props.theme.colors.vibrantCream};
+  background-color: ${props => props.theme.colors[props.backgroundColor]};
   border: 0.4rem solid ${props => props.theme.colors.vibrantBlack};
   border-radius: 0.4rem;
   box-shadow: 1.6rem 1.6rem 0 ${props => props.theme.colors.vibrantBlack};
@@ -107,9 +108,8 @@ const Title = styled(H3)`
 `
 
 const Content = styled.div`
-  overflow: hidden;
-  background-color: ${({ backgroundColor, theme }) =>
-    theme.colors[backgroundColor || 'mutedCream']};
+  position: relative;
+  overflow: ${({ overflow }) => overflow};
 `
 
 const Caption = styled.figcaption`
@@ -121,6 +121,7 @@ const NonInteractiveWindow = ({
   children,
   contentBackgroundColor,
   height,
+  overflow,
   title,
   titleBarBackgroundColor,
   width,
@@ -128,17 +129,18 @@ const NonInteractiveWindow = ({
   const labelId = uid()
 
   return (
-    <Container height={height} width={width}>
+    <Container
+      backgroundColor={contentBackgroundColor}
+      height={height}
+      width={width}
+    >
       <TitleBar backgroundColor={titleBarBackgroundColor} aria-hidden>
         <CloseBoldIcon />
         <Title>{title}</Title>
         <ZoomBoldIcon />
         <CollapseBoldIcon />
       </TitleBar>
-      <Content
-        backgroundColor={contentBackgroundColor}
-        aria-labelledby={labelId}
-      >
+      <Content overflow={overflow} aria-labelledby={labelId}>
         {children}
       </Content>
       <Caption id={labelId}>{caption}</Caption>
@@ -151,16 +153,18 @@ NonInteractiveWindow.propTypes = {
   children: PropTypes.node.isRequired,
   contentBackgroundColor: PropTypes.string,
   height: PropTypes.number,
+  overflow: PropTypes.oneOf(OVERFLOWS),
   title: PropTypes.string.isRequired,
   titleBarBackgroundColor: PropTypes.string,
   width: PropTypes.number,
 }
 
 NonInteractiveWindow.defaultProps = {
-  height: 50,
-  width: 50,
-  titleBarBackgroundColor: 'vibrantBlue',
   contentBackgroundColor: 'mutedCream',
+  height: 50,
+  overflow: 'hidden',
+  titleBarBackgroundColor: 'vibrantBlue',
+  width: 50,
 }
 
 export default NonInteractiveWindow

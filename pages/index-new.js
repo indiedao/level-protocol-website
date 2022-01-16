@@ -16,6 +16,7 @@ import Token from '../components/ui/illustrations/Token'
 import NFTIllustration from '../components/ui/illustrations/NFT'
 import SkillzIllustration from '../components/ui/illustrations/Skillz'
 import CommunitiesIllustration from '../components/ui/illustrations/Communities'
+import IntegrationsIllustration from '../components/ui/illustrations/Integrations'
 
 const PageContent = styled.div`
   display: grid;
@@ -171,7 +172,7 @@ const Page = () => {
                   <CommunitiesIllustration />
                 </Section>
                 <Section balance="start" boundary="little">
-                  <p>Placeholder</p>
+                  <IntegrationsIllustration />
                   <TextBlock align="left">
                     <H3 color="trueWhite">Use with your favorite tools</H3>
                     <Body1>
