@@ -2,11 +2,13 @@ import SparkleUI from '../components/ui/Sparkle/Sparkle'
 
 import { COLOR_NAMES } from '../util/theme'
 
-const Template = ({ fillColor, height, strokeColor, width }) => (
+const Template = ({ fillColor, height, left, strokeColor, top, width }) => (
   <SparkleUI
     fillColor={fillColor}
     height={height}
+    left={left}
     strokeColor={strokeColor}
+    top={top}
     width={width}
   />
 )
@@ -17,6 +19,8 @@ Sparkle.args = {
   fillColor: 'transparent',
   width: 14.8,
   height: 15.1,
+  top: undefined,
+  left: undefined,
 }
 
 const Story = {
@@ -67,6 +71,28 @@ const Story = {
         max: 50,
         min: 0.1,
         step: 0.1,
+      },
+    },
+    top: {
+      description: 'Optional top positioning',
+      table: {
+        type: {
+          summary: '(in 10px rem)',
+        },
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
+    },
+    left: {
+      description: 'Optional left positioning',
+      table: {
+        type: {
+          summary: '(in 10px rem)',
+        },
+        defaultValue: {
+          summary: 'undefined',
+        },
       },
     },
   },
