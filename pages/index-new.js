@@ -14,6 +14,7 @@ import TextBlock from '../components/ui/TextBlock'
 import Panel from '../components/ui/Panel'
 import Token from '../components/ui/illustrations/Token'
 import NFTIllustration from '../components/ui/illustrations/NFT'
+import SkillzIllustration from '../components/ui/illustrations/Skillz'
 
 const PageContent = styled.div`
   display: grid;
@@ -138,7 +139,7 @@ const Page = () => {
                   </TextBlock>
                 </Section>
                 <Section balance="start" boundary="little">
-                  <p>Placeholder</p>
+                  <SkillzIllustration />
                   <TextBlock align="left">
                     <H3 color="trueWhite">Community-specific skills</H3>
                     <ul>

@@ -11,7 +11,6 @@ const Illustration = styled.div`
   position: relative;
   width: 83.1rem;
   height: 50.5rem;
-  overflow: hidden;
   background: transparent ${props => props.theme.halftones.xs};
 `
 

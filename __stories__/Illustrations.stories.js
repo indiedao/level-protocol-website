@@ -34,7 +34,7 @@ const Template = () => (
       })}
     </StoryGrid>
     <StoryGrid columns={1}>
-      <SectionTitle>Large Illustrations</SectionTitle>
+      <SectionTitle columns={1}>Large Illustrations</SectionTitle>
       {LARGE_ILLUSTRATION_NAMES.map(illustrationName => {
         const Illustration = large[illustrationName]
         return (

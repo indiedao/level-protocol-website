@@ -107,6 +107,7 @@ const Title = styled(H3)`
 `
 
 const Content = styled.div`
+  overflow: hidden;
   background-color: ${({ backgroundColor, theme }) =>
     theme.colors[backgroundColor || 'mutedCream']};
 `

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const SectionTitle = styled.h2`
-  grid-column: 1 / 6;
+  grid-column: 1 / ${props => props.columns || 6};
   font-family: ${props => props.theme.fontStacks.chicago};
   font-size: 6.4rem;
   line-height: 8.173rem;
