@@ -1,8 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import illustrations from '../components/ui/illustrations/small'
-import NFT from '../components/ui/illustrations/NFT'
+import small, {
+  SMALL_ILLUSTRATION_NAMES,
+} from '../components/ui/illustrations/small'
+import large, {
+  LARGE_ILLUSTRATION_NAMES,
+} from '../components/ui/illustrations/large'
 import { Body1 } from '../components/ui/Typography'
 import SectionTitle from './SectionTitle'
 import StoryGrid from './StoryGrid'
@@ -19,8 +23,8 @@ const Template = () => (
   <>
     <StoryGrid columns={5}>
       <SectionTitle>Small Illustrations</SectionTitle>
-      {Object.keys(illustrations).map(illustrationName => {
-        const Illustration = illustrations[illustrationName]
+      {SMALL_ILLUSTRATION_NAMES.map(illustrationName => {
+        const Illustration = small[illustrationName]
         return (
           <Example key={illustrationName}>
             <Illustration />
@@ -30,12 +34,21 @@ const Template = () => (
       })}
     </StoryGrid>
     <StoryGrid columns={1}>
-      <NFT />
+      <SectionTitle>Large Illustrations</SectionTitle>
+      {LARGE_ILLUSTRATION_NAMES.map(illustrationName => {
+        const Illustration = large[illustrationName]
+        return (
+          <Example key={illustrationName}>
+            <Illustration />
+            <Body1>{illustrationName}</Body1>
+          </Example>
+        )
+      })}
     </StoryGrid>
   </>
 )
 
-export const Small = Template.bind({})
+export const Illustrations = Template.bind({})
 
 const Story = {
   title: 'Marketing / Illustrations',
