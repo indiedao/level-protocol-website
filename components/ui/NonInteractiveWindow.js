@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import ShortUniqueId from 'short-unique-id'
 
-import { H3 } from './Typography'
+import { H3, screenReaderTextStyles } from './Typography'
 import { CloseBoldIcon, CollapseBoldIcon, ZoomBoldIcon } from './icons'
 
-const Container = styled.div`
+const uid = new ShortUniqueId()
+
+const Container = styled.figure`
   align-self: start;
   display: grid;
   grid-template-columns: 1fr;
@@ -108,7 +111,12 @@ const Content = styled.div`
     theme.colors[backgroundColor || 'mutedCream']};
 `
 
+const Caption = styled.figcaption`
+  ${screenReaderTextStyles}
+`
+
 const NonInteractiveWindow = ({
+  caption,
   children,
   contentBackgroundColor,
   height,
@@ -116,20 +124,29 @@ const NonInteractiveWindow = ({
   titleBarBackgroundColor,
   width,
 }) => {
+  const labelId = uid()
+
   return (
     <Container height={height} width={width}>
-      <TitleBar backgroundColor={titleBarBackgroundColor}>
+      <TitleBar backgroundColor={titleBarBackgroundColor} aria-hidden>
         <CloseBoldIcon />
         <Title>{title}</Title>
         <ZoomBoldIcon />
         <CollapseBoldIcon />
       </TitleBar>
-      <Content backgroundColor={contentBackgroundColor}>{children}</Content>
+      <Content
+        backgroundColor={contentBackgroundColor}
+        aria-labelledby={labelId}
+      >
+        {children}
+      </Content>
+      <Caption id={labelId}>{caption}</Caption>
     </Container>
   )
 }
 
 NonInteractiveWindow.propTypes = {
+  caption: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   contentBackgroundColor: PropTypes.string,
   height: PropTypes.number,

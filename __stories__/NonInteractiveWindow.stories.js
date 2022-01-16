@@ -2,6 +2,7 @@ import { COLOR_NAMES } from '../util/theme'
 import NonInteractiveWindowUI from '../components/ui/NonInteractiveWindow'
 
 const Template = ({
+  caption,
   children,
   contentBackgroundColor,
   height,
@@ -10,6 +11,7 @@ const Template = ({
   width,
 }) => (
   <NonInteractiveWindowUI
+    caption={caption}
     contentBackgroundColor={contentBackgroundColor}
     height={height}
     title={title}
@@ -24,6 +26,7 @@ export const NonInteractiveWindow = Template.bind({})
 
 NonInteractiveWindow.args = {
   children: 'Content appears here.',
+  caption: 'description',
   title: 'Skillz',
   titleBarBackgroundColor: 'vibrantBlue',
   contentBackgroundColor: 'vibrantCream',
@@ -35,6 +38,9 @@ const Story = {
   title: 'Design System / Non Interactive Window',
   component: NonInteractiveWindowUI,
   argTypes: {
+    caption: {
+      description: 'A description of the content for screen readers.',
+    },
     titleBarBackgroundColor: {
       description: 'The color of the title bar background.',
       table: {
