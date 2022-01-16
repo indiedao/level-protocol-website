@@ -109,6 +109,7 @@ const sharedEndScrollButtonStyles = css`
 `
 
 const Content = styled.div`
+  position: relative;
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -167,6 +168,11 @@ const Content = styled.div`
     ${sharedScrollButtonHoverStyles}
   }
 `
+
+// const Inner = styled.div`
+//   height: 60vh;
+//   max-height: 60vh;
+// `
 
 const LevelWindow = ({
   backgroundColor,
