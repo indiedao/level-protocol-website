@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 import { H2 } from './Typography'
 import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
 
-const Container = styled.div`
+const Container = styled.article`
   align-self: start;
   display: grid;
   grid-template-columns: 1fr;

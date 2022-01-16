@@ -1,8 +1,23 @@
+import styled from 'styled-components'
 import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
 
-import { H1 } from '../components/ui/Typography'
 import Public from '../components/layouts/Public'
+import MenuBar from '../components/ui/MenuBar'
+import LevelWindow from '../components/ui/LevelWindow'
+import Hero from '../components/ui/Hero/Hero'
+
+const Content = styled.div`
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  padding-top: 14.8rem;
+  width: 100%;
+`
+
+const LongContent = styled.div`
+  height: 150vh;
+`
 
 const Page = () => {
   return (
@@ -13,9 +28,22 @@ const Page = () => {
       </Head>
       <main>
         <Public>
-          <H1 color="base900">
-            <Image alt="logo" height={60} width={595} src="/images/logo.svg" />
-          </H1>
+          <MenuBar>
+            <Link href="/about">About</Link>
+            <Link href="/join">Join</Link>
+          </MenuBar>
+          <Content>
+            <LevelWindow
+              enableActions={false}
+              maxHeight="75vh"
+              title="Level Protocol"
+            >
+              <>
+                <Hero />
+                <LongContent />
+              </>
+            </LevelWindow>
+          </Content>
         </Public>
       </main>
     </div>
