@@ -19,6 +19,7 @@ const Wrapper = styled.div`
           position: absolute;
           top: ${top || 0}rem;
           left: ${left || 0}rem;
+          z-index: 5;
         `
       : ''}
 

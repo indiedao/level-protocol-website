@@ -65,7 +65,7 @@ const Integrations = () => (
     </BackgroundWindow>
     <ForegroundWindow>
       <NonInteractiveWindow
-        caption="an empty window"
+        caption="a diagram demonstrating the options for connecting your favorite community integration"
         height={47.6 + 0.4}
         overflow="visible"
         title="skillz"

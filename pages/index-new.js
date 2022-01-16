@@ -17,6 +17,7 @@ import NFTIllustration from '../components/ui/illustrations/NFT'
 import SkillzIllustration from '../components/ui/illustrations/Skillz'
 import CommunitiesIllustration from '../components/ui/illustrations/Communities'
 import IntegrationsIllustration from '../components/ui/illustrations/Integrations'
+import BenefitsIllustration from '../components/ui/illustrations/Benefits'
 
 const PageContent = styled.div`
   display: grid;
@@ -190,7 +191,7 @@ const Page = () => {
                       <li>Gain access to specific smart contract functions</li>
                     </ul>
                   </TextBlock>
-                  <p>Placeholder</p>
+                  <BenefitsIllustration />
                 </Section>
               </Article>
               <Footer />
