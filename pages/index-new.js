@@ -15,6 +15,7 @@ import Panel from '../components/ui/Panel'
 import Token from '../components/ui/illustrations/Token'
 import NFTIllustration from '../components/ui/illustrations/NFT'
 import SkillzIllustration from '../components/ui/illustrations/Skillz'
+import CommunitiesIllustration from '../components/ui/illustrations/Communities'
 
 const PageContent = styled.div`
   display: grid;
@@ -167,7 +168,7 @@ const Page = () => {
                       member’s Level token
                     </Body1>
                   </TextBlock>
-                  <p>Placeholder</p>
+                  <CommunitiesIllustration />
                 </Section>
                 <Section balance="start" boundary="little">
                   <p>Placeholder</p>

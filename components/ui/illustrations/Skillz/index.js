@@ -57,7 +57,7 @@ const Select = styled.div`
   left: ${(28.3 / WIDTH) * 100}%;
 `
 
-const NFT = () => (
+const Skillz = () => (
   <Illustration>
     <BackgroundWindow>
       <NonInteractiveWindow
@@ -122,4 +122,4 @@ const NFT = () => (
   </Illustration>
 )
 
-export default NFT
+export default Skillz
