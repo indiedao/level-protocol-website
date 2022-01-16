@@ -26,7 +26,7 @@ const HeroSection = styled.section`
   padding: calc(75 / 1159 * 100%);
   background-color: ${({ theme }) => theme.colors.vibrantBlack};
 
-  ${({ theme }) => theme.bp.lgPlus('padding: 7.5rem;')}
+  ${({ theme }) => theme.bp.lgPlus('padding: 7.5rem 1.1rem;')}
 `
 
 const Banner = styled.div`
