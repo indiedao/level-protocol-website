@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import illustrations from '../components/ui/illustrations'
+import illustrations from '../components/ui/illustrations/small'
+import NFT from '../components/ui/illustrations/NFT'
 import { Body1 } from '../components/ui/Typography'
 import SectionTitle from './SectionTitle'
 import StoryGrid from './StoryGrid'
@@ -15,18 +16,23 @@ const Example = styled.div`
 `
 
 const Template = () => (
-  <StoryGrid columns={5}>
-    <SectionTitle>Small Illustrations</SectionTitle>
-    {Object.keys(illustrations).map(illustrationName => {
-      const Illustration = illustrations[illustrationName]
-      return (
-        <Example key={illustrationName}>
-          <Illustration />
-          <Body1>{illustrationName}</Body1>
-        </Example>
-      )
-    })}
-  </StoryGrid>
+  <>
+    <StoryGrid columns={5}>
+      <SectionTitle>Small Illustrations</SectionTitle>
+      {Object.keys(illustrations).map(illustrationName => {
+        const Illustration = illustrations[illustrationName]
+        return (
+          <Example key={illustrationName}>
+            <Illustration />
+            <Body1>{illustrationName}</Body1>
+          </Example>
+        )
+      })}
+    </StoryGrid>
+    <StoryGrid columns={1}>
+      <NFT />
+    </StoryGrid>
+  </>
 )
 
 export const Small = Template.bind({})

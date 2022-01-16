@@ -1,11 +1,11 @@
 import PanelUI from '../components/ui/Panel'
 import Button from '../components/ui/Button'
-import { ILLUSTRATION_NAMES } from '../components/ui/illustrations'
+import { SMALL_ILLUSTRATION_NAMES } from '../components/ui/illustrations/small'
 
-const Template = ({ illustrationName, title, buttonText }) => (
+const Template = ({ smallIllustrationName, title, buttonText }) => (
   <PanelUI
     button={buttonText ? <Button>{buttonText}</Button> : undefined}
-    illustrationName={illustrationName}
+    smallIllustrationName={smallIllustrationName}
     title={title}
   >
     <ol>
@@ -31,7 +31,7 @@ Panel.args = {
       </li>
     </ol>
   `,
-  illustrationName: 'Community',
+  smallIllustrationName: 'Community',
   title: 'For communities',
   buttonText: 'Join waitlist',
 }
@@ -40,9 +40,9 @@ const Story = {
   title: 'Design System / Panel',
   component: PanelUI,
   argTypes: {
-    illustrationName: {
-      options: ILLUSTRATION_NAMES,
-      description: 'The illustration to use in the panel.',
+    smallIllustrationName: {
+      options: SMALL_ILLUSTRATION_NAMES,
+      description: 'The small illustration to use in the panel.',
       control: {
         type: 'select',
       },

@@ -2,7 +2,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { H3, Body2 } from './Typography'
-import illustrations, { ILLUSTRATION_NAMES } from './illustrations'
+import smallIllustrations, {
+  SMALL_ILLUSTRATION_NAMES,
+} from './illustrations/small'
 
 const Container = styled.div`
   position: relative;
@@ -62,9 +64,9 @@ const PanelContent = styled(Body2)`
   color: ${props => props.theme.colors.trueWhite};
 `
 
-const Panel = ({ button, illustrationName, title, children }) => {
-  const Illustration = illustrationName
-    ? illustrations[illustrationName]
+const Panel = ({ button, smallIllustrationName, title, children }) => {
+  const Illustration = smallIllustrationName
+    ? smallIllustrations[smallIllustrationName]
     : undefined
 
   return (
@@ -82,13 +84,13 @@ const Panel = ({ button, illustrationName, title, children }) => {
 Panel.propTypes = {
   button: PropTypes.element,
   children: PropTypes.node.isRequired,
-  illustrationName: PropTypes.oneOf(ILLUSTRATION_NAMES),
+  smallIllustrationName: PropTypes.oneOf(SMALL_ILLUSTRATION_NAMES),
   title: PropTypes.string,
 }
 
 Panel.defaultProps = {
   button: undefined,
-  illustrationName: undefined,
+  smallIllustrationName: undefined,
   title: undefined,
 }
 
