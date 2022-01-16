@@ -29,6 +29,8 @@ const PageContent = styled.div`
 
 const Article = styled.article`
   padding: 0 6.4rem;
+
+  ${props => props.theme.bp.xl('padding: 0 16.6rem;')}
 `
 
 const NFT = styled.div`
