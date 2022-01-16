@@ -13,6 +13,7 @@ import Section from '../components/ui/Section'
 import TextBlock from '../components/ui/TextBlock'
 import Panel from '../components/ui/Panel'
 import Token from '../components/ui/illustrations/Token'
+import NFTIllustration from '../components/ui/illustrations/NFT'
 
 const PageContent = styled.div`
   display: grid;
@@ -72,7 +73,7 @@ const Page = () => {
                 <Section alignment="start" balance="equal" boundary="little">
                   <Panel
                     button={<Button>Join Waitlist</Button>}
-                    illustrationName="Community"
+                    smallIllustrationName="Community"
                     title="For communities"
                   >
                     <ol>
@@ -91,7 +92,7 @@ const Page = () => {
                   </Panel>
                   <Panel
                     button={<Button>Join Waitlist</Button>}
-                    illustrationName="Member"
+                    smallIllustrationName="Member"
                     title="For members"
                   >
                     <ol>
@@ -124,7 +125,7 @@ const Page = () => {
                     </TextBlock>
                     <Button>How does this work?</Button>
                   </NFT>
-                  <p>Placeholder</p>
+                  <NFTIllustration />
                 </Section>
                 <Section boundary="lot">
                   <TextBlock>

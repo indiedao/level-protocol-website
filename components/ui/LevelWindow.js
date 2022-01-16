@@ -232,7 +232,7 @@ const LevelWindow = ({
 
 LevelWindow.propTypes = {
   backgroundColor: PropTypes.oneOf(COLOR_NAMES),
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   collapsed: PropTypes.bool,
   enableActions: PropTypes.bool,
   handleClose: PropTypes.func,
