@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
-import { ButtonStyles, LinkStyles, StyledLinkText } from './Typography'
+import Link from './Link'
+import { buttonStyles, linkStyles } from './Typography'
 import { LevelLogoIcon } from './icons'
 
 const Wrapper = styled.div`
@@ -26,11 +26,11 @@ const sharedMenuContainerStyles = css`
 `
 
 const sharedMenuItemStyles = css`
-  ${LinkStyles}
+  ${linkStyles}
   padding: 0 1.6rem;
   color: ${props => props.theme.colors.mutedBlack};
   border-right: 1px solid ${props => props.theme.colors.mutedBlack};
-  text-decoration: none;
+  text-decoration: none !important;
   white-space: nowrap;
   text-overflow: ellipsis;
   user-select: none;
@@ -57,20 +57,15 @@ const Menu = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    > *:nth-child(n + 2) {
+      margin-left: 1.24rem;
+    }
   }
 `
 
-const Brand = styled.a`
-  ${sharedMenuItemStyles}
-  display: grid;
-  grid-template-columns: repeat(2, min-content);
-  grid-gap: 1.24rem;
-
-  svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    object-fit: contain;
-  }
+const Brand = styled.span`
+  ${linkStyles}
 `
 
 const Tray = styled.ul`
@@ -81,13 +76,13 @@ const Tray = styled.ul`
 `
 
 const TrayItem = styled.li`
-  ${ButtonStyles}
+  ${buttonStyles}
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 1.6rem;
   user-select: none;
-  cursor: default;
+  cursor: ${props => props.theme.cursors.default};
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
 `
 
@@ -103,13 +98,15 @@ const MenuBar = ({ children }) => {
   return (
     <Wrapper>
       <Menu>
-        <Link href="/" passHref>
-          <Brand>
-            <>
-              <LevelLogoIcon />
-              <StyledLinkText color="mutedBlack">Level Protocol</StyledLinkText>
-            </>
-          </Brand>
+        <Link
+          activeColor="mutedBlack"
+          color="mutedBlack"
+          hoverColor="mutedBlack"
+          href="/"
+          passHref
+        >
+          <LevelLogoIcon />
+          <Brand>Level Protocol</Brand>
         </Link>
         {children}
       </Menu>
