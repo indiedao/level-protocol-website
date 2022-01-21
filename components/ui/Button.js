@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { buttonStyles } from './Typography'
-import theme from '../../util/theme'
+import { COLOR_NAMES } from '../../util/theme'
 
 const StyledButton = styled.button`
   position: relative;
@@ -74,7 +74,7 @@ const StyledButton = styled.button`
     z-index: 1;
   }
 
-  &:not([data-state]):hover:not(:active),
+  &:not([data-state]):hover:not([disabled]):not(:active),
   &[data-state='hover'] {
     cursor: ${props => props.theme.cursors.select};
     box-shadow: 1rem 1rem 0 ${props => props.theme.colors.trueBlack};
@@ -107,30 +107,30 @@ const ButtonContent = styled.span`
   cursor: inherit;
 `
 
-const Button = ({ children, color, disabled, onClick, stateOverride }) => (
+const Button = ({ children, color, disabled, onClick, state }) => (
   <StyledButton
     disabled={disabled}
     onClick={onClick}
     type="button"
-    data-state={stateOverride}
+    data-state={state}
   >
     <ButtonContent color={color}>{children}</ButtonContent>
   </StyledButton>
 )
 
 Button.propTypes = {
-  color: PropTypes.oneOf(Object.keys(theme.colors)),
+  color: PropTypes.oneOf(COLOR_NAMES),
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
-  stateOverride: PropTypes.oneOf(['resting', 'hover', 'active']),
+  state: PropTypes.oneOf(['resting', 'hover', 'active']),
 }
 
 Button.defaultProps = {
   color: 'trueWhite',
   disabled: false,
   onClick: () => null,
-  stateOverride: undefined,
+  state: undefined,
 }
 
 export default Button

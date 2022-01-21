@@ -72,6 +72,7 @@ const Tray = styled.ul`
   ${sharedMenuContainerStyles}
   margin: 0;
   padding: 0;
+  color: ${props => props.theme.colors.mutedBlack};
   list-style-type: none;
 `
 

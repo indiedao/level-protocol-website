@@ -15,7 +15,6 @@ export const selectPointerUrl =
   // eslint-disable-next-line prettier/prettier
   'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC1SURBVHgB7VfRDoAgCITW//+yZavNUBSdITbvxSlT4QaHIuSB9+jISO3N2GAwpBFckTv3JgARa8+JMJyB5cByYIc+cAU7WyVmGKCKVwVOH571c84qqBkGPtP6EAlG0EwvKGk9pOzNlwY9xLYQ+Yh7Rd3kgAZolidzgd0c13t2TveBxRzwrqH3kFaAlgPq6NUNRUi9Ic3qgFouzP0vEF+S+T9Mw8ADEROcIsJvGKg4t/jCGs7AAatGPE9tNKGbAAAAAElFTkSuQmCC\')'
 
-
 export const busyPointerUrl =
   // eslint-disable-next-line prettier/prettier
   'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACNSURBVHgB7VdBCsAwCNOx/3/ZMUbLVrYS9aAd5tSDJW0SUJlwCFjHpMBGwZi9FvqxyLOMmTUcORVAvb6KZV5+U+RViVQKqH7eLwl27UuJcAXqAacfJu8b0Ax0wiELZcH6GXByxyuwt4MjzS5UCPN1Q0N383CWBYlnQsWs5+FaaC8A5n8LR24FRvxzNywcRYYiNQ/1xLsAAAAASUVORK5CYII=\')'
@@ -70,5 +69,9 @@ const theme = {
     busy: `${busyPointerUrl}, wait`,
   },
 }
+
+export const COLOR_NAMES = Object.keys(theme.colors).filter(
+  colorName => !/00$/.test(colorName),
+)
 
 export default theme

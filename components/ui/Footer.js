@@ -21,7 +21,6 @@ const FooterLinksContainer = styled.nav`
   > *:nth-child(n + 2) {
     margin-left: 1.2rem;
     padding-left: 1.2rem;
-    border-right-width: 0;
     border-left-width: 0.1rem;
     border-left-style: solid;
     border-color: ${props => props.theme.colors.trueWhite};
@@ -63,9 +62,5 @@ const Footer = () => (
     </Copyright>
   </FooterContainer>
 )
-
-Footer.propTypes = {}
-
-Footer.defaultProps = {}
 
 export default Footer

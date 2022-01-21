@@ -1,49 +1,58 @@
 import PanelUI from '../components/ui/Panel'
-import StoryGrid from './StoryGrid'
 import Button from '../components/ui/Button'
-import illustrations from '../components/ui/illustrations'
+import { SMALL_ILLUSTRATION_NAMES } from '../components/ui/illustrations/small'
 
-const Template = ({
-  'Illustration Name': illustrationName,
-  Title: title,
-  Button: button,
-}) => {
-  const Illustration = illustrations[illustrationName]
-
-  return (
-    <StoryGrid columns={2}>
-      <PanelUI title={title} illustration={<Illustration />}>
-        <ol>
-          <li>
-            Define skills relevant for your community that members can earn
-          </li>
-          <li>Combine existing tools with your own community data</li>
-          <li>
-            Rollup all off-chain data from your community, DAO, game, or
-            metaverse into members’ Level tokens, on-chain
-          </li>
-        </ol>
-        <Button>{button}</Button>
-      </PanelUI>
-    </StoryGrid>
-  )
-}
+const Template = ({ smallIllustrationName, title, buttonText }) => (
+  <PanelUI
+    button={buttonText ? <Button>{buttonText}</Button> : undefined}
+    smallIllustrationName={smallIllustrationName}
+    title={title}
+  >
+    <ol>
+      <li>Define skills relevant for your community that members can earn</li>
+      <li>Combine existing tools with your own community data</li>
+      <li>
+        Rollup all off-chain data from your community, DAO, game, or metaverse
+        into members’ Level tokens, on-chain
+      </li>
+    </ol>
+  </PanelUI>
+)
 
 export const Panel = Template.bind({})
-
 Panel.args = {
-  'Illustration Name': 'Community',
-  Title: 'For communities',
-  Button: 'Join waitlist',
+  children: `
+    <ol>
+      <li>Define skills relevant for your community that members can earn</li>
+      <li>Combine existing tools with your own community data</li>
+      <li>
+        Rollup all off-chain data from your community, DAO, game, or metaverse
+        into members’ Level tokens, on-chain
+      </li>
+    </ol>
+  `,
+  smallIllustrationName: 'Community',
+  title: 'For communities',
+  buttonText: 'Join waitlist',
 }
 
 const Story = {
   title: 'Design System / Panel',
+  component: PanelUI,
   argTypes: {
-    'Illustration Name': {
-      options: [...Object.keys(illustrations)],
+    smallIllustrationName: {
+      options: SMALL_ILLUSTRATION_NAMES,
+      description: 'The small illustration to use in the panel.',
       control: {
         type: 'select',
+      },
+    },
+    buttonText: {
+      description: 'The text to use for the button.',
+    },
+    button: {
+      table: {
+        disable: true,
       },
     },
   },
