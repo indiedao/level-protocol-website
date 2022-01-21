@@ -1,6 +1,6 @@
 import PanelUI from '../components/ui/Panel'
 import StoryGrid from './StoryGrid'
-import Button from '../components/ui/Buttons'
+import Button from '../components/ui/Button'
 import illustrations from '../components/ui/illustrations'
 
 const Template = ({
