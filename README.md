@@ -10,7 +10,7 @@ Generated from the 2C Vercel Client Boilerplate
 
 To use Vercel Next.js, you need the following tools:
 
-- Node.js - [Install Node.js 12](https://nodejs.org/en/), including the npm package management tool. [NVM](https://github.com/nvm-sh/nvm) is recommended.
+- Node.js - [Install Node.js 14](https://nodejs.org/en/), including the npm package management tool. [NVM](https://github.com/nvm-sh/nvm) is recommended.
 
 1. Copy `.env.example` to `.env` and add values below, then source to shell.
 2. `npm run dev` - to run the Next.js app locally

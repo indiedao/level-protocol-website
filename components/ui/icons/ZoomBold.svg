@@ -1,0 +1,12 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="3.67383" y="3.67383" width="24.6538" height="24.6538" fill="#EFECD3" stroke="#302F2C" stroke-width="2.5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.92428 27.0781L7.38582 27.0781L7.38582 7.38582L27.0781 7.38582L27.0781 4.92428L7.38582 4.92428L4.92428 4.92428L4.92428 7.38582L4.92428 27.0781Z" fill="#302F2C"/>
+<g style="mix-blend-mode:hard-light" opacity="0.2">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M27.0777 4.92383H24.6161V24.6161H4.92383V27.0777H24.6161H27.0777V24.6161V4.92383Z" fill="#302F2C"/>
+</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32 0H29.5385V29.5385H0V32H29.5385H32V0Z" fill="#302F2C"/>
+<g style="mix-blend-mode:hard-light" opacity="0.2">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.000602722 29.5391L2.46214 29.5391L2.46214 2.46214L29.5391 2.46214L29.5391 0.000602722L2.46214 0.000600355L0.000605305 0.00060014L0.000602722 29.5391Z" fill="#302F2C"/>
+</g>
+<rect x="3.67383" y="3.67383" width="14.8077" height="14.8077" stroke="#302F2C" stroke-width="2.5"/>
+</svg>
