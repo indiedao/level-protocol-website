@@ -169,11 +169,6 @@ const Content = styled.div`
   }
 `
 
-// const Inner = styled.div`
-//   height: 60vh;
-//   max-height: 60vh;
-// `
-
 const LevelWindow = ({
   backgroundColor,
   children,
