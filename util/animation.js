@@ -73,7 +73,7 @@ class Animation {
     this.pyramidPosition = PYRAMID_ROTATION_OFFSET
   }
 
-  #tick() {
+  tick() {
     // Rotate pyramid:
     if (
       this.pyramidPosition <

@@ -29,7 +29,7 @@ const AStyles = css`
   margin: 0 6px;
   padding-bottom: 3px;
   border-bottom: 1px solid white;
-  cursor: pointer;
+  cursor: ${props => props.theme.cursors.select};
 
   /* Truncate long links inside of overflow hidden parents: */
   text-overflow: ellipsis;
@@ -50,7 +50,7 @@ const A = styled.a`
     background-color: ${props =>
       props.theme.colors[props.backgroundColor || 'white']};
     transition: all 500ms;
-    cursor: pointer;
+    cursor: ${props => props.theme.cursors.select};
     z-index: -1;
   }
 

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
+import { COLOR_NAMES } from '../../util/theme'
 import { H2 } from './Typography'
 import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
 
@@ -12,7 +13,7 @@ const Container = styled.div`
   grid-template-rows: 6.6rem 1fr;
   min-height: calc(6.6rem + 0.4rem * 2);
   max-height: ${({ maxHeight }) => maxHeight};
-  background-color: ${props => props.theme.colors.vibrantCream};
+  background-color: ${props => props.theme.colors[props.backgroundColor]};
   border: 0.4rem solid ${props => props.theme.colors.vibrantBlack};
   border-radius: 1.6rem;
   box-shadow: 1.6rem 1.6rem 0 ${props => props.theme.colors.vibrantBlack};
@@ -41,6 +42,7 @@ const TitleBar = styled.div`
   grid-gap: 1.6rem;
   padding: 0 1.8rem;
   color: ${props => props.theme.colors.mutedBlack};
+  background-color: ${props => props.theme.colors.vibrantCream};
   border-top-right-radius: 1.05rem;
   border-top-left-radius: 1.05rem;
   user-select: none;
@@ -65,14 +67,18 @@ const TitleBarButton = styled.button`
     object-fit: contain;
   }
 
-  &:hover:not(:disabled) {
+  &:hover:not([disabled]) {
     filter: brightness(95%);
     background-color: ${props => props.theme.colors.vibrantCream};
   }
 
-  &:active:not(:disabled) {
+  &:active:not([disabled]) {
     filter: contrast(115%);
     background-color: ${props => props.theme.colors.vibrantCream};
+  }
+
+  &[disabled] {
+    cursor: ${props => props.theme.cursors.default};
   }
 `
 
@@ -103,6 +109,7 @@ const sharedEndScrollButtonStyles = css`
 `
 
 const Content = styled.div`
+  position: relative;
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -163,6 +170,7 @@ const Content = styled.div`
 `
 
 const LevelWindow = ({
+  backgroundColor,
   children,
   collapsed,
   enableActions,
@@ -183,7 +191,12 @@ const LevelWindow = ({
 
   if (isVisible) {
     return (
-      <Container isZoomed={isZoomed} maxHeight={maxHeight} maxWidth={maxWidth}>
+      <Container
+        backgroundColor={backgroundColor}
+        isZoomed={isZoomed}
+        maxHeight={maxHeight}
+        maxWidth={maxWidth}
+      >
         <TitleBar>
           <TitleBarButton
             onClick={closeWindow}
@@ -219,7 +232,8 @@ const LevelWindow = ({
 }
 
 LevelWindow.propTypes = {
-  children: PropTypes.element.isRequired,
+  backgroundColor: PropTypes.oneOf(COLOR_NAMES),
+  children: PropTypes.node.isRequired,
   collapsed: PropTypes.bool,
   enableActions: PropTypes.bool,
   handleClose: PropTypes.func,
@@ -230,6 +244,7 @@ LevelWindow.propTypes = {
 }
 
 LevelWindow.defaultProps = {
+  backgroundColor: 'vibrantCream',
   collapsed: false,
   enableActions: true,
   handleClose: () => null,
