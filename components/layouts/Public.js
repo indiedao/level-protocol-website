@@ -8,6 +8,8 @@ const Layout = styled.div`
   grid-template-columns: 1fr;
   width: 100%;
   min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
 
   > * {
     z-index: 1;

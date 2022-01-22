@@ -8,4 +8,6 @@ const illustrations = {
   Token,
 }
 
+export const SMALL_ILLUSTRATION_NAMES = Object.keys(illustrations)
+
 export default illustrations

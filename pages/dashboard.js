@@ -6,9 +6,11 @@ import { mapCoordinapeData } from '../util/coordinape'
 import { H2 } from '../components/ui/Typography'
 import FileUploader from '../components/ui/FileUploader'
 import Web3Layout from '../components/layouts/Web3Layout'
+import Button from '../components/ui/Button'
 
 const Converter = () => {
   const [csvData, setCsvData] = useState([])
+  const [membersData, setMembersData] = useState([])
   const buttonRef = useRef()
 
   const handleOpenDialog = event => {
@@ -39,13 +41,15 @@ const Converter = () => {
   }
 
   const handleSubmit = async () => {
-    fetch('/api/harness', {
+    const result = await fetch('/api/harness', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(csvData),
     })
+
+    setMembersData(result)
   }
 
   return (
@@ -57,18 +61,27 @@ const Converter = () => {
       <main>
         <Web3Layout>
           <Layout>
-            <H2>Upload Coordinape Data</H2>
-            <FileUploader
-              title="Upload your Coordinape Data File"
-              buttonRef={buttonRef}
-              handleOnFileLoad={handleOnFileLoad}
-              handleOnError={handleOnError}
-              handleSubmit={handleSubmit}
-              handleRemoveFile={handleRemoveFile}
-              handleOnRemoveFile={handleOnRemoveFile}
-              handleOpenDialog={handleOpenDialog}
-            />
-            {csvData && <p>{JSON.stringify(csvData)}</p>}
+            {membersData ? (
+              <div>
+                <H2>Upload Coordinape Data</H2>
+                <FileUploader
+                  title="Upload your Coordinape Data File"
+                  buttonRef={buttonRef}
+                  handleOnFileLoad={handleOnFileLoad}
+                  handleOnError={handleOnError}
+                  handleRemoveFile={handleRemoveFile}
+                  handleOnRemoveFile={handleOnRemoveFile}
+                  handleOpenDialog={handleOpenDialog}
+                />
+                <H2>Update members data</H2>
+                <Button onClick={handleSubmit}>Submit</Button>
+              </div>
+            ) : (
+              <div>
+                <H2>Data Updated</H2>
+                <pre>{result}</pre>
+              </div>
+            )}
           </Layout>
         </Web3Layout>
       </main>
