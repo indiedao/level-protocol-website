@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
 import Link from 'next/link'
+import debounce from 'debounce'
 
 import Public from '../components/layouts/Public'
 import { H2, H3, H4, Body1 } from '../components/ui/Typography'
@@ -79,6 +81,25 @@ const Parallax = styled.div`
 `
 
 const Page = () => {
+  const section = useRef(null)
+  const [availableWidth, setAvailableWidth] = useState(1)
+
+  useEffect(() => {
+    const resetWidth = debounce(() => {
+      if (section.current) {
+        const { width } = section.current.getBoundingClientRect()
+        if (width < 1152 && width !== availableWidth) {
+          setAvailableWidth(width)
+        }
+      }
+    }, 250)
+
+    resetWidth()
+    window.addEventListener('resize', resetWidth)
+
+    return () => window.removeEventListener('resize', resetWidth)
+  }, [availableWidth])
+
   return (
     <div>
       <Head>
@@ -101,7 +122,7 @@ const Page = () => {
               <Parallax>
                 <Article>
                   <Hero />
-                  <Section boundary="some">
+                  <Section boundary="some" ref={section}>
                     <TextBlock>
                       <H2 color="vibrantGreen">lvl is a crypto resume</H2>
                       <H4 color="trueWhite">
@@ -168,7 +189,7 @@ const Page = () => {
                       </TextBlock>
                       <Button>How does this work?</Button>
                     </NFT>
-                    <NFTIllustration />
+                    <NFTIllustration availableWidth={availableWidth} />
                   </Section>
                   <Section boundary="lot">
                     <TextBlock>
@@ -181,7 +202,7 @@ const Page = () => {
                     </TextBlock>
                   </Section>
                   <Section balance="start" boundary="little">
-                    <SkillzIllustration />
+                    <SkillzIllustration availableWidth={availableWidth} />
                     <TextBlock align="left">
                       <H3 color="trueWhite">Community-specific skills</H3>
                       <ul>
@@ -209,10 +230,10 @@ const Page = () => {
                         member’s Level token
                       </Body1>
                     </TextBlock>
-                    <CommunitiesIllustration />
+                    <CommunitiesIllustration availableWidth={availableWidth} />
                   </Section>
                   <Section balance="start" boundary="little">
-                    <IntegrationsIllustration />
+                    <IntegrationsIllustration availableWidth={availableWidth} />
                     <TextBlock align="left">
                       <H3 color="trueWhite">Use with your favorite tools</H3>
                       <Body1>
@@ -232,7 +253,7 @@ const Page = () => {
                         </li>
                       </ul>
                     </TextBlock>
-                    <BenefitsIllustration />
+                    <BenefitsIllustration availableWidth={availableWidth} />
                   </Section>
                 </Article>
                 <Footer />
