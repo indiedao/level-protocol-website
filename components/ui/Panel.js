@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { H3, Body2 } from './Typography'
+import { H3, body2Styles } from './Typography'
 import smallIllustrations, {
   SMALL_ILLUSTRATION_NAMES,
 } from './illustrations/small'
@@ -64,7 +64,8 @@ const Container = styled.div`
   }
 `
 
-const PanelContent = styled(Body2)`
+const PanelContent = styled.div`
+  ${body2Styles}
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 0.8rem;
