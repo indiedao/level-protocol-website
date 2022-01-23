@@ -29,7 +29,7 @@ const Section = styled.section`
     }
   }}
 
-  ${({ balance }) =>
+  ${({ balance, theme }) =>
     balance === 'vertical'
       ? css`
           justify-items: center;
@@ -37,24 +37,30 @@ const Section = styled.section`
           grid-gap: 5.6rem;
         `
       : css`
-          grid-template-rows: 1fr;
-          grid-auto-flow: column;
           grid-gap: 6.4rem;
+
+          ${theme.bp.lgPlus('grid-template-rows: 1fr; grid-auto-flow: column;')}
         `}
 
-  ${({ balance }) => {
+  ${({ balance, theme }) => {
     switch (balance) {
       case 'start':
         return css`
-          grid-template-columns: 61.8% auto;
+          grid-template-columns: 1fr;
+
+          ${theme.bp.lgPlus('grid-template-columns: 61.8% auto;')}
         `
       case 'end':
         return css`
-          grid-template-columns: auto 61.8%;
+          grid-template-columns: 1fr;
+
+          ${theme.bp.lgPlus('grid-template-columns: auto 61.8%;')}
         `
       case 'equal':
         return css`
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
+
+          ${theme.bp.lgPlus('grid-template-columns: 1fr 1fr;')}
         `
       case 'auto':
       default:
