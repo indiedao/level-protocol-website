@@ -50,7 +50,7 @@ const Parallax = styled.div`
 
   position: relative;
 
-  section {
+  > * {
     position: relative;
     z-index: 1;
   }
