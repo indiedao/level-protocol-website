@@ -194,11 +194,13 @@ const Page = () => {
                           level.
                         </Body1>
                       </TextBlock>
-                      <Button>How does this work?</Button>
+                      <Button anchor="#how-lvl-works">
+                        How does this work?
+                      </Button>
                     </NFT>
                     <NFTIllustration availableWidth={availableWidth} />
                   </Section>
-                  <Section boundary="lot">
+                  <Section id="how-lvl-works" boundary="lot">
                     <TextBlock>
                       <H2 color="vibrantGreen">How It Works</H2>
                       <H4 color="trueWhite">

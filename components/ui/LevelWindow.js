@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
@@ -144,6 +144,7 @@ const Content = styled.div`
   border-top-color: ${props => props.theme.colors.vibrantBlack};
   border-bottom-left-radius: 1.05rem;
   transition-origin: center top;
+  scroll-behavior: smooth;
 
   ${({ isCollapsed, maxHeight }) =>
     isCollapsed
@@ -209,6 +210,7 @@ const LevelWindow = ({
   title,
   zoomed,
 }) => {
+  const content = useRef(null)
   const [isVisible, setVisible] = useState(true)
   const [isZoomed, setZoomed] = useState(zoomed)
   const [isCollapsed, setCollapsed] = useState(collapsed)
@@ -217,6 +219,40 @@ const LevelWindow = ({
     setVisible(!isVisible)
     handleClose()
   }
+
+  useEffect(() => {
+    let anchorNodeList
+
+    const handleAnchorScroll = event => {
+      if (content.current) {
+        const { currentTarget } = event
+        const href = currentTarget.getAttribute('data-anchor') || ''
+        const hash = href.split('#').pop()
+        const destinationNode = document.getElementById(hash)
+        if (destinationNode) {
+          event.preventDefault()
+          const { top } = destinationNode.getBoundingClientRect()
+          content.current.scrollTop += top - 60
+          window.history.pushState({}, href)
+          return false
+        }
+      }
+      return null
+    }
+
+    if (content.current) {
+      anchorNodeList = content.current.querySelectorAll('button[data-anchor]')
+      anchorNodeList.forEach(buttonNode => {
+        buttonNode.addEventListener('click', handleAnchorScroll)
+      })
+    }
+
+    return () => {
+      anchorNodeList.forEach(buttonNode => {
+        buttonNode.removeEventListener('click', handleAnchorScroll)
+      })
+    }
+  }, [children])
 
   if (isVisible) {
     return (
@@ -250,7 +286,7 @@ const LevelWindow = ({
             <CollapseIcon />
           </TitleBarButton>
         </TitleBar>
-        <Content isCollapsed={isCollapsed} maxHeight={maxHeight}>
+        <Content isCollapsed={isCollapsed} maxHeight={maxHeight} ref={content}>
           {children}
         </Content>
       </Container>

@@ -107,11 +107,12 @@ const ButtonContent = styled.span`
   cursor: inherit;
 `
 
-const Button = ({ children, color, disabled, onClick, state }) => (
+const Button = ({ anchor, children, color, disabled, onClick, state }) => (
   <StyledButton
     disabled={disabled}
     onClick={onClick}
     type="button"
+    data-anchor={anchor}
     data-state={state}
   >
     <ButtonContent color={color}>{children}</ButtonContent>
@@ -119,6 +120,7 @@ const Button = ({ children, color, disabled, onClick, state }) => (
 )
 
 Button.propTypes = {
+  anchor: PropTypes.string,
   color: PropTypes.oneOf(COLOR_NAMES),
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
@@ -127,6 +129,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
+  anchor: undefined,
   color: 'trueWhite',
   disabled: false,
   onClick: () => null,
