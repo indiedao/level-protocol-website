@@ -7,12 +7,14 @@ import { H2 } from './Typography'
 import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
 
 const Container = styled.div`
+  --title-bar-height: 4.8rem;
+
   align-self: start;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 6.6rem 1fr;
+  grid-template-rows: var(--title-bar-height) 1fr;
   width: 100%;
-  min-height: calc(6.6rem + 0.4rem * 2);
+  min-height: calc(var(--title-bar-height) + 0.4rem * 2);
   max-height: ${({ maxHeight }) => maxHeight};
   background-color: ${props => props.theme.colors[props.backgroundColor]};
   border: 0.4rem solid ${props => props.theme.colors.vibrantBlack};
@@ -20,6 +22,8 @@ const Container = styled.div`
   box-shadow: 0.8rem 0.8rem 0 ${props => props.theme.colors.vibrantBlack};
   transition: width 233ms ease, max-width 233ms ease, max-height 233ms ease;
   transition-origin: center top;
+
+  ${({ theme }) => theme.bp.mdPlus(' --title-bar-height: 6.6rem; ')}
 
   ${({ theme }) =>
     theme.bp.lgPlus(
@@ -69,10 +73,12 @@ const Title = styled(H2)`
 
 const TitleBarButton = styled.button`
   padding: 0;
-  height: 4rem;
-  width: 4rem;
+  height: 2.4rem;
+  width: 2.4rem;
   border: none;
   background: none;
+
+  ${props => props.theme.bp.mdPlus(' height: 4rem; width: 4rem; ')}
 
   svg {
     width: inherit;
@@ -147,7 +153,7 @@ const Content = styled.div`
           transition: max-height 233ms ease, border-top-width 34ms ease 233ms;
         `
       : css`
-          max-height: calc(${maxHeight} - 6.6rem - 0.4rem * 2);
+          max-height: calc(${maxHeight} - var(--title-bar-height) - 0.4rem * 2);
           border-top-width: 0.4rem;
           transition: max-height 233ms ease 34ms, border-top-width 34ms ease;
         `}
