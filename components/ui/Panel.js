@@ -11,7 +11,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 2.4rem;
-  padding: 4.8rem 6.4rem 7.6rem;
+  padding: 2.4rem 2.4rem 3.6rem;
   color: white;
   background: linear-gradient(
     137.95deg,
@@ -22,8 +22,14 @@ const Container = styled.div`
   border-radius: 0.4rem 2.4rem;
   z-index: 1;
 
+  ${props => props.theme.bp.lgPlus(' padding: 4.8rem 6.4rem 7.6rem; ')}
+
   &::before,
   &::after {
+    --elevation: 0.6rem;
+
+    ${props => props.theme.bp.lgPlus(' --elevation: 1.2rem; ')}
+
     content: '';
     position: absolute;
     top: 0;
@@ -44,15 +50,16 @@ const Container = styled.div`
       rgba(0, 0, 0, 0.8) calc(57% + 2.5rem),
       rgba(0, 0, 0, 0.8) 100%
     );
-    transform: translate(1.2rem, 1.2rem);
+    transform: translate(var(--elevation), var(--elevation));
     clip-path: polygon(
-      calc(100% - 1.4rem) 0,
+      calc(100% - calc(var(--elevation) + 0.2rem)) 0,
       100% 0,
       100% 100%,
       0 100%,
-      0 calc(100% - 1.4rem),
-      calc(100% - 1.4rem) calc(100% - 1.4rem),
-      calc(100% - 1.4rem) 0
+      0 calc(100% - calc(var(--elevation) + 0.2rem)),
+      calc(100% - calc(var(--elevation) + 0.2rem))
+        calc(100% - calc(var(--elevation) + 0.2rem)),
+      calc(100% - calc(var(--elevation) + 0.2rem)) 0
     );
   }
 `

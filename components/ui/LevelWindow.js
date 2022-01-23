@@ -11,14 +11,20 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 6.6rem 1fr;
+  width: 100%;
   min-height: calc(6.6rem + 0.4rem * 2);
   max-height: ${({ maxHeight }) => maxHeight};
   background-color: ${props => props.theme.colors[props.backgroundColor]};
   border: 0.4rem solid ${props => props.theme.colors.vibrantBlack};
   border-radius: 1.6rem;
-  box-shadow: 1.6rem 1.6rem 0 ${props => props.theme.colors.vibrantBlack};
-  transition: width 233ms ease, max-width 233ms ease;
+  box-shadow: 0.8rem 0.8rem 0 ${props => props.theme.colors.vibrantBlack};
+  transition: width 233ms ease, max-width 233ms ease, max-height 233ms ease;
   transition-origin: center top;
+
+  ${({ theme }) =>
+    theme.bp.lgPlus(
+      ` box-shadow: 1.6rem 1.6rem 0 ${theme.colors.vibrantBlack}; `,
+    )}
 
   ${({ isZoomed, maxWidth, theme: { bp } }) =>
     isZoomed
@@ -27,8 +33,6 @@ const Container = styled.div`
           max-width: ${maxWidth};
         `
       : css`
-          ${bp.sm(' width: 80vw; max-width: 60rem; ')}
-          ${bp.md(' width: 60rem; max-width: 120rem; ')}
           ${bp.lg(' width: 120rem; max-width: 156rem; ')}
           ${bp.xl(' width: 144rem; max-width: 80vw; ')}
         `}
@@ -36,7 +40,7 @@ const Container = styled.div`
 
 const TitleBar = styled.div`
   display: grid;
-  grid-template-columns: min-content 1fr min-content min-content;
+  grid-template-columns: min-content 1fr;
   justify-items: center;
   align-items: center;
   grid-gap: 1.6rem;
@@ -46,6 +50,15 @@ const TitleBar = styled.div`
   border-top-right-radius: 1.05rem;
   border-top-left-radius: 1.05rem;
   user-select: none;
+
+  ${props =>
+    props.theme.bp.lgPlus(
+      ' grid-template-columns: min-content 1fr min-content min-content; ',
+    )}
+
+  > button:not(:first-child) {
+    ${props => props.theme.bp.sm(' display: none; ')}
+  }
 `
 
 const Title = styled(H2)`
@@ -85,9 +98,11 @@ const TitleBarButton = styled.button`
 const sharedScrollButtonStyles = css`
   display: block;
   width: inherit;
-  height: 4.4rem;
+  height: 2.2rem;
   background-color: ${props => props.theme.colors.vibrantBlack};
   background-repeat: no-repeat, no-repeat;
+
+  ${props => props.theme.bp.lgPlus(' height: 4.4rem; ')}
 `
 
 const sharedScrollButtonHoverStyles = css`
@@ -98,14 +113,20 @@ const sharedStartScrollButtonStyles = css`
   ${sharedScrollButtonStyles}
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAIAQAAAABGt0WaAAAAEUlEQVR4AWMIhQOGVXBAuSgAkMYn2b1UVnQAAAAASUVORK5CYII='), url('data:image/svg+xml;utf8,<svg fill="none" height="14" viewBox="0 0 19 14" width="19" xmlns="http://www.w3.org/2000/svg"><path d="m10.7163 1.53979 6.9155 9.58241c.716.992.0071 2.3778-1.2163 2.3778h-13.831c-1.22341 0-1.932276-1.3858-1.21633-2.3778l6.9155-9.58241c.59871-.829585 1.83393-.829585 2.43263 0z" fill="%23efecd3" stroke="%23efecd3"/></svg>');
   background-position: left bottom, center calc(50% - 0.4rem);
-  background-size: 4rem 0.4rem, 1.9rem 1.4rem;
+  background-size: 2rem 0.2rem, 0.85rem 0.7rem;
+
+  ${props =>
+    props.theme.bp.lgPlus(' background-size: 4rem 0.4rem, 1.9rem 1.4rem; ')}
 `
 
 const sharedEndScrollButtonStyles = css`
   ${sharedScrollButtonStyles}
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAIAQAAAABGt0WaAAAAEUlEQVR4AWMIhQOGVXBAuSgAkMYn2b1UVnQAAAAASUVORK5CYII='), url('data:image/svg+xml;utf8,<svg fill="none" height="14" viewBox="0 0 19 14" width="19" xmlns="http://www.w3.org/2000/svg"><path d="m10.7163 12.4602c-.5987.8296-1.83392.8296-2.43263 0l-6.9155-9.58239c-.715943-.99205-.00708-2.377812 1.21633-2.377812l13.831.000002c1.2234 0 1.9323 1.38576 1.2163 2.37781z" fill="%23efecd3" stroke="%23efecd3"/></svg>');
   background-position: left top, center calc(50% + 0.4rem);
-  background-size: 4rem 0.4rem, 1.9rem 1.4rem;
+  background-size: 2rem 0.2rem, 0.85rem 0.7rem;
+
+  ${props =>
+    props.theme.bp.lgPlus(' background-size: 4rem 0.4rem, 1.9rem 1.4rem; ')}
 `
 
 const Content = styled.div`
@@ -132,7 +153,9 @@ const Content = styled.div`
         `}
 
   ::-webkit-scrollbar {
-    width: 40px;
+    width: 20px;
+
+    ${props => props.theme.bp.lgPlus(' width: 40px; ')}
   }
 
   ::-webkit-scrollbar-track-piece {

@@ -9,7 +9,7 @@ const Section = styled.section`
   display: grid;
   align-items: ${({ alignment }) => alignment};
 
-  ${({ boundary }) => {
+  ${({ boundary, theme }) => {
     switch (boundary) {
       case 'little':
         return css`
@@ -17,11 +17,15 @@ const Section = styled.section`
         `
       case 'some':
         return css`
-          padding: 12rem 0;
+          padding: 9rem 0;
+
+          ${theme.bp.lgPlus(' padding: 12rem 0; ')}
         `
       case 'lot':
         return css`
-          padding: 26.2rem 0;
+          padding: 13.1rem 0;
+
+          ${theme.bp.lgPlus(' padding: 26.2rem 0; ')}
         `
       case 'none':
       default:
@@ -46,18 +50,21 @@ const Section = styled.section`
     switch (balance) {
       case 'start':
         return css`
+          justify-items: center;
           grid-template-columns: 1fr;
 
           ${theme.bp.lgPlus('grid-template-columns: 61.8% auto;')}
         `
       case 'end':
         return css`
+          justify-items: center;
           grid-template-columns: 1fr;
 
           ${theme.bp.lgPlus('grid-template-columns: auto 61.8%;')}
         `
       case 'equal':
         return css`
+          justify-items: center;
           grid-template-columns: 1fr;
 
           ${theme.bp.lgPlus('grid-template-columns: 1fr 1fr;')}

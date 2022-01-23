@@ -3,9 +3,6 @@ import PropTypes from 'prop-types'
 
 const ScaleWrapper = styled.div`
   position: relative;
-  width: ${({ availableWidth }) => availableWidth / 10}rem;
-  height: ${({ availableWidth, height, width }) =>
-    ((availableWidth / (width * 10)) * (height * 10)) / 10}rem;
 
   > * {
     position: absolute;
@@ -13,15 +10,27 @@ const ScaleWrapper = styled.div`
     left: 50%;
     transform-origin: left top;
     transition: transform 144ms ease;
+  }
 
-    ${({ availableWidth, width }) =>
-      availableWidth < width * 10
-        ? css`
+  ${({ availableWidth, height, width }) =>
+    availableWidth < width * 10
+      ? css`
+          width: ${availableWidth / 10}rem;
+          height: ${((availableWidth / (width * 10)) * (height * 10)) / 10}rem;
+
+          > * {
             transform: scale(${availableWidth / (width * 10)})
               translate(-50%, -50%);
-          `
-        : ''}
-  }
+          }
+        `
+      : css`
+          width: ${width}rem;
+          height: ${height}rem;
+
+          > * {
+            transform: translate(-50%, -50%);
+          }
+        `}
 `
 
 ScaleWrapper.propTypes = {

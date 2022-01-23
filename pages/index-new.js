@@ -25,13 +25,16 @@ const PageContent = styled.div`
   display: grid;
   justify-items: center;
   grid-template-columns: 1fr;
-  padding-top: 14.8rem;
+  padding: 10vh 5vw 5vh;
   width: 100%;
+
+  ${props => props.theme.bp.lgPlus('padding: 14.8rem 0 0;')}
 `
 
 const Article = styled.article`
-  padding: 0 6.4rem;
+  padding: 0 5vw;
 
+  ${props => props.theme.bp.lg('padding: 0 6.4rem;')}
   ${props => props.theme.bp.xl('padding: 0 16.6rem;')}
 `
 
@@ -88,8 +91,12 @@ const Page = () => {
     const resetWidth = debounce(() => {
       if (section.current) {
         const { width } = section.current.getBoundingClientRect()
-        if (width < 1152 && width !== availableWidth) {
-          setAvailableWidth(width)
+        if (width < 1024) {
+          if (width !== availableWidth) {
+            setAvailableWidth(width)
+          }
+        } else if (width >= 1024) {
+          setAvailableWidth(1024)
         }
       }
     }, 250)
@@ -116,7 +123,7 @@ const Page = () => {
             <LevelWindow
               backgroundColor="vibrantBlack"
               enableActions={false}
-              maxHeight="75vh"
+              maxHeight={availableWidth >= 1024 ? '75vh' : '85vh'}
               title="Level Protocol"
             >
               <Parallax>
