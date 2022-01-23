@@ -52,7 +52,7 @@ const TitleBar = styled.div`
   user-select: none;
 
   ${props =>
-    props.theme.bp.lgPlus(
+    props.theme.bp.mdPlus(
       ' grid-template-columns: min-content 1fr min-content min-content; ',
     )}
 
@@ -102,7 +102,7 @@ const sharedScrollButtonStyles = css`
   background-color: ${props => props.theme.colors.vibrantBlack};
   background-repeat: no-repeat, no-repeat;
 
-  ${props => props.theme.bp.lgPlus(' height: 4.4rem; ')}
+  ${props => props.theme.bp.mdPlus(' height: 4.4rem; ')}
 `
 
 const sharedScrollButtonHoverStyles = css`
@@ -116,7 +116,7 @@ const sharedStartScrollButtonStyles = css`
   background-size: 2rem 0.2rem, 0.85rem 0.7rem;
 
   ${props =>
-    props.theme.bp.lgPlus(' background-size: 4rem 0.4rem, 1.9rem 1.4rem; ')}
+    props.theme.bp.mdPlus(' background-size: 4rem 0.4rem, 1.9rem 1.4rem; ')}
 `
 
 const sharedEndScrollButtonStyles = css`
@@ -126,7 +126,7 @@ const sharedEndScrollButtonStyles = css`
   background-size: 2rem 0.2rem, 0.85rem 0.7rem;
 
   ${props =>
-    props.theme.bp.lgPlus(' background-size: 4rem 0.4rem, 1.9rem 1.4rem; ')}
+    props.theme.bp.mdPlus(' background-size: 4rem 0.4rem, 1.9rem 1.4rem; ')}
 `
 
 const Content = styled.div`
@@ -155,7 +155,7 @@ const Content = styled.div`
   ::-webkit-scrollbar {
     width: 20px;
 
-    ${props => props.theme.bp.lgPlus(' width: 40px; ')}
+    ${props => props.theme.bp.mdPlus(' width: 40px; ')}
   }
 
   ::-webkit-scrollbar-track-piece {
