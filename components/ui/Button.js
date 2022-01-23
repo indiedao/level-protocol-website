@@ -9,7 +9,7 @@ const StyledButton = styled.button`
   justify-self: start;
   align-self: start;
   margin: 0 auto 0 0;
-  padding: 0 2rem;
+  padding: 0.4rem 2rem;
   width: auto;
   min-height: 4.4rem;
   background-color: ${props => props.theme.colors.vibrantRed};
