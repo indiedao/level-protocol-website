@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
+import ScaleWrapper from '../ScaleWrapper'
 import NonInteractiveWindow from '../../NonInteractiveWindow'
 import Elevation from '../../Elevation'
 import Sparkle from '../../Sparkle/Sparkle'
@@ -57,69 +59,79 @@ const Select = styled.div`
   left: ${(28.3 / WIDTH) * 100}%;
 `
 
-const Skillz = () => (
-  <Illustration>
-    <BackgroundWindow>
-      <NonInteractiveWindow
-        caption="just a background"
-        height={38.9}
-        title="hidden"
-        titleBarBackgroundColor="mutedBlue"
-        width={45.5}
-      >
-        <BackgroundWindowBackground />
-      </NonInteractiveWindow>
-    </BackgroundWindow>
-    <ForegroundWindow>
-      <NonInteractiveWindow
-        caption="an illustration of skills moving between groups or organizations"
-        height={47.6}
-        title="skillz"
-        width={41.1}
-      >
+const Skillz = ({ availableWidth }) => (
+  <ScaleWrapper availableWidth={availableWidth} height={HEIGHT} width={WIDTH}>
+    <Illustration>
+      <BackgroundWindow>
+        <NonInteractiveWindow
+          caption="just a background"
+          height={38.9}
+          title="hidden"
+          titleBarBackgroundColor="mutedBlue"
+          width={45.5}
+        >
+          <BackgroundWindowBackground />
+        </NonInteractiveWindow>
+      </BackgroundWindow>
+      <ForegroundWindow>
+        <NonInteractiveWindow
+          caption="an illustration of skills moving between groups or organizations"
+          height={47.6}
+          title="skillz"
+          width={41.1}
+        >
+          <Image
+            alt=""
+            height="425"
+            src="/images/illustrations/skillz/skillz.png"
+            width="411"
+          />
+        </NonInteractiveWindow>
+      </ForegroundWindow>
+      <Avatar elevation={8} left={11.7} top={32.2}>
+        <Avatar01Svg />
+      </Avatar>
+      <Avatar elevation={8} height={12.1} left={22.9} top={29.4} width={12.1}>
+        <Avatar02Svg />
+      </Avatar>
+      <Avatar elevation={8} left={36.6} top={34.6}>
+        <Avatar03Svg />
+      </Avatar>
+      <Avatar elevation={8} left={47.8} top={31.4}>
+        <Avatar04Svg />
+      </Avatar>
+      <Select>
         <Image
           alt=""
-          height="425"
-          src="/images/illustrations/skillz/skillz.png"
-          width="411"
+          height="56"
+          src="/images/illustrations/skillz/select.png"
+          width="56"
         />
-      </NonInteractiveWindow>
-    </ForegroundWindow>
-    <Avatar elevation={8} left={11.7} top={32.2}>
-      <Avatar01Svg />
-    </Avatar>
-    <Avatar elevation={8} height={12.1} left={22.9} top={29.4} width={12.1}>
-      <Avatar02Svg />
-    </Avatar>
-    <Avatar elevation={8} left={36.6} top={34.6}>
-      <Avatar03Svg />
-    </Avatar>
-    <Avatar elevation={8} left={47.8} top={31.4}>
-      <Avatar04Svg />
-    </Avatar>
-    <Select>
-      <Image
-        alt=""
-        height="56"
-        src="/images/illustrations/skillz/select.png"
-        width="56"
+      </Select>
+      <Sparkle
+        height={7.9}
+        left={-2.6}
+        strokeColor="vibrantRed"
+        top={41.1}
+        width={7.7}
       />
-    </Select>
-    <Sparkle
-      height={7.9}
-      left={-2.6}
-      strokeColor="vibrantRed"
-      top={41.1}
-      width={7.7}
-    />
-    <Sparkle
-      height={12.2}
-      left={47.5}
-      strokeColor="vibrantGreen"
-      top={16}
-      width={11.9}
-    />
-  </Illustration>
+      <Sparkle
+        height={12.2}
+        left={47.5}
+        strokeColor="vibrantGreen"
+        top={16}
+        width={11.9}
+      />
+    </Illustration>
+  </ScaleWrapper>
 )
+
+Skillz.propTypes = {
+  availableWidth: PropTypes.number,
+}
+
+Skillz.defaultProps = {
+  availableWidth: 1152,
+}
 
 export default Skillz

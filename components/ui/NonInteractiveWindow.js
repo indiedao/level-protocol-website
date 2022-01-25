@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import ShortUniqueId from 'short-unique-id'
+import PropTypes from 'prop-types'
 
 import { H3, screenReaderTextStyles } from './Typography'
 import { CloseBoldIcon, CollapseBoldIcon, ZoomBoldIcon } from './icons'
 
 export const OVERFLOWS = ['hidden', 'visible']
-const uid = new ShortUniqueId()
 
 const Container = styled.figure`
   align-self: start;
@@ -116,6 +114,12 @@ const Caption = styled.figcaption`
   ${screenReaderTextStyles}
 `
 
+const kebabCase = string =>
+  string
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+
 const NonInteractiveWindow = ({
   caption,
   children,
@@ -126,7 +130,7 @@ const NonInteractiveWindow = ({
   titleBarBackgroundColor,
   width,
 }) => {
-  const labelId = uid()
+  const labelId = `${kebabCase(title)}-label`
 
   return (
     <Container

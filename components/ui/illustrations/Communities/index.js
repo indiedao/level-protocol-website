@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
+import ScaleWrapper from '../ScaleWrapper'
 import NonInteractiveWindow from '../../NonInteractiveWindow'
 import Sparkle from '../../Sparkle/Sparkle'
 
@@ -45,64 +47,74 @@ const Token = styled.div`
   }
 `
 
-const Communities = () => (
-  <Illustration>
-    <BackgroundWindow>
-      <NonInteractiveWindow
-        caption="an ethereal waveform-like image"
-        height={HEIGHT}
-        title="off the chain"
-        titleBarBackgroundColor="mutedBlack"
-        width={47.2}
-      >
-        <Image
-          alt=""
-          height="507"
-          src="/images/illustrations/communities/off-the-chain.png"
-          width="468"
-        />
-      </NonInteractiveWindow>
-    </BackgroundWindow>
-    <ForegroundWindow>
-      <NonInteractiveWindow
-        caption="an illustration of a retro version of the Level Protocol NFT"
-        contentBackgroundColor="mutedBlack"
-        height={39.4 + 0.4}
-        title="token"
-        width={34.1 + 0.8}
-      >
-        <Token>
+const Communities = ({ availableWidth }) => (
+  <ScaleWrapper availableWidth={availableWidth} height={HEIGHT} width={WIDTH}>
+    <Illustration>
+      <BackgroundWindow>
+        <NonInteractiveWindow
+          caption="an ethereal waveform-like image"
+          height={HEIGHT}
+          title="off the chain"
+          titleBarBackgroundColor="mutedBlack"
+          width={47.2}
+        >
           <Image
             alt=""
-            height="352"
-            src="/images/illustrations/nft/color-background.png"
-            width="298"
+            height="507"
+            src="/images/illustrations/communities/off-the-chain.png"
+            width="468"
           />
-          <Image
-            alt=""
-            height="271"
-            src="/images/illustrations/nft/nft.png"
-            width="184"
-          />
-        </Token>
-      </NonInteractiveWindow>
-    </ForegroundWindow>
-    <Sparkle
-      height={5.4}
-      left={11.4}
-      strokeColor="trueWhite"
-      top={17.1}
-      width={5.2}
-    />
-    <Sparkle
-      fillColor="trueWhite"
-      height={14.3}
-      left={49.1}
-      strokeColor="vibrantBlue"
-      top={34.4}
-      width={14}
-    />
-  </Illustration>
+        </NonInteractiveWindow>
+      </BackgroundWindow>
+      <ForegroundWindow>
+        <NonInteractiveWindow
+          caption="an illustration of a retro version of the Level Protocol NFT"
+          contentBackgroundColor="mutedBlack"
+          height={39.4 + 0.4}
+          title="token"
+          width={34.1 + 0.8}
+        >
+          <Token>
+            <Image
+              alt=""
+              height="352"
+              src="/images/illustrations/nft/color-background.png"
+              width="298"
+            />
+            <Image
+              alt=""
+              height="271"
+              src="/images/illustrations/nft/nft.png"
+              width="184"
+            />
+          </Token>
+        </NonInteractiveWindow>
+      </ForegroundWindow>
+      <Sparkle
+        height={5.4}
+        left={11.4}
+        strokeColor="trueWhite"
+        top={17.1}
+        width={5.2}
+      />
+      <Sparkle
+        fillColor="trueWhite"
+        height={14.3}
+        left={49.1}
+        strokeColor="vibrantBlue"
+        top={34.4}
+        width={14}
+      />
+    </Illustration>
+  </ScaleWrapper>
 )
+
+Communities.propTypes = {
+  availableWidth: PropTypes.number,
+}
+
+Communities.defaultProps = {
+  availableWidth: 1152,
+}
 
 export default Communities

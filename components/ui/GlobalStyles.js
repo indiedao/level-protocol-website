@@ -68,6 +68,12 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     ${body1Styles}
   }
+  ul {
+    padding-inline-start: 1.1em;
+  }
+  ol {
+    padding-inline-start: 1.25em;
+  }
   li {
     ${body1Styles}
     padding: 5px 0;

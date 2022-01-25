@@ -23,7 +23,7 @@ const HeroSection = styled.section`
   justify-items: center;
   grid-template-columns: 1fr;
   grid-gap: 0.8rem;
-  padding: calc(75 / 1159 * 100%);
+  padding: 8vw 0 1.5vw;
   background-color: ${({ theme }) => theme.colors.vibrantBlack};
 
   ${({ theme }) => theme.bp.lgPlus('padding: 7.5rem 1.1rem;')}
@@ -49,7 +49,7 @@ const ScreenReaderAbbreviation = styled.abbr`
 const WrappedCharacter = styled.span`
   color: ${({ color, theme }) => theme.colors[color || 'vibrantRed']};
   font-family: monaco, Consolas, 'Lucida Console', monospace;
-  font-size: 1.16vw;
+  font-size: 1.04vw;
   line-height: calc(1.867 / 1.4);
   user-select: none;
 
