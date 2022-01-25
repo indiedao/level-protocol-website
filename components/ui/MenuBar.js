@@ -18,6 +18,7 @@ const Wrapper = styled.div`
   left: 0;
   background-color: ${props => props.theme.colors.vibrantCream};
   box-shadow: 0 0.2rem 0 ${props => props.theme.colors.black};
+  z-index: 2;
 
   ${({ theme }) => theme.bp.mdPlus(' --menu-height: 4.8rem; ')}
 `

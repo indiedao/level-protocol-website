@@ -20,6 +20,7 @@ import SkillzIllustration from '../components/ui/illustrations/Skillz'
 import CommunitiesIllustration from '../components/ui/illustrations/Communities'
 import IntegrationsIllustration from '../components/ui/illustrations/Integrations'
 import BenefitsIllustration from '../components/ui/illustrations/Benefits'
+import { openUrl } from '../util/url'
 
 const PageContent = styled.div`
   display: grid;
@@ -117,7 +118,7 @@ const Page = () => {
         <Public>
           <MenuBar>
             <Link href="/about">About</Link>
-            <Link href="/join">Join</Link>
+            <Link href="#join-community">Join</Link>
           </MenuBar>
           <PageContent>
             <LevelWindow
@@ -139,9 +140,22 @@ const Page = () => {
                       </H4>
                     </TextBlock>
                   </Section>
-                  <Section alignment="start" balance="equal" boundary="little">
+                  <Section
+                    alignment="start"
+                    balance="equal"
+                    boundary="little"
+                    id="join-community"
+                  >
                     <Panel
-                      button={<Button>Join Waitlist</Button>}
+                      button={
+                        <Button
+                          onClick={() =>
+                            openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
+                          }
+                        >
+                          Join Waitlist
+                        </Button>
+                      }
                       smallIllustrationName="Community"
                       title="For communities"
                     >
@@ -161,7 +175,15 @@ const Page = () => {
                       </ol>
                     </Panel>
                     <Panel
-                      button={<Button>Join Waitlist</Button>}
+                      button={
+                        <Button
+                          onClick={() =>
+                            openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
+                          }
+                        >
+                          Join Waitlist
+                        </Button>
+                      }
                       smallIllustrationName="Member"
                       title="For members"
                     >
