@@ -38,7 +38,7 @@ const Container = styled.div`
         `
       : css`
           ${bp.lg(' width: 120rem; max-width: 156rem; ')}
-          ${bp.xl(' width: 144rem; max-width: 80vw; ')}
+          ${bp.xl(' width: 144rem; ')}
         `}
 `
 
