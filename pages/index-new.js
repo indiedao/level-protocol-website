@@ -117,7 +117,6 @@ const Page = () => {
       <main>
         <Public>
           <MenuBar>
-            <Link href="/about">About</Link>
             <Link href="#join-community">Join</Link>
           </MenuBar>
           <PageContent>
