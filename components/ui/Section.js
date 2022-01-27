@@ -72,6 +72,7 @@ const Section = styled.section`
         `
       case 'equal':
         return css`
+          align-items: stretch;
           justify-items: center;
           grid-template-columns: 1fr;
 

@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 
 import Link from './Link'
 import { buttonStyles, linkStyles } from './Typography'
-import { LevelLogoIcon } from './icons'
+import { LvlLogoIcon } from './icons'
 
 const Wrapper = styled.div`
   --menu-height: 3.6rem;
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   box-shadow: 0 0.2rem 0 ${props => props.theme.colors.black};
   z-index: 2;
 
-  ${({ theme }) => theme.bp.mdPlus(' --menu-height: 4.8rem; ')}
+  ${({ theme }) => theme.bp.mdPlus(' --menu-height: 4rem; ')}
 `
 
 const sharedMenuContainerStyles = css`
@@ -35,6 +35,7 @@ const sharedMenuItemStyles = css`
   padding: 0 1.6rem;
   color: ${props => props.theme.colors.mutedBlack};
   border-right: 0.1rem solid ${props => props.theme.colors.mutedBlack};
+  font-size: 1.6rem;
   text-decoration: none !important;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -53,7 +54,7 @@ const sharedMenuItemStyles = css`
 
 const Menu = styled.nav`
   ${sharedMenuContainerStyles}
-  font-size: 2rem;
+  font-size: 1.6rem;
   line-height: 2rem;
 
   a {
@@ -81,8 +82,6 @@ const Tray = styled.ul`
   padding: 0;
   color: ${props => props.theme.colors.mutedBlack};
   list-style-type: none;
-
-  ${({ theme }) => theme.bp.sm(' display: none; ')}
 `
 
 const TrayItem = styled.li`
@@ -91,9 +90,15 @@ const TrayItem = styled.li`
   justify-content: center;
   align-items: center;
   padding: 0 1.6rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
   user-select: none;
   cursor: ${props => props.theme.cursors.default};
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
+
+  &:last-child {
+    ${({ theme }) => theme.bp.sm(' display: none; ')}
+  }
 `
 
 const MenuBar = ({ children }) => {
@@ -115,7 +120,7 @@ const MenuBar = ({ children }) => {
           href="/"
           passHref
         >
-          <LevelLogoIcon />
+          <LvlLogoIcon />
           <Brand>lvl protocol</Brand>
         </Link>
         {children}

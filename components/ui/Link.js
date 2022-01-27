@@ -11,6 +11,10 @@ const sharedLinkStyles = css`
   margin: 0 auto 0 0;
   cursor: ${props => props.theme.cursors.select};
 
+  &:visited {
+    color: ${props => props.theme.colors[props.color]};
+  }
+
   &:not([data-state]):hover:not(:active),
   &[data-state='hover'] {
     color: ${props => props.theme.colors[props.hoverColor]};
