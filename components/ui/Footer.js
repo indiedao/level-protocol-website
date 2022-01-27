@@ -37,6 +37,10 @@ const Copyright = styled.div`
   text-align: center;
 `
 
+const NoBreak = styled.span`
+  white-space: nowrap;
+`
+
 const Footer = () => (
   <FooterContainer>
     <FooterLinksContainer>
@@ -63,7 +67,10 @@ const Footer = () => (
       </Link>
     </FooterLinksContainer>
     <Copyright>
-      <Body1>Copyright ©{new Date().getFullYear()} The&nbsp;IndieDAO</Body1>
+      <Body1>
+        <NoBreak>Copyright ©{new Date().getFullYear()}</NoBreak>{' '}
+        <NoBreak>The IndieDAO</NoBreak>
+      </Body1>
     </Copyright>
   </FooterContainer>
 )

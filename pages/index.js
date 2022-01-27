@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
-import Link from 'next/link'
+import NextLink from 'next/link'
 import debounce from 'debounce'
 
 import Public from '../components/layouts/Public'
 import { H2, H3, H4, Body1 } from '../components/ui/Typography'
 import Button from '../components/ui/Button'
+import Link from '../components/ui/Link'
 import MenuBar from '../components/ui/MenuBar'
 import LevelWindow from '../components/ui/LevelWindow'
 import Hero from '../components/ui/Hero/Hero'
@@ -117,13 +118,15 @@ const Page = () => {
       <main>
         <Public>
           <MenuBar>
-            <Link href="#join-community">join</Link>
+            <NextLink href="#join-community">join</NextLink>
           </MenuBar>
           <PageContent>
             <LevelWindow
               backgroundColor="vibrantBlack"
               enableActions={false}
-              maxHeight={availableWidth >= 1024 ? '75vh' : '85vh'}
+              maxHeight={
+                availableWidth >= 1024 ? 'calc(100vh - 25rem)' : '85vh'
+              }
               title="lvl protocol"
             >
               <Parallax>
@@ -232,9 +235,9 @@ const Page = () => {
                       </H4>
                       <H4 color="trueWhite">
                         lvl NFTs are{' '}
-                        <a href="https://vitalik.ca/general/2022/01/26/soulbound.html">
+                        <Link href="https://vitalik.ca/general/2022/01/26/soulbound.html">
                           &quot;Soulbound&quot;
-                        </a>{' '}
+                        </Link>{' '}
                         and lock reputation to the entity that earned it in each
                         community.
                       </H4>
