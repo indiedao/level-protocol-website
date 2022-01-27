@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 
 import Link from './Link'
 import { buttonStyles, linkStyles } from './Typography'
-import { LevelLogoIcon } from './icons'
+import { LvlLogoIcon } from './icons'
 
 const Wrapper = styled.div`
   --menu-height: 3.6rem;
@@ -120,7 +120,7 @@ const MenuBar = ({ children }) => {
           href="/"
           passHref
         >
-          <LevelLogoIcon />
+          <LvlLogoIcon />
           <Brand>lvl protocol</Brand>
         </Link>
         {children}
