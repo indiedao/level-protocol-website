@@ -2,10 +2,10 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 const origin = process.env.NEXT_PUBLIC_ORIGIN || 'https://lvlprotocol.xyz'
-const title = process.env.NEXT_PUBLIC_SITE_TITLE || 'Level Protocol'
+const title = process.env.NEXT_PUBLIC_SITE_TITLE || 'LVL Protocol'
 const description =
   process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-  'lvl is a crypto resume: Level is an on-chain reputation and skills web3 resume that highlights all of your contributions across communities, DAOs, and metaverses'
+  'lvl is a crypto resume: LVL is an on-chain reputation and skills web3 resume that highlights all of your contributions across communities, DAOs, and metaverses'
 const twitterUsername =
   process.env.NEXT_PUBLIC_TWITTER_USERNAME || 'lvlprotocol'
 
