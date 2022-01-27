@@ -68,7 +68,7 @@ const Communities = ({ availableWidth }) => (
       </BackgroundWindow>
       <ForegroundWindow>
         <NonInteractiveWindow
-          caption="an illustration of a retro version of the Level Protocol NFT"
+          caption="an illustration of a retro version of the LVL Protocol NFT"
           contentBackgroundColor="mutedBlack"
           height={39.4 + 0.4}
           title="token"

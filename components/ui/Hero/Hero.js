@@ -163,8 +163,7 @@ const Hero = ({
         })}
       </Banner>
       <Title color="trueWhite">
-        <ScreenReaderAbbreviation title="Level">LVL</ScreenReaderAbbreviation>
-        Protocol
+        <ScreenReaderAbbreviation title="Level">lvl</ScreenReaderAbbreviation>
       </Title>
     </HeroSection>
   )

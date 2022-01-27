@@ -116,7 +116,7 @@ const MenuBar = ({ children }) => {
           passHref
         >
           <LevelLogoIcon />
-          <Brand>Level Protocol</Brand>
+          <Brand>lvl protocol</Brand>
         </Link>
         {children}
       </Menu>

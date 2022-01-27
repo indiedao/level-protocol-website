@@ -1,4 +1,4 @@
-# Level Protocol Website
+# lvl protocol website
 
 Generated from the 2C Vercel Client Boilerplate
 
@@ -35,9 +35,9 @@ Commits pushed to `main` branch will automatically build and deploy the `product
 
 Local development: set values in .env
 
-| Name    | Default   | Description             |
-| ------- | --------- | ----------------------- |
-| ENV_VAR | `default` | Add description here... |
+| Name                    | Default | Description                 |
+| ----------------------- | ------- | --------------------------- |
+| CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds. |
 
 #### System Environment Variables
 
