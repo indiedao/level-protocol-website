@@ -235,7 +235,11 @@ const Page = () => {
                       </H4>
                       <H4 color="trueWhite">
                         lvl NFTs are{' '}
-                        <Link href="https://vitalik.ca/general/2022/01/26/soulbound.html">
+                        <Link
+                          href="https://vitalik.ca/general/2022/01/26/soulbound.html"
+                          target="_blank"
+                          rel="noopener"
+                        >
                           &quot;Soulbound&quot;
                         </Link>{' '}
                         and lock reputation to the entity that earned it in each
