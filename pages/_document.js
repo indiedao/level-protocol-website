@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-const origin = process.env.NEXT_PUBLIC_ORIGIN || 'https://level.2c.io'
+const origin = process.env.NEXT_PUBLIC_ORIGIN || 'https://lvlprotocol.xyz'
 const title = process.env.NEXT_PUBLIC_SITE_TITLE || 'Level Protocol'
 const description =
   process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
