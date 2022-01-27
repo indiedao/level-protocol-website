@@ -1,68 +1,113 @@
-import styled, { css } from 'styled-components'
+import { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
+import debounce from 'debounce'
 
-import { H1 } from '../components/ui/Typography'
-import Web3Layout from '../components/layouts/Web3Layout'
+import Public from '../components/layouts/Public'
+import { H2, H3, H4, Body1 } from '../components/ui/Typography'
+import Button from '../components/ui/Button'
+import MenuBar from '../components/ui/MenuBar'
+import LevelWindow from '../components/ui/LevelWindow'
+import Hero from '../components/ui/Hero/Hero'
+import Footer from '../components/ui/Footer'
+import Section from '../components/ui/Section'
+import TextBlock from '../components/ui/TextBlock'
+import Panel from '../components/ui/Panel'
+import Token from '../components/ui/illustrations/Token'
+import NFTIllustration from '../components/ui/illustrations/NFT'
+import SkillzIllustration from '../components/ui/illustrations/Skillz'
+import CommunitiesIllustration from '../components/ui/illustrations/Communities'
+import IntegrationsIllustration from '../components/ui/illustrations/Integrations'
+import BenefitsIllustration from '../components/ui/illustrations/Benefits'
+import { openUrl } from '../util/url'
 
-const Layout = styled.div`
-  margin: 0 auto;
-  max-width: 900px;
+const PageContent = styled.div`
   display: grid;
-  grid-row-gap: 40px;
-  justify-content: center;
-  padding-top: 180px;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  padding: 10vh 5vw 5vh;
+  width: 100%;
+
+  ${props => props.theme.bp.lgPlus('padding: 14.8rem 0 0;')}
 `
 
-const LinkLayout = styled.div`
-  display: flex;
-  justify-content: center;
+const Article = styled.article`
+  padding: 0 5vw;
+
+  ${props => props.theme.bp.lg('padding: 0 6.4rem;')}
+  ${props => props.theme.bp.xl('padding: 0 16.6rem;')}
 `
 
-const AStyles = css`
+const NFT = styled.div`
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  grid-gap: 2.4rem;
+
+  > * {
+    margin: 0 auto;
+  }
+`
+
+const Parallax = styled.div`
+  --parallax-top: 0;
+  --parallax-bottom: 0;
+
   position: relative;
-  font-family: 'Matter';
-  font-weight: 400;
-  font-size: 1.6rem;
-  line-height: 2rem;
-  text-decoration-line: none;
-  margin: 0 6px;
-  padding-bottom: 3px;
-  border-bottom: 1px solid white;
-  cursor: ${props => props.theme.cursors.select};
 
-  /* Truncate long links inside of overflow hidden parents: */
-  text-overflow: ellipsis;
-  display: inline-block;
-  vertical-align: middle;
-  overflow: hidden;
-  color: ${props => props.theme.colors[props.color || 'black']};
-`
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
-const A = styled.a`
-  ${AStyles}
-  ::before {
+  &::before,
+  &:after {
     content: '';
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 0%;
-    background-color: ${props =>
-      props.theme.colors[props.backgroundColor || 'white']};
-    transition: all 500ms;
-    cursor: ${props => props.theme.cursors.select};
-    z-index: -1;
+    right: 0;
+    left: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    z-index: 0;
   }
 
-  &:hover {
-    ::before {
-      content: '';
-      height: 100%;
-    }
+  &::before {
+    top: var(--parallax-top);
+  }
+
+  &::after {
+    bottom: var(--parallax-bottom);
+    height: 356.4rem;
+    background-image: url('/images/parallax.png');
   }
 `
 
-const Home = () => {
+const Page = () => {
+  const section = useRef(null)
+  const [availableWidth, setAvailableWidth] = useState(1)
+
+  useEffect(() => {
+    const resetWidth = debounce(() => {
+      if (section.current) {
+        const { width } = section.current.getBoundingClientRect()
+        if (width < 1024) {
+          if (width !== availableWidth) {
+            setAvailableWidth(width)
+          }
+        } else if (width >= 1024) {
+          setAvailableWidth(1024)
+        }
+      }
+    }, 250)
+
+    resetWidth()
+    window.addEventListener('resize', resetWidth)
+
+    return () => window.removeEventListener('resize', resetWidth)
+  }, [availableWidth])
+
   return (
     <div>
       <Head>
@@ -70,31 +115,185 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Web3Layout>
-          <Layout>
-            <H1 color="base900">
-              <Image
-                alt="logo"
-                height={60}
-                width={595}
-                src="/images/logo.svg"
-              />
-            </H1>
-            <LinkLayout>
-              <A
-                href="https://docs.google.com/document/d/1mv4vfrYRBwc8nI7jGBoqDITV-desH_UhFNA3UW8dUnw/edit#"
-                target="_blank"
-                color="base900"
-                backgroundColor="base700"
-              >
-                Read White Paper (v1.1)
-              </A>
-            </LinkLayout>
-          </Layout>
-        </Web3Layout>
+        <Public>
+          <MenuBar>
+            <Link href="#join-community">Join</Link>
+          </MenuBar>
+          <PageContent>
+            <LevelWindow
+              backgroundColor="vibrantBlack"
+              enableActions={false}
+              maxHeight={availableWidth >= 1024 ? '75vh' : '85vh'}
+              title="Level Protocol"
+            >
+              <Parallax>
+                <Article>
+                  <Hero />
+                  <Section boundary="some" ref={section}>
+                    <TextBlock>
+                      <H2 color="vibrantGreen">lvl is a crypto resume</H2>
+                      <H4 color="trueWhite">
+                        Level is an on-chain reputation and skills web3 resume
+                        that highlights all of your contributions across
+                        communities, DAOs, and metaverses
+                      </H4>
+                    </TextBlock>
+                  </Section>
+                  <Section
+                    alignment="start"
+                    balance="equal"
+                    boundary="little"
+                    id="join-community"
+                  >
+                    <Panel
+                      button={
+                        <Button
+                          onClick={() =>
+                            openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
+                          }
+                        >
+                          Join Waitlist
+                        </Button>
+                      }
+                      smallIllustrationName="Community"
+                      title="For communities"
+                    >
+                      <ol>
+                        <li>
+                          Define skills relevant for your community that members
+                          can earn
+                        </li>
+                        <li>
+                          Combine existing tools with your own community data
+                        </li>
+                        <li>
+                          Rollup all off-chain data from your community, DAO,
+                          game, or metaverse into members’ Level tokens,
+                          on-chain
+                        </li>
+                      </ol>
+                    </Panel>
+                    <Panel
+                      button={
+                        <Button
+                          onClick={() =>
+                            openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
+                          }
+                        >
+                          Join Waitlist
+                        </Button>
+                      }
+                      smallIllustrationName="Member"
+                      title="For members"
+                    >
+                      <ol>
+                        <li>
+                          Mint your Level token to start tracking your
+                          contribution, skills, and reputation
+                        </li>
+                        <li>
+                          Focus on building your contributions and reputation in
+                          your metaverses and level up your skills
+                        </li>
+                        <li>
+                          Watch your dynamic Level NFT token shift and change
+                          along with your growth
+                        </li>
+                      </ol>
+                    </Panel>
+                  </Section>
+                  <Section balance="vertical" boundary="some">
+                    <NFT>
+                      <Token />
+                      <TextBlock>
+                        <H2 color="vibrantGreen">Dynamic NFTs</H2>
+                        <Body1>
+                          Level Tokens are dynamic NFTs that showcase your
+                          earned skills in each community, combining data from
+                          any source, validated by the community, then stored
+                          on-chain so any smart contract can interact at your
+                          level.
+                        </Body1>
+                      </TextBlock>
+                      <Button anchor="#how-lvl-works">
+                        How does this work?
+                      </Button>
+                    </NFT>
+                    <NFTIllustration availableWidth={availableWidth} />
+                  </Section>
+                  <Section id="how-lvl-works" boundary="lot">
+                    <TextBlock>
+                      <H2 color="vibrantGreen">How It Works</H2>
+                      <H4 color="trueWhite">
+                        Community admins configure the skills important to them.
+                        Community members earn those skills and customize how
+                        they show up on their Level NFT.
+                      </H4>
+                    </TextBlock>
+                  </Section>
+                  <Section balance="start" boundary="little">
+                    <SkillzIllustration availableWidth={availableWidth} />
+                    <TextBlock align="left">
+                      <H3 color="trueWhite">Community-specific skills</H3>
+                      <ul>
+                        <li>
+                          Service DAOs can highlight leadership, development,
+                          and other technological skills.
+                        </li>
+                        <li>
+                          Venture DAOs would select growth strategies, community
+                          building, and analytical skills.
+                        </li>
+                        <li>
+                          For game communities, skills can be about marketing,
+                          socialization, and activity. All other metaverses can
+                          choose anything from experience to reputation!
+                        </li>
+                      </ul>
+                    </TextBlock>
+                  </Section>
+                  <Section balance="end" boundary="little">
+                    <TextBlock align="left">
+                      <H3 color="trueWhite">Communities drive growth</H3>
+                      <Body1>
+                        Communities can rollup their off-chain data into each
+                        member’s Level token
+                      </Body1>
+                    </TextBlock>
+                    <CommunitiesIllustration availableWidth={availableWidth} />
+                  </Section>
+                  <Section balance="start" boundary="little">
+                    <IntegrationsIllustration availableWidth={availableWidth} />
+                    <TextBlock align="left">
+                      <H3 color="trueWhite">Use with your favorite tools</H3>
+                      <Body1>
+                        Sourcecred, Coordinape, Tip Party, Ronin/Axie,
+                        DarkForest, and others&hellip;
+                      </Body1>
+                    </TextBlock>
+                  </Section>
+                  <Section balance="end" boundary="little">
+                    <TextBlock align="left">
+                      <H3 color="trueWhite">Member benefits</H3>
+                      <ul>
+                        <li>Display their Levels</li>
+                        <li>Gain access to new communities(via Guild.xyz)</li>
+                        <li>
+                          Gain access to specific smart contract functions
+                        </li>
+                      </ul>
+                    </TextBlock>
+                    <BenefitsIllustration availableWidth={availableWidth} />
+                  </Section>
+                </Article>
+                <Footer />
+              </Parallax>
+            </LevelWindow>
+          </PageContent>
+        </Public>
       </main>
     </div>
   )
 }
 
-export default Home
+export default Page
