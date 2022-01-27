@@ -1,14 +1,11 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-const origin = process.env.NEXT_PUBLIC_ORIGIN || 'https://level.2c.io'
-const title = process.env.NEXT_PUBLIC_SITE_TITLE || 'Level Protocol'
-const description =
-  process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-  'lvl is a crypto resume: Level is an on-chain reputation and skills web3 resume that highlights all of your contributions across communities, DAOs, and metaverses'
-const twitterUsername =
-  process.env.NEXT_PUBLIC_TWITTER_USERNAME || 'lvlprotocol'
-
+// TODO: move to constants util file
+const origin = process.env.NEXT_PUBLIC_ORIGIN
+const title = process.env.NEXT_PUBLIC_SITE_TITLE
+const description = process.env.NEXT_PUBLIC_SITE_DESCRIPTION
+const twitterUsername = process.env.NEXT_PUBLIC_TWITTER_USERNAME
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()

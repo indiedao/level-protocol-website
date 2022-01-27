@@ -4,7 +4,7 @@ import Head from 'next/head'
 const Page401 = () => (
   <div>
     <Head>
-      <title>Level Protocol | Not Found</title>
+      <title>lvl protocol | not found</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <main>

@@ -70,7 +70,7 @@ const Token = styled(Elevation)`
 const NFT = ({ availableWidth }) => (
   <ScaleWrapper availableWidth={availableWidth} height={HEIGHT} width={WIDTH}>
     <NonInteractiveWindow
-      caption="a retro OS window displays a retro version of the Level Protocol NFT"
+      caption="a retro OS window displays a retro version of the LVL Protocol NFT"
       height={5.2 + 50.5 + 0.8}
       title="Design Pro 2000"
       width={83.9}

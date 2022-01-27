@@ -111,20 +111,20 @@ const Page = () => {
   return (
     <div>
       <Head>
-        <title>Level Protocol</title>
+        <title>lvl protocol</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <Public>
           <MenuBar>
-            <Link href="#join-community">Join</Link>
+            <Link href="#join-community">join</Link>
           </MenuBar>
           <PageContent>
             <LevelWindow
               backgroundColor="vibrantBlack"
               enableActions={false}
               maxHeight={availableWidth >= 1024 ? '75vh' : '85vh'}
-              title="Level Protocol"
+              title="lvl protocol"
             >
               <Parallax>
                 <Article>
@@ -133,7 +133,7 @@ const Page = () => {
                     <TextBlock>
                       <H2 color="vibrantGreen">lvl is a crypto resume</H2>
                       <H4 color="trueWhite">
-                        Level is an on-chain reputation and skills web3 resume
+                        lvl is an on-chain reputation and skills web3 resume
                         that highlights all of your contributions across
                         communities, DAOs, and metaverses
                       </H4>
@@ -168,8 +168,7 @@ const Page = () => {
                         </li>
                         <li>
                           Rollup all off-chain data from your community, DAO,
-                          game, or metaverse into members’ Level tokens,
-                          on-chain
+                          game, or metaverse into members’ lvl tokens, on-chain
                         </li>
                       </ol>
                     </Panel>
@@ -188,7 +187,7 @@ const Page = () => {
                     >
                       <ol>
                         <li>
-                          Mint your Level token to start tracking your
+                          Mint your lvl token to start tracking your
                           contribution, skills, and reputation
                         </li>
                         <li>
@@ -196,7 +195,7 @@ const Page = () => {
                           your metaverses and level up your skills
                         </li>
                         <li>
-                          Watch your dynamic Level NFT token shift and change
+                          Watch your dynamic lvl NFT token shift and change
                           along with your growth
                         </li>
                       </ol>
@@ -208,11 +207,11 @@ const Page = () => {
                       <TextBlock>
                         <H2 color="vibrantGreen">Dynamic NFTs</H2>
                         <Body1>
-                          Level Tokens are dynamic NFTs that showcase your
-                          earned skills in each community, combining data from
-                          any source, validated by the community, then stored
+                          lvl Tokens are dynamic NFTs that showcase your earned
+                          skills in each community, combining data from any
+                          source, validated by the community, then stored
                           on-chain so any smart contract can interact at your
-                          level.
+                          lvl.
                         </Body1>
                       </TextBlock>
                       <Button anchor="#how-lvl-works">
@@ -225,9 +224,19 @@ const Page = () => {
                     <TextBlock>
                       <H2 color="vibrantGreen">How It Works</H2>
                       <H4 color="trueWhite">
-                        Community admins configure the skills important to them.
-                        Community members earn those skills and customize how
-                        they show up on their Level NFT.
+                        Community admins configure skills that are important to
+                        their community, and integrate the tools they depend on
+                        to measure each member&apos;s contributions. Community
+                        members compose their skills and reputation across
+                        different communities into their single lvl NFT.
+                      </H4>
+                      <H4 color="trueWhite">
+                        lvl NFTs are{' '}
+                        <a href="https://vitalik.ca/general/2022/01/26/soulbound.html">
+                          &quot;Soulbound&quot;
+                        </a>{' '}
+                        and lock reputation to the entity that earned it in each
+                        community.
                       </H4>
                     </TextBlock>
                   </Section>
@@ -257,7 +266,7 @@ const Page = () => {
                       <H3 color="trueWhite">Communities drive growth</H3>
                       <Body1>
                         Communities can rollup their off-chain data into each
-                        member’s Level token
+                        member’s lvl token
                       </Body1>
                     </TextBlock>
                     <CommunitiesIllustration availableWidth={availableWidth} />
@@ -265,10 +274,10 @@ const Page = () => {
                   <Section balance="start" boundary="little">
                     <IntegrationsIllustration availableWidth={availableWidth} />
                     <TextBlock align="left">
-                      <H3 color="trueWhite">Use with your favorite tools</H3>
+                      <H3 color="trueWhite">Integrate your favorite tools</H3>
                       <Body1>
-                        Sourcecred, Coordinape, Tip Party, Ronin/Axie,
-                        DarkForest, and others&hellip;
+                        Sourcecred, Coordinape, Tip Party, Github, Figma, and
+                        many others&hellip;
                       </Body1>
                     </TextBlock>
                   </Section>
@@ -276,10 +285,10 @@ const Page = () => {
                     <TextBlock align="left">
                       <H3 color="trueWhite">Member benefits</H3>
                       <ul>
-                        <li>Display their Levels</li>
-                        <li>Gain access to new communities(via Guild.xyz)</li>
+                        <li>Display your lvl</li>
+                        <li>Access to token-gated experiences</li>
                         <li>
-                          Gain access to specific smart contract functions
+                          Access to token-gated smart contract functionality
                         </li>
                       </ul>
                     </TextBlock>

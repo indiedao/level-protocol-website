@@ -45,7 +45,7 @@ const Footer = () => (
         target="_blank"
         rel="noopener"
       >
-        Whitepaper
+        Technical Specification
       </Link>
       <Link
         href="https://twitter.com/lvlprotocol"
