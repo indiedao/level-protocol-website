@@ -1,5 +1,5 @@
 import { makeFileObjects, storeFiles } from '../../util/web3Storage'
-import { getCommunities, updateCommunity } from '../../util/fauna'
+import { getCommunities } from '../../util/fauna'
 import { getSourcecredContributions } from '../../util/sourcecred'
 
 export const aggregateThirdPartyData = async (
@@ -28,7 +28,7 @@ export default async (req, res) => {
   if (req.method === 'POST') {
     try {
       const communitiesResponse = await getCommunities()
-      const { data, ref } = communitiesResponse[0]
+      const { data } = communitiesResponse[0]
       const communityData = data
       const contributions = await getSourcecredContributions()
       const coordinape = req.body
@@ -47,7 +47,6 @@ export default async (req, res) => {
         cid,
       }
 
-      await updateCommunity(ref, updatedData)
       res.statusCode = 200
       res.json({ updatedData })
     } catch (error) {

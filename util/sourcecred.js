@@ -9,15 +9,22 @@ export const getSourcecredContributions = async () => {
 
   return credGrainView
     .participants()
-    .map(x => x.identity)
+    .map(participant => participant.identity)
     .map(identity => {
-      const userWeekNode = Array.from(credGraph.nodes()).find(node =>
-        node.address.includes(identity.id),
+      const intervalStartTime = credGrainView
+        .intervals()
+        .find(
+          interval => interval.endTimeMs > new Date('8/15/2021'),
+        ).startTimeMs
+      const userWeekNode = Array.from(credGraph.nodes()).find(
+        node =>
+          node.address.includes(identity.id) &&
+          node.address.includes(intervalStartTime),
       )
-      const data = Array.from(credGraph.inNeighbors(userWeekNode.address)).map(
-        edge => credGraph.node(edge.src),
-      )
+      const contribution = Array.from(
+        credGraph.inNeighbors(userWeekNode.address),
+      ).map(edge => credGraph.node(edge.src))
 
-      return { name: identity.name, contribution: data }
+      return { name: identity.name, contribution }
     })
 }

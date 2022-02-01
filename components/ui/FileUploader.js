@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { CSVReader } from 'react-papaparse'
-import { H2, Body1 } from './Typography'
+import { H4, Body1 } from './Typography'
 import Button from './Button'
 
 const ProcessFileControlsContainer = styled.div`
@@ -18,7 +18,7 @@ const FileUploader = ({
   handleOpenDialog,
 }) => (
   <>
-    <H2>{title}</H2>
+    <H4 color="white">{title}</H4>
     <CSVReader
       ref={buttonRef}
       onFileLoad={handleOnFileLoad}
