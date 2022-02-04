@@ -24,6 +24,7 @@
     "@apollo/client": "^3.5.6",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
+    "@walletconnect/web3-provider": "^1.7.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
@@ -45,7 +46,9 @@
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3",
     "three": "^0.133.1",
-    "web3.storage": "^3.5.1"
+    "web3": "^1.6.1",
+    "web3.storage": "^3.5.1",
+    "web3modal": "^1.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -77,6 +80,7 @@
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.4.5",
     "hardhat": "^2.6.1",
+    "hardhat-abi-exporter": "^2.6.1",
     "hardhat-gas-reporter": "^1.0.4",
     "jest": "^27.4.4",
     "prettier": "^2.5.1",

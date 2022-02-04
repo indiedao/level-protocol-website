@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { ThemeProvider } from 'styled-components'
 import { ApolloProvider } from '@apollo/react-hooks'
+import { Web3Provider } from '../components/contexts/Web3Context'
 
 import { useApollo } from '../util/apolloClient'
 import theme from '../util/theme'
@@ -22,7 +23,9 @@ const MyApp = ({ Component, pageProps }) => {
           bodyBackgroundColor="mutedBlack"
         />
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
+          <Web3Provider>
+            <Component {...pageProps} />
+          </Web3Provider>
         </ApolloProvider>
       </ThemeProvider>
     </>
