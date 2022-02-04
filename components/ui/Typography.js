@@ -16,8 +16,10 @@ const sharedHeaderStyles = css`
 
 export const h1Styles = css`
   ${sharedHeaderStyles}
-  font-size: 4.8rem;
-  line-height: 5.6rem;
+  font-size: 3.2rem;
+  line-height: 4rem;
+
+  ${props => props.theme.bp.mdPlus(' font-size: 4.8rem; line-height: 5.6rem; ')}
 `
 
 export const H1 = styled.h1`
@@ -28,8 +30,10 @@ H1.defaultProps = { color: 'trueBlack' }
 
 export const h2Styles = css`
   ${sharedHeaderStyles}
-  font-size: 3.2rem;
-  line-height: 4rem;
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+
+  ${props => props.theme.bp.mdPlus(' font-size: 3.2rem; line-height: 4rem; ')}
 `
 
 export const H2 = styled.h2`
@@ -41,8 +45,10 @@ H2.defaultProps = { color: 'trueBlack' }
 
 export const h3Styles = css`
   ${sharedHeaderStyles}
-  font-size: 2.4rem;
-  line-height: 3.2rem;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+
+  ${props => props.theme.bp.mdPlus(' font-size: 2.4rem; line-height: 3.2rem; ')}
 `
 
 export const H3 = styled.h3`
@@ -58,8 +64,10 @@ export const h4Styles = css`
     color: ${props.theme.colors[props.color]};
     font-family: ${props.theme.fontStacks.geneva};
     font-weight: 400;
-    font-size: 2.4rem;
-    line-height: 3.2rem;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+
+    ${props.theme.bp.mdPlus(' font-size: 2.4rem; line-height: 3.2rem; ')}
   `}
 `
 
@@ -76,13 +84,17 @@ const sharedBodyStyles = css`
     color: ${props.theme.colors[props.color]};
     font-family: ${props.theme.fontStacks.geneva};
     font-weight: 400;
-    line-height: 2.8rem;
+    line-height: 2.4rem;
+
+    ${props.theme.bp.mdPlus(' line-height: 2.8rem; ')}
   `}
 `
 
 export const body1Styles = css`
   ${sharedBodyStyles}
-  font-size: 2rem;
+  font-size: 1.8rem;
+
+  ${props => props.theme.bp.mdPlus(' font-size: 2rem; ')}
 `
 
 export const Body1 = styled.p`
@@ -91,7 +103,9 @@ export const Body1 = styled.p`
 
 export const body2Styles = css`
   ${sharedBodyStyles}
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+
+  ${props => props.theme.bp.mdPlus(' font-size: 1.8rem; ')}
 `
 
 export const Body2 = styled.p`

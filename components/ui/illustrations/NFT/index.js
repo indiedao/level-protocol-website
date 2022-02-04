@@ -1,11 +1,16 @@
 import styled from 'styled-components'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
+import ScaleWrapper from '../ScaleWrapper'
 import NonInteractiveWindow from '../../NonInteractiveWindow'
 import Elevation from '../../Elevation'
 import Sparkle from '../../Sparkle/Sparkle'
 import NavbarSvg from './navbar.svg'
 import ScrollBarSvg from './scrollbar.svg'
+
+const WIDTH = 83.1
+const HEIGHT = 50.5
 
 const Illustration = styled.div`
   position: relative;
@@ -62,72 +67,82 @@ const Token = styled(Elevation)`
   }
 `
 
-const NFT = () => (
-  <NonInteractiveWindow
-    caption="a retro OS window displays a retro version of the Level Protocol NFT"
-    height={5.2 + 50.5 + 0.8}
-    title="Design Pro 2000"
-    width={83.9}
-  >
-    <Illustration>
-      <Pyramid>
-        <Image
-          alt=""
-          height="350"
-          src="/images/illustrations/nft/pyramid.png"
-          width="467"
+const NFT = ({ availableWidth }) => (
+  <ScaleWrapper availableWidth={availableWidth} height={HEIGHT} width={WIDTH}>
+    <NonInteractiveWindow
+      caption="a retro OS window displays a retro version of the LVL Protocol NFT"
+      height={5.2 + 50.5 + 0.8}
+      title="Design Pro 2000"
+      width={83.9}
+    >
+      <Illustration>
+        <Pyramid>
+          <Image
+            alt=""
+            height="350"
+            src="/images/illustrations/nft/pyramid.png"
+            width="467"
+          />
+        </Pyramid>
+        <Token>
+          <Image
+            alt=""
+            height="352"
+            src="/images/illustrations/nft/color-background.png"
+            width="298"
+          />
+          <Image
+            alt=""
+            height="275"
+            src="/images/illustrations/nft/nft.png"
+            width="187"
+          />
+        </Token>
+        <Toolbar>
+          <Image
+            alt=""
+            height="196"
+            src="/images/illustrations/nft/toolbar.png"
+            width="100"
+          />
+        </Toolbar>
+        <Navbar />
+        <Scrollbar />
+        <Sparkle
+          fillColor="trueWhite"
+          height={5.2}
+          left={22.8}
+          strokeColor="trueBlack"
+          top={12.6 + 2.2}
+          width={5.4}
         />
-      </Pyramid>
-      <Token>
-        <Image
-          alt=""
-          height="352"
-          src="/images/illustrations/nft/color-background.png"
-          width="298"
+        <Sparkle
+          fillColor="trueWhite"
+          height={7.9}
+          left={8.2}
+          strokeColor="trueBlack"
+          top={32.2 + 2.2}
+          width={7.7}
         />
-        <Image
-          alt=""
-          height="275"
-          src="/images/illustrations/nft/nft.png"
-          width="187"
+        <Sparkle
+          fillColor="trueWhite"
+          height={12.1}
+          left={66.2}
+          strokeColor="trueBlack"
+          top={5.1 + 2.2}
+          width={11.8}
         />
-      </Token>
-      <Toolbar>
-        <Image
-          alt=""
-          height="196"
-          src="/images/illustrations/nft/toolbar.png"
-          width="100"
-        />
-      </Toolbar>
-      <Navbar />
-      <Scrollbar />
-      <Sparkle
-        fillColor="trueWhite"
-        height={5.2}
-        left={22.8}
-        strokeColor="trueBlack"
-        top={12.6 + 2.2}
-        width={5.4}
-      />
-      <Sparkle
-        fillColor="trueWhite"
-        height={7.9}
-        left={8.2}
-        strokeColor="trueBlack"
-        top={32.2 + 2.2}
-        width={7.7}
-      />
-      <Sparkle
-        fillColor="trueWhite"
-        height={12.1}
-        left={66.2}
-        strokeColor="trueBlack"
-        top={5.1 + 2.2}
-        width={11.8}
-      />
-    </Illustration>
-  </NonInteractiveWindow>
+      </Illustration>
+    </NonInteractiveWindow>
+  </ScaleWrapper>
 )
+
+NFT.propTypes = {
+  availableWidth: PropTypes.number,
+}
+
+NFT.defaultProps = {
+  availableWidth: 1152,
+}
 
 export default NFT

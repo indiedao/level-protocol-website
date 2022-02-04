@@ -24,6 +24,7 @@ const theme = {
     sm: style => `@media only screen and (max-width: 767px) { ${style} }`,
     md: style =>
       `@media only screen and (min-width: 768px) and (max-width: 1279px) { ${style} }`,
+    mdPlus: style => `@media only screen and (min-width: 768px) { ${style} }`,
     lg: style =>
       `@media only screen and (min-width: 1280px) and (max-width: 1560px) { ${style} }`,
     lgPlus: style => `@media only screen and (min-width: 1280px) { ${style} }`,
@@ -45,10 +46,6 @@ const theme = {
     mutedBlue: '#6c7894',
     black: '#000000',
     white: '#ffffff',
-    base900: '#0d1034', // deprecated
-    base700: '#3b4472', // deprecated
-    base100: '#e1e4f0', // deprecated
-    primary100: '#cafee8', // deprecated
   },
 
   halftones: {

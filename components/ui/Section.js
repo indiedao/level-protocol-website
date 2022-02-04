@@ -9,7 +9,7 @@ const Section = styled.section`
   display: grid;
   align-items: ${({ alignment }) => alignment};
 
-  ${({ boundary }) => {
+  ${({ boundary, theme }) => {
     switch (boundary) {
       case 'little':
         return css`
@@ -17,11 +17,15 @@ const Section = styled.section`
         `
       case 'some':
         return css`
-          padding: 12rem 0;
+          padding: 9rem 0;
+
+          ${theme.bp.lgPlus(' padding: 12rem 0; ')}
         `
       case 'lot':
         return css`
-          padding: 26.2rem 0;
+          padding: 13.1rem 0;
+
+          ${theme.bp.lgPlus(' padding: 26.2rem 0; ')}
         `
       case 'none':
       default:
@@ -29,7 +33,7 @@ const Section = styled.section`
     }
   }}
 
-  ${({ balance }) =>
+  ${({ balance, theme }) =>
     balance === 'vertical'
       ? css`
           justify-items: center;
@@ -37,24 +41,42 @@ const Section = styled.section`
           grid-gap: 5.6rem;
         `
       : css`
-          grid-template-rows: 1fr;
-          grid-auto-flow: column;
           grid-gap: 6.4rem;
+
+          ${theme.bp.lgPlus(
+            ' grid-template-rows: 1fr; grid-auto-flow: column; ',
+          )}
         `}
 
-  ${({ balance }) => {
+  ${({ balance, theme }) => {
     switch (balance) {
       case 'start':
         return css`
-          grid-template-columns: 61.8% auto;
+          justify-items: center;
+          grid-template-columns: 1fr;
+
+          ${theme.bp.lgPlus(' grid-template-columns: 61.8% auto; ')}
         `
       case 'end':
         return css`
-          grid-template-columns: auto 61.8%;
+          justify-items: center;
+          grid-template-columns: 1fr;
+
+          ${theme.bp.lgPlus(' grid-template-columns: auto 61.8%; ')}
+
+          > *:last-child {
+            grid-row: 1;
+
+            ${theme.bp.lgPlus(' grid-row: auto; ')}
+          }
         `
       case 'equal':
         return css`
-          grid-template-columns: 1fr 1fr;
+          align-items: stretch;
+          justify-items: center;
+          grid-template-columns: 1fr;
+
+          ${theme.bp.lgPlus(' grid-template-columns: 1fr 1fr; ')}
         `
       case 'auto':
       default:

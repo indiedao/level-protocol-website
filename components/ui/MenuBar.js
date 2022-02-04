@@ -5,9 +5,11 @@ import styled, { css } from 'styled-components'
 
 import Link from './Link'
 import { buttonStyles, linkStyles } from './Typography'
-import { LevelLogoIcon } from './icons'
+import { LvlLogoIcon } from './icons'
 
 const Wrapper = styled.div`
+  --menu-height: 3.6rem;
+
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -15,21 +17,25 @@ const Wrapper = styled.div`
   right: 0;
   left: 0;
   background-color: ${props => props.theme.colors.vibrantCream};
-  box-shadow: 0 2px 0 ${props => props.theme.colors.black};
+  box-shadow: 0 0.2rem 0 ${props => props.theme.colors.black};
+  z-index: 2;
+
+  ${({ theme }) => theme.bp.mdPlus(' --menu-height: 4rem; ')}
 `
 
 const sharedMenuContainerStyles = css`
   display: flex;
   justify-content: center;
-  min-height: 4.8rem;
-  max-height: 4.8rem;
+  min-height: var(--menu-height);
+  max-height: var(--menu-height);
 `
 
 const sharedMenuItemStyles = css`
   ${linkStyles}
   padding: 0 1.6rem;
   color: ${props => props.theme.colors.mutedBlack};
-  border-right: 1px solid ${props => props.theme.colors.mutedBlack};
+  border-right: 0.1rem solid ${props => props.theme.colors.mutedBlack};
+  font-size: 1.6rem;
   text-decoration: none !important;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -48,7 +54,7 @@ const sharedMenuItemStyles = css`
 
 const Menu = styled.nav`
   ${sharedMenuContainerStyles}
-  font-size: 2rem;
+  font-size: 1.6rem;
   line-height: 2rem;
 
   a {
@@ -60,6 +66,8 @@ const Menu = styled.nav`
 
     > *:nth-child(n + 2) {
       margin-left: 1.24rem;
+
+      ${({ theme }) => theme.bp.sm(' display: none; ')}
     }
   }
 `
@@ -82,9 +90,15 @@ const TrayItem = styled.li`
   justify-content: center;
   align-items: center;
   padding: 0 1.6rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
   user-select: none;
   cursor: ${props => props.theme.cursors.default};
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
+
+  &:last-child {
+    ${({ theme }) => theme.bp.sm(' display: none; ')}
+  }
 `
 
 const MenuBar = ({ children }) => {
@@ -106,8 +120,8 @@ const MenuBar = ({ children }) => {
           href="/"
           passHref
         >
-          <LevelLogoIcon />
-          <Brand>Level Protocol</Brand>
+          <LvlLogoIcon />
+          <Brand>lvl protocol</Brand>
         </Link>
         {children}
       </Menu>

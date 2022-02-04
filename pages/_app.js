@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { ThemeProvider } from 'styled-components'
 import { ApolloProvider } from '@apollo/react-hooks'
+import { Web3Provider } from '../components/contexts/Web3Context'
 
 import { useApollo } from '../util/apolloClient'
 import theme from '../util/theme'
@@ -11,16 +12,20 @@ const MyApp = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <meta name="description" content="Level Procol." />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <GlobalStyles bodyColor="primary100" bodyBackgroundColor="base100" />
+        <GlobalStyles
+          bodyColor="vibrantWhite"
+          bodyBackgroundColor="mutedBlack"
+        />
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
+          <Web3Provider>
+            <Component {...pageProps} />
+          </Web3Provider>
         </ApolloProvider>
       </ThemeProvider>
     </>

@@ -15,7 +15,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contracts to deploy
-  const Lvl = await hre.ethers.getContractFactory('Lvl')
+  const Lvl = await hre.ethers.getContractFactory('LvlV1')
   const lvl = await Lvl.deploy()
   await lvl.deployed()
   console.log('Lvl deployed to:', lvl.address)
