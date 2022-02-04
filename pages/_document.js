@@ -1,6 +1,11 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
+// TODO: move to constants util file
+const origin = process.env.NEXT_PUBLIC_ORIGIN
+const title = process.env.NEXT_PUBLIC_SITE_TITLE
+const description = process.env.NEXT_PUBLIC_SITE_DESCRIPTION
+const twitterUsername = process.env.NEXT_PUBLIC_TWITTER_USERNAME
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()
@@ -82,6 +87,44 @@ export default class MyDocument extends Document {
             as="font"
             crossOrigin=""
           />
+          {['16x16', '32x32', '96x96'].map(size => (
+            <link
+              rel="icon"
+              type="image/png"
+              href={`/images/favicons/favicon-${size}.png`}
+              sizes={size}
+              key={size}
+            />
+          ))}
+          {['120x120', '152x152', '167x167', '180x180', '512x512'].map(size => (
+            <link
+              rel="apple-touch-icon"
+              type="image/png"
+              href={`/images/favicons/apple-touch-icon-${size}.png`}
+              sizes={size}
+              key={size}
+            />
+          ))}
+          <meta name="msapplication-TileColor" content="#d7d7d7" />
+          <meta name="msapplication-TileImage" content="/browserconfig.xml" />
+          <meta
+            name="twitter:image"
+            content={`${origin}/images/favicons/share.png`}
+          />
+          <meta
+            property="og:image"
+            content={`${origin}/images/favicons/share.png`}
+          />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta name="description" content={description} />
+          <meta name="twitter:description" content={description} />
+          <meta property="og:description" content={description} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content={title} />
+          <meta property="og:url" content={origin} />
+          <meta name="twitter:site" content={twitterUsername} />
+          <meta name="twitter:card" content="summary_large_image" />
         </Head>
         <body>
           <Main />

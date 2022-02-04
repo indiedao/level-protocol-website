@@ -12,14 +12,16 @@ const MyApp = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <meta name="description" content="Level Procol." />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <GlobalStyles bodyColor="primary100" bodyBackgroundColor="base100" />
+        <GlobalStyles
+          bodyColor="vibrantWhite"
+          bodyBackgroundColor="mutedBlack"
+        />
         <ApolloProvider client={apolloClient}>
           <Web3Provider>
             <Component {...pageProps} />

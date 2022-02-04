@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
-import { ButtonStyles, LinkStyles, StyledLinkText } from './Typography'
-import { LevelLogoIcon } from './icons'
+import Link from './Link'
+import { buttonStyles, linkStyles } from './Typography'
+import { LvlLogoIcon } from './icons'
 
 const Wrapper = styled.div`
+  --menu-height: 3.6rem;
+
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -15,22 +17,26 @@ const Wrapper = styled.div`
   right: 0;
   left: 0;
   background-color: ${props => props.theme.colors.vibrantCream};
-  box-shadow: 0 2px 0 ${props => props.theme.colors.black};
+  box-shadow: 0 0.2rem 0 ${props => props.theme.colors.black};
+  z-index: 2;
+
+  ${({ theme }) => theme.bp.mdPlus(' --menu-height: 4rem; ')}
 `
 
 const sharedMenuContainerStyles = css`
   display: flex;
   justify-content: center;
-  min-height: 4.8rem;
-  max-height: 4.8rem;
+  min-height: var(--menu-height);
+  max-height: var(--menu-height);
 `
 
 const sharedMenuItemStyles = css`
-  ${LinkStyles}
+  ${linkStyles}
   padding: 0 1.6rem;
   color: ${props => props.theme.colors.mutedBlack};
-  border-right: 1px solid ${props => props.theme.colors.mutedBlack};
-  text-decoration: none;
+  border-right: 0.1rem solid ${props => props.theme.colors.mutedBlack};
+  font-size: 1.6rem;
+  text-decoration: none !important;
   white-space: nowrap;
   text-overflow: ellipsis;
   user-select: none;
@@ -48,7 +54,7 @@ const sharedMenuItemStyles = css`
 
 const Menu = styled.nav`
   ${sharedMenuContainerStyles}
-  font-size: 2rem;
+  font-size: 1.6rem;
   line-height: 2rem;
 
   a {
@@ -57,38 +63,42 @@ const Menu = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    > *:nth-child(n + 2) {
+      margin-left: 1.24rem;
+
+      ${({ theme }) => theme.bp.sm(' display: none; ')}
+    }
   }
 `
 
-const Brand = styled.a`
-  ${sharedMenuItemStyles}
-  display: grid;
-  grid-template-columns: repeat(2, min-content);
-  grid-gap: 1.24rem;
-
-  svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    object-fit: contain;
-  }
+const Brand = styled.span`
+  ${linkStyles}
 `
 
 const Tray = styled.ul`
   ${sharedMenuContainerStyles}
   margin: 0;
   padding: 0;
+  color: ${props => props.theme.colors.mutedBlack};
   list-style-type: none;
 `
 
 const TrayItem = styled.li`
-  ${ButtonStyles}
+  ${buttonStyles}
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 1.6rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
   user-select: none;
-  cursor: default;
+  cursor: ${props => props.theme.cursors.default};
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
+
+  &:last-child {
+    ${({ theme }) => theme.bp.sm(' display: none; ')}
+  }
 `
 
 const MenuBar = ({ children }) => {
@@ -103,13 +113,15 @@ const MenuBar = ({ children }) => {
   return (
     <Wrapper>
       <Menu>
-        <Link href="/" passHref>
-          <Brand>
-            <>
-              <LevelLogoIcon />
-              <StyledLinkText color="mutedBlack">Level Protocol</StyledLinkText>
-            </>
-          </Brand>
+        <Link
+          activeColor="mutedBlack"
+          color="mutedBlack"
+          hoverColor="mutedBlack"
+          href="/"
+          passHref
+        >
+          <LvlLogoIcon />
+          <Brand>lvl protocol</Brand>
         </Link>
         {children}
       </Menu>

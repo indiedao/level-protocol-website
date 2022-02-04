@@ -1,8 +1,15 @@
 import { createGlobalStyle } from 'styled-components'
 
-import { H1Styles, H2Styles, H3Styles, H4Styles, Body1 } from './Typography'
+import {
+  h1Styles,
+  h2Styles,
+  h3Styles,
+  h4Styles,
+  body1Styles,
+} from './Typography'
 
 const GlobalStyles = createGlobalStyle`
+
   html, body {
     padding: 0;
     margin: 0;
@@ -15,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
     :root {
       --hue: 0;
     }
+    cursor: ${props => props.theme.cursors.default};
   }
   body.animate {
     background-color: hsl(var(--hue), 100%, 50%);
@@ -49,20 +57,25 @@ const GlobalStyles = createGlobalStyle`
   }
 
   * {
+    ${body1Styles}
     box-sizing: border-box;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 500;
   }
-  h1 { ${H1Styles} }
-  h2 { ${H2Styles} }
-  h3 { ${H3Styles} }
-  h4 { ${H4Styles} }
+  h1 { ${h1Styles} }
+  h2 { ${h2Styles} }
+  h3 { ${h3Styles} }
+  h4 { ${h4Styles} }
   p {
     margin: 0;
-    ${Body1}
+    ${body1Styles}
+  }
+  ul {
+    padding-inline-start: 1.1em;
+  }
+  ol {
+    padding-inline-start: 1.25em;
   }
   li {
-    ${Body1}
+    ${body1Styles}
     padding: 5px 0;
     overflow: display;
   }
@@ -72,6 +85,7 @@ const GlobalStyles = createGlobalStyle`
   textarea:focus,
   button:focus {
     outline: none;
+    cursor: ${props => props.theme.cursors.select};
   }
   input {
     padding: 20px;
@@ -85,9 +99,10 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     border-radius: 5px;
     border: 1px solid gray;
+    cursor: ${props => props.theme.cursors.select};
   }
   ::selection {
-    background: ${props => props.theme.colors.black};
+    background: ${props => props.theme.colors.vibrantGreen};
   }
 `
 

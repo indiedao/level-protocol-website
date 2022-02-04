@@ -11,9 +11,6 @@ const StoryGrid = styled.div`
     ${props => props.columns},
     ${props => props.columnWidth || '1fr'}
   );
-  > div {
-    min-height: ${props => props.height};
-  }
 `
 
 StoryGrid.propTypes = {

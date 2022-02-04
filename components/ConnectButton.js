@@ -1,4 +1,4 @@
-import { Button } from './ui/Buttons'
+import Button from './ui/Button'
 import useWeb3 from './hooks/useWeb3'
 import { Body1 } from './ui/Typography'
 import { NetworkId } from '../util/constants'
