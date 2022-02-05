@@ -6,9 +6,9 @@ import { Body1 } from './ui/Typography'
 const MintButton = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const { accounts, contracts } = useWeb3()
+  const { address, contracts, networkError } = useWeb3()
 
-  if (!accounts.length) {
+  if (!address || networkError) {
     return <Body1>Please connect to your wallet.</Body1>
   }
 
@@ -19,9 +19,7 @@ const MintButton = () => {
   const mint = async () => {
     try {
       setLoading(true)
-      await contracts.LvlV1Contract.methods.mint().send({
-        from: accounts[0],
-      })
+      await contracts.LvlV1Contract.mint()
       setLoading(false)
     } catch (e) {
       setError(e.message)
