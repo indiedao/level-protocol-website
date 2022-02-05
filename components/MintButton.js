@@ -13,7 +13,10 @@ const MintButton = () => {
   }
 
   if (error) {
-    return <Body1>{error}</Body1>
+    if (error.match('Address can only have one LVL token!')) {
+      return <Body1>You already have a LVL token!</Body1>
+    }
+    return <Body1>Unknown Error!</Body1>
   }
 
   const mint = async () => {
