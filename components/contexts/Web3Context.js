@@ -32,7 +32,7 @@ export const Web3Provider = ({ children }) => {
   useEffect(() => {
     setWeb3Modal(
       new Web3Modal({
-        cacheProvider: false,
+        cacheProvider: true,
         providerOptions,
       }),
     )
@@ -68,9 +68,15 @@ export const Web3Provider = ({ children }) => {
         LvlV1Contract: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
       })
 
-      // Watch for network changes:
+      // Watch for provider network changes:
       _provider.on('network', newNetwork => {
         setNetworkId(newNetwork.chainId)
+      })
+
+      // Watch for wallet account change:
+      _web3.on('accountsChanged', async () => {
+        setProvider(_provider.getSigner())
+        setAddress(await _provider.getSigner().getAddress())
       })
     },
     [contracts, web3Modal],
