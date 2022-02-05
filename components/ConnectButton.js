@@ -7,18 +7,11 @@ const ConnectButton = () => {
   const { connect, address, networkError, web3 } = useWeb3()
 
   if (networkError) {
-    return (
-      <Button
-        onClick={async () => {
-          await web3.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: Network.hexId }],
-          })
-        }}
-      >
-        {networkError}
-      </Button>
-    )
+    web3.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: Network.hexId }],
+    })
+    return <Button>{networkError}</Button>
   }
 
   if (address) {
