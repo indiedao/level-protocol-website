@@ -38,6 +38,8 @@ Local development: set values in .env
 | Name                    | Default | Description                 |
 | ----------------------- | ------- | --------------------------- |
 | CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds. |
+| RINKEBY_RPC_PATH        | ``      | Alchemy or RPC path.        |
+| MAINNET_RPC_PATH        | ``      | Alchemy or RPC path.        |
 
 #### System Environment Variables
 

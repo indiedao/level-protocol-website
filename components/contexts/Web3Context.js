@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 
 import LvlV1ABI from '../../abi/contracts/LvlV1.sol/LvlV1.json'
-import { InfuraId, LvlV1Address, Network } from '../../util/constants'
+import { LvlV1Address, Network, RPCPath } from '../../util/constants'
 
 const Web3Context = createContext()
 
@@ -12,7 +12,9 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: InfuraId,
+      rpc: {
+        [Network.id]: `https://${RPCPath}`,
+      },
     },
   },
 }
