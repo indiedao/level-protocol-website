@@ -28,6 +28,7 @@ export const Web3Provider = ({ children }) => {
   const [provider, setProvider] = useState()
   const [networkId, setNetworkId] = useState()
   const [networkError, setNetworkError] = useState()
+  const [hasLvlToken, setHasLvlToken] = useState(false)
 
   useEffect(() => {
     setWeb3Modal(
@@ -48,6 +49,17 @@ export const Web3Provider = ({ children }) => {
     }
   }, [networkId])
 
+  const refreshToken = useCallback(async () => {
+    if (!contracts.LvlV1 || !address) return
+    const balance = Number(await contracts.LvlV1.balanceOf(address))
+    setHasLvlToken(balance > 0)
+  }, [contracts.LvlV1, address])
+
+  // Reload lvl token data whenever deps change:
+  useEffect(() => {
+    refreshToken()
+  }, [refreshToken, networkId, contracts.LvlV1, address])
+
   const connect = useCallback(
     async function connect() {
       const _web3 = await web3Modal.connect()
@@ -65,7 +77,7 @@ export const Web3Provider = ({ children }) => {
       // Initialize contracts:
       setContracts({
         ...contracts,
-        LvlV1Contract: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
+        LvlV1: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
       })
 
       // Watch for provider network changes:
@@ -103,6 +115,7 @@ export const Web3Provider = ({ children }) => {
       web3,
       networkError,
       provider,
+      hasLvlToken,
     }
   }, [
     signer,
@@ -114,6 +127,7 @@ export const Web3Provider = ({ children }) => {
     web3,
     connect,
     disconnect,
+    hasLvlToken,
   ])
 
   return (

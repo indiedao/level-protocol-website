@@ -22,7 +22,7 @@ const MintButton = () => {
   const mint = async () => {
     try {
       setLoading(true)
-      await contracts.LvlV1Contract.mint()
+      await contracts.LvlV1.mint()
       setLoading(false)
     } catch (e) {
       setError(e.message)
