@@ -6,12 +6,20 @@ import { Network } from '../util/constants'
 const ConnectButton = () => {
   const { connect, address, networkError, web3 } = useWeb3()
 
+  const switchChain = () => {
+    try {
+      web3.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: Network.hexId }],
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   if (networkError) {
-    web3.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: Network.hexId }],
-    })
-    return <Button>{networkError}</Button>
+    switchChain()
+    return <Button onClick={switchChain}>{networkError}</Button>
   }
 
   if (address) {
