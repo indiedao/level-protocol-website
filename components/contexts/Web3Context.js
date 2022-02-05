@@ -68,7 +68,7 @@ export const Web3Provider = ({ children }) => {
         LvlV1Contract: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
       })
 
-      // Watch for address changes:
+      // Watch for network changes:
       _provider.on('network', newNetwork => {
         setNetworkId(newNetwork.chainId)
       })
@@ -76,13 +76,15 @@ export const Web3Provider = ({ children }) => {
     [contracts, web3Modal],
   )
 
-  const disconnect = useCallback(
-    async function disconnect() {
-      await web3Modal.clearCachedProvider()
-      // TODO: clear account/provider
-    },
-    [web3Modal],
-  )
+  const disconnect = useCallback(async () => {
+    await web3Modal.clearCachedProvider()
+    setProvider(null)
+    setWeb3(null)
+    setSigner(null)
+    setNetworkId(null)
+    setAddress(null)
+    setContracts({})
+  }, [web3Modal])
 
   const memoizedData = useMemo(() => {
     return {

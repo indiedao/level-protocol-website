@@ -4,7 +4,7 @@ import { Body1 } from './ui/Typography'
 import { Network } from '../util/constants'
 
 const ConnectButton = () => {
-  const { connect, address, networkError, web3 } = useWeb3()
+  const { connect, disconnect, address, networkError, web3 } = useWeb3()
 
   const switchChain = () => {
     try {
@@ -23,7 +23,12 @@ const ConnectButton = () => {
   }
 
   if (address) {
-    return <Body1>{address}</Body1>
+    return (
+      <div>
+        <Button onClick={disconnect}>disconnect</Button>
+        <Body1>{address}</Body1>
+      </div>
+    )
   }
 
   return <Button onClick={connect}>connect</Button>
