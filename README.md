@@ -35,9 +35,11 @@ Commits pushed to `main` branch will automatically build and deploy the `product
 
 Local development: set values in .env
 
-| Name                    | Default | Description                 |
-| ----------------------- | ------- | --------------------------- |
-| CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds. |
+| Name                    | Default | Description                                          |
+| ----------------------- | ------- | ---------------------------------------------------- |
+| CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds.                          |
+| WEB3STORAGE_TOKEN       | ``      | Token for web3 storage to store community IPFS data. |
+| FAUNADB_SECRET          | ``      | Fauna key for storing community configurations.      |
 
 #### System Environment Variables
 
