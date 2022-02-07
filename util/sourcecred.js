@@ -1,9 +1,12 @@
 import * as sc from 'sourcecred'
 
+// TODO: allow each community to configure their own instance:
+const SOURCECRED_URL =
+  'https://raw.githubusercontent.com/twos-complement/sourcecred/gh-pages/'
+
 export const getSourcecredContributions = async () => {
-  const instance = sc.sourcecred.instance.readInstance.getNetworkReadInstance(
-    process.env.SOURCECRED_URL,
-  )
+  const instance =
+    sc.sourcecred.instance.readInstance.getNetworkReadInstance(SOURCECRED_URL)
   const credGrainView = await instance.readCredGrainView()
   const credGraph = await instance.readCredGraph()
 
