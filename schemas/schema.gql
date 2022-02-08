@@ -1,14 +1,65 @@
-type communities {
+type Member {
+  username: String!
+  address: String!
+  ens: String!
+  community: [Community!] @relation
+}
+
+type Integration {
+  cid: String!
+  community: Community!
+}
+
+type Skillset {
+  name: String!
+  description: String
+  community: Community!
+  skills: [Skill!] @relation
+}
+
+type Skill {
+  name: String!
+  description: String
+  skillsets: [Skillset!] @relation
+}
+
+type RollupConfig {
+  systemName: String!
+  skill: Skill!
+  functionName: String!
+  dataSourcesKeys: [String!]
+  community: Community!
+}
+
+type RollupCache {
+  cid: String!
+  rollupData: String!
+  community: Community!
+}
+
+type Community {
   name: String!
   address: String!
-  cid: String!
-  members: {
-    username: String!
-    address: String!
-    ens: String!
-  }
+  ens: String
+  members: [Member!] @relation
+  integrations: [Integration!] @relation
+  skillset: [Skillset!] @relation
+  rollupConfigs: [RollupConfig!] @relation
 }
 
 type Query {
-  allCommunities: [communities!]
+  allCommunities: [Community!]
+  community(address: String!): Community
+  createCommunity(name: String!, address: String!, ens: String): Community
+  allMembers: [Member!]
+  createMember(username: String!, address: String!, ens: String): Member
+  allIntegrations: [Integration!]
+  createIntegration(cid: String!): Integration
+  allSkills: [Skill!]
+  skill(name: String!): Skill
+  createSkill(name: String!): Skill
+  rollupConfig(functionName: String!): [RollupConfig!]
+  createRollupConfig(functionName: String!): RollupConfig
+  createRollupCache(cid: String!): RollupCache
+  RollupCache(cid: String!): RollupCache
 }
