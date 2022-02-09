@@ -1,37 +1,61 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import * as THREE from 'three'
 
-import { outerShapeFs, outerShapeVs } from './shapes/outerShape'
-import { linesFs, linesVs } from './shapes/lines'
-import { innerShapeFs, innerShapeVs } from './shapes/innerShape'
+import { outerShapeFs, outerShapeVs } from './pyramid-shapes/outerShape'
+import { linesFs, linesVs } from './pyramid-shapes/lines'
+import { innerShapeFs, innerShapeVs } from './pyramid-shapes/innerShape'
 import {
   outerShapeBackFaceFs,
   outerShapeBackFaceVs,
-} from './shapes/outerShapeBackFace'
+} from './pyramid-shapes/outerShapeBackFace'
+import { throttle } from '../util/throttle'
+import { clamp, cubicInterpolation, radians } from '../util/pyramid'
 
-const PyramidPage = () => {
+const ROTATION_INTERVAL = 2500
+
+const Pyramid = () => {
+  const canvasRef = useRef(null)
+  const whiteLightAmount = 0.25
+  const discoTimeDivisor = 5000.0
+  const outerShapeRadius = 10
+  const outerShapeHeight = 13
+  const outerShapeEdgeRefractThreshold = 0.04 // closer to 0 means closer to an edge
+  const outerShapeRefractionFactor = 5.0
+  const innerShapeBaseRadius = 6
+  const innerShapeHeight = 7
+  const innerShapeReflectionAlpha = 0.2
+  const cameraZ = 25
+  const cameraY = 10
+  const cameraNear = 1
+  const cameraFar = 100
+  const camaraFOV = 75
+
   useEffect(() => {
-    function clamp(val, lo, hi) {
-      if (val < lo) return lo
-      if (val > hi) return hi
-      return val
+    // Recommendation: keep percentAnimation slightly slower than spin to first draw attention to outershape, then back to inner.
+    const percentAnimation = {
+      elapsedMilliseconds: 0,
+      durationMilliseconds: 1000 * 2,
+      beginValue: 0,
+      endValue: 0,
     }
+    const spinAnimation = {
+      elapsedMilliseconds: 0,
+      durationMilliseconds: 800 * 2,
+      beginValue: 0,
+      endValue: 0,
+    }
+    const whiteLightPosition = new THREE.Vector3(20, 40, 3)
+    const scene = new THREE.Scene()
+    const sceneRT = new THREE.Scene()
+    const canvas = canvasRef.current
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+    renderer.autoClear = false
 
-    function lerp(a, b, t) {
-      return (1.0 - t) * a + t * b
-    }
-
-    // https://en.wikipedia.org/wiki/Cubic_Hermite_spline
-    // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/smoothstep.xhtml
-    function cubicInterpolation(a, b, t) {
-      const k = t * t * (3.0 - 2.0 * t)
-      return lerp(a, b, k)
-    }
-
-    function radians(degrees) {
-      return (degrees * Math.PI) / 180
-    }
+    const frontRT = new THREE.WebGLRenderTarget(
+      canvas.clientWidth,
+      canvas.clientHeight,
+    )
 
     function genPentagonVerticesAtY(radius, yCoord) {
       // Each vertex is 72 degrees apart because 5 * 72 = 360.
@@ -272,58 +296,18 @@ const PyramidPage = () => {
       return alphaMaterial
     }
 
-    function resizeRenderer(renderer) {
-      const canvas = renderer.domElement
+    function resizeRenderer(resizableRenderer) {
+      const rendererCanvas = resizableRenderer.domElement
       const pixelRatio = window.devicePixelRatio
-      const width = Math.trunc(canvas.clientWidth * pixelRatio)
-      const height = Math.trunc(canvas.clientHeight * pixelRatio)
-      const needResize = canvas.width !== width || canvas.height !== height
+      const width = Math.trunc(rendererCanvas.clientWidth * pixelRatio)
+      const height = Math.trunc(rendererCanvas.clientHeight * pixelRatio)
+      const needResize =
+        rendererCanvas.width !== width || rendererCanvas.height !== height
       if (needResize) {
         renderer.setSize(width, height, false)
       }
       return needResize
     }
-
-    const whiteLightPosition = new THREE.Vector3(20, 40, 3)
-    const whiteLightAmount = 0.25
-    const discoTimeDivisor = 5000.0
-    const outerShapeRadius = 10
-    const outerShapeHeight = 13
-    const outerShapeEdgeRefractThreshold = 0.04 // closer to 0 means closer to an edge
-    const outerShapeRefractionFactor = 5.0
-    const innerShapeBaseRadius = 6
-    const innerShapeHeight = 7
-    const innerShapeReflectionAlpha = 0.2
-    const cameraZ = 25
-    const cameraY = 10
-    const cameraNear = 1
-    const cameraFar = 100
-    const camaraFOV = 75
-
-    // Recommendation: keep percentAnimation slightly slower than spin to first draw attention to outershape, then back to inner.
-    const percentAnimation = {
-      elapsedMilliseconds: 0,
-      durationMilliseconds: 1000 * 2,
-      beginValue: 0,
-      endValue: 0,
-    }
-    const spinAnimation = {
-      elapsedMilliseconds: 0,
-      durationMilliseconds: 800 * 2,
-      beginValue: 0,
-      endValue: 0,
-    }
-
-    const canvas = document.querySelector('#pyramidCanvas')
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
-    renderer.autoClear = false
-
-    const scene = new THREE.Scene()
-    const sceneRT = new THREE.Scene()
-    const frontRT = new THREE.WebGLRenderTarget(
-      canvas.clientWidth,
-      canvas.clientHeight,
-    )
 
     const outerShapeReflectionMatrices = createOuterShapeReflectionMatrices(
       outerShapeRadius,
@@ -435,16 +419,10 @@ const PyramidPage = () => {
     // Sample data
     const samplePercents = [0, 100, 20, 75, 50]
 
-    canvas.onclick = function onClickHandler(mouseEvent) {
-      if (mouseEvent.clientX > canvas.clientWidth / 2) {
-        currentFace += 1
-      } else {
-        currentFace -= 1
-      }
-
+    const rotate = rotateFace => {
       // Unlike C/C++, % is well defined for negatives in JavasScript.
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
-      const faceIndex = ((currentFace % 5) + 5) % 5
+      const faceIndex = ((rotateFace % 5) + 5) % 5
 
       percentAnimation.elapsedMilliseconds = 0
       percentAnimation.beginValue = innerShapeMaterial.uniforms.percent.value
@@ -452,7 +430,19 @@ const PyramidPage = () => {
 
       spinAnimation.elapsedMilliseconds = 0
       spinAnimation.beginValue = innerShapeMesh.rotation.y
-      spinAnimation.endValue = radians(currentFace * 72)
+      spinAnimation.endValue = radians(rotateFace * 72)
+    }
+
+    const rotateThrottled = throttle(() => {
+      rotate((currentFace += 1))
+    }, ROTATION_INTERVAL)
+
+    canvas.onclick = function onClickHandler(mouseEvent) {
+      if (mouseEvent.clientX > canvas.clientWidth / 2) {
+        rotate((currentFace += 1))
+      } else {
+        rotate((currentFace -= 1))
+      }
     }
 
     let previousTime = 0
@@ -524,21 +514,14 @@ const PyramidPage = () => {
       renderer.clear()
       renderer.render(scene, camera)
 
+      rotateThrottled()
+
       requestAnimationFrame(render)
     }
     requestAnimationFrame(render)
   }, [])
-  return (
-    <Layout>
-      <Canvas id="pyramidCanvas" />
-    </Layout>
-  )
+  return <Canvas ref={canvasRef} />
 }
-
-const Layout = styled.div`
-  width: 100vw;
-  height: 100vh;
-`
 
 const Canvas = styled.canvas`
   width: 100%;
@@ -546,4 +529,4 @@ const Canvas = styled.canvas`
   display: block;
 `
 
-export default PyramidPage
+export default Pyramid
