@@ -4,18 +4,31 @@ import { Body1 } from './ui/Typography'
 import { Network } from '../util/constants'
 
 const ConnectButton = () => {
-  const { connect, address, networkError, web3 } = useWeb3()
+  const { connect, disconnect, address, networkError, web3 } = useWeb3()
+
+  const switchChain = () => {
+    try {
+      web3.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: Network.hexId }],
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   if (networkError) {
-    web3.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: Network.hexId }],
-    })
-    return <Button>{networkError}</Button>
+    switchChain()
+    return <Button onClick={switchChain}>{networkError}</Button>
   }
 
   if (address) {
-    return <Body1>{address}</Body1>
+    return (
+      <div>
+        <Button onClick={disconnect}>disconnect</Button>
+        <Body1>{address}</Body1>
+      </div>
+    )
   }
 
   return <Button onClick={connect}>connect</Button>
