@@ -1,7 +1,24 @@
 import gql from 'graphql-tag'
 
-export const HELLO_WORLD_QUERY = gql`
-  query HELLO_WORLD_QUERY {
-    helloWorld
+export const GET_COMMUNITY = gql`
+  query GET_COMMUNITY($address: String!) {
+    community(address: $address) {
+      _id
+      name
+      address
+      ens
+      members {
+        data {
+          username
+          address
+          ens
+        }
+      }
+      integrations {
+        data {
+          cid
+        }
+      }
+    }
   }
 `

@@ -1,25 +1,15 @@
-import faunadb, { query } from 'faunadb'
+import { GraphQLClient, gql } from 'graphql-request'
 
-export const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET,
+import { GET_COMMUNITY } from '../util/queries'
+
+const graphQLClient = new GraphQLClient('https://graphql.fauna.com/graphql', {
+  headers: {
+    authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
+  },
 })
 
-export const getCommunities = async () => {
-  const q = query.Paginate(query.Match(query.Ref('indexes/allCommunities')))
-  const response = await client.query(q)
-  const refs = response.data
-  const communitiesQuery = refs.map(ref => query.Get(ref))
-  const communities = await client.query(communitiesQuery)
-
-  return communities
-}
-
-export const updateCommunity = async (ref, data) => {
-  const result = await client.query(
-    query.Update(query.Ref(query.Collection('communities'), ref.id), {
-      data,
-    }),
-  )
-
-  return result
+export const getCommunity = address => {
+  return graphQLClient
+    .request(GET_COMMUNITY, { address })
+    .then(({ community }) => community)
 }
