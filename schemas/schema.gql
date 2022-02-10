@@ -1,4 +1,4 @@
-type Member {
+type CommunityMember {
   username: String!
   address: String!
   ens: String!
@@ -41,7 +41,7 @@ type Community {
   name: String!
   address: String!
   ens: String
-  members: [Member!] @relation
+  members: [CommunityMember!] @relation
   integrations: [Integration!] @relation
   skillset: [Skillset!] @relation
   rollupConfigs: [RollupConfig!] @relation
@@ -51,8 +51,12 @@ type Query {
   allCommunities: [Community!]
   community(address: String!): Community
   createCommunity(name: String!, address: String!, ens: String): Community
-  allMembers: [Member!]
-  createMember(username: String!, address: String!, ens: String): Member
+  allCommunityMembers: [CommunityMember!]
+  createCommunityMember(
+    username: String!
+    address: String!
+    ens: String
+  ): CommunityMember
   allIntegrations: [Integration!]
   createIntegration(cid: String!): Integration
   allSkills: [Skill!]
