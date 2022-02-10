@@ -1,15 +1,10 @@
 import { useMemo, useCallback, useEffect, createContext, useState } from 'react'
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import Web3 from 'web3'
+import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 
 import LvlV1ABI from '../../abi/contracts/LvlV1.sol/LvlV1.json'
-import {
-  InfuraId,
-  LvlV1Address,
-  NetworkId,
-  NetworkName,
-} from '../../util/constants'
+import { LvlV1Address, Network, RPCPath } from '../../util/constants'
 
 const Web3Context = createContext()
 
@@ -17,109 +12,122 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: InfuraId,
+      rpc: {
+        [Network.id]: `https://${RPCPath}`,
+      },
     },
   },
 }
 
 export const Web3Provider = ({ children }) => {
   const [web3Modal, setWeb3Modal] = useState()
-  const [accounts, setAccounts] = useState([])
+  const [signer, setSigner] = useState()
+  const [address, setAddress] = useState()
   const [contracts, setContracts] = useState({})
   const [web3, setWeb3] = useState()
   const [provider, setProvider] = useState()
   const [networkId, setNetworkId] = useState()
-  const [error, setError] = useState()
+  const [networkError, setNetworkError] = useState()
+  const [hasLvlToken, setHasLvlToken] = useState(false)
 
   useEffect(() => {
     setWeb3Modal(
       new Web3Modal({
-        cacheProvider: false,
+        cacheProvider: true,
         providerOptions,
       }),
     )
   }, [])
 
   useEffect(() => {
-    if (networkId && networkId !== NetworkId) {
-      setError(`Please switch to ${NetworkName}`)
+    if (networkId && networkId !== Network.id) {
+      setNetworkError(
+        `Please switch to ${ethers.providers.getNetwork(Network.id).name}`,
+      )
+    } else {
+      setNetworkError(false)
     }
   }, [networkId])
 
+  const refreshToken = useCallback(async () => {
+    if (!contracts.LvlV1 || !address) return
+    const balance = Number(await contracts.LvlV1.balanceOf(address))
+    setHasLvlToken(balance > 0)
+  }, [contracts.LvlV1, address])
+
+  // Reload lvl token data whenever deps change:
+  useEffect(() => {
+    refreshToken()
+  }, [refreshToken, networkId, contracts.LvlV1, address])
+
   const connect = useCallback(
     async function connect() {
-      const providerInstance = await web3Modal.connect()
-      const web3Instance = new Web3(providerInstance)
+      const _web3 = await web3Modal.connect()
+      const _provider = new ethers.providers.Web3Provider(_web3, 'any')
+      const _signer = _provider.getSigner()
+      const _address = await _signer.getAddress()
+      const _network = await _provider.getNetwork()
 
-      // Set provider:
-      setProvider(providerInstance)
-      setWeb3(web3Instance)
-
-      // Set accounts:
-      setAccounts(await web3Instance.eth.getAccounts())
-
-      // Set network:
-      setNetworkId(web3Instance.currentProvider.chainId)
+      setProvider(_provider)
+      setWeb3(_web3)
+      setSigner(_signer)
+      setNetworkId(_network.chainId)
+      setAddress(_address)
 
       // Initialize contracts:
-      const LvlV1Contract = new web3Instance.eth.Contract(
-        LvlV1ABI,
-        LvlV1Address,
-      )
       setContracts({
         ...contracts,
-        LvlV1Contract,
+        LvlV1: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
       })
 
-      // Watch for address changes:
-      providerInstance.on('accountsChanged', newAccounts => {
-        setAccounts(newAccounts)
-        setError(null)
+      // Watch for provider network changes:
+      _provider.on('network', newNetwork => {
+        setNetworkId(newNetwork.chainId)
       })
 
-      // Watch for network changes:
-      providerInstance.on('chainChanged', newNetworkId => {
-        setNetworkId(newNetworkId)
-        setError(null)
+      // Watch for wallet account change:
+      _web3.on('accountsChanged', async () => {
+        setProvider(_provider.getSigner())
+        setAddress(await _provider.getSigner().getAddress())
       })
     },
     [contracts, web3Modal],
   )
 
-  const disconnect = useCallback(
-    async function disconnect() {
-      await web3Modal.clearCachedProvider()
-
-      if (provider?.disconnect && typeof provider.disconnect === 'function') {
-        await provider.disconnect()
-      }
-
-      setProvider(null)
-      setAccounts([])
-    },
-    [web3Modal, provider, setAccounts, setProvider],
-  )
+  const disconnect = useCallback(async () => {
+    await web3Modal.clearCachedProvider()
+    setProvider(null)
+    setWeb3(null)
+    setSigner(null)
+    setNetworkId(null)
+    setAddress(null)
+    setContracts({})
+  }, [web3Modal])
 
   const memoizedData = useMemo(() => {
     return {
       connect,
       disconnect,
-      accounts,
+      signer,
+      address,
       networkId,
       contracts,
       web3,
-      error,
+      networkError,
       provider,
+      hasLvlToken,
     }
   }, [
-    accounts,
+    signer,
+    address,
     contracts,
-    error,
+    networkError,
     provider,
     networkId,
     web3,
     connect,
     disconnect,
+    hasLvlToken,
   ])
 
   return (

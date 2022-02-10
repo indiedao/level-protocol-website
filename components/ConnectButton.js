@@ -1,32 +1,34 @@
 import Button from './ui/Button'
 import useWeb3 from './hooks/useWeb3'
 import { Body1 } from './ui/Typography'
-import { NetworkId } from '../util/constants'
+import { Network } from '../util/constants'
 
 const ConnectButton = () => {
-  const { connect, accounts, error, provider, networkId } = useWeb3()
+  const { connect, disconnect, address, networkError, web3 } = useWeb3()
 
-  if (error) {
-    if (networkId !== NetworkId) {
-      return (
-        <Button
-          onClick={async () => {
-            await provider.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: NetworkId }],
-            })
-          }}
-        >
-          {error}
-        </Button>
-      )
+  const switchChain = () => {
+    try {
+      web3.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: Network.hexId }],
+      })
+    } catch (e) {
+      console.log(e)
     }
-
-    return <Body1>{error}</Body1>
   }
 
-  if (accounts.length) {
-    return <Body1>{accounts[0]}</Body1>
+  if (networkError) {
+    switchChain()
+    return <Button onClick={switchChain}>{networkError}</Button>
+  }
+
+  if (address) {
+    return (
+      <div>
+        <Button onClick={disconnect}>disconnect</Button>
+        <Body1>{address}</Body1>
+      </div>
+    )
   }
 
   return <Button onClick={connect}>connect</Button>
