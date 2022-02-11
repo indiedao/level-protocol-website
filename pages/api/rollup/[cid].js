@@ -4,7 +4,7 @@ export default async (req, res) => {
   if (req.method === 'GET') {
     try {
       const { cid } = req.query
-      //const res = await fetch(`https://ipfs.io/ipfs/${cid}/level.json`) // compiled data
+      // const res = await fetch(`https://ipfs.io/ipfs/${cid}/level.json`) // compiled data
       const data = await retrieveFilesData(cid)
 
       // TODO:

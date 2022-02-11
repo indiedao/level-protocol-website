@@ -1,6 +1,5 @@
-import { GraphQLClient, gql } from 'graphql-request'
-
-import { GET_COMMUNITY } from '../util/queries'
+import { GraphQLClient } from 'graphql-request'
+import { GET_COMMUNITY } from './queries'
 
 const graphQLClient = new GraphQLClient('https://graphql.fauna.com/graphql', {
   headers: {

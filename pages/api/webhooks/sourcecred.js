@@ -1,5 +1,5 @@
-import { getSourcecredContributions } from '../../../util/sourcecred'
 import axios from 'axios'
+import { getSourcecredContributions } from '../../../util/sourcecred'
 
 export default async (req, res) => {
   if (req.method === 'POST') {
