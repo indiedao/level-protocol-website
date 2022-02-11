@@ -2,11 +2,16 @@ import { getSourcecredContributions } from '../../util/sourcecred'
 
 export default async (req, res) => {
   if (req.method === 'GET') {
-    const data = await getSourcecredContributions()
-    res.statusCode = 200
-
-    res.json({
-      data,
-    })
+    try {
+      const data = await getSourcecredContributions()
+      res.statusCode = 200
+      res.json({
+        data,
+      })
+    } catch (error) {
+      console.log(error)
+      res.statusCode = 500
+      res.json({ error })
+    }
   }
 }

@@ -11,12 +11,23 @@ export function makeStorageClient() {
 export function makeFileObjects(data) {
   const buffer = Buffer.from(JSON.stringify(data))
 
-  const files = [
-    new File(['level'], 'plain-utf8.txt'),
-    new File([buffer], 'level.json'),
-  ]
+  const files = [new File([buffer], 'level.json')]
   return files
 }
+
+// export async function retrieveFilesData(cid) {
+//   const client = makeStorageClient()
+//   const res = await client.get(cid)
+//   console.log(`Got a response! [${res.status}] ${res.statusText}`)
+//   if (!res.ok) {
+//     throw new Error(`failed to get ${cid} - [${res.status}] ${res.statusText}`)
+//   }
+
+//   const files = await res.files()
+//   const lvlFile = files[0]
+
+//   console.log('lvlFile', lvlFile)
+// }
 
 export async function storeFiles(files) {
   const client = makeStorageClient()

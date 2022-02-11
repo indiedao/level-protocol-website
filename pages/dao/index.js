@@ -56,7 +56,7 @@ const Dashboard = () => {
                   <ul>
                     <li>Members Management - - Coming Soon</li>
                     <li>
-                      <Link href="/admin/rollup">Data Rollup</Link>
+                      <Link href="/dao/integrations">Data Rollup</Link>
                     </li>
                   </ul>
                 </DashboardWrapper>

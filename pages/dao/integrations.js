@@ -106,7 +106,10 @@ const Converter = () => {
   }
 
   const handleRollup = () => {
-    console.log('rollup!')
+    // TODO:
+    // - get the data from the ipfs
+    // - parse the data
+    // - rollup the data into skills
   }
 
   const ipfsUrl =
