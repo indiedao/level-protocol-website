@@ -73,14 +73,14 @@ export const Web3Provider = ({ children }) => {
       const _signer = _provider.getSigner()
       const _address = await _signer.getAddress()
       const _network = await _provider.getNetwork()
-      const { eth } = new Web3(_web3)
+      const { eth: _eth } = new Web3(_web3)
 
       setProvider(_provider)
       setWeb3(_web3)
       setSigner(_signer)
       setNetworkId(_network.chainId)
       setAddress(_address)
-      setEth(eth)
+      setEth(_eth)
 
       // Initialize contracts:
       setContracts({
