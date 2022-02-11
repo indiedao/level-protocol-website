@@ -2,6 +2,7 @@ import { useMemo, useCallback, useEffect, createContext, useState } from 'react'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
+import Web3 from 'web3'
 
 import LvlV1ABI from '../../abi/contracts/LvlV1.sol/LvlV1.json'
 import { LvlV1Address, Network, HTTPRPC } from '../../util/constants'
@@ -29,6 +30,7 @@ export const Web3Provider = ({ children }) => {
   const [networkId, setNetworkId] = useState()
   const [networkError, setNetworkError] = useState()
   const [hasLvlToken, setHasLvlToken] = useState(false)
+  const [eth, setEth] = useState()
 
   useEffect(() => {
     setWeb3Modal(
@@ -71,12 +73,14 @@ export const Web3Provider = ({ children }) => {
       const _signer = _provider.getSigner()
       const _address = await _signer.getAddress()
       const _network = await _provider.getNetwork()
+      const { eth } = new Web3(_web3)
 
       setProvider(_provider)
       setWeb3(_web3)
       setSigner(_signer)
       setNetworkId(_network.chainId)
       setAddress(_address)
+      setEth(eth)
 
       // Initialize contracts:
       setContracts({
@@ -120,6 +124,7 @@ export const Web3Provider = ({ children }) => {
       networkError,
       provider,
       hasLvlToken,
+      eth,
     }
   }, [
     signer,
@@ -132,6 +137,7 @@ export const Web3Provider = ({ children }) => {
     connect,
     disconnect,
     hasLvlToken,
+    eth,
   ])
 
   return (
