@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 
 import LvlV1ABI from '../../abi/contracts/LvlV1.sol/LvlV1.json'
-import { LvlV1Address, Network, RPCPath } from '../../util/constants'
+import { LvlV1Address, Network, HTTPRPC } from '../../util/constants'
 
 const Web3Context = createContext()
 
@@ -13,7 +13,7 @@ const providerOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        [Network.id]: `https://${RPCPath}`,
+        [Network.id]: HTTPRPC,
       },
     },
   },
@@ -51,8 +51,12 @@ export const Web3Provider = ({ children }) => {
 
   const refreshToken = useCallback(async () => {
     if (!contracts.LvlV1 || !address) return
-    const balance = Number(await contracts.LvlV1.balanceOf(address))
-    setHasLvlToken(balance > 0)
+    try {
+      const balance = Number(await contracts.LvlV1.balanceOf(address))
+      setHasLvlToken(balance > 0)
+    } catch (e) {
+      setHasLvlToken(0)
+    }
   }, [contracts.LvlV1, address])
 
   // Reload lvl token data whenever deps change:
