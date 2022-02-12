@@ -13,7 +13,7 @@ const ConnectButton = () => {
         params: [{ chainId: Network.hexId }],
       })
     } catch (e) {
-      console.log(e)
+      console.log(e) // eslint-disable-line no-console
     }
   }
 
