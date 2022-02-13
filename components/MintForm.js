@@ -10,7 +10,7 @@ const MintForm = () => {
   const [configSaved, setConfigSaved] = useState(false)
   const [nftAddress, setNftAddress] = useState()
   const [nftId, setNftId] = useState()
-  const { address, contracts, networkError, eth, ens } = useWeb3()
+  const { address, contracts, networkError, ens, signer } = useWeb3()
 
   if (!address || networkError) {
     return <Body1>Please connect to your wallet.</Body1>
@@ -25,7 +25,7 @@ const MintForm = () => {
 
   const saveConfig = async () => {
     const message = `Saving NFT ${nftId} as profile image`
-    const signature = await eth.personal.sign(message, address)
+    const signature = await signer.signMessage(message, address)
 
     await fetch('/api/save-config', {
       method: 'POST',
