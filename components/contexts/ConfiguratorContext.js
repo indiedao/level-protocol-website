@@ -10,7 +10,8 @@ export const ConfiguratorProvider = ({ children }) => {
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()
   const [isSaved, setIsSaved] = useState(true)
-  const [color, setColor] = useState()
+  const [colorHue, setColorHue] = useState(860)
+  const [colorLightness, setColorLightness] = useState(60)
   const { signer, address } = useWeb3()
 
   // Load existing configuration:
@@ -78,8 +79,10 @@ export const ConfiguratorProvider = ({ children }) => {
       previousStep,
       setStep,
       setNft,
-      color,
-      setColor,
+      colorHue,
+      setColorHue,
+      colorLightness,
+      setColorLightness,
       previousStepAvailable: STEPS.indexOf(currentStep) !== 0,
       nextStepAvailable: STEPS.indexOf(currentStep) !== STEPS.length - 1,
     }
@@ -93,8 +96,10 @@ export const ConfiguratorProvider = ({ children }) => {
     previousStep,
     setStep,
     setNft,
-    color,
-    setColor,
+    colorHue,
+    setColorHue,
+    colorLightness,
+    setColorLightness,
   ])
 
   return (
