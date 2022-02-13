@@ -29,7 +29,6 @@ export const Web3Provider = ({ children }) => {
   const [networkId, setNetworkId] = useState()
   const [networkError, setNetworkError] = useState()
   const [hasLvlToken, setHasLvlToken] = useState(false)
-  const [eth, setEth] = useState()
   const [ens, setEns] = useState()
 
   useEffect(() => {
