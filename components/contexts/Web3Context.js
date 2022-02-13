@@ -31,6 +31,23 @@ export const Web3Provider = ({ children }) => {
   const [networkError, setNetworkError] = useState()
   const [hasLvlToken, setHasLvlToken] = useState(false)
   const [eth, setEth] = useState()
+  const [ens, setEns] = useState()
+
+  const refreshToken = useCallback(async () => {
+    if (!contracts.LvlV1 || !address) return
+    try {
+      const balance = Number(await contracts.LvlV1.balanceOf(address))
+      setHasLvlToken(balance > 0)
+    } catch (e) {
+      setHasLvlToken(0)
+    }
+  }, [contracts.LvlV1, address])
+
+  const refreshEns = useCallback(async () => {
+    if (!address || !provider || !provider.lookupAddress) return
+    const _ens = await provider.lookupAddress(address)
+    setEns(_ens || false)
+  }, [address, provider])
 
   useEffect(() => {
     setWeb3Modal(
@@ -51,20 +68,11 @@ export const Web3Provider = ({ children }) => {
     }
   }, [networkId])
 
-  const refreshToken = useCallback(async () => {
-    if (!contracts.LvlV1 || !address) return
-    try {
-      const balance = Number(await contracts.LvlV1.balanceOf(address))
-      setHasLvlToken(balance > 0)
-    } catch (e) {
-      setHasLvlToken(0)
-    }
-  }, [contracts.LvlV1, address])
-
-  // Reload lvl token data whenever deps change:
+  // Reload token data whenever deps change:
   useEffect(() => {
     refreshToken()
-  }, [refreshToken, networkId, contracts.LvlV1, address])
+    refreshEns()
+  }, [refreshToken, refreshEns, networkId, contracts.LvlV1, address])
 
   const connect = useCallback(
     async function connect() {
@@ -125,6 +133,7 @@ export const Web3Provider = ({ children }) => {
       provider,
       hasLvlToken,
       eth,
+      ens,
     }
   }, [
     signer,
@@ -138,6 +147,7 @@ export const Web3Provider = ({ children }) => {
     disconnect,
     hasLvlToken,
     eth,
+    ens,
   ])
 
   return (

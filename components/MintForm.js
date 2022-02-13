@@ -10,7 +10,7 @@ const MintForm = () => {
   const [configSaved, setConfigSaved] = useState(false)
   const [nftAddress, setNftAddress] = useState()
   const [nftId, setNftId] = useState()
-  const { address, contracts, networkError, eth } = useWeb3()
+  const { address, contracts, networkError, eth, ens } = useWeb3()
 
   if (!address || networkError) {
     return <Body1>Please connect to your wallet.</Body1>
@@ -71,6 +71,12 @@ const MintForm = () => {
   // Config state:
   return (
     <div>
+      <Body1>
+        ENS:{' '}
+        {ens === false
+          ? 'Go register one at ens.domains'
+          : ens || 'Loading ENS...'}
+      </Body1>
       <NFTList
         handleSelect={({ address: contractAddress, id }) => {
           setNftAddress(contractAddress)

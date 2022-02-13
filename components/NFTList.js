@@ -45,12 +45,28 @@ const NFTList = ({ handleSelect }) => {
     if (!loading) return <Body1>You don&apos;t have any NFTs...</Body1>
   }
 
-  const nftData = nfts.map(nft => ({
+  // Remove junk:
+  const realNfts = nfts.filter(nft => {
+    return (
+      nft.contract &&
+      nft.contract.address &&
+      nft.id &&
+      nft.id.tokenId &&
+      nft.media &&
+      nft.media[0] &&
+      nft.media[0].uri &&
+      nft.media[0].uri.raw
+    )
+  })
+
+  const nftData = realNfts.map(nft => ({
     key: `${nft.contract.address}-${nft.id.tokenId}`,
-    src: nft?.media?.[0].uri.raw || '/404-nft.png',
+    src: nft?.media?.[0].uri.raw,
     address: nft.contract.address,
     id: nft.id.tokenId,
   }))
+
+  console.log(nftData)
 
   return (
     <Wrapper>
