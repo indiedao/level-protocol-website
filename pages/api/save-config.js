@@ -1,8 +1,10 @@
 import { utils } from 'ethers'
-import contract from '../../util/contract'
+import { getNftContract } from '../../util/contract'
 
-async function verifyOwnership({ address, nftId }) {
+async function verifyOwnership({ address, nftAddress, nftId }) {
+  const contract = getNftContract(nftAddress)
   const owner = await contract.ownerOf(nftId)
+
   if (owner !== address) throw new Error(`Invalid owner of ${nftId}!`)
 }
 
@@ -14,11 +16,11 @@ async function verifySignature({ message, signature, address }) {
 
 const saveConfig = async (req, res) => {
   try {
-    const { address, message, signature, nftId } = JSON.parse(req.body)
+    const { address, message, signature, nftId, nftAddress } = JSON.parse(req.body)
 
     await verifySignature({ address, message, signature })
 
-    await verifyOwnership({ address, nftId })
+    await verifyOwnership({ address, nftAddress, nftId })
 
     res.statusCode = 200
     res.json({ success: true })
