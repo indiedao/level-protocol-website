@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { H1, Body1 } from '../components/ui/Typography'
 import ConnectButton from '../components/ConnectButton'
-import MintButton from '../components/MintButton'
+import MintForm from '../components/MintForm'
 import useWeb3 from '../components/hooks/useWeb3'
 
 const MintPage = () => {
@@ -12,7 +12,7 @@ const MintPage = () => {
     <Layout>
       <ConnectButton />
       <H1 color="base900">Mint LVL Token</H1>
-      {!hasLvlToken && <MintButton />}
+      {!hasLvlToken && <MintForm />}
       {hasLvlToken && <Body1>You already have a lvl token!</Body1>}
     </Layout>
   )

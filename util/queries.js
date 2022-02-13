@@ -22,3 +22,26 @@ export const GET_COMMUNITY = gql`
     }
   }
 `
+
+export const GET_COMMUNITIES = gql`
+  query GET_COMMUNITIES {
+    communities {
+      _id
+      name
+      address
+      ens
+      members {
+        data {
+          username
+          address
+          ens
+        }
+      }
+      integrations {
+        data {
+          cid
+        }
+      }
+    }
+  }
+`
