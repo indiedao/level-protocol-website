@@ -23,15 +23,12 @@ export const ConfiguratorProvider = ({ children }) => {
     setIsSaved(false)
   }, [nftId, nftAddress])
 
-  const setNft = useCallback(
-    ({ id, address: contractAddress }) => {
-      if (id === undefined || address === undefined)
-        throw new Error('Must include id and address when saving NFT!')
-      setNftId(id)
-      setNftAddress(contractAddress)
-    },
-    [address],
-  )
+  const setNft = useCallback(({ id, address: _address }) => {
+    if (id === undefined || _address === undefined)
+      throw new Error('Must include id and address when saving NFT!')
+    setNftId(id)
+    setNftAddress(_address)
+  }, [])
 
   const nextStep = useCallback(() => {
     const currentIndex = STEPS.indexOf(currentStep)

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import ConfiguratorControls from '../ui/ConfiguratorControls'
 
 const ConfiguratorControlsView = props => {
-  const { up, down, left, right } = props
+  const { up, down, left, right, a, b } = props
 
   useEffect(() => {
     const handler = e => {
@@ -18,6 +18,14 @@ const ConfiguratorControlsView = props => {
           break
         case 'ArrowRight':
           right()
+          break
+        case 'Enter':
+        case 'a':
+          a()
+          break
+        case 'Backspace':
+        case 'b':
+          b()
           break
         default:
           break
