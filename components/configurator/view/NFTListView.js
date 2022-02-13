@@ -5,6 +5,7 @@ import { HTTPRPC } from '../../../util/constants'
 import { Body1 } from '../../ui/Typography'
 import NFTList from '../ui/NFTList'
 import NFTImage from '../ui/NFTImage'
+import ConfiguratorControlsView from './ConfiguratorControlsView'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 
@@ -67,23 +68,91 @@ const NFTListView = ({ handleSelect }) => {
     id: nft.id.tokenId,
   }))
 
-  console.log(nftData)
+  const handleUp = () => {
+    // Handle first click:
+    if (!selectedNftKey) {
+      setSelectedNftKey(nftData[0].key)
+      return
+    }
+    // Top row (do nothing):
+    const selectedIndex = nftData.indexOf(
+      nftData.find(nft => nft.key === selectedNftKey),
+    )
+    if (selectedIndex < 3) return
+    // Go up one row (minus 3):
+    setSelectedNftKey(nftData[selectedIndex - 3].key)
+  }
+
+  const handleDown = () => {
+    // Handle first click:
+    if (!selectedNftKey) {
+      setSelectedNftKey(nftData[0].key)
+      return
+    }
+    const selectedIndex = nftData.indexOf(
+      nftData.find(nft => nft.key === selectedNftKey),
+    )
+    // Bottom row (do nothing):
+    if (selectedIndex > nftData.length - 4) return
+    // Go down one row (plus 3):
+    setSelectedNftKey(nftData[selectedIndex + 3].key)
+  }
+
+  const handleLeft = () => {
+    // Handle first click:
+    if (!selectedNftKey) {
+      setSelectedNftKey(nftData[0].key)
+      return
+    }
+    const selectedIndex = nftData.indexOf(
+      nftData.find(nft => nft.key === selectedNftKey),
+    )
+    // Left column (do nothing):
+    if (selectedIndex % 3 === 0) return
+    // Go left one (minus 1):
+    setSelectedNftKey(nftData[selectedIndex - 1].key)
+  }
+
+  const handleRight = () => {
+    // Handle first click:
+    if (!selectedNftKey) {
+      setSelectedNftKey(nftData[0].key)
+      return
+    }
+    const selectedIndex = nftData.indexOf(
+      nftData.find(nft => nft.key === selectedNftKey),
+    )
+    // End of selection but not row (do nothing):
+    if (selectedIndex === nftData.length - 1) return
+    // Right column (do nothing):
+    if (selectedIndex % 3 === 2) return
+    // Go right one (plus 1):
+    setSelectedNftKey(nftData[selectedIndex + 1].key)
+  }
 
   return (
-    <NFTList>
-      {nftData.map(nft => (
-        <div key={nft.key}>
-          <NFTImage
-            src={nft.src}
-            selected={selectedNftKey === nft.key}
-            onClick={() => {
-              handleSelect({ address: nft.address, id: nft.id })
-              setSelectedNftKey(nft.key)
-            }}
-          />
-        </div>
-      ))}
-    </NFTList>
+    <div>
+      <NFTList>
+        {nftData.map(nft => (
+          <div key={nft.key}>
+            <NFTImage
+              src={nft.src}
+              selected={selectedNftKey === nft.key}
+              onClick={() => {
+                handleSelect({ address: nft.address, id: nft.id })
+                setSelectedNftKey(nft.key)
+              }}
+            />
+          </div>
+        ))}
+      </NFTList>
+      <ConfiguratorControlsView
+        up={handleUp}
+        down={handleDown}
+        right={handleRight}
+        left={handleLeft}
+      />
+    </div>
   )
 }
 
