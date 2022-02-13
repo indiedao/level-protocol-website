@@ -1,16 +1,8 @@
 import styled from 'styled-components'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
-
-import Animation from '../../util/animation'
+import Pyramid from '../../components/Pyramid'
 
 const Level = () => {
-  const [animation, setAnimation] = useState()
-
-  useEffect(() => {
-    setAnimation(new Animation())
-  }, [])
-
   return (
     <div>
       <Head>
@@ -18,17 +10,17 @@ const Level = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {animation && <ClickWrapper onClick={animation.rotatePyramid} />}
+        <Layout>
+          <Pyramid />
+        </Layout>
       </main>
     </div>
   )
 }
 
-const ClickWrapper = styled.div`
-  position: absolute;
-  width: 100%;
+const Layout = styled.div`
+  width: 100vw;
   height: 100vh;
-  cursor: pointer;
 `
 
 export default Level
