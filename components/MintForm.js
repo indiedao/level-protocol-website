@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import Button from './ui/Button'
 import useWeb3 from './hooks/useWeb3'
+import useConfigurator from './hooks/useConfigurator'
 import { Body1 } from './ui/Typography'
-import NFTList from './NFTList'
 
 const MintForm = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const [configSaved, setConfigSaved] = useState(false)
-  const [nftAddress, setNftAddress] = useState()
-  const [nftId, setNftId] = useState()
-  const { address, contracts, networkError, ens, signer } = useWeb3()
+  const { address, contracts, networkError, ens } = useWeb3()
+  const { nftId, nftAddress } = useConfigurator()
 
   if (!address || networkError) {
     return <Body1>Please connect to your wallet.</Body1>
@@ -23,24 +21,6 @@ const MintForm = () => {
     return <Body1>Unknown Error!</Body1>
   }
 
-  const saveConfig = async () => {
-    const message = `Saving NFT ${nftId} as profile image`
-    const signature = await signer.signMessage(message, address)
-
-    await fetch('/api/save-config', {
-      method: 'POST',
-      body: JSON.stringify({
-        address,
-        nftAddress,
-        nftId,
-        signature,
-        message,
-      }),
-    })
-
-    setConfigSaved(true)
-  }
-
   const mint = async () => {
     try {
       setLoading(true)
@@ -51,24 +31,8 @@ const MintForm = () => {
     }
   }
 
-  // TODO (nicovalencia): abstract these to state provider as page gets more complex:
-
-  // Loading state:
   if (loading) return <Body1>Transaction pending...</Body1>
 
-  // Minting state:
-  if (configSaved) {
-    return (
-      <div>
-        <Body1>NFT Address: {nftAddress}</Body1>
-        <Body1>NFT Id: {nftId}</Body1>
-        <Button onClick={() => setConfigSaved(false)}>edit</Button>
-        <Button onClick={mint}>mint</Button>
-      </div>
-    )
-  }
-
-  // Config state:
   return (
     <div>
       <Body1>
@@ -77,13 +41,9 @@ const MintForm = () => {
           ? 'Go register one at ens.domains'
           : ens || 'Loading ENS...'}
       </Body1>
-      <NFTList
-        handleSelect={({ address: contractAddress, id }) => {
-          setNftAddress(contractAddress)
-          setNftId(id)
-        }}
-      />
-      <Button onClick={saveConfig}>save</Button>
+      <Body1>NFT Address: {nftAddress}</Body1>
+      <Body1>NFT Id: {nftId}</Body1>
+      <Button onClick={mint}>mint</Button>
     </div>
   )
 }

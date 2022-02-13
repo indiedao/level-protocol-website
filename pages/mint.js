@@ -1,22 +1,18 @@
 import styled from 'styled-components'
-
-import { H1, Body1 } from '../components/ui/Typography'
+import { H1 } from '../components/ui/Typography'
 import ConnectButton from '../components/ConnectButton'
-import MintForm from '../components/MintForm'
-import useWeb3 from '../components/hooks/useWeb3'
+import ConfiguratorView from '../components/configurator/view/ConfiguratorView'
+import { ConfiguratorProvider } from '../components/contexts/ConfiguratorContext'
 
-const MintPage = () => {
-  const { hasLvlToken } = useWeb3()
-
-  return (
-    <Layout>
-      <ConnectButton />
-      <H1 color="base900">Mint LVL Token</H1>
-      {!hasLvlToken && <MintForm />}
-      {hasLvlToken && <Body1>You already have a lvl token!</Body1>}
-    </Layout>
-  )
-}
+const MintPage = () => (
+  <Layout>
+    <ConnectButton />
+    <H1 color="base900">Mint/Configure LVL Token</H1>
+    <ConfiguratorProvider>
+      <ConfiguratorView />
+    </ConfiguratorProvider>
+  </Layout>
+)
 
 const Layout = styled.div`
   margin: 0 auto;

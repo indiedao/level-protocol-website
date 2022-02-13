@@ -1,13 +1,14 @@
-import styled, { css } from 'styled-components'
 import { useEffect, useCallback, useState } from 'react'
 import { createAlchemyWeb3 } from '@alch/alchemy-web3'
-import useWeb3 from './hooks/useWeb3'
-import { HTTPRPC } from '../util/constants'
-import { Body1 } from './ui/Typography'
+import useWeb3 from '../../hooks/useWeb3'
+import { HTTPRPC } from '../../../util/constants'
+import { Body1 } from '../../ui/Typography'
+import NFTList from '../ui/NFTList'
+import NFTImage from '../ui/NFTImage'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 
-const NFTList = ({ handleSelect }) => {
+const NFTListView = ({ handleSelect }) => {
   const [nfts, setNfts] = useState([])
   const [selectedNftKey, setSelectedNftKey] = useState()
   const [loading, setLoading] = useState(true)
@@ -69,7 +70,7 @@ const NFTList = ({ handleSelect }) => {
   console.log(nftData)
 
   return (
-    <Wrapper>
+    <NFTList>
       {nftData.map(nft => (
         <div key={nft.key}>
           <NFTImage
@@ -82,30 +83,8 @@ const NFTList = ({ handleSelect }) => {
           />
         </div>
       ))}
-    </Wrapper>
+    </NFTList>
   )
 }
 
-const Wrapper = styled.div`
-  width: 300px;
-  padding: 20px 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-`
-
-const NFTImage = styled.img`
-  ${props => css`
-    width: 100px;
-    height: 100px;
-    cursor: ${props.theme.cursors.select};
-
-    ${props.selected &&
-    css`
-      border: 4px solid red;
-    `}
-  `}
-`
-
-export default NFTList
+export default NFTListView
