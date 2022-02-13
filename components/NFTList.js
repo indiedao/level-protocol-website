@@ -10,14 +10,17 @@ const web3 = createAlchemyWeb3(HTTPRPC)
 const NFTList = ({ handleSelect }) => {
   const [nfts, setNfts] = useState([])
   const [selectedNftKey, setSelectedNftKey] = useState()
+  const [loading, setLoading] = useState(true)
   const { address } = useWeb3()
 
   const fetchNFTs = useCallback(async () => {
     if (!address) return
+
+    setLoading(true)
+
     const resp = await web3.alchemy.getNfts({
       owner: address,
     })
-
     const _nfts = []
 
     for (let i = 0; i < resp.ownedNfts.length; i += 1) {
@@ -30,13 +33,17 @@ const NFTList = ({ handleSelect }) => {
     }
 
     setNfts(_nfts)
+    setLoading(false)
   }, [address])
 
   useEffect(() => {
     fetchNFTs()
   }, [fetchNFTs, address])
 
-  if (nfts.length === 0) return <Body1>Loading your NFTs...</Body1>
+  if (nfts.length === 0) {
+    if (loading) return <Body1>Loading your NFTs...</Body1>
+    if (!loading) return <Body1>You don&apos;t have any NFTs...</Body1>
+  }
 
   const nftData = nfts.map(nft => ({
     key: `${nft.contract.address}-${nft.id.tokenId}`,
