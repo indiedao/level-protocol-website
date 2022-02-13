@@ -33,22 +33,6 @@ export const Web3Provider = ({ children }) => {
   const [eth, setEth] = useState()
   const [ens, setEns] = useState()
 
-  const refreshToken = useCallback(async () => {
-    if (!contracts.LvlV1 || !address) return
-    try {
-      const balance = Number(await contracts.LvlV1.balanceOf(address))
-      setHasLvlToken(balance > 0)
-    } catch (e) {
-      setHasLvlToken(0)
-    }
-  }, [contracts.LvlV1, address])
-
-  const refreshEns = useCallback(async () => {
-    if (!address || !provider || !provider.lookupAddress) return
-    const _ens = await provider.lookupAddress(address)
-    setEns(_ens || false)
-  }, [address, provider])
-
   useEffect(() => {
     setWeb3Modal(
       new Web3Modal({
@@ -70,9 +54,32 @@ export const Web3Provider = ({ children }) => {
 
   // Reload token data whenever deps change:
   useEffect(() => {
+    let active = true
+
+    const refreshToken = async () => {
+      if (!contracts.LvlV1 || !address) return
+      try {
+        const balance = Number(await contracts.LvlV1.balanceOf(address))
+        if (active) setHasLvlToken(balance > 0)
+      } catch (e) {
+        if (active) setHasLvlToken(0)
+      }
+    }
+
+    const refreshEns = async () => {
+      if (!address || !provider) return
+      const _ens = await provider.lookupAddress(address)
+      if (active) setEns(_ens || false)
+    }
+
     refreshToken()
     refreshEns()
-  }, [refreshToken, refreshEns, networkId, contracts.LvlV1, address])
+
+    // Kill any async requests if deps change to avoid race conditions:
+    return () => {
+      active = false
+    }
+  }, [networkId, contracts.LvlV1, address, provider])
 
   const connect = useCallback(
     async function connect() {
@@ -103,7 +110,7 @@ export const Web3Provider = ({ children }) => {
 
       // Watch for wallet account change:
       _web3.on('accountsChanged', async () => {
-        setProvider(_provider.getSigner())
+        setSigner(_provider.getSigner())
         setAddress(await _provider.getSigner().getAddress())
       })
     },
