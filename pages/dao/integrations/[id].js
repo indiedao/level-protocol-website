@@ -9,4 +9,3 @@ const IntegrationDetails = () => {
 }
 
 export default IntegrationDetails
-

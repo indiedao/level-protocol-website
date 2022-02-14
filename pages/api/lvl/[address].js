@@ -1,7 +1,7 @@
 const Address = (req, res) => {
-  const address = req.query.address
+  const { address } = req.query
 
-  //TODO: get actual lvl address
+  // TODO: get actual lvl address
   res.statusCode = 200
   return res.json({
     address,

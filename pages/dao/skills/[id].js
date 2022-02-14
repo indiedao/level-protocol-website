@@ -9,4 +9,3 @@ const SkillDetails = () => {
 }
 
 export default SkillDetails
-

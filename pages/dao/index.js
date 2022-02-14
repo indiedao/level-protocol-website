@@ -15,4 +15,3 @@ const DaoIndex = () => {
 }
 
 export default DaoIndex
-

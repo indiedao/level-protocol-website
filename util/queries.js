@@ -50,12 +50,12 @@ export const GET_COMMUNITIES = gql`
 
 export const CREATE_MEMBER_CONFIG = gql`
   mutation CREATE_MEMBER_CONFIG(
-      $address: String!
-      $ens: String
-      $nftAddress: String!
-      $nftId: String!
-      $message: String!
-      $signature: String!
+    $address: String!
+    $ens: String
+    $nftAddress: String!
+    $nftId: String!
+    $message: String!
+    $signature: String!
   ) {
     createMemberConfig(
       data: {

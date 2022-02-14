@@ -1,13 +1,12 @@
-
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 
-import MenuBar from '../../components/ui/MenuBar'
-import Link from '../../components/ui/Link'
-import LevelWindow from '../../components/ui/LevelWindow'
+import MenuBar from '../ui/MenuBar'
+import Link from '../ui/Link'
+import LevelWindow from '../ui/LevelWindow'
 
-import Public from '../../components/layouts/Public'
+import Public from './Public'
 
 const PageContent = styled.div`
   display: grid;
@@ -54,9 +53,7 @@ const Dao = ({ children, title }) => {
               title={title}
             >
               <Article>
-                <DaoWrapper>
-                  {children}
-                </DaoWrapper>
+                <DaoWrapper>{children}</DaoWrapper>
               </Article>
             </LevelWindow>
           </PageContent>
@@ -70,7 +67,7 @@ Dao.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-  ]).isRequired
+  ]).isRequired,
 }
 
 export default Dao

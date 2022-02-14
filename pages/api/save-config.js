@@ -17,13 +17,22 @@ async function verifySignature({ message, signature, address }) {
 
 const saveConfig = async (req, res) => {
   try {
-    const { address, message, signature, nftId, nftAddress, ens } = JSON.parse(req.body)
+    const { address, message, signature, nftId, nftAddress, ens } = JSON.parse(
+      req.body,
+    )
 
     await verifySignature({ address, message, signature })
 
     await verifyOwnership({ address, nftAddress, nftId })
 
-    await createMemberConfig({ address, message, signature, nftId, nftAddress, ens })
+    await createMemberConfig({
+      address,
+      message,
+      signature,
+      nftId,
+      nftAddress,
+      ens,
+    })
 
     res.statusCode = 200
     res.json({ success: true })

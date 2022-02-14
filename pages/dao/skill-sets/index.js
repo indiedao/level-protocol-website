@@ -1,4 +1,3 @@
-
 import DaoLayout from '../../../components/layouts/Dao'
 import Link from '../../../components/ui/Link'
 
@@ -19,4 +18,3 @@ const SkillSets = () => {
 }
 
 export default SkillSets
-

@@ -9,4 +9,3 @@ const DaoSettings = () => {
 }
 
 export default DaoSettings
-

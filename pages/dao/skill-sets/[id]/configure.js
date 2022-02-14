@@ -9,4 +9,3 @@ const SkillSetConfigure = () => {
 }
 
 export default SkillSetConfigure
-
