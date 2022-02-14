@@ -13,7 +13,7 @@ const Screen = styled.div`
   display: grid;
   grid-template-rows: 93px auto;
   background-color: ${props => props.theme.colors.vibrantScreen};
-  padding: 27px 43px;
+  padding: 20px 20px;
   box-shadow: inset 0px 0px 16px #000000;
   height: 100%;
 `

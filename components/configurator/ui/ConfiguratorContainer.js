@@ -5,7 +5,7 @@ const ConfiguratorContainer = styled.div`
   width: 100vw;
   height: 100vh;
   max-width: 500px;
-  max-height: 800px;
+  max-height: 900px;
   display: grid;
   grid-template-rows: auto 200px;
   border-radius: 40px;
