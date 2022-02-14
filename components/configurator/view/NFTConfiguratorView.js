@@ -6,6 +6,10 @@ import { HTTPRPC } from '../../../util/constants'
 import { Body1 } from '../../ui/Typography'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
 import TokenView from '../../token/view/TokenView'
+import NFTCountOverlay from '../ui/NFTCountOverlay'
+import ConfiguratorContainer from '../ui/ConfiguratorContainer'
+import ConfiguratorScreen from '../ui/ConfiguratorScreen'
+import ConfiguratorNavView from './ConfiguratorNavView'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 const DEFAULT_NFTS = []
@@ -102,18 +106,21 @@ const NFTConfiguratorView = () => {
   }
 
   return (
-    <div>
-      <Body1>
-        {selectedNftIndex + 1}/{nfts.length}
-      </Body1>
-      <TokenView address={address} nft={nfts[selectedNftIndex]} />
+    <ConfiguratorContainer>
+      <ConfiguratorScreen>
+        <ConfiguratorNavView />
+        <div>
+          <TokenView address={address} nft={nfts[selectedNftIndex]} />
+        </div>
+      </ConfiguratorScreen>
       <ConfiguratorControlsView
         right={handleRight}
         left={handleLeft}
         a={nextStep}
         b={previousStep}
       />
-    </div>
+      <NFTCountOverlay count={selectedNftIndex + 1} total={nfts.length} />
+    </ConfiguratorContainer>
   )
 }
 

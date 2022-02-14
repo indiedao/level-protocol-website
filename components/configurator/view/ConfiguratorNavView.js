@@ -1,22 +1,12 @@
 import useConfigurator from '../../hooks/useConfigurator'
+import ConfiguratorNavContainer from '../ui/ConfiguratorNavContainer'
 import NavItem from '../ui/NavItem'
 
 const ConfiguratorNavView = () => {
-  const {
-    flow,
-    currentStep,
-    previousStep,
-    nextStep,
-    setStep,
-    previousStepAvailable,
-    nextStepAvailable,
-  } = useConfigurator()
+  const { flow, currentStep, setStep } = useConfigurator()
 
   return (
-    <div>
-      {previousStepAvailable && (
-        <NavItem onClick={() => previousStep()}>&lt; PREV</NavItem>
-      )}
+    <ConfiguratorNavContainer>
       <NavItem onClick={() => setStep('NFT')} active={currentStep === 'NFT'}>
         pfp
       </NavItem>
@@ -29,10 +19,7 @@ const ConfiguratorNavView = () => {
       <NavItem onClick={() => setStep('SAVE')} active={currentStep === 'SAVE'}>
         {flow === 'CONFIG' ? 'save' : 'mint'}
       </NavItem>
-      {nextStepAvailable && (
-        <NavItem onClick={() => nextStep()}>NEXT &gt;</NavItem>
-      )}
-    </div>
+    </ConfiguratorNavContainer>
   )
 }
 

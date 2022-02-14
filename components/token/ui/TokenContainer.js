@@ -6,8 +6,8 @@ const TokenContainer = styled.div`
     width: ${props.width}px;
     height: ${props.height}px;
     grid-template-rows: 20% 20px auto;
-    background-color: pink;
     justify-items: center;
+    overflow: hidden;
   `}
 `
 

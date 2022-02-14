@@ -20,11 +20,8 @@ const MintPage = () => {
 
 const Layout = styled.div`
   margin: 0 auto;
-  max-width: 900px;
   display: grid;
-  grid-row-gap: 40px;
   justify-content: center;
-  padding-top: 180px;
 `
 
 export default MintPage

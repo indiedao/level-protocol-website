@@ -5,6 +5,9 @@ import useWeb3 from '../../hooks/useWeb3'
 import Button from '../../ui/Button'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
 import { Body1 } from '../../ui/Typography'
+import ConfiguratorContainer from '../ui/ConfiguratorContainer'
+import ConfiguratorNavView from './ConfiguratorNavView'
+import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 
 const SaveConfiguratorView = () => {
   const [state, setState] = useState('CONFIG')
@@ -46,26 +49,36 @@ const SaveConfiguratorView = () => {
 
   if (state === 'CONFIG')
     return (
-      <div>
-        <Button onClick={handleSave}>save</Button>
+      <ConfiguratorContainer>
+        <ConfiguratorScreen>
+          <ConfiguratorNavView />
+          <div>
+            <Button onClick={handleSave}>save</Button>
+          </div>
+        </ConfiguratorScreen>
         <ConfiguratorControlsView a={handleSave} b={previousStep} />
-      </div>
+      </ConfiguratorContainer>
     )
 
   return (
-    <div>
-      <Body1>
-        Donate to the Buidlers:{' '}
-        {ethers.utils.formatEther(donationAmount.toString())} ETH (optional)
-      </Body1>
-      <Button onClick={handleMint}>mint</Button>
+    <ConfiguratorContainer>
+      <ConfiguratorScreen>
+        <ConfiguratorNavView />
+        <div>
+          <Body1>
+            Donate to the Buidlers:{' '}
+            {ethers.utils.formatEther(donationAmount.toString())} ETH (optional)
+          </Body1>
+          <Button onClick={handleMint}>mint</Button>
+        </div>
+      </ConfiguratorScreen>
       <ConfiguratorControlsView
         up={increaseDonation}
         down={decreaseDonation}
         a={handleMint}
         b={previousStep}
       />
-    </div>
+    </ConfiguratorContainer>
   )
 }
 

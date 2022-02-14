@@ -25,8 +25,8 @@ const Pyramid = () => {
   const innerShapeBaseRadius = 6
   const innerShapeHeight = 7
   const innerShapeReflectionAlpha = 0.2
-  const cameraZ = 25
-  const cameraY = 10
+  const cameraZ = 18
+  const cameraY = 5
   const cameraNear = 1
   const cameraFar = 100
   const camaraFOV = 75

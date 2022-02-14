@@ -1,6 +1,9 @@
 import useConfigurator from '../../hooks/useConfigurator'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
 import ColorPreview from '../ui/ColorPreview'
+import ConfiguratorContainer from '../ui/ConfiguratorContainer'
+import ConfiguratorNavView from './ConfiguratorNavView'
+import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 
 const HUE_OFFSET = 10
 const MAX_HUE = 360
@@ -50,8 +53,11 @@ const ColorConfiguratorView = () => {
   }
 
   return (
-    <div>
-      <ColorPreview hue={colorHue} lightness={colorLightness} />
+    <ConfiguratorContainer>
+      <ConfiguratorScreen>
+        <ConfiguratorNavView />
+        <ColorPreview hue={colorHue} lightness={colorLightness} />
+      </ConfiguratorScreen>
       <ConfiguratorControlsView
         up={handleUp}
         down={handleDown}
@@ -60,7 +66,7 @@ const ColorConfiguratorView = () => {
         a={nextStep}
         b={previousStep}
       />
-    </div>
+    </ConfiguratorContainer>
   )
 }
 
