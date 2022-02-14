@@ -48,7 +48,7 @@ const SaveConfiguratorView = () => {
     return (
       <div>
         <Button onClick={handleSave}>save</Button>
-        <ConfiguratorControlsView a={save} b={previousStep} />
+        <ConfiguratorControlsView a={handleSave} b={previousStep} />
       </div>
     )
 
@@ -62,7 +62,7 @@ const SaveConfiguratorView = () => {
       <ConfiguratorControlsView
         up={increaseDonation}
         down={decreaseDonation}
-        a={save}
+        a={handleMint}
         b={previousStep}
       />
     </div>
