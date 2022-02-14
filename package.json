@@ -16,8 +16,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "publish": "chromatic",
-    "lint": "eslint --ext .js --ext .jsx .",
-    "lint:fix": "eslint --fix --ext .js --ext .jsx .",
+    "lint": "eslint './**/*.{js,jsx}'",
+    "lint:fix": "npm run lint -- --fix",
     "compile": "npx hardhat compile"
   },
   "dependencies": {

@@ -18,6 +18,8 @@ export const getCommunities = () => {
   return graphQLClient.request(GET_COMMUNITIES).then(communities => communities)
 }
 
-export const createMemberConfig = (config) => {
-  return graphQLClient.request(CREATE_MEMBER_CONFIG, config).then(config => config)
+export const createMemberConfig = configParam => {
+  return graphQLClient
+    .request(CREATE_MEMBER_CONFIG, configParam)
+    .then(config => config)
 }
