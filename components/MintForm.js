@@ -33,6 +33,7 @@ const MintForm = () => {
         address,
         nftAddress,
         nftId,
+        ...(ens && { ens }),
         signature,
         message,
       }),

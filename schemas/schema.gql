@@ -47,6 +47,15 @@ type Community {
   rollupConfigs: [RollupConfig!] @relation
 }
 
+type MemberConfig {
+  address: String!
+  ens: String
+  nftAddress: String!
+  nftId: String!
+  message: String!
+  signature: String!
+}
+
 type Query {
   allCommunities: [Community!]
   community(address: String!): Community
@@ -66,4 +75,13 @@ type Query {
   createRollupConfig(functionName: String!): RollupConfig
   createRollupCache(cid: String!): RollupCache
   RollupCache(cid: String!): RollupCache
+  memberConfig(address: String!): MemberConfig
+  createConfig(
+    address: String!
+    ens: String
+    nftAddress: String!
+    nftId: String!
+    message: String!
+    signature: String!
+  ): MemberConfig
 }

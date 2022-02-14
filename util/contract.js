@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import LvlABI from '../abi/contracts/LvlV1.sol/LvlV1.json'
-import NftABI from '../abi/contracts/Generic.sol/Nft.json'
+import NftABI from '../abi/contracts/Nft.sol/Nft.json'
 import { NETWORK_NAME, API_KEY, LvlV1Address } from './constants'
 
 // Setup web3 contract:
