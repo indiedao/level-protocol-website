@@ -30,6 +30,11 @@ const NFTConfiguratorView = () => {
   const { address } = useWeb3()
   const { nextStep, previousStep, setNft } = useConfigurator()
 
+  useEffect(() => {
+    const nft = nfts[selectedNftIndex]
+    setNft(nft)
+  }, [selectedNftIndex, nfts, setNft])
+
   const fetchNFTs = useCallback(async () => {
     if (!address) return
 
@@ -91,7 +96,6 @@ const NFTConfiguratorView = () => {
     }
     // Go left one (minus 1):
     setSelectedNftIndex(selectedNftIndex - 1)
-    setNft(nfts[selectedNftIndex - 1])
   }
 
   const handleRight = () => {
@@ -102,7 +106,6 @@ const NFTConfiguratorView = () => {
     }
     // Go right one (plus 1):
     setSelectedNftIndex(selectedNftIndex + 1)
-    setNft(nfts[selectedNftIndex + 1])
   }
 
   return (
@@ -110,7 +113,11 @@ const NFTConfiguratorView = () => {
       <ConfiguratorScreen>
         <ConfiguratorNavView />
         <div>
-          <TokenView address={address} nft={nfts[selectedNftIndex]} />
+          <TokenView
+            address={address}
+            nftId={nfts[selectedNftIndex].id}
+            nftAddress={nfts[selectedNftIndex].address}
+          />
         </div>
       </ConfiguratorScreen>
       <ConfiguratorControlsView

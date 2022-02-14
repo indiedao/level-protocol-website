@@ -1,9 +1,10 @@
 import useConfigurator from '../../hooks/useConfigurator'
+import TokenView from '../../token/view/TokenView'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
-import ColorPreview from '../ui/ColorPreview'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
+import useWeb3 from '../../hooks/useWeb3'
 
 const HUE_OFFSET = 10
 const MAX_HUE = 360
@@ -20,7 +21,10 @@ const ColorConfiguratorView = () => {
     colorLightness,
     nextStep,
     previousStep,
+    nftId,
+    nftAddress,
   } = useConfigurator()
+  const { address } = useWeb3()
 
   const handleUp = () => {
     if (colorLightness < MAX_LIGHTNESS - LIGHTNESS_OFFSET) {
@@ -52,11 +56,15 @@ const ColorConfiguratorView = () => {
     }
   }
 
+  // <ColorPreview hue={colorHue} lightness={colorLightness} />
+
   return (
     <ConfiguratorContainer>
       <ConfiguratorScreen>
         <ConfiguratorNavView />
-        <ColorPreview hue={colorHue} lightness={colorLightness} />
+        <div>
+          <TokenView address={address} nftId={nftId} nftAddress={nftAddress} />
+        </div>
       </ConfiguratorScreen>
       <ConfiguratorControlsView
         up={handleUp}

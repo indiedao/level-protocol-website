@@ -4,7 +4,7 @@ const NavItem = styled.div`
   ${({ active }) =>
     active &&
     css`
-      border: 2px solid red;
+      text-decoration: underline;
     `}
 `
 
