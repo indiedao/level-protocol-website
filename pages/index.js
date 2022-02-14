@@ -119,6 +119,9 @@ const Page = () => {
         <Public>
           <MenuBar>
             <NextLink href="#join-community">join</NextLink>
+            <NextLink href="https://indiedao.gitbook.io/indiedao/products/lvl-protocol">
+              docs
+            </NextLink>
           </MenuBar>
           <PageContent>
             <LevelWindow
