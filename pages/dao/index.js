@@ -4,9 +4,10 @@ import Head from 'next/head'
 import { H2 } from '../../components/ui/Typography'
 import MenuBar from '../../components/ui/MenuBar'
 import Link from '../../components/ui/Link'
+import Button from '../../components/ui/Button'
 import LevelWindow from '../../components/ui/LevelWindow'
-
 import Public from '../../components/layouts/Public'
+import useWeb3 from '../../components/hooks/useWeb3'
 
 const PageContent = styled.div`
   display: grid;
@@ -31,6 +32,8 @@ const DashboardWrapper = styled.div`
 `
 
 const Dashboard = () => {
+  const { address, connect, disconnect } = useWeb3()
+
   return (
     <div>
       <Head>
@@ -52,13 +55,22 @@ const Dashboard = () => {
             >
               <Article>
                 <DashboardWrapper>
-                  <H2>Options</H2>
-                  <ul>
-                    <li>Members Management - - Coming Soon</li>
-                    <li>
-                      <Link href="/dao/integrations">Data Rollup</Link>
-                    </li>
-                  </ul>
+                  {address ? (
+                    <>
+                      <H2>Options</H2>
+                      <ul>
+                        <li>Members Management - - Coming Soon</li>
+                        <li>
+                          <Link href="/dao/integrations">Data Rollup</Link>
+                        </li>
+                        <li>
+                          <Link onClick={disconnect}>Disconnect</Link>
+                        </li>
+                      </ul>
+                    </>
+                  ) : (
+                    <Button onClick={connect}>Connect</Button>
+                  )}
                 </DashboardWrapper>
               </Article>
             </LevelWindow>
