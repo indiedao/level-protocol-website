@@ -53,3 +53,14 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+## Database
+
+Create a database in FaunaDB following this guide
+https://docs.fauna.com/fauna/current/learn/quick_start/gql_quick_start
+
+and then go to the graphql option in the left manu and import the schema file from
+
+`schemas/schema.gql`
+
+Create a secret in the security option for the database and make sure you're using the right url

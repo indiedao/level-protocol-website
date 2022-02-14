@@ -1,6 +1,6 @@
 type CommunityMember {
   username: String!
-  address: String!
+  adminAddress: [String!]!
   ens: String!
   community: [Community!] @relation
 }
@@ -39,12 +39,21 @@ type RollupCache {
 
 type Community {
   name: String!
-  address: String!
+  admins: [CommunityMember!] @relation
   ens: String
   members: [CommunityMember!] @relation
   integrations: [Integration!] @relation
   skillset: [Skillset!] @relation
   rollupConfigs: [RollupConfig!] @relation
+}
+
+type MemberConfig {
+  address: String!
+  ens: String
+  nftAddress: String!
+  nftId: String!
+  message: String!
+  signature: String!
 }
 
 type Query {
@@ -66,4 +75,13 @@ type Query {
   createRollupConfig(functionName: String!): RollupConfig
   createRollupCache(cid: String!): RollupCache
   RollupCache(cid: String!): RollupCache
+  memberConfig(address: String!): MemberConfig
+  createConfig(
+    address: String!
+    ens: String
+    nftAddress: String!
+    nftId: String!
+    message: String!
+    signature: String!
+  ): MemberConfig
 }
