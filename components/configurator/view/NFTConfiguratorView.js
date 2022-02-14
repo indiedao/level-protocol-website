@@ -4,9 +4,8 @@ import useWeb3 from '../../hooks/useWeb3'
 import useConfigurator from '../../hooks/useConfigurator'
 import { HTTPRPC } from '../../../util/constants'
 import { Body1 } from '../../ui/Typography'
-import NFTList from '../ui/NFTList'
-import NFTImage from '../ui/NFTImage'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
+import TokenView from '../../token/view/TokenView'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 const DEFAULT_NFTS = []
@@ -107,9 +106,7 @@ const NFTConfiguratorView = () => {
       <Body1>
         {selectedNftIndex + 1}/{nfts.length}
       </Body1>
-      <NFTList>
-        <NFTImage onClick={handleRight} src={nfts[selectedNftIndex].src} />
-      </NFTList>
+      <TokenView address={address} nft={nfts[selectedNftIndex]} />
       <ConfiguratorControlsView
         right={handleRight}
         left={handleLeft}
