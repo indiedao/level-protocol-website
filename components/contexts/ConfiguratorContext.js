@@ -6,18 +6,20 @@ const ConfiguratorContext = createContext()
 const STEPS = ['NFT', 'COLOR', 'SAVE']
 
 export const ConfiguratorProvider = ({ children }) => {
+  const [flow, setFlow] = useState()
   const [currentStep, setCurrentStep] = useState(STEPS[0])
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()
   const [isSaved, setIsSaved] = useState(true)
   const [colorHue, setColorHue] = useState(860)
   const [colorLightness, setColorLightness] = useState(60)
-  const { signer, address } = useWeb3()
+  const { signer, address, hasLvlToken } = useWeb3()
 
   // Load existing configuration:
   useEffect(() => {
-    // TODO
-  }, [])
+    // TODO load existing...
+    setFlow(hasLvlToken ? 'CONFIG' : 'MINT')
+  }, [hasLvlToken])
 
   // Mark unsaved changes when any deps change:
   useEffect(() => {
@@ -70,6 +72,7 @@ export const ConfiguratorProvider = ({ children }) => {
 
   const memoizedData = useMemo(() => {
     return {
+      flow,
       currentStep,
       nftId,
       nftAddress,
@@ -87,6 +90,7 @@ export const ConfiguratorProvider = ({ children }) => {
       nextStepAvailable: STEPS.indexOf(currentStep) !== STEPS.length - 1,
     }
   }, [
+    flow,
     currentStep,
     nftId,
     nftAddress,

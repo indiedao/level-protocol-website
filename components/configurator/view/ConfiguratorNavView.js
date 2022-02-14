@@ -5,6 +5,7 @@ import NavItem from '../ui/NavItem'
 
 const ConfiguratorNavView = () => {
   const {
+    flow,
     currentStep,
     previousStep,
     nextStep,
@@ -21,16 +22,16 @@ const ConfiguratorNavView = () => {
         <NavItem onClick={() => previousStep()}>&lt; PREV</NavItem>
       )}
       <NavItem onClick={() => setStep('NFT')} active={currentStep === 'NFT'}>
-        NFT
+        pfp
       </NavItem>
       <NavItem
         onClick={() => setStep('COLOR')}
         active={currentStep === 'COLOR'}
       >
-        Color
+        color
       </NavItem>
       <NavItem onClick={() => setStep('SAVE')} active={currentStep === 'SAVE'}>
-        Save
+        {flow === 'CONFIG' ? 'save' : 'mint'}
       </NavItem>
       {nextStepAvailable && (
         <NavItem onClick={() => nextStep()}>NEXT &gt;</NavItem>

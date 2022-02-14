@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { H1 } from '../components/ui/Typography'
 import ConnectButton from '../components/ConnectButton'
 import ConfiguratorView from '../components/configurator/view/ConfiguratorView'
 import { ConfiguratorProvider } from '../components/contexts/ConfiguratorContext'
