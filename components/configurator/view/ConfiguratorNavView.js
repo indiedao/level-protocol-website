@@ -1,4 +1,6 @@
 import useConfigurator from '../../hooks/useConfigurator'
+import useWeb3 from '../../hooks/useWeb3'
+import { Body1 } from '../../ui/Typography'
 import NavItem from '../ui/NavItem'
 
 const ConfiguratorNavView = () => {
@@ -10,9 +12,11 @@ const ConfiguratorNavView = () => {
     previousStepAvailable,
     nextStepAvailable,
   } = useConfigurator()
+  const { ens, address } = useWeb3()
 
   return (
     <div>
+      <Body1>{ens || address}</Body1>
       {previousStepAvailable && (
         <NavItem onClick={() => previousStep()}>&lt; PREV</NavItem>
       )}
