@@ -41,4 +41,13 @@ const ConfiguratorControlsView = props => {
   return <ConfiguratorControls {...props} />
 }
 
+ConfiguratorControlsView.defaultProps = {
+  up: () => {},
+  down: () => {},
+  left: () => {},
+  right: () => {},
+  a: () => {},
+  b: () => {},
+}
+
 export default ConfiguratorControlsView

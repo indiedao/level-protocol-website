@@ -9,10 +9,20 @@ import NFTImage from '../ui/NFTImage'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
+const DEFAULT_NFTS = []
+
+for (let i = 0; i < 2; i += 1) {
+  DEFAULT_NFTS.push({
+    id: i,
+    address: '0x0',
+    src: `/pfps/default-${i}.png`,
+    key: `0x0-${i}`,
+  })
+}
 
 const NFTConfiguratorView = () => {
-  const [nfts, setNfts] = useState([])
-  const [selectedNftKey, setSelectedNftKey] = useState()
+  const [nfts, setNfts] = useState(DEFAULT_NFTS)
+  const [selectedNftIndex, setSelectedNftIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const { address } = useWeb3()
   const { nextStep, previousStep, setNft } = useConfigurator()
@@ -36,7 +46,28 @@ const NFTConfiguratorView = () => {
       _nfts.push(nft)
     }
 
-    setNfts(_nfts)
+    // Remove junk:
+    const realNfts = _nfts.filter(nft => {
+      return (
+        nft.contract &&
+        nft.contract.address &&
+        nft.id &&
+        nft.id.tokenId &&
+        nft.media &&
+        nft.media[0] &&
+        nft.media[0].uri &&
+        nft.media[0].uri.raw
+      )
+    })
+
+    const formattedNfts = realNfts.map(nft => ({
+      key: `${nft.contract.address}-${nft.id.tokenId}`,
+      src: nft?.media?.[0].uri.raw,
+      address: nft.contract.address,
+      id: nft.id.tokenId,
+    }))
+
+    setNfts([...DEFAULT_NFTS, ...formattedNfts])
     setLoading(false)
   }, [address])
 
@@ -49,108 +80,37 @@ const NFTConfiguratorView = () => {
     if (!loading) return <Body1>You don&apos;t have any NFTs...</Body1>
   }
 
-  // Remove junk:
-  const realNfts = nfts.filter(nft => {
-    return (
-      nft.contract &&
-      nft.contract.address &&
-      nft.id &&
-      nft.id.tokenId &&
-      nft.media &&
-      nft.media[0] &&
-      nft.media[0].uri &&
-      nft.media[0].uri.raw
-    )
-  })
-
-  const nftData = realNfts.map(nft => ({
-    key: `${nft.contract.address}-${nft.id.tokenId}`,
-    src: nft?.media?.[0].uri.raw,
-    address: nft.contract.address,
-    id: nft.id.tokenId,
-  }))
-
-  const handleUp = () => {
-    // Handle first click:
-    if (!selectedNftKey) {
-      setSelectedNftKey(nftData[0].key)
-      return
-    }
-    // Top row (do nothing):
-    const selectedIndex = nftData.indexOf(
-      nftData.find(nft => nft.key === selectedNftKey),
-    )
-    if (selectedIndex < 3) return
-    // Go up one row (minus 3):
-    setSelectedNftKey(nftData[selectedIndex - 3].key)
-  }
-
-  const handleDown = () => {
-    // Handle first click:
-    if (!selectedNftKey) {
-      setSelectedNftKey(nftData[0].key)
-      return
-    }
-    const selectedIndex = nftData.indexOf(
-      nftData.find(nft => nft.key === selectedNftKey),
-    )
-    // Bottom row (do nothing):
-    if (selectedIndex > nftData.length - 4) return
-    // Go down one row (plus 3):
-    setSelectedNftKey(nftData[selectedIndex + 3].key)
-  }
-
   const handleLeft = () => {
-    // Handle first click:
-    if (!selectedNftKey) {
-      setSelectedNftKey(nftData[0].key)
+    // Beginning (go to end):
+    if (selectedNftIndex === 0) {
+      setSelectedNftIndex(nfts.length - 1)
       return
     }
-    const selectedIndex = nftData.indexOf(
-      nftData.find(nft => nft.key === selectedNftKey),
-    )
-    // Left column (do nothing):
-    if (selectedIndex % 3 === 0) return
     // Go left one (minus 1):
-    setSelectedNftKey(nftData[selectedIndex - 1].key)
+    setSelectedNftIndex(selectedNftIndex - 1)
+    setNft(nfts[selectedNftIndex - 1])
   }
 
   const handleRight = () => {
-    // Handle first click:
-    if (!selectedNftKey) {
-      setSelectedNftKey(nftData[0].key)
+    // End (go to beginning):
+    if (selectedNftIndex === nfts.length - 1) {
+      setSelectedNftIndex(0)
       return
     }
-    const selectedIndex = nftData.indexOf(
-      nftData.find(nft => nft.key === selectedNftKey),
-    )
-    // End of selection but not row (do nothing):
-    if (selectedIndex === nftData.length - 1) return
-    // Right column (do nothing):
-    if (selectedIndex % 3 === 2) return
     // Go right one (plus 1):
-    setSelectedNftKey(nftData[selectedIndex + 1].key)
+    setSelectedNftIndex(selectedNftIndex + 1)
+    setNft(nfts[selectedNftIndex + 1])
   }
 
   return (
     <div>
+      <Body1>
+        {selectedNftIndex + 1}/{nfts.length}
+      </Body1>
       <NFTList>
-        {nftData.map(nft => (
-          <div key={nft.key}>
-            <NFTImage
-              src={nft.src}
-              selected={selectedNftKey === nft.key}
-              onClick={() => {
-                setNft({ address: nft.address, id: nft.id })
-                setSelectedNftKey(nft.key)
-              }}
-            />
-          </div>
-        ))}
+        <NFTImage onClick={handleRight} src={nfts[selectedNftIndex].src} />
       </NFTList>
       <ConfiguratorControlsView
-        up={handleUp}
-        down={handleDown}
         right={handleRight}
         left={handleLeft}
         a={nextStep}

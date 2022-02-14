@@ -5,11 +5,6 @@ const NFTImage = styled.img`
     width: 100px;
     height: 100px;
     cursor: ${props.theme.cursors.select};
-
-    ${props.selected &&
-    css`
-      border: 4px solid red;
-    `}
   `}
 `
 
