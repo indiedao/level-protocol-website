@@ -18,8 +18,6 @@ async function verifySignature({ message, signature, address }) {
 const saveConfig = async (req, res) => {
   try {
     const { address, message, signature, nftId, nftAddress, ens } = JSON.parse(req.body)
-    console.log('🚀 ~ file: save-config.js ~ line 21 ~ saveConfig ~ ens', ens)
-    console.log('🚀 ~ file: save-config.js ~ line 21 ~ saveConfig ~ address', address)
 
     await verifySignature({ address, message, signature })
 
