@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import Pyramid from '../../Pyramid'
 import useEns from '../../hooks/useEns'
+import useTruncatedAddress from '../../hooks/useTruncatedAddress'
 import PFP from '../ui/PFP'
 import TokenContainer from '../ui/TokenContainer'
 import { Body1 } from '../../ui/Typography'
@@ -9,6 +10,7 @@ const TokenView = ({ address, nft }) => {
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
   const { ens } = useEns(address)
+  const { truncatedAddress } = useTruncatedAddress(address)
   const container = useRef()
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const TokenView = ({ address, nft }) => {
   return (
     <TokenContainer ref={container} width={width} height={height}>
       <PFP src={nft.src} />
-      <Body1>{ens || address}</Body1>
+      <Body1>{ens || truncatedAddress}</Body1>
       <Pyramid width={width} height={height} />
     </TokenContainer>
   )
