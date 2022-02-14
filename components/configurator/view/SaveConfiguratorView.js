@@ -1,10 +1,16 @@
 import useConfigurator from '../../hooks/useConfigurator'
 import Button from '../../ui/Button'
+import ConfiguratorControlsView from './ConfiguratorControlsView'
 
 const SaveConfiguratorView = () => {
-  const { save } = useConfigurator()
+  const { previousStep, save } = useConfigurator()
 
-  return <Button onClick={save}>Save</Button>
+  return (
+    <div>
+      <Button onClick={save}>Save</Button>
+      <ConfiguratorControlsView a={save} b={previousStep} />
+    </div>
+  )
 }
 
 export default SaveConfiguratorView
