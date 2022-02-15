@@ -56,7 +56,8 @@ export const ConfiguratorProvider = ({ children }) => {
   }, [])
 
   const save = useCallback(async () => {
-    const message = `Saving NFT ${nftId} as profile image`
+    // TODO: add config details to signature message:
+    const message = 'Saving...'
     const signature = await signer.signMessage(message, address)
     await fetch('/api/save-config', {
       method: 'POST',

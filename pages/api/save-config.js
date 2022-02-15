@@ -1,5 +1,6 @@
 import { utils } from 'ethers'
 import { getNftContract } from '../../util/contract'
+import { createMemberConfig } from '../../util/fauna'
 
 async function verifyOwnership({ address, nftAddress, nftId }) {
   const contract = getNftContract(nftAddress)
@@ -23,6 +24,14 @@ const saveConfig = async (req, res) => {
     await verifySignature({ address, message, signature })
 
     await verifyOwnership({ address, nftAddress, nftId })
+
+    await createMemberConfig({
+      address,
+      message,
+      signature,
+      nftId,
+      nftAddress,
+    })
 
     res.statusCode = 200
     res.json({ success: true })
