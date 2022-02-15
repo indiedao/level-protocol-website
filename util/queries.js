@@ -1,16 +1,35 @@
 import gql from 'graphql-tag'
 
 export const GET_COMMUNITY = gql`
-  query GET_COMMUNITY($address: String!) {
-    community(address: $address) {
+  query GET_COMMUNITY($ens: String!) {
+    community(ens: $ens) {
       _id
       name
-      address
       ens
       members {
         data {
           username
-          address
+          ens
+        }
+      }
+      integrations {
+        data {
+          cid
+        }
+      }
+    }
+  }
+`
+
+export const GET_COMMUNITY_BY_ADMIN = gql`
+  query GET_COMMUNITY_BY_ADMIN($adminAddress: String!) {
+    communityByAdmin(adminAddress: $adminAddress) {
+      _id
+      name
+      ens
+      members {
+        data {
+          username
           ens
         }
       }
@@ -34,7 +53,6 @@ export const GET_COMMUNITIES = gql`
         members {
           data {
             username
-            address
             ens
           }
         }
@@ -59,7 +77,6 @@ export const CREATE_MEMBER_CONFIG = gql`
   ) {
     createMemberConfig(
       data: {
-        address: $address
         ens: $ens
         nftAddress: $nftAddress
         nftId: $nftId
@@ -67,7 +84,6 @@ export const CREATE_MEMBER_CONFIG = gql`
         signature: $signature
       }
     ) {
-      address
       ens
       nftAddress
       nftId
