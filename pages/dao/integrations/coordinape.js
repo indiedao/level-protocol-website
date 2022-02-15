@@ -1,14 +1,15 @@
 import useWeb3 from '../../../components/hooks/useWeb3'
 import DaoLayout from '../../../components/layouts/Dao'
-import IntegrationsView from '../../../components/views/IntegrationsView'
+import CoordinapeView from '../../../components/views/CoordinapeView'
 import Button from '../../../components/ui/Button'
 
-const Integrations = () => {
+const CoordinapeIntegration = () => {
   const { address, connect } = useWeb3()
+
   return (
-    <DaoLayout title="Integrations">
+    <DaoLayout title="Coordinape Integration">
       {address ? (
-        <IntegrationsView />
+        <CoordinapeView />
       ) : (
         <Button onClick={connect}>Connect Wallet</Button>
       )}
@@ -16,4 +17,4 @@ const Integrations = () => {
   )
 }
 
-export default Integrations
+export default CoordinapeIntegration

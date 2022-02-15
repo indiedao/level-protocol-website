@@ -39,7 +39,7 @@ const Spinner = styled.div`
 `
 
 const IntegrationView = () => {
-  const [csvData, setCsvData] = useState([])
+  const [csvData, setCsvData] = useState(null)
   const [membersData, setMembersData] = useState(null)
   const [loading, setLoading] = useState(false)
   const buttonRef = useRef()
@@ -65,7 +65,7 @@ const IntegrationView = () => {
     try {
       setLoading(true)
       setMembersData(null)
-      const res = await fetch('/api/harness', {
+      const res = await fetch('/api/webhooks/coordinape', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,13 +81,6 @@ const IntegrationView = () => {
     }
   }
 
-  const handleRollup = () => {
-    // TODO:
-    // - get the data from the ipfs
-    // - parse the data
-    // - rollup the data into skills
-  }
-
   const ipfsUrl =
     membersData && membersData.cid
       ? `https://ipfs.io/ipfs/${membersData.cid}/level.json`
@@ -100,16 +93,11 @@ const IntegrationView = () => {
         <Button onClick={disconnect}>Disconnect</Button>
       </IntegrationsHeader>
       {ipfsUrl ? (
-        <>
-          <IpfsLink>
-            <a href={ipfsUrl} target="_blank" rel="noreferrer">
-              See it on IPFS!
-            </a>
-          </IpfsLink>
-
-          <H4 color="white">Submit to LVL</H4>
-          <Button onClick={handleRollup}>Rollup</Button>
-        </>
+        <IpfsLink>
+          <a href={ipfsUrl} target="_blank" rel="noreferrer">
+            See it on IPFS!
+          </a>
+        </IpfsLink>
       ) : (
         <>
           <FileUploader
@@ -119,8 +107,13 @@ const IntegrationView = () => {
             handleRemoveFile={handleRemoveFile}
             handleOpenDialog={handleOpenDialog}
           />
-          <H4 color="white">Update members data</H4>
-          <Button onClick={handleSubmit}>Submit</Button>
+          {csvData && (
+            <>
+              <H4 color="white">Integrate Data</H4>
+              <Button onClick={handleSubmit}>Submit</Button>
+            </>
+          )}
+
           {loading && !ipfsUrl && <Spinner />}
         </>
       )}

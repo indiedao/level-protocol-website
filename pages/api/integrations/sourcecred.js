@@ -2,10 +2,10 @@ import { makeFileObjects, storeFiles } from '../../../util/web3Storage'
 import { getCommunity } from '../../../util/fauna'
 
 export const aggregateThirdPartyData = async (
-  communityData,
+  communityMembers,
   sourceCredContributions,
 ) =>
-  communityData.members.data
+  communityMembers
     .map(member => ({
       ...member,
       sourcredData: sourceCredContributions.filter(
@@ -20,15 +20,19 @@ export default async (req, res) => {
       // Address is temporary hardcoded until we have
       // a proper way to get the address
       // from the user connect.
-      const communityData = await getCommunity('0x')
+      const { community } = await getCommunity('0x')
       const contributions = req.body.data || []
-      const result = await aggregateThirdPartyData(communityData, contributions)
+      const result = await aggregateThirdPartyData(
+        community.members.data,
+        contributions,
+      )
       const files = makeFileObjects(result)
       const cid = await storeFiles(files)
       const updatedData = {
-        ...communityData,
+        ...community,
         cid,
       }
+
       res.statusCode = 200
       res.json({ updatedData })
     } catch (error) {

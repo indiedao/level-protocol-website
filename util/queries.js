@@ -2,14 +2,13 @@ import gql from 'graphql-tag'
 
 export const GET_COMMUNITY = gql`
   query GET_COMMUNITY($ens: String!) {
-    community(ens: $address) {
+    community(ens: $ens) {
       _id
       name
       ens
       members {
         data {
           username
-          address
           ens
         }
       }
@@ -54,7 +53,6 @@ export const GET_COMMUNITIES = gql`
         members {
           data {
             username
-            address
             ens
           }
         }
@@ -79,7 +77,6 @@ export const CREATE_MEMBER_CONFIG = gql`
   ) {
     createMemberConfig(
       data: {
-        address: $address
         ens: $ens
         nftAddress: $nftAddress
         nftId: $nftId
@@ -87,7 +84,6 @@ export const CREATE_MEMBER_CONFIG = gql`
         signature: $signature
       }
     ) {
-      address
       ens
       nftAddress
       nftId

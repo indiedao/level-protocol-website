@@ -4,7 +4,7 @@ export default async (req, res) => {
   if (req.method === 'POST') {
     try {
       const contributions = req.body
-      const url = `http://${req.headers.host}/api/integration/coordinape`
+      const url = `http://${req.headers.host}/api/integrations/coordinape`
       const { data } = await axios.post(url, {
         contributions,
       })

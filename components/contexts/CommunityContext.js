@@ -10,7 +10,7 @@ export const CommunityProvider = ({ children }) => {
 
   const verifyAdmin = async () => {
     if (address) {
-      const res = await fetch(`../api/admin/${address}`)
+      const res = await fetch(`/api/admin/${address}`)
       const { community } = await res.json()
 
       if (community && !currentCommunity) {

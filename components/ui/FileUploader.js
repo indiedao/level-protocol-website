@@ -34,7 +34,7 @@ const FileUploader = ({
               <ProcessFileControlsContainer>
                 <Button onClick={handleRemoveFile}>Remove</Button>
               </ProcessFileControlsContainer>
-              <Body1>You are uploading {file && file.name}</Body1>
+              <Body1 color="white">You are uploading {file && file.name}</Body1>
             </>
           ) : (
             <Button onClick={handleOpenDialog}>Browse file</Button>
