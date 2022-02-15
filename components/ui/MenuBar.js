@@ -50,6 +50,10 @@ const sharedMenuItemStyles = css`
     filter: contrast(115%);
     background-color: ${props => props.theme.colors.vibrantCream};
   }
+
+  &:visited {
+    color: ${props => props.theme.colors.black};
+  }
 `
 
 const Menu = styled.nav`
