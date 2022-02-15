@@ -40,8 +40,10 @@ Local development: set values in .env
 | CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds.                          |
 | WEB3STORAGE_TOKEN       | ``      | Token for web3 storage to store community IPFS data. |
 | FAUNADB_SECRET          | ``      | Fauna key for storing community configurations.      |
+| FAUNADB_URL             | ``      | Fauna Graphql url.                                   |
 | RINKEBY_RPC_PATH        | ``      | Alchemy or RPC path.                                 |
 | MAINNET_RPC_PATH        | ``      | Alchemy or RPC path.                                 |
+| SOURCECRED_URL          | ``      | Sourecred node url                                   |
 
 #### System Environment Variables
 
