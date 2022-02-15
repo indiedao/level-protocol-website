@@ -1,24 +1,19 @@
-import { makeFileObjects, storeFiles } from '../../util/web3Storage'
-import { getCommunity } from '../../util/fauna'
-import { getSourcecredContributions } from '../../util/sourcecred'
+import { makeFileObjects, storeFiles } from '../../../util/web3Storage'
+import { getCommunity } from '../../../util/fauna'
 
 export const aggregateThirdPartyData = async (
-  communityData,
-  sourceCredContributions,
+  communityMembers,
   coordinapeEpoch,
 ) =>
-  communityData.members
+  communityMembers
     .map(member => ({
       ...member,
-      sourcredData: sourceCredContributions.filter(
-        contribution => contribution.name === member.username,
-      ),
       coordinapeData: [
         ...(member.coordinapeData ? member.coordinapeData : []),
         coordinapeEpoch.find(
           newEpoch =>
             newEpoch.address &&
-            newEpoch.address.toLowerCase() === member.address.toLowerCase(),
+            newEpoch.address.toLowerCase() === member.ens.toLowerCase(),
         ),
       ],
     }))
@@ -30,26 +25,24 @@ export default async (req, res) => {
       // Address is temporary hardcoded until we have
       // a proper way to get the address
       // from the user connect.
-      const communityData = await getCommunity('0x')
-      const contributions = await getSourcecredContributions()
-      const coordinape = req.body
+      const { community } = await getCommunity('0x')
+      const { contributions } = req.body
 
       const result = await aggregateThirdPartyData(
-        communityData,
+        community.members.data,
         contributions,
-        coordinape,
       )
 
       const files = makeFileObjects(result)
       const cid = await storeFiles(files)
 
-      const updatedData = {
-        ...communityData,
+      const updatedCommunity = {
+        ...community,
         cid,
       }
 
       res.statusCode = 200
-      res.json({ updatedData })
+      res.json({ updatedCommunity })
     } catch (error) {
       console.error(error)
       res.statusCode = 500
