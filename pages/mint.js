@@ -5,9 +5,9 @@ import { ConfiguratorProvider } from '../components/contexts/ConfiguratorContext
 import useWeb3 from '../components/hooks/useWeb3'
 
 const MintPage = () => {
-  const { address } = useWeb3()
+  const { address, networkError } = useWeb3()
 
-  if (!address) return <ConnectButton />
+  if (!address || networkError) return <ConnectButton />
 
   return (
     <Layout>
