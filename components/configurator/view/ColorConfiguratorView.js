@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import useConfigurator from '../../hooks/useConfigurator'
 import TokenView from '../../token/view/TokenView'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
@@ -5,6 +6,7 @@ import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import useWeb3 from '../../hooks/useWeb3'
+import hslToHex from '../../../util/hslToHex'
 
 const HUE_OFFSET = 10
 const MAX_HUE = 360
@@ -23,8 +25,16 @@ const ColorConfiguratorView = () => {
     previousStep,
     nftId,
     nftAddress,
+    setStatusIndicator,
   } = useConfigurator()
   const { address } = useWeb3()
+
+  // Update status indicator with color:
+  useEffect(() => {
+    setStatusIndicator({
+      message: hslToHex(colorHue, 100, colorLightness),
+    })
+  }, [setStatusIndicator, colorHue, colorLightness])
 
   const handleUp = () => {
     if (colorLightness < MAX_LIGHTNESS - LIGHTNESS_OFFSET) {
@@ -55,8 +65,6 @@ const ColorConfiguratorView = () => {
       setColorHue(0)
     }
   }
-
-  // <ColorPreview hue={colorHue} lightness={colorLightness} />
 
   return (
     <ConfiguratorContainer>

@@ -13,6 +13,7 @@ export const ConfiguratorProvider = ({ children }) => {
   const [isSaved, setIsSaved] = useState(true)
   const [colorHue, setColorHue] = useState(860)
   const [colorLightness, setColorLightness] = useState(60)
+  const [statusMessage, setStatusMessage] = useState('')
   const { signer, address, hasLvlToken } = useWeb3()
 
   // Load existing configuration:
@@ -70,6 +71,10 @@ export const ConfiguratorProvider = ({ children }) => {
     setIsSaved(true)
   }, [nftAddress, nftId, address, signer])
 
+  const setStatusIndicator = useCallback(({ message }) => {
+    setStatusMessage(message)
+  }, [])
+
   const memoizedData = useMemo(() => {
     return {
       flow,
@@ -86,6 +91,8 @@ export const ConfiguratorProvider = ({ children }) => {
       setColorHue,
       colorLightness,
       setColorLightness,
+      setStatusIndicator,
+      statusMessage,
       previousStepAvailable: STEPS.indexOf(currentStep) !== 0,
       nextStepAvailable: STEPS.indexOf(currentStep) !== STEPS.length - 1,
     }
@@ -104,6 +111,8 @@ export const ConfiguratorProvider = ({ children }) => {
     setColorHue,
     colorLightness,
     setColorLightness,
+    setStatusIndicator,
+    statusMessage,
   ])
 
   return (

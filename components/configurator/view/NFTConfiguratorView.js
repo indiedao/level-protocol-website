@@ -28,7 +28,8 @@ const NFTConfiguratorView = () => {
   const [selectedNftIndex, setSelectedNftIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const { address } = useWeb3()
-  const { nextStep, previousStep, setNft } = useConfigurator()
+  const { nextStep, previousStep, setNft, setStatusIndicator } =
+    useConfigurator()
 
   useEffect(() => {
     const nft = nfts[selectedNftIndex]
@@ -79,9 +80,23 @@ const NFTConfiguratorView = () => {
     setLoading(false)
   }, [address])
 
+  // Load NFTs when deps change:
   useEffect(() => {
     fetchNFTs()
   }, [fetchNFTs, address])
+
+  // Update status indicator on loading and nft changes:
+  useEffect(() => {
+    let message
+    if (loading) {
+      message = 'loading your NFTs'
+    } else {
+      message = `${selectedNftIndex + 1}/${nfts.length}`
+    }
+    setStatusIndicator({
+      message,
+    })
+  }, [setStatusIndicator, selectedNftIndex, nfts.length, loading])
 
   if (nfts.length === 0) {
     if (loading) return <Body1>Loading your NFTs...</Body1>
@@ -126,7 +141,6 @@ const NFTConfiguratorView = () => {
         a={nextStep}
         b={previousStep}
       />
-      <NFTCountOverlay count={selectedNftIndex + 1} total={nfts.length} />
     </ConfiguratorContainer>
   )
 }

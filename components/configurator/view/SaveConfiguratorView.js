@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
@@ -8,14 +8,28 @@ import { Body1 } from '../../ui/Typography'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
+import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+
+const STATE_STATUS_MAP = {
+  CONFIG: 'saving...',
+  MINT: 'minting...',
+  CONFIRMATION: 'connected',
+}
 
 const SaveConfiguratorView = () => {
   const [state, setState] = useState('CONFIG')
   const [donationAmount, setDonationAmount] = useState(
     ethers.utils.parseEther('0.01'),
   )
-  const { flow, previousStep, save } = useConfigurator()
+  const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
   const { contracts } = useWeb3()
+
+  // Set status indicator message:
+  useEffect(() => {
+    setStatusIndicator({
+      message: STATE_STATUS_MAP[state],
+    })
+  }, [setStatusIndicator, state])
 
   const handleSave = async () => {
     await save()
@@ -45,16 +59,30 @@ const SaveConfiguratorView = () => {
     setDonationAmount(donationAmount.sub(ethers.utils.parseEther('0.01')))
   }
 
-  if (state === 'CONFIRMATION') return <Body1>Success!</Body1>
+  const handleTwitter = () => {
+    console.log('open twitter share dialog...')
+  }
+
+  if (state === 'CONFIRMATION')
+    return (
+      <ConfiguratorContainer>
+        <ConfiguratorScreen>
+          <ConfiguratorNavView />
+          <ConfiguratorPrompt
+            message="you're on the invite list - would you like to bring friends on your journey?"
+            action="invite on twitter"
+          />
+        </ConfiguratorScreen>
+        <ConfiguratorControlsView a={handleTwitter} />
+      </ConfiguratorContainer>
+    )
 
   if (state === 'CONFIG')
     return (
       <ConfiguratorContainer>
         <ConfiguratorScreen>
           <ConfiguratorNavView />
-          <div>
-            <Button onClick={handleSave}>save</Button>
-          </div>
+          <ConfiguratorPrompt message="look good?" action="sign" />
         </ConfiguratorScreen>
         <ConfiguratorControlsView a={handleSave} b={previousStep} />
       </ConfiguratorContainer>

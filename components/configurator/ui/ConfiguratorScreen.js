@@ -1,4 +1,16 @@
 import styled from 'styled-components'
+import useConfigurator from '../../hooks/useConfigurator'
+
+const ConfiguratorScreen = ({ children }) => {
+  const { statusMessage } = useConfigurator()
+
+  return (
+    <Frame>
+      <Screen>{children}</Screen>
+      <StatusMessage>{statusMessage}</StatusMessage>
+    </Frame>
+  )
+}
 
 const Frame = styled.div`
   background-color: ${props => props.theme.colors.mutedGray};
@@ -18,10 +30,10 @@ const Screen = styled.div`
   height: 100%;
 `
 
-const ConfiguratorScreen = ({ children }) => (
-  <Frame>
-    <Screen>{children}</Screen>
-  </Frame>
-)
+const StatusMessage = styled.div`
+  position: absolute;
+  top: 40px;
+  left: 80px;
+`
 
 export default ConfiguratorScreen

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useWeb3 from '../../hooks/useWeb3'
 import { Network } from '../../../util/constants'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
@@ -6,6 +6,7 @@ import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+import useConfigurator from '../../hooks/useConfigurator'
 
 const MESSAGE_STEPS = [
   'The time is now for us to rebuild...',
@@ -17,6 +18,7 @@ const MESSAGE_STEPS = [
 const ConnectConfiguratorView = () => {
   const [step, setStep] = useState(0)
   const { connect, networkError, web3 } = useWeb3()
+  const { setStatusIndicator } = useConfigurator()
 
   const isLastStep = step === MESSAGE_STEPS.length - 1
 
@@ -36,6 +38,22 @@ const ConnectConfiguratorView = () => {
     // Message:
     content = <ConfiguratorPrompt message={MESSAGE_STEPS[step]} action="next" />
   }
+
+  // Setup default status indicator message:
+  useEffect(() => {
+    setStatusIndicator({
+      message: 'not connected',
+    })
+  }, [setStatusIndicator])
+
+  // Show network errors on status indicator:
+  useEffect(() => {
+    if (networkError) {
+      setStatusIndicator({
+        message: 'network error',
+      })
+    }
+  }, [setStatusIndicator, networkError])
 
   const handleConnect = () => {
     if (networkError) {
