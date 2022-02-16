@@ -9,7 +9,7 @@ import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
 import useConfigurator from '../../hooks/useConfigurator'
 
 const MESSAGE_STEPS = [
-  'The time is now for us to rebuild...',
+  'The time for us to rebuild is now...',
   // eslint-disable-next-line quotes
   "it's dangerous to go alone...",
   'take this soulbound NFT and lvl up...',
@@ -20,7 +20,7 @@ const ConnectConfiguratorView = () => {
   const { connect, networkError, web3 } = useWeb3()
   const { setStatusIndicator } = useConfigurator()
 
-  const isLastStep = step === MESSAGE_STEPS.length - 1
+  const isLastStep = step === MESSAGE_STEPS.length
 
   let content
   if (isLastStep && networkError) {

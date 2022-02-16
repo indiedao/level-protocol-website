@@ -37,6 +37,7 @@ const theme = {
   colors: {
     trueBlack: '#000000',
     trueWhite: '#ffffff',
+    vibrantPixel: '#fffcd8',
     vibrantBlack: '#212125',
     vibrantScreen: '#2B3B2A',
     vibrantCream: '#efecd3',
@@ -64,6 +65,7 @@ const theme = {
   fontStacks: {
     chicago: 'ChicagoFLFRegular, sans-serif',
     geneva: 'Geneva, Verdana',
+    alagard: 'Alagard, serif',
   },
 
   cursors: {

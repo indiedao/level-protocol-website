@@ -71,6 +71,12 @@ export default class MyDocument extends Document {
           />
           <link
             rel="preload"
+            href="/fonts/alagard.ttf"
+            as="font"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
             href="/fonts/Geneva-Normal-Italic.ttf"
             as="font"
             crossOrigin=""
