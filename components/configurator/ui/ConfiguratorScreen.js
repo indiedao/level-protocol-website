@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import useConfigurator from '../../hooks/useConfigurator'
+import StatusIndicator from './StatusIndicator'
 
 const ConfiguratorScreen = ({ children }) => {
   const { statusMessage } = useConfigurator()
@@ -7,7 +8,7 @@ const ConfiguratorScreen = ({ children }) => {
   return (
     <Frame>
       <Screen>{children}</Screen>
-      <StatusMessage>{statusMessage}</StatusMessage>
+      <StatusIndicator message={statusMessage} />
     </Frame>
   )
 }
@@ -28,12 +29,6 @@ const Screen = styled.div`
   padding: 20px 20px;
   box-shadow: inset 0px 0px 16px #000000;
   height: 100%;
-`
-
-const StatusMessage = styled.div`
-  position: absolute;
-  top: 40px;
-  left: 80px;
 `
 
 export default ConfiguratorScreen

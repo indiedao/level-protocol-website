@@ -88,7 +88,7 @@ const NFTConfiguratorView = () => {
   useEffect(() => {
     let message
     if (loading) {
-      message = 'loading your NFTs'
+      message = 'loading your NFTs...'
     } else {
       message = `${selectedNftIndex + 1}/${nfts.length}`
     }
