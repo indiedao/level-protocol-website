@@ -22,7 +22,7 @@ const SaveConfiguratorView = () => {
     ethers.utils.parseEther('0.01'),
   )
   const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
-  const { contracts } = useWeb3()
+  const { contracts, address } = useWeb3()
 
   // Set status indicator message:
   useEffect(() => {
@@ -60,7 +60,10 @@ const SaveConfiguratorView = () => {
   }
 
   const handleTwitter = () => {
-    console.log('open twitter share dialog...')
+    const content = encodeURI(
+      `Join my journey on @lvlprotocol https://lvlprotocol.xyz/tokens/${address}`,
+    )
+    window.location = `https://twitter.com/intent/tweet?text=${content}`
   }
 
   if (state === 'CONFIRMATION')
@@ -69,8 +72,8 @@ const SaveConfiguratorView = () => {
         <ConfiguratorScreen>
           <ConfiguratorNavView />
           <ConfiguratorPrompt
-            message="you're on the invite list - would you like to bring friends on your journey?"
-            action="invite on twitter"
+            message="well done, your journey will begin soon..."
+            action="bring a friend"
           />
         </ConfiguratorScreen>
         <ConfiguratorControlsView a={handleTwitter} />
@@ -82,7 +85,7 @@ const SaveConfiguratorView = () => {
       <ConfiguratorContainer>
         <ConfiguratorScreen>
           <ConfiguratorNavView />
-          <ConfiguratorPrompt message="look good?" action="sign" />
+          <ConfiguratorPrompt message="ready?" action="sign" />
         </ConfiguratorScreen>
         <ConfiguratorControlsView a={handleSave} b={previousStep} />
       </ConfiguratorContainer>
