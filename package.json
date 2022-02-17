@@ -37,6 +37,7 @@
     "date-fns": "^2.27.0",
     "debounce": "^1.2.1",
     "deepmerge": "^4.2.2",
+    "eth-json-rpc-middleware": "^8.0.1",
     "ethers": "^5.5.4",
     "faunadb": "^4.4.1",
     "graphql": "^15.8.0",
