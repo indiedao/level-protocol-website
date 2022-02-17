@@ -52,7 +52,7 @@ const TokenView = ({
 
   return (
     <PixelCard color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
-      <TokenContainer ref={container} width={width} height={height}>
+      <TokenContainer ref={container} height={height}>
         <PFP src={nftSrc} />
         <Pyramid
           width={width}
@@ -72,7 +72,6 @@ const EnsAddress = styled(Body1)`
   background-color: ${props => props.theme.colors.vibrantScreen};
   padding: 8px 10px;
   height: 40px;
-  width: 116px;
   font-family: Alagard;
   font-style: normal;
   font-weight: normal;
