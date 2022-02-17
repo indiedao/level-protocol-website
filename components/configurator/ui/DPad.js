@@ -47,10 +47,17 @@ const DPad = ({ up, down, left, right }) => (
 )
 
 DPad.propTypes = {
-  up: PropTypes.func.isRequired,
-  down: PropTypes.func.isRequired,
-  left: PropTypes.func.isRequired,
-  right: PropTypes.func.isRequired,
+  up: PropTypes.func,
+  down: PropTypes.func,
+  left: PropTypes.func,
+  right: PropTypes.func,
+}
+
+DPad.defaultProps = {
+  up: () => null,
+  down: () => null,
+  left: () => null,
+  right: () => null,
 }
 
 export default DPad
