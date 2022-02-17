@@ -6,7 +6,7 @@ const ConfiguratorContext = createContext()
 const STEPS = ['NFT', 'COLOR', 'SAVE']
 
 export const ConfiguratorProvider = ({ children }) => {
-  const [flow, setFlow] = useState('CONFIG')
+  const [flow] = useState('CONFIG')
   const [currentStep, setCurrentStep] = useState(STEPS[0])
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()

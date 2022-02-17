@@ -23,7 +23,7 @@ const SaveConfiguratorView = () => {
     ethers.utils.parseEther('0.01'),
   )
   const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
-  const { contracts, address } = useWeb3()
+  const { address } = useWeb3()
 
   // Set status indicator message:
   useEffect(() => {
