@@ -11,10 +11,4 @@ export const Network = {
 export const HTTPRPC = `https://eth-${Network.name}.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`
 export const WSRPC = `ws://eth-${Network.name}.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`
 
-const NETWORK_NAMES = {
-  1: 'matic',
-  4: 'rinkeby',
-}
-
-export const NETWORK_NAME = NETWORK_NAMES[networkId]
-export const API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_KEY
+export const AlchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY
