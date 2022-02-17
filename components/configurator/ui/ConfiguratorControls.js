@@ -1,22 +1,27 @@
 import styled from 'styled-components'
-import { Body1 } from '../../ui/Typography'
+
+import LvlSvg from '../assets/lvl.svg'
+import DPad from './DPad'
+import ABPad from './ABPad'
+
+const Wrapper = styled.div`
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: 3rem 1fr;
+  height: 26rem;
+
+  > *:nth-child(1) {
+    grid-column: 1 / span 2;
+  }
+`
 
 const ConfiguratorControls = ({ up, down, left, right, a, b }) => (
   <Wrapper>
-    <DPad>
-      <Body1 onClick={up}>UP</Body1>
-      <Body1 onClick={down}>DOWN</Body1>
-      <Body1 onClick={left}>LEFT</Body1>
-      <Body1 onClick={right}>RIGHT</Body1>
-    </DPad>
-    <AButton onClick={a}>A</AButton>
-    <BButton onClick={b}>B</BButton>
+    <LvlSvg />
+    <DPad up={up} down={down} left={left} right={right} />
+    <ABPad a={a} b={b} />
   </Wrapper>
 )
-
-const Wrapper = styled.div``
-const DPad = styled.div``
-const AButton = styled.div``
-const BButton = styled.div``
 
 export default ConfiguratorControls
