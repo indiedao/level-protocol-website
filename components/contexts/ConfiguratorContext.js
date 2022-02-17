@@ -70,7 +70,7 @@ export const ConfiguratorProvider = ({ children }) => {
       body: JSON.stringify({
         address,
         nftAddress,
-        nftId,
+        nftId: nftId.toString(),
         signature,
         message,
         colorHue: Number(colorHue),

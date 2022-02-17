@@ -7,7 +7,7 @@ import {
   GET_MEMBER_CONFIG,
 } from './queries'
 
-const graphQLClient = new GraphQLClient(process.env.FAUNADB_URL, {
+const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
   headers: {
     authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
   },
@@ -46,6 +46,7 @@ export const getCommunityByAdmin = async adminAddress => {
 
 export const createMemberConfig = async configParam => {
   try {
+    console.log('creating...', configParam)
     const { memberConfig } = await graphQLClient.request(
       CREATE_MEMBER_CONFIG,
       configParam,

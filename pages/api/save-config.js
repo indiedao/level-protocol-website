@@ -3,10 +3,15 @@ import { getNftContract } from '../../util/contract'
 import { createMemberConfig } from '../../util/fauna'
 
 async function verifyOwnership({ address, nftAddress, nftId }) {
+  // Allow 0x0 for custom lvl PFP:
+  if (nftAddress === '0x0') return true
+
   const contract = getNftContract(nftAddress)
   const owner = await contract.ownerOf(nftId)
 
   if (owner !== address) throw new Error(`Invalid owner of ${nftId}!`)
+
+  return true
 }
 
 async function verifySignature({ message, signature, address }) {

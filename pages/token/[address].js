@@ -14,11 +14,15 @@ const Level = () => {
 
   const loadConfig = useCallback(async () => {
     if (address) {
-      const memberConfig = await fetch(`/api/members/${address}/config`, {
+      const resp = await fetch(`/api/members/${address}/config`, {
         method: 'GET',
       })
 
+      const { memberConfig } = await resp.json()
       console.log(memberConfig)
+      if (!memberConfig) {
+        router.push('/404')
+      }
 
       setConfig(memberConfig)
     }

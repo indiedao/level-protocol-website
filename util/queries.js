@@ -69,22 +69,24 @@ export const GET_COMMUNITIES = gql`
 export const CREATE_MEMBER_CONFIG = gql`
   mutation CREATE_MEMBER_CONFIG(
     $address: String!
-    $ens: String
     $nftAddress: String!
     $nftId: String!
     $message: String!
     $signature: String!
+    $colorHue: Int!
+    $colorLightness: Int!
   ) {
     createMemberConfig(
       data: {
-        ens: $ens
+        address: $address
         nftAddress: $nftAddress
         nftId: $nftId
         message: $message
         signature: $signature
+        colorHue: $colorHue
+        colorLightness: $colorLightness
       }
     ) {
-      ens
       nftAddress
       nftId
       message
@@ -98,7 +100,7 @@ export const CREATE_MEMBER_CONFIG = gql`
 export const GET_MEMBER_CONFIG = gql`
   query GET_MEMBER_CONFIG($address: String!) {
     memberConfig(address: $address) {
-      ens
+      address
       nftAddress
       nftId
       message
