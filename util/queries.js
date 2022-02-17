@@ -89,6 +89,23 @@ export const CREATE_MEMBER_CONFIG = gql`
       nftId
       message
       signature
+      colorHue
+      colorLightness
+    }
+  }
+`
+
+export const GET_MEMBER_CONFIG = gql`
+  mutation GET_MEMBER_CONFIG(
+  ) {
+    memberConfig(address: $address) {
+      ens
+      nftAddress
+      nftId
+      message
+      signature
+      colorHue
+      colorLightness
     }
   }
 `

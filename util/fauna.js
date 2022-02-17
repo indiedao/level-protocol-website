@@ -4,6 +4,7 @@ import {
   GET_COMMUNITY,
   CREATE_MEMBER_CONFIG,
   GET_COMMUNITY_BY_ADMIN,
+  GET_MEMBER_CONFIG,
 } from './queries'
 
 const graphQLClient = new GraphQLClient(process.env.FAUNADB_URL, {
@@ -55,4 +56,18 @@ export const createMemberConfig = async configParam => {
   }
 
   return false
+}
+
+export const getMemberConfig = async memberAddress => {
+  try {
+    const { config } = await graphQLClient.request(
+      GET_MEMBER_CONFIG,
+      { address: memberAddress },
+    )
+    return config
+  } catch (error) {
+    console.error(error)
+  }
+
+  return undefined
 }
