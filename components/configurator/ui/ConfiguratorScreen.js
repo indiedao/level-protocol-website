@@ -24,7 +24,8 @@ const Frame = styled.div`
 
 const Screen = styled.div`
   display: grid;
-  grid-template-rows: 93px auto;
+  grid-template-rows: min-content auto;
+  grid-gap: 2.4rem;
   background-color: ${props => props.theme.colors.vibrantScreen};
   padding: 20px 20px;
   box-shadow: inset 0px 0px 16px #000000;
