@@ -9,6 +9,7 @@ import TokenView from '../../token/view/TokenView'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorNavView from './ConfiguratorNavView'
+import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 const DEFAULT_NFTS = []
@@ -126,13 +127,13 @@ const NFTConfiguratorView = () => {
     <ConfiguratorContainer>
       <ConfiguratorScreen>
         <ConfiguratorNavView />
-        <div>
+        <NFTArrowTokenViewContainer>
           <TokenView
             address={address}
             nftId={nfts[selectedNftIndex].id}
             nftAddress={nfts[selectedNftIndex].address}
           />
-        </div>
+        </NFTArrowTokenViewContainer>
       </ConfiguratorScreen>
       <ConfiguratorControlsView
         right={handleRight}
