@@ -4,6 +4,7 @@ const useTruncatedAddress = address => {
   const [truncatedAddress, setTruncatedAddress] = useState()
 
   useEffect(() => {
+    if (!address) return
     const pre = address.slice(0, 5)
     const suf = address.slice(address.length - 3, address.length)
     setTruncatedAddress(`${pre}...${suf}`)
