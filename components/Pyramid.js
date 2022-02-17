@@ -11,6 +11,7 @@ import {
 } from './pyramid-shapes/outerShapeBackFace'
 import { throttle } from '../util/throttle'
 import { clamp, cubicInterpolation, radians } from '../util/pyramid'
+import theme from '../util/theme'
 
 const ROTATION_INTERVAL = 2500
 
@@ -512,6 +513,7 @@ const Pyramid = () => {
       // Now render outer mesh and apply effects
       renderer.setRenderTarget(null)
       renderer.clear()
+      scene.background = new THREE.Color(theme.colors.vibrantScreen)
       renderer.render(scene, camera)
 
       rotateThrottled()
