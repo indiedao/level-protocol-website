@@ -21,6 +21,7 @@ const Frame = styled.div`
     inset 0px -16px 24px rgba(255, 255, 255, 0.25),
     inset 0px 8px 16px rgba(255, 255, 255, 0.25);
   border-radius: 8px;
+  width: 100%;
   max-width: calc(100vw - 6.4rem);
 `
 
