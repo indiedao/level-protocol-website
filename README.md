@@ -35,9 +35,14 @@ Commits pushed to `main` branch will automatically build and deploy the `product
 
 Local development: set values in .env
 
-| Name                    | Default | Description                 |
-| ----------------------- | ------- | --------------------------- |
-| CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds. |
+| Name                    | Default | Description                                          |
+| ----------------------- | ------- | ---------------------------------------------------- |
+| CHROMATIC_PROJECT_TOKEN | ``      | Token for Chromatic builds.                          |
+| WEB3STORAGE_TOKEN       | ``      | Token for web3 storage to store community IPFS data. |
+| FAUNADB_SECRET          | ``      | Fauna key for storing community configurations.      |
+| RINKEBY_RPC_PATH        | ``      | Alchemy or RPC path.                                 |
+| MAINNET_RPC_PATH        | ``      | Alchemy or RPC path.                                 |
+| SOURCECRED_URL          | ``      | Sourecred node url                                   |
 
 #### System Environment Variables
 
@@ -49,3 +54,14 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+## Database
+
+Create a database in FaunaDB following this guide
+https://docs.fauna.com/fauna/current/learn/quick_start/gql_quick_start
+
+and then go to the graphql option in the left manu and import the schema file from
+
+`schemas/schema.gql`
+
+Create a secret in the security option for the database and make sure you're using the right url

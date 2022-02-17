@@ -9,15 +9,18 @@ const offsetRoundedDotSvgUrl =
 
 export const defaultPointerUrl =
   // eslint-disable-next-line prettier/prettier
-  'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACWSURBVHgB3ZbRCsAgCEVt7P9/uTXYBZEctSWp5yUqerhHqQp1qA0+Lw0y4qDNnG+bCA4jFiZ8GwCWJmIYABYmYhkAK03ENABWmIhtAPwxkcMA+GIilwEwYyKHAfGB6u2rJmIZQFKtpHlvQpa8PHPUlPiY7yaUyS3YbqCbbLSWshfYOo2cv/HZA5Y1l/jsgVmq8hiE6IELDUZLeXFsyuYAAAAASUVORK5CYII=\')'
+  // eslint-disable-next-line quotes
+  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACWSURBVHgB3ZbRCsAgCEVt7P9/uTXYBZEctSWp5yUqerhHqQp1qA0+Lw0y4qDNnG+bCA4jFiZ8GwCWJmIYABYmYhkAK03ENABWmIhtAPwxkcMA+GIilwEwYyKHAfGB6u2rJmIZQFKtpHlvQpa8PHPUlPiY7yaUyS3YbqCbbLSWshfYOo2cv/HZA5Y1l/jsgVmq8hiE6IELDUZLeXFsyuYAAAAASUVORK5CYII=')"
 
 export const selectPointerUrl =
   // eslint-disable-next-line prettier/prettier
-  'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC1SURBVHgB7VfRDoAgCITW//+yZavNUBSdITbvxSlT4QaHIuSB9+jISO3N2GAwpBFckTv3JgARa8+JMJyB5cByYIc+cAU7WyVmGKCKVwVOH571c84qqBkGPtP6EAlG0EwvKGk9pOzNlwY9xLYQ+Yh7Rd3kgAZolidzgd0c13t2TveBxRzwrqH3kFaAlgPq6NUNRUi9Ic3qgFouzP0vEF+S+T9Mw8ADEROcIsJvGKg4t/jCGs7AAatGPE9tNKGbAAAAAElFTkSuQmCC\')'
+  // eslint-disable-next-line quotes
+  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC1SURBVHgB7VfRDoAgCITW//+yZavNUBSdITbvxSlT4QaHIuSB9+jISO3N2GAwpBFckTv3JgARa8+JMJyB5cByYIc+cAU7WyVmGKCKVwVOH571c84qqBkGPtP6EAlG0EwvKGk9pOzNlwY9xLYQ+Yh7Rd3kgAZolidzgd0c13t2TveBxRzwrqH3kFaAlgPq6NUNRUi9Ic3qgFouzP0vEF+S+T9Mw8ADEROcIsJvGKg4t/jCGs7AAatGPE9tNKGbAAAAAElFTkSuQmCC')"
 
 export const busyPointerUrl =
   // eslint-disable-next-line prettier/prettier
-  'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACNSURBVHgB7VdBCsAwCNOx/3/ZMUbLVrYS9aAd5tSDJW0SUJlwCFjHpMBGwZi9FvqxyLOMmTUcORVAvb6KZV5+U+RViVQKqH7eLwl27UuJcAXqAacfJu8b0Ax0wiELZcH6GXByxyuwt4MjzS5UCPN1Q0N383CWBYlnQsWs5+FaaC8A5n8LR24FRvxzNywcRYYiNQ/1xLsAAAAASUVORK5CYII=\')'
+  // eslint-disable-next-line quotes
+  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACNSURBVHgB7VdBCsAwCNOx/3/ZMUbLVrYS9aAd5tSDJW0SUJlwCFjHpMBGwZi9FvqxyLOMmTUcORVAvb6KZV5+U+RViVQKqH7eLwl27UuJcAXqAacfJu8b0Ax0wiELZcH6GXByxyuwt4MjzS5UCPN1Q0N383CWBYlnQsWs5+FaaC8A5n8LR24FRvxzNywcRYYiNQ/1xLsAAAAASUVORK5CYII=')"
 
 const theme = {
   bp: {
@@ -36,12 +39,16 @@ const theme = {
   colors: {
     trueBlack: '#000000',
     trueWhite: '#ffffff',
+    vibrantPixel: '#fffcd8',
     vibrantBlack: '#212125',
+    vibrantScreen: '#2B3B2A',
     vibrantCream: '#efecd3',
     vibrantRed: '#eb4130',
     vibrantGreen: '#76f651',
     vibrantBlue: '#3872f5',
+    vibrantGray1: '#fffcd8',
     mutedBlack: '#302f2c',
+    mutedGray: '#7c7c7d',
     mutedCream: '#d6d1be',
     mutedRed: '#c9734c',
     mutedGreen: '#99caaa',
@@ -60,6 +67,7 @@ const theme = {
   fontStacks: {
     chicago: 'ChicagoFLFRegular, sans-serif',
     geneva: 'Geneva, Verdana',
+    alagard: 'Alagard, serif',
   },
 
   cursors: {
