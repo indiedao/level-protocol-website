@@ -4,7 +4,7 @@ const TokenContainer = styled.div`
   ${props => css`
     position: relative;
     display: grid;
-    width: ${props.width}px;
+    width: 100%;
     height: ${props.height}px;
     grid-template-rows: 20% 68% 12%;
     justify-items: center;
