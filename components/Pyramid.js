@@ -15,7 +15,7 @@ import theme from '../util/theme'
 
 const ROTATION_INTERVAL = 2500
 
-const Pyramid = () => {
+const Pyramid = ({ backgroundColor = theme.colors.vibrantScreen }) => {
   const canvasRef = useRef(null)
   const whiteLightAmount = 0.25
   const discoTimeDivisor = 5000.0
@@ -513,7 +513,7 @@ const Pyramid = () => {
       // Now render outer mesh and apply effects
       renderer.setRenderTarget(null)
       renderer.clear()
-      scene.background = new THREE.Color(theme.colors.vibrantScreen)
+      scene.background = new THREE.Color(backgroundColor)
       renderer.render(scene, camera)
 
       rotateThrottled()

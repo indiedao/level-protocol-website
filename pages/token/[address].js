@@ -1,9 +1,11 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useEffect, useState, useCallback } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/dist/client/router'
 import TokenView from '../../components/token/view/TokenView'
 import { Body1 } from '../../components/ui/Typography'
+import { A, H4 } from '../../components/ui/AltTypography'
+import theme from '../../util/theme'
 
 const Level = () => {
   const [config, setConfig] = useState()
@@ -51,8 +53,15 @@ const Level = () => {
                 nftAddress={config.nftAddress}
                 colorHue={config.colorHue}
                 colorLightness={config.colorLightness}
+                backgroundColor={theme.colors.vibrantBlack}
               />
             )}
+            <Callout>
+              <H4 color="vibrantPixel">lvl coming soon</H4>
+              <A href="https://twitter.com/lvlprotocol" target="_blank">
+                @lvlprotocol
+              </A>
+            </Callout>
           </Container>
         </Layout>
       </main>
@@ -60,12 +69,30 @@ const Level = () => {
   )
 }
 
-const Layout = styled.div``
+const Layout = styled.div`
+  ${props => css`
+    background-color: ${props.theme.colors.vibrantScreen};
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: ${props.theme.colors.vibrantBlack};
+  `}
+`
 
 const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 100%;
   max-width: 600px;
+  display: grid;
+  grid-template-rows: auto 60px;
+  padding: 80px 50px;
+`
+
+const Callout = styled.div`
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export default Level

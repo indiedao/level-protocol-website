@@ -82,10 +82,17 @@ export const buttonStyles = css`
 
 export const linkStyles = css`
   ${sharedActionStyles}
+  color: ${props => props.theme.colors[props.color]};
   font-size: inherit;
   line-height: inherit;
   display: inline;
 `
+
+export const A = styled.a`
+  ${linkStyles}
+`
+A.propTypes = { ...propTypesColor }
+A.defaultProps = { color: 'mutedGreen' }
 
 export const screenReaderTextStyles = css`
   clip: rect(0 0 0 0);

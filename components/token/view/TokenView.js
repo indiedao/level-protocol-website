@@ -17,6 +17,7 @@ const TokenView = ({
   nftAddress,
   colorHue,
   colorLightness,
+  backgroundColor,
 }) => {
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
@@ -53,7 +54,11 @@ const TokenView = ({
       <TokenContainer ref={container} width={width} height={height}>
         <PFP src={nftSrc} />
         <Body1>{ens || truncatedAddress}</Body1>
-        <Pyramid width={width} height={height} />
+        <Pyramid
+          width={width}
+          height={height}
+          backgroundColor={backgroundColor}
+        />
       </TokenContainer>
     </PixelCard>
   )
