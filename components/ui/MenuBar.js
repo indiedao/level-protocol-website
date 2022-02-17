@@ -71,6 +71,8 @@ const Menu = styled.nav`
     > *:nth-child(n + 2) {
       margin-left: 1.24rem;
 
+      ${({ theme }) => theme.bp.xs(' display: none; ')}
+
       ${({ theme }) => theme.bp.sm(' display: none; ')}
     }
   }
@@ -101,6 +103,8 @@ const TrayItem = styled.li`
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
 
   &:last-child {
+    ${({ theme }) => theme.bp.xs(' display: none; ')}
+
     ${({ theme }) => theme.bp.sm(' display: none; ')}
   }
 `

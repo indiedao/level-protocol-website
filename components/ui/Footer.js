@@ -17,10 +17,14 @@ const FooterLinksContainer = styled.nav`
   font-size: 2rem;
   line-height: 2rem;
 
+  ${props => props.theme.bp.xs(' flex-direction: column; ')}
+
   ${props => props.theme.bp.sm(' flex-direction: column; ')}
 
   > *:nth-child(n + 2) {
     border-color: ${props => props.theme.colors.trueWhite};
+
+    ${props => props.theme.bp.xs(' margin: 1.2rem 0 0; text-align: center; ')}
 
     ${props => props.theme.bp.sm(' margin: 1.2rem 0 0; text-align: center; ')}
 
