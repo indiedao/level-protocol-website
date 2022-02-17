@@ -47,12 +47,13 @@ type Community {
 }
 
 type MemberConfig {
-  address: String!
-  ens: String
+  address: String! @unique
   nftAddress: String!
   nftId: String!
   message: String!
   signature: String!
+  colorHue: Int!
+  colorLightness: Int!
 }
 
 type Query {
@@ -78,10 +79,11 @@ type Query {
   memberConfig(address: String!): MemberConfig
   createConfig(
     address: String!
-    ens: String
     nftAddress: String!
     nftId: String!
     message: String!
     signature: String!
+    colorHue: Int!
+    colorLightness: Int!
   ): MemberConfig
 }

@@ -60,7 +60,7 @@ export const Web3Provider = ({ children }) => {
         const balance = Number(await contracts.LvlV1.balanceOf(address))
         if (active) setHasLvlToken(balance > 0)
       } catch (e) {
-        if (active) setHasLvlToken(0)
+        if (active) setHasLvlToken(false)
       }
     }
 

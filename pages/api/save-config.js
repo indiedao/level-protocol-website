@@ -3,10 +3,15 @@ import { getNftContract } from '../../util/contract'
 import { createMemberConfig } from '../../util/fauna'
 
 async function verifyOwnership({ address, nftAddress, nftId }) {
+  // Allow 0x0 for custom lvl PFP:
+  if (nftAddress === '0x0') return true
+
   const contract = getNftContract(nftAddress)
   const owner = await contract.ownerOf(nftId)
 
   if (owner !== address) throw new Error(`Invalid owner of ${nftId}!`)
+
+  return true
 }
 
 async function verifySignature({ message, signature, address }) {
@@ -17,9 +22,15 @@ async function verifySignature({ message, signature, address }) {
 
 const saveConfig = async (req, res) => {
   try {
-    const { address, message, signature, nftId, nftAddress, ens } = JSON.parse(
-      req.body,
-    )
+    const {
+      address,
+      message,
+      signature,
+      nftId,
+      nftAddress,
+      colorHue,
+      colorLightness,
+    } = JSON.parse(req.body)
 
     await verifySignature({ address, message, signature })
 
@@ -31,15 +42,15 @@ const saveConfig = async (req, res) => {
       signature,
       nftId,
       nftAddress,
-      ens,
+      colorHue,
+      colorLightness,
     })
 
     res.statusCode = 200
     res.json({ success: true })
   } catch (error) {
     console.log('~ file: save-config.js ~ line 12 ~ saveConfig ~ error', error)
-    res.statusCode = 200
-    res.json({ success: false })
+    res.status(500).json({ error: 'Failed to save config!' })
   }
 }
 

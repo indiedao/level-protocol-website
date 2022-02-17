@@ -11,10 +11,11 @@ import {
 } from './pyramid-shapes/outerShapeBackFace'
 import { throttle } from '../util/throttle'
 import { clamp, cubicInterpolation, radians } from '../util/pyramid'
+import theme from '../util/theme'
 
 const ROTATION_INTERVAL = 2500
 
-const Pyramid = () => {
+const Pyramid = ({ backgroundColor = theme.colors.vibrantScreen }) => {
   const canvasRef = useRef(null)
   const whiteLightAmount = 0.25
   const discoTimeDivisor = 5000.0
@@ -25,8 +26,8 @@ const Pyramid = () => {
   const innerShapeBaseRadius = 6
   const innerShapeHeight = 7
   const innerShapeReflectionAlpha = 0.2
-  const cameraZ = 25
-  const cameraY = 10
+  const cameraZ = 18
+  const cameraY = 5
   const cameraNear = 1
   const cameraFar = 100
   const camaraFOV = 75
@@ -512,6 +513,7 @@ const Pyramid = () => {
       // Now render outer mesh and apply effects
       renderer.setRenderTarget(null)
       renderer.clear()
+      scene.background = new THREE.Color(backgroundColor)
       renderer.render(scene, camera)
 
       rotateThrottled()

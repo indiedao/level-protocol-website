@@ -4,9 +4,10 @@ import {
   GET_COMMUNITY,
   CREATE_MEMBER_CONFIG,
   GET_COMMUNITY_BY_ADMIN,
+  GET_MEMBER_CONFIG,
 } from './queries'
 
-const graphQLClient = new GraphQLClient(process.env.FAUNADB_URL, {
+const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
   headers: {
     authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
   },
@@ -44,15 +45,22 @@ export const getCommunityByAdmin = async adminAddress => {
 }
 
 export const createMemberConfig = async configParam => {
+  const { memberConfig } = await graphQLClient.request(
+    CREATE_MEMBER_CONFIG,
+    configParam,
+  )
+  return memberConfig
+}
+
+export const getMemberConfig = async memberAddress => {
   try {
-    const { config } = await graphQLClient.request(
-      CREATE_MEMBER_CONFIG,
-      configParam,
-    )
-    return config
+    const { memberConfig } = await graphQLClient.request(GET_MEMBER_CONFIG, {
+      address: memberAddress,
+    })
+    return memberConfig
   } catch (error) {
     console.error(error)
   }
 
-  return false
+  return undefined
 }
