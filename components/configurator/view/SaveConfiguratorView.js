@@ -68,7 +68,7 @@ const SaveConfiguratorView = () => {
 
   const handleTwitterShare = () => {
     const content = encodeURI(
-      `Join my journey on @lvlprotocol https://lvlprotocol.xyz/tokens/${address}`,
+      `Join my journey on @lvlprotocol https://lvlprotocol.xyz/token/${address}`,
     )
     window.location = `https://twitter.com/intent/tweet?text=${content}`
   }
