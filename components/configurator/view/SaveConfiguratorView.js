@@ -23,7 +23,7 @@ const SaveConfiguratorView = () => {
     ethers.utils.parseEther('0.01'),
   )
   const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
-  const { contracts, address } = useWeb3()
+  const { address } = useWeb3()
 
   // Set status indicator message:
   useEffect(() => {
@@ -51,9 +51,11 @@ const SaveConfiguratorView = () => {
   }
 
   const handleMint = async () => {
+    /*
     await contracts.LvlV1.mint({
       value: donationAmount.toString(),
     })
+    */
     setState('CONFIRMATION')
   }
 
@@ -121,10 +123,7 @@ const SaveConfiguratorView = () => {
       <ConfiguratorScreen>
         <ConfiguratorNavView />
         <div>
-          <Body1>
-            Donate to the Buidlers:{' '}
-            {ethers.utils.formatEther(donationAmount.toString())} ETH (optional)
-          </Body1>
+          <Body1>Minting coming soon...</Body1>
           <Button onClick={handleMint}>mint</Button>
         </div>
       </ConfiguratorScreen>

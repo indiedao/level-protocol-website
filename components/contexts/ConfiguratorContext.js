@@ -6,7 +6,7 @@ const ConfiguratorContext = createContext()
 const STEPS = ['NFT', 'COLOR', 'SAVE']
 
 export const ConfiguratorProvider = ({ children }) => {
-  const [flow, setFlow] = useState()
+  const [flow] = useState('CONFIG')
   const [currentStep, setCurrentStep] = useState(STEPS[0])
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()
@@ -19,7 +19,7 @@ export const ConfiguratorProvider = ({ children }) => {
   // Load existing configuration:
   useEffect(() => {
     // TODO load existing...
-    setFlow(hasLvlToken ? 'CONFIG' : 'MINT')
+    // setFlow(hasLvlToken ? 'CONFIG' : 'MINT')
   }, [hasLvlToken])
 
   // Mark unsaved changes when any deps change:
