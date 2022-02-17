@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Pyramid</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      #pyramidCanvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="pyramidCanvas"></canvas>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!--
+Notes for shaders in threejs
+	1. script type x-shader/BLAH is a convention used in examples with no special meaning. It just tells browser "not javascript."
+	2. threejs ShaderMaterial prepends some shader content for you, specifically some glsl uniforms and vertex attributes.
+
+References:
+	https://threejs.org/docs/index.html?q=shader#api/en/materials/ShaderMaterial
+	https://threejs.org/docs/index.html?q=shader#api/en/renderers/webgl/WebGLProgram
+-->
+  <script id="outerShape-vs" type="x-shader/x-vertex">
+    varying vec3 bary;
+    varying vec3 worldPos;
+
+    void main() {
+    	bary = vec3(uv, 1.0 - uv.x - uv.y);
+    	worldPos = (modelMatrix * vec4(position, 1)).xyz;
+    	gl_Position = projectionMatrix * viewMatrix * vec4(worldPos, 1.0);
+    }
+  </script>
+  <script id="outerShape-fs" type="x-shader/x-fragment">
+    uniform sampler2D frontView;
+    uniform vec2 resolution;
+    uniform float discoTime;
+    uniform float edgeRefractThreshold;
+    uniform float refractionFactor;
+    varying vec3 bary;
+    varying vec3 worldPos;
+
+    // Adapted from https://tympanus.net/codrops/2019/12/20/how-to-create-the-apple-fifth-avenue-cube-in-webgl/
+    vec3 radialRainbow(vec2 pos, float time) {
+    	float t = (atan(pos.y, pos.x) + radians(180.0)) / radians(360.0);
+    	t = mod(t + cos(time), 1.0);
+
+    	vec3 a = vec3(0.15, 0.58, 0.96);
+    	vec3 b = vec3(0.29, 1.00, 0.55);
+    	vec3 c = vec3(1.00, 0.0, 0.85);
+    	vec3 d = vec3(0.92, 0.20, 0.14);
+    	vec3 e = vec3(1.00, 0.96, 0.32);
+
+    	const float step = 1.0 / 5.0;
+
+    	vec3 color = a;
+    	color = mix(color, b, smoothstep(step * 0.0, step * 1.0, t));
+    	color = mix(color, c, smoothstep(step * 1.0, step * 2.0, t));
+    	color = mix(color, d, smoothstep(step * 2.0, step * 3.0, t));
+    	color = mix(color, e, smoothstep(step * 3.0, step * 4.0, t));
+    	color = mix(color, a, smoothstep(step * 4.0, step * 5.0, t));
+
+    	return color;
+    }
+
+    void main() {
+    	vec2 st = gl_FragCoord.xy;
+
+    	vec3 dbdx = dFdx(bary);
+    	vec3 dbdy = dFdy(bary);
+
+    	float T = edgeRefractThreshold;
+    	if (bary.x < T || bary.y < T) {
+    		vec3 v = bary - vec3(1.0/3.0); // vec from center
+    		vec2 warp = vec2(0,0);
+
+    		if (dbdx.x != 0.0) warp.x += (v.x / dbdx.x);
+    		if (dbdx.y != 0.0) warp.x += (v.y / dbdx.y);
+    		if (dbdx.z != 0.0) warp.x += (v.z / dbdx.z);
+
+    		if (dbdy.x != 0.0) warp.y += (v.x / dbdy.x);
+    		if (dbdy.y != 0.0) warp.y += (v.y / dbdy.y);
+    		if (dbdy.z != 0.0) warp.y += (v.z / dbdy.z);
+
+    		if (T < bary.z && bary.z < 1.0 - T){ // Suppress warp near top or bottom to avoid black seeping in.
+    			warp = (refractionFactor / T) * normalize(warp);
+    			if (bary.x < T) st += (warp * (T - bary.x));
+    			if (bary.y < T) st += (warp * (T - bary.y));
+    		}
+    	}
+    	st = clamp(st/resolution, vec2(0), vec2(1));
+    	vec4 B = texture2D(frontView, st);
+    	vec4 A = vec4(0);
+
+    	vec3 dwdx = dFdx(worldPos);
+    	vec3 dwdy = dFdy(worldPos);
+    	vec3 n = normalize(cross(dwdx, dwdy));
+
+    	T *= 1.25;
+    	if ((bary.x < T || bary.y < T || bary.z < T) && abs(n.y) < .9) {
+    		float borderFactor = 1.0 - smoothstep(0.0, T * T * T, bary.x * bary.y * bary.z);
+
+    		vec3 disco = radialRainbow(worldPos.xz, discoTime);
+    		vec3 color = disco;
+    		A = vec4(color * borderFactor, borderFactor);
+    	}
+
+    	gl_FragColor = A + (1.0 - A.a) * B;
+    }
+  </script>
+
+  <script id="outerShapeBackFace-vs" type="x-shader/x-vertex">
+    varying vec3 bary;
+    varying vec3 worldPos;
+
+    void main() {
+    	bary = vec3(uv, 1.0 - uv.x - uv.y);
+    	worldPos = (modelMatrix * vec4(position, 1)).xyz;
+    	gl_Position = projectionMatrix * viewMatrix * vec4(worldPos, 1.0);
+    }
+  </script>
+  <script id="outerShapeBackFace-fs" type="x-shader/x-fragment">
+    uniform float discoTime;
+    uniform float edgeRefractThreshold;
+    varying vec3 bary;
+    varying vec3 worldPos;
+
+    // Same as from outerShape fragment shader
+    vec3 radialRainbow(vec2 pos, float time) {
+    	float t = (atan(pos.y, pos.x) + radians(180.0)) / radians(360.0);
+    	t = mod(t + cos(time), 1.0);
+
+    	vec3 a = vec3(0.15, 0.58, 0.96);
+    	vec3 b = vec3(0.29, 1.00, 0.55);
+    	vec3 c = vec3(1.00, 0.0, 0.85);
+    	vec3 d = vec3(0.92, 0.20, 0.14);
+    	vec3 e = vec3(1.00, 0.96, 0.32);
+
+    	const float step = 1.0 / 5.0;
+
+    	vec3 color = a;
+    	color = mix(color, b, smoothstep(step * 0.0, step * 1.0, t));
+    	color = mix(color, c, smoothstep(step * 1.0, step * 2.0, t));
+    	color = mix(color, d, smoothstep(step * 2.0, step * 3.0, t));
+    	color = mix(color, e, smoothstep(step * 3.0, step * 4.0, t));
+    	color = mix(color, a, smoothstep(step * 4.0, step * 5.0, t));
+
+    	return color;
+    }
+
+    void main() {
+    	float T = edgeRefractThreshold;
+    	vec4 A = vec4(0);
+
+    	vec3 dwdx = dFdx(worldPos);
+    	vec3 dwdy = dFdy(worldPos);
+    	vec3 n = normalize(cross(dwdx, dwdy));
+
+    	T *= 1.25;
+    	if ((bary.x < T || bary.y < T || bary.z < T) && abs(n.y) < .9) {
+    		float borderFactor = 1.0 - smoothstep(0.0, T * T * T, bary.x * bary.y * bary.z);
+
+    		vec3 disco = radialRainbow(worldPos.xz, discoTime);
+    		vec3 color = disco;
+    		A = vec4(color * borderFactor, borderFactor);
+    	}
+
+    	gl_FragColor = A;
+    }
+  </script>
+
+  <script id="lines-vs" type="x-shader/x-vertex">
+    varying vec3 worldPos;
+
+    void main() {
+    	worldPos = (modelMatrix * vec4(position, 1)).xyz;
+    	gl_Position = projectionMatrix * viewMatrix * vec4(worldPos, 1.0);
+    }
+  </script>
+  <script id="lines-fs" type="x-shader/x-fragment">
+    uniform float discoTime;
+    varying vec3 worldPos;
+
+    // Same as from outerShape fragment shader
+    vec3 radialRainbow(vec2 pos, float time) {
+    	float t = (atan(pos.y, pos.x) + radians(180.0)) / radians(360.0);
+    	t = mod(t + cos(time), 1.0);
+
+    	vec3 a = vec3(0.15, 0.58, 0.96);
+    	vec3 b = vec3(0.29, 1.00, 0.55);
+    	vec3 c = vec3(1.00, 0.0, 0.85);
+    	vec3 d = vec3(0.92, 0.20, 0.14);
+    	vec3 e = vec3(1.00, 0.96, 0.32);
+
+    	const float step = 1.0 / 5.0;
+
+    	vec3 color = a;
+    	color = mix(color, b, smoothstep(step * 0.0, step * 1.0, t));
+    	color = mix(color, c, smoothstep(step * 1.0, step * 2.0, t));
+    	color = mix(color, d, smoothstep(step * 2.0, step * 3.0, t));
+    	color = mix(color, e, smoothstep(step * 3.0, step * 4.0, t));
+    	color = mix(color, a, smoothstep(step * 4.0, step * 5.0, t));
+
+    	return color;
+    }
+
+    void main() {
+    	vec3 disco = radialRainbow(worldPos.xz, discoTime);
+    	vec3 color = mix(disco, vec3(1), 0.5);
+    	gl_FragColor = vec4(color * 1.0, 1.0);
+    }
+  </script>
+
+  <script id="innerShape-vs" type="x-shader/x-vertex">
+    uniform mat4  reflectionMatrix;
+    uniform int cullFrontReflections;
+    uniform float height;
+    uniform float percent;
+    varying vec3 worldPos; // no reflection applied
+
+    void main() {
+    	vec3 pos = position;
+    	if (position.y > 0.0) {
+    		vec3 endPos = vec3(0, height, 0);
+    		vec3 beginPos = vec3(position.x, 0, position.z);
+    		// Non zero min because 0 percent looks bad (Z-fighting). Always show a little to avoid that.
+    		float t = clamp(percent / 100.0, 0.005, 1.0);
+    		pos = mix(beginPos, endPos, t);
+    	}
+
+    	worldPos = (modelMatrix * vec4(pos, 1)).xyz;
+
+    	// HACK to cull reflections on front faces because couldn't get clip planes working in threejs
+    	vec4 reflectedWorldPos = modelMatrix * reflectionMatrix * vec4(pos, 1);
+    	if (cullFrontReflections != 0 && reflectedWorldPos.z > 0.0)
+    		reflectedWorldPos.z = 1000.0;
+
+    	gl_Position = projectionMatrix * viewMatrix * reflectedWorldPos;
+    }
+  </script>
+  <script id="innerShape-fs" type="x-shader/x-fragment">
+    uniform vec3 whiteLightPosition;
+    uniform float whiteLightAmount;
+    uniform float discoTime;
+    uniform float alpha;
+    varying vec3 worldPos; // no reflection applied
+
+    // Same as from outerShape fragment shader
+    vec3 radialRainbow(vec2 pos, float time) {
+    	float t = (atan(pos.y, pos.x) + radians(180.0)) / radians(360.0);
+    	t = mod(t + cos(time), 1.0);
+
+    	vec3 a = vec3(0.15, 0.58, 0.96);
+    	vec3 b = vec3(0.29, 1.00, 0.55);
+    	vec3 c = vec3(1.00, 0.0, 0.85);
+    	vec3 d = vec3(0.92, 0.20, 0.14);
+    	vec3 e = vec3(1.00, 0.96, 0.32);
+
+    	const float step = 1.0 / 5.0;
+
+    	vec3 color = a;
+    	color = mix(color, b, smoothstep(step * 0.0, step * 1.0, t));
+    	color = mix(color, c, smoothstep(step * 1.0, step * 2.0, t));
+    	color = mix(color, d, smoothstep(step * 2.0, step * 3.0, t));
+    	color = mix(color, e, smoothstep(step * 3.0, step * 4.0, t));
+    	color = mix(color, a, smoothstep(step * 4.0, step * 5.0, t));
+
+    	return color;
+    }
+
+    void main() {
+    	vec3 dwdx = dFdx(worldPos);
+    	vec3 dwdy = dFdy(worldPos);
+    	vec3 N = normalize(cross(dwdx, dwdy));
+    	vec3 L = normalize(whiteLightPosition - worldPos);
+
+    	vec3 light = max(0.0, dot(N, L)) * vec3(whiteLightAmount);
+
+    	vec3 disco = radialRainbow(worldPos.xz, discoTime) * .85; // darken disco a little to better show 3D shape with light
+    	vec3 color = disco + light;
+    	gl_FragColor = vec4(color*alpha, alpha);
+    }
+  </script>
+
+  <script>
+    function clamp(val, lo, hi) {
+      if (val < lo) return lo
+      else if (val > hi) return hi
+      else return val
+    }
+
+    function lerp(a, b, t) {
+      return (1.0 - t) * a + t * b
+    }
+
+    // https://en.wikipedia.org/wiki/Cubic_Hermite_spline
+    // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/smoothstep.xhtml
+    function cubicInterpolation(a, b, t) {
+      t = t * t * (3.0 - 2.0 * t)
+      return lerp(a, b, t)
+    }
+
+    function radians(degrees) {
+      return (degrees * Math.PI) / 180
+    }
+
+    function genPentagonVerticesAtY(radius, yCoord) {
+      // Each vertex is 72 degrees apart because 5 * 72 = 360.
+      // To get flat part facing Z-axis, the Z-axis will conceptually split a 72 degree interval into 2 36 degree parts.
+      // Those "front" vertices are 90-36 = 54 degrees from the X-axis.
+      const theta0 = radians(54 + 72 * 0)
+      const theta1 = radians(54 + 72 * 1)
+      const theta2 = radians(54 + 72 * 2)
+      const theta3 = radians(54 + 72 * 3)
+      const theta4 = radians(54 + 72 * 4)
+      return [
+        radius * Math.cos(theta0),
+        yCoord,
+        radius * Math.sin(theta0),
+        radius * Math.cos(theta1),
+        yCoord,
+        radius * Math.sin(theta1),
+        radius * Math.cos(theta2),
+        yCoord,
+        radius * Math.sin(theta2),
+        radius * Math.cos(theta3),
+        yCoord,
+        radius * Math.sin(theta3),
+        radius * Math.cos(theta4),
+        yCoord,
+        radius * Math.sin(theta4),
+      ]
+    }
+
+    function pushVertex(dstArray, srcArray, srcVertexIndex) {
+      dstArray.push(
+        srcArray[3 * srcVertexIndex + 0],
+        srcArray[3 * srcVertexIndex + 1],
+        srcArray[3 * srcVertexIndex + 2],
+      )
+    }
+
+    function pushTriangle(
+      dstArray,
+      srcArray,
+      srcVertexIndexA,
+      srcVertexIndexB,
+      srcVertexIndexC,
+    ) {
+      pushVertex(dstArray, srcArray, srcVertexIndexA)
+      pushVertex(dstArray, srcArray, srcVertexIndexB)
+      pushVertex(dstArray, srcArray, srcVertexIndexC)
+    }
+
+    function setVec(vec3, srcArray, srcVertexIndex) {
+      const x = srcArray[3 * srcVertexIndex + 0]
+      const y = srcArray[3 * srcVertexIndex + 1]
+      const z = srcArray[3 * srcVertexIndex + 2]
+      vec3.set(x, y, z)
+    }
+
+    function createCubeGeometry(height) {
+      // It's handy to have a cube to debug with.
+      const x = height / 2
+      const y = height
+      const z = height / 2
+
+      const vertices = []
+      const normals = []
+
+      // +Z
+      vertices.push(-x, y, z)
+      vertices.push(-x, 0, z)
+      vertices.push(x, 0, z)
+
+      vertices.push(-x, y, z)
+      vertices.push(x, 0, z)
+      vertices.push(x, y, z)
+      for (let i = 0; i < 6; ++i) {
+        normals.push(0, 0, 1)
+      }
+
+      // -Z
+      vertices.push(-x, y, -z)
+      vertices.push(x, 0, -z)
+      vertices.push(-x, 0, -z)
+
+      vertices.push(-x, y, -z)
+      vertices.push(x, y, -z)
+      vertices.push(x, 0, -z)
+      for (let i = 0; i < 6; ++i) {
+        normals.push(0, 0, -1)
+      }
+
+      // +Y
+      vertices.push(-x, y, -z)
+      vertices.push(-x, y, z)
+      vertices.push(x, y, -z)
+
+      vertices.push(x, y, -z)
+      vertices.push(-x, y, z)
+      vertices.push(x, y, z)
+      for (let i = 0; i < 6; ++i) {
+        normals.push(0, 1, 0)
+      }
+
+      // -Y
+      vertices.push(-x, 0, -z)
+      vertices.push(x, 0, -z)
+      vertices.push(-x, 0, z)
+
+      vertices.push(x, 0, -z)
+      vertices.push(x, 0, z)
+      vertices.push(-x, 0, z)
+      for (let i = 0; i < 6; ++i) {
+        normals.push(0, -1, 0)
+      }
+
+      // +X
+      vertices.push(x, y, z)
+      vertices.push(x, 0, z)
+      vertices.push(x, y, -z)
+
+      vertices.push(x, y, -z)
+      vertices.push(x, 0, z)
+      vertices.push(x, 0, -z)
+      for (let i = 0; i < 6; ++i) {
+        normals.push(1, 0, 0)
+      }
+
+      // -X
+      vertices.push(-x, y, z)
+      vertices.push(-x, y, -z)
+      vertices.push(-x, 0, z)
+
+      vertices.push(-x, y, -z)
+      vertices.push(-x, 0, -z)
+      vertices.push(-x, 0, z)
+      for (let i = 0; i < 6; ++i) {
+        normals.push(1, 0, 0)
+      }
+
+      const geometry = new THREE.BufferGeometry()
+      geometry.setAttribute(
+        'position',
+        new THREE.BufferAttribute(new Float32Array(vertices), 3),
+      )
+      geometry.setAttribute(
+        'normal',
+        new THREE.BufferAttribute(new Float32Array(normals), 3),
+      )
+      return geometry
+    }
+
+    function createOuterShapeGeometry(radius, height) {
+      const penta = genPentagonVerticesAtY(radius, 0)
+
+      // Add center base and top vertices
+      penta.push(0, 0, 0)
+      penta.push(0, height, 0)
+
+      const vertices = []
+      const uvBary = [] // Will use UVs as a hack to get barycentric coordinates in shader
+
+      // bottom triangles
+      pushTriangle(vertices, penta, 5, 0, 1)
+      pushTriangle(vertices, penta, 5, 1, 2)
+      pushTriangle(vertices, penta, 5, 2, 3)
+      pushTriangle(vertices, penta, 5, 3, 4)
+      pushTriangle(vertices, penta, 5, 4, 0)
+      for (let i = 0; i < 5; ++i) {
+        // Choice here doesn't matter much 'cause we won't look at bottom
+        uvBary.push(0, 0)
+        uvBary.push(1, 0)
+        uvBary.push(0, 1)
+      }
+
+      // "wall" triangles, 1 per side, 5 sides total
+      //    top
+      //    /\    b for base
+      //   /__\
+      //   bj  bk
+      for (let i = 0; i < 5; ++i) {
+        const j = i
+        const k = i == 4 ? 0 : i + 1
+        const b = penta
+
+        pushVertex(vertices, b, 6)
+        pushVertex(vertices, b, k)
+        pushVertex(vertices, b, j)
+
+        uvBary.push(0, 0)
+        uvBary.push(1, 0)
+        uvBary.push(0, 1)
+      }
+
+      const geometry = new THREE.BufferGeometry()
+      geometry.setAttribute(
+        'position',
+        new THREE.BufferAttribute(new Float32Array(vertices), 3),
+      )
+      geometry.setAttribute(
+        'uv',
+        new THREE.BufferAttribute(new Float32Array(uvBary), 2),
+      )
+      return geometry
+    }
+
+    function createOuterShapeReflectionMatrices(radius, height) {
+      reflectionMatrices = []
+
+      // Strategy:
+      //    1. Compute plane normals
+      //    2. Compute d for plane equation ax + by + cz + d = 0. Plane normal contains a,b,c part.
+      //    3. Fill threejs Matrix4 with coefficients according to https://en.wikipedia.org/wiki/Transformation_matrix#Reflection
+
+      const penta = genPentagonVerticesAtY(radius, 0)
+
+      // "wall" triangles, 1 per side, 5 sides total
+      //    top
+      //    /\    b for base
+      //   /__\
+      //   bj  bk
+      const top = new THREE.Vector3(0, height, 0)
+      const bj = new THREE.Vector3()
+      const bk = new THREE.Vector3()
+      for (let i = 0; i < 5; ++i) {
+        const j = i
+        const k = i == 4 ? 0 : i + 1
+
+        setVec(bj, penta, j)
+        setVec(bk, penta, k)
+
+        bj.sub(top)
+        bk.sub(top)
+
+        bj.cross(bk)
+        const N = bj
+        N.normalize()
+
+        const a = N.x
+        const b = N.y
+        const c = N.z
+        const d = -N.dot(top)
+
+        const mat = new THREE.Matrix4()
+        mat.set(
+          1 - 2 * a * a,
+          -2 * a * b,
+          -2 * a * c,
+          -2 * a * d,
+          -2 * a * b,
+          1 - 2 * b * b,
+          -2 * b * c,
+          -2 * b * d,
+          -2 * a * c,
+          -2 * b * c,
+          1 - 2 * c * c,
+          -2 * c * d,
+          0,
+          0,
+          0,
+          1,
+        )
+        reflectionMatrices.push(mat)
+      }
+
+      return reflectionMatrices
+    }
+
+    function createInnerShapeGeometry(baseRadius, height) {
+      // Convention: all verticies with y > 0 will be animated in vertex shader
+      const basePenta = genPentagonVerticesAtY(baseRadius, 0)
+      const topPenta = genPentagonVerticesAtY(baseRadius, height)
+
+      // Add center vertex for top and base. All top and base triangles will share a center vertex.
+      basePenta.push(0, 0, 0)
+      topPenta.push(0, height, 0)
+
+      const vertices = []
+
+      // bottom triangles
+      pushTriangle(vertices, basePenta, 5, 0, 1)
+      pushTriangle(vertices, basePenta, 5, 1, 2)
+      pushTriangle(vertices, basePenta, 5, 2, 3)
+      pushTriangle(vertices, basePenta, 5, 3, 4)
+      pushTriangle(vertices, basePenta, 5, 4, 0)
+
+      // top triangles
+      pushTriangle(vertices, topPenta, 5, 1, 0)
+      pushTriangle(vertices, topPenta, 5, 2, 1)
+      pushTriangle(vertices, topPenta, 5, 3, 2)
+      pushTriangle(vertices, topPenta, 5, 4, 3)
+      pushTriangle(vertices, topPenta, 5, 0, 4)
+
+      // "wall" triangles, 2 per side, 5 sides total
+      //	tj___tk
+      //   |\  |
+      //   | \ |   b for base, t for top
+      //   |__\|
+      //   bj  bk
+      for (let i = 0; i < 5; ++i) {
+        const j = i
+        const k = i == 4 ? 0 : i + 1
+        const t = topPenta
+        const b = basePenta
+
+        pushVertex(vertices, t, j)
+        pushVertex(vertices, b, k)
+        pushVertex(vertices, b, j)
+
+        pushVertex(vertices, t, j)
+        pushVertex(vertices, t, k)
+        pushVertex(vertices, b, k)
+      }
+
+      const geometry = new THREE.BufferGeometry()
+      geometry.setAttribute(
+        'position',
+        new THREE.BufferAttribute(new Float32Array(vertices), 3),
+      )
+      return geometry
+    }
+
+    function enablePremultipliedAlpha(material) {
+      // Enable blending. Do it premultiplied style. See https://en.wikipedia.org/wiki/Alpha_compositing#Straight_versus_premultiplied
+      material.transparent = true
+      material.blending = THREE.CustomBlending
+      material.blendEquation = THREE.AddEquation
+      material.blendSrc = THREE.OneFactor
+      material.blendSrcAlpha = material.blendSrc
+      material.blendDst = THREE.OneMinusSrcAlphaFactor
+      material.blendDstAlpha = material.blendDst
+    }
+
+    function resizeRenderer(renderer) {
+      const canvas = renderer.domElement
+      const pixelRatio = window.devicePixelRatio
+      const width = Math.trunc(canvas.clientWidth * pixelRatio)
+      const height = Math.trunc(canvas.clientHeight * pixelRatio)
+      const needResize = canvas.width !== width || canvas.height !== height
+      if (needResize) {
+        renderer.setSize(width, height, false)
+      }
+      return needResize
+    }
+
+    const whiteLightPosition = new THREE.Vector3(20, 40, 3)
+    const whiteLightAmount = 0.25
+    const discoTimeDivisor = 5000.0
+    const outerShapeRadius = 10
+    const outerShapeHeight = 13
+    const outerShapeEdgeRefractThreshold = 0.04 // closer to 0 means closer to an edge
+    const outerShapeRefractionFactor = 5.0
+    const innerShapeBaseRadius = 6
+    const innerShapeHeight = 7
+    const innerShapeReflectionAlpha = 0.2
+    const cameraZ = 25
+    const cameraY = 10
+    const cameraNear = 1
+    const cameraFar = 100
+    const camaraFOV = 75
+
+    // Recommendation: keep percentAnimation slightly slower than spin to first draw attention to outershape, then back to inner.
+    const percentAnimation = {
+      elapsedMilliseconds: 0,
+      durationMilliseconds: 1000 * 2,
+      beginValue: 0,
+      endValue: 0,
+    }
+    const spinAnimation = {
+      elapsedMilliseconds: 0,
+      durationMilliseconds: 800 * 2,
+      beginValue: 0,
+      endValue: 0,
+    }
+
+    const canvas = document.querySelector('#pyramidCanvas')
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+    renderer.autoClear = false
+
+    const scene = new THREE.Scene()
+    const sceneRT = new THREE.Scene()
+    const frontRT = new THREE.WebGLRenderTarget(
+      canvas.clientWidth,
+      canvas.clientHeight,
+    )
+
+    const outerShapeReflectionMatrices = createOuterShapeReflectionMatrices(
+      outerShapeRadius,
+      outerShapeHeight,
+    )
+    const outerShapeGeometry = createOuterShapeGeometry(
+      outerShapeRadius,
+      outerShapeHeight,
+    )
+    const outerShapeMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        frontView: { value: frontRT.texture },
+        resolution: { value: new THREE.Vector2() },
+        discoTime: { value: 0 },
+        edgeRefractThreshold: { value: outerShapeEdgeRefractThreshold },
+        refractionFactor: { value: outerShapeRefractionFactor },
+      },
+      vertexShader: document.querySelector('#outerShape-vs').textContent,
+      fragmentShader: document.querySelector('#outerShape-fs').textContent,
+    })
+    enablePremultipliedAlpha(outerShapeMaterial)
+    const outerShapeMesh = new THREE.Mesh(
+      outerShapeGeometry,
+      outerShapeMaterial,
+    )
+    scene.add(outerShapeMesh)
+
+    const outerShapeLines = new THREE.LineSegments(
+      new THREE.EdgesGeometry(outerShapeGeometry),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          discoTime: { value: 0 },
+        },
+        vertexShader: document.querySelector('#lines-vs').textContent,
+        fragmentShader: document.querySelector('#lines-fs').textContent,
+      }),
+    )
+    scene.add(outerShapeLines)
+
+    const innerShapeGeometry = createInnerShapeGeometry(
+      innerShapeBaseRadius,
+      innerShapeHeight,
+    )
+    const innerShapeMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        reflectionMatrix: { value: new THREE.Matrix4() },
+        cullFrontReflections: { value: 0 },
+        height: { value: innerShapeHeight },
+        percent: { value: 50 },
+        whiteLightPosition: { value: whiteLightPosition },
+        whiteLightAmount: { value: whiteLightAmount },
+        discoTime: { value: 0 },
+        alpha: { value: 1 },
+      },
+      vertexShader: document.querySelector('#innerShape-vs').textContent,
+      fragmentShader: document.querySelector('#innerShape-fs').textContent,
+    })
+    enablePremultipliedAlpha(innerShapeMaterial)
+    const innerShapeMesh = new THREE.Mesh(
+      innerShapeGeometry,
+      innerShapeMaterial,
+    )
+    sceneRT.add(innerShapeMesh)
+
+    const outerShapeBackFaceMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        discoTime: { value: 0 },
+        edgeRefractThreshold: { value: outerShapeEdgeRefractThreshold },
+      },
+      vertexShader: document.querySelector('#outerShapeBackFace-vs')
+        .textContent,
+      fragmentShader: document.querySelector('#outerShapeBackFace-fs')
+        .textContent,
+    })
+
+    outerShapeBackFaceMaterial.side = THREE.BackSide
+    const outerShapeBackFaceMesh = new THREE.Mesh(
+      outerShapeGeometry,
+      outerShapeBackFaceMaterial,
+    )
+    sceneRT.add(outerShapeBackFaceMesh)
+
+    const camera = new THREE.PerspectiveCamera(
+      camaraFOV,
+      canvas.clientWidth / canvas.clientHeight,
+      cameraNear,
+      cameraFar,
+    )
+    camera.position.z = cameraZ
+    camera.position.y = cameraY
+
+    function advanceAnimation(
+      animation,
+      ms,
+      interpolationFunction = cubicInterpolation,
+    ) {
+      if (animation.elapsedMilliseconds < animation.durationMilliseconds) {
+        animation.elapsedMilliseconds = clamp(
+          animation.elapsedMilliseconds + ms,
+          0,
+          animation.durationMilliseconds,
+        )
+        const t = animation.elapsedMilliseconds / animation.durationMilliseconds
+        return interpolationFunction(
+          animation.beginValue,
+          animation.endValue,
+          t,
+        )
+      }
+      return animation.endValue
+    }
+
+    // We will let this counter go freely beyond or below valid index ranges [0,5) to avoid more complicated logic for the spin animation. Basic
+    // problem is that the discontinuity at 0/360 can make the pyramid spin a bunch the "long way". The general fix for this kind of problem is
+    // to determine the shortest route. We don't need the general fix for this implementation.
+    let currentFace = 0
+
+    // Sample data
+    const samplePercents = [0, 100, 20, 75, 50]
+
+    canvas.onclick = function (mouseEvent) {
+      if (mouseEvent.clientX > canvas.clientWidth / 2) {
+        currentFace++
+      } else {
+        currentFace--
+      }
+
+      // Unlike C/C++, % is well defined for negatives in JavasScript.
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
+      const faceIndex = ((currentFace % 5) + 5) % 5
+
+      percentAnimation.elapsedMilliseconds = 0
+      percentAnimation.beginValue = innerShapeMaterial.uniforms.percent.value
+      percentAnimation.endValue = samplePercents[faceIndex]
+
+      spinAnimation.elapsedMilliseconds = 0
+      spinAnimation.beginValue = innerShapeMesh.rotation.y
+      spinAnimation.endValue = radians(currentFace * 72)
+    }
+
+    previousTime = 0
+    function render(time) {
+      const deltaMilli = time - previousTime
+      previousTime = time
+
+      if (resizeRenderer(renderer)) {
+        const canvas = renderer.domElement
+        camera.aspect = canvas.clientWidth / canvas.clientHeight
+        camera.updateProjectionMatrix()
+
+        const size = outerShapeMaterial.uniforms.resolution.value
+        renderer.getSize(size)
+        frontRT.setSize(size.x, size.y)
+      }
+
+      innerShapeMaterial.uniforms.percent.value = advanceAnimation(
+        percentAnimation,
+        deltaMilli,
+        cubicInterpolation,
+      )
+      const rotY = advanceAnimation(
+        spinAnimation,
+        deltaMilli,
+        cubicInterpolation,
+      )
+
+      outerShapeMesh.rotation.y = rotY
+      outerShapeLines.rotation.y = rotY
+      outerShapeBackFaceMesh.rotation.y = rotY
+      innerShapeMesh.rotation.y = rotY
+
+      const discoTime = time / discoTimeDivisor
+      outerShapeMaterial.uniforms.discoTime.value = discoTime
+      outerShapeLines.material.uniforms.discoTime.value = discoTime
+      outerShapeBackFaceMaterial.uniforms.discoTime.value = discoTime
+      innerShapeMaterial.uniforms.discoTime.value = discoTime
+
+      // Render inside mesh and outside backfaces to render target so it can be distorted later
+      renderer.setRenderTarget(frontRT)
+      renderer.clear()
+
+      outerShapeBackFaceMesh.visible = true
+      outerShapeBackFaceMaterial.depthWrite = false
+      outerShapeBackFaceMaterial.stencilWrite = true
+      outerShapeBackFaceMaterial.stencilZPass = THREE.IncrementStencilOp
+      innerShapeMaterial.stencilFunc = THREE.AlwaysStencilFunc
+      innerShapeMaterial.side = THREE.FrontSide
+      innerShapeMaterial.uniforms.reflectionMatrix.value = new THREE.Matrix4()
+      innerShapeMaterial.uniforms.cullFrontReflections.value = 0
+      innerShapeMaterial.uniforms.alpha.value = 1
+      renderer.render(sceneRT, camera)
+
+      outerShapeBackFaceMesh.visible = false
+      innerShapeMaterial.side = THREE.BackSide
+      innerShapeMaterial.uniforms.alpha.value = innerShapeReflectionAlpha
+      innerShapeMaterial.stencilFunc = THREE.GreaterStencilFunc
+
+      for (let faceIndex = 0; faceIndex < 5; ++faceIndex) {
+        innerShapeMaterial.uniforms.reflectionMatrix.value =
+          outerShapeReflectionMatrices[faceIndex]
+        innerShapeMaterial.uniforms.cullFrontReflections.value = 1
+        renderer.render(sceneRT, camera)
+      }
+
+      // Now render outer mesh and apply effects
+      renderer.setRenderTarget(null)
+      renderer.clear()
+      renderer.render(scene, camera)
+
+      requestAnimationFrame(render)
+    }
+    requestAnimationFrame(render)
+  </script>
+</html>
