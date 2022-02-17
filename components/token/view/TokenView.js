@@ -54,14 +54,14 @@ const TokenView = ({
     <PixelCard color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
       <TokenContainer ref={container} width={width} height={height}>
         <PFP src={nftSrc} />
-        <EnsAddress color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
-          {ens || truncatedAddress}
-        </EnsAddress>
         <Pyramid
           width={width}
           height={height}
           backgroundColor={backgroundColor}
         />
+        <EnsAddress color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
+          {ens || truncatedAddress}
+        </EnsAddress>
       </TokenContainer>
     </PixelCard>
   )
@@ -69,6 +69,18 @@ const TokenView = ({
 
 const EnsAddress = styled(Body1)`
   color: ${({ color }) => color};
+  background-color: ${props => props.theme.colors.vibrantScreen};
+  padding: 8px 10px;
+  height: 40px;
+  width: 116px;
+  font-family: Alagard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  border-radius: 8px;
+  position: absolute;
+  bottom: 25px;
 `
 
 export default TokenView
