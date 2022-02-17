@@ -14,11 +14,11 @@ import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 const web3 = createAlchemyWeb3(HTTPRPC)
 const DEFAULT_NFTS = []
 
-for (let i = 0; i < 2; i += 1) {
+for (let i = 0; i < 3; i += 1) {
   DEFAULT_NFTS.push({
     id: i,
     address: '0x0',
-    src: `/pfps/default-${i}.png`,
+    src: `/pfps/default-${i}.jpg`,
     key: `0x0-${i}`,
   })
 }

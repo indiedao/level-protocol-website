@@ -32,14 +32,18 @@ const SaveConfiguratorView = () => {
   }, [setStatusIndicator, state])
 
   const handleSave = async () => {
-    await save()
-
-    if (flow === 'MINT') {
-      // Prompt user to mint:
-      setState('MINT')
-    } else {
-      // Show confirmation:
-      setState('CONFIRMATION')
+    try {
+      await save()
+      if (flow === 'MINT') {
+        // Prompt user to mint:
+        setState('MINT')
+      } else {
+        // Show confirmation:
+        setState('CONFIRMATION')
+      }
+    } catch (e) {
+      // Show error:
+      setState('ERROR')
     }
   }
 
@@ -59,12 +63,30 @@ const SaveConfiguratorView = () => {
     setDonationAmount(donationAmount.sub(ethers.utils.parseEther('0.01')))
   }
 
-  const handleTwitter = () => {
+  const handleTwitterShare = () => {
     const content = encodeURI(
       `Join my journey on @lvlprotocol https://lvlprotocol.xyz/tokens/${address}`,
     )
     window.location = `https://twitter.com/intent/tweet?text=${content}`
   }
+
+  const handleTwitterView = () => {
+    window.location = 'https://twitter.com/lvlprotocol'
+  }
+
+  if (state === 'ERROR')
+    return (
+      <ConfiguratorContainer>
+        <ConfiguratorScreen>
+          <ConfiguratorNavView />
+          <ConfiguratorPrompt
+            message="error: access list is probably full :("
+            action="keep watch"
+          />
+        </ConfiguratorScreen>
+        <ConfiguratorControlsView a={handleTwitterView} />
+      </ConfiguratorContainer>
+    )
 
   if (state === 'CONFIRMATION')
     return (
@@ -76,7 +98,7 @@ const SaveConfiguratorView = () => {
             action="bring a friend"
           />
         </ConfiguratorScreen>
-        <ConfiguratorControlsView a={handleTwitter} />
+        <ConfiguratorControlsView a={handleTwitterShare} />
       </ConfiguratorContainer>
     )
 

@@ -65,7 +65,7 @@ export const ConfiguratorProvider = ({ children }) => {
       throw new Error('Provided colorLightness is not a number')
     }
 
-    await fetch('/api/save-config', {
+    const resp = await fetch('/api/save-config', {
       method: 'POST',
       body: JSON.stringify({
         address,
@@ -77,7 +77,10 @@ export const ConfiguratorProvider = ({ children }) => {
         colorLightness: Number(colorLightness),
       }),
     })
+
     setIsSaved(true)
+
+    if (resp.status !== 200) throw new Error('Failed to save config!')
   }, [nftAddress, nftId, address, signer, colorHue, colorLightness])
 
   const setStatusIndicator = useCallback(({ message }) => {

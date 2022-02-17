@@ -50,8 +50,7 @@ const saveConfig = async (req, res) => {
     res.json({ success: true })
   } catch (error) {
     console.log('~ file: save-config.js ~ line 12 ~ saveConfig ~ error', error)
-    res.statusCode = 200
-    res.json({ success: false })
+    res.status(500).json({ error: 'Failed to save config!' })
   }
 }
 

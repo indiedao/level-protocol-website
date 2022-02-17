@@ -45,18 +45,11 @@ export const getCommunityByAdmin = async adminAddress => {
 }
 
 export const createMemberConfig = async configParam => {
-  try {
-    console.log('creating...', configParam)
-    const { memberConfig } = await graphQLClient.request(
-      CREATE_MEMBER_CONFIG,
-      configParam,
-    )
-    return memberConfig
-  } catch (error) {
-    console.error(error)
-  }
-
-  return false
+  const { memberConfig } = await graphQLClient.request(
+    CREATE_MEMBER_CONFIG,
+    configParam,
+  )
+  return memberConfig
 }
 
 export const getMemberConfig = async memberAddress => {

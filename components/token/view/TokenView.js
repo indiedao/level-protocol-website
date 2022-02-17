@@ -30,7 +30,7 @@ const TokenView = ({
   const fetchNft = useCallback(async () => {
     // Using lvl pfp:
     if (nftAddress === '0x0') {
-      setNftSrc(`/pfps/default-${nftId}.png`)
+      setNftSrc(`/pfps/default-${nftId}.jpg`)
       return
     }
 
