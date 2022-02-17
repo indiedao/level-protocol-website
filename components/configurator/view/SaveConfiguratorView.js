@@ -9,6 +9,7 @@ import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+import { playSound } from '../../../util/audio'
 
 const STATE_STATUS_MAP = {
   CONFIG: 'saving...',
@@ -34,6 +35,7 @@ const SaveConfiguratorView = () => {
   const handleSave = async () => {
     try {
       await save()
+      playSound('page_turn.wav')
       if (flow === 'MINT') {
         // Prompt user to mint:
         setState('MINT')
@@ -43,6 +45,7 @@ const SaveConfiguratorView = () => {
       }
     } catch (e) {
       // Show error:
+      playSound('button_cancel.wav')
       setState('ERROR')
     }
   }

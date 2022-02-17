@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import LvlSvg from '../assets/lvl.svg'
 import DPad from './DPad'
 import ABPad from './ABPad'
+import { playSound } from '../../../util/audio'
 
 const Wrapper = styled.div`
   display: grid;
@@ -19,8 +20,34 @@ const Wrapper = styled.div`
 const ConfiguratorControls = ({ up, down, left, right, a, b }) => (
   <Wrapper>
     <LvlSvg />
-    <DPad up={up} down={down} left={left} right={right} />
-    <ABPad a={a} b={b} />
+    <DPad
+      up={() => {
+        playSound('button3_clean.wav')
+        up()
+      }}
+      down={() => {
+        playSound('button3_clean.wav')
+        down()
+      }}
+      left={() => {
+        playSound('button3_clean.wav')
+        left()
+      }}
+      right={() => {
+        playSound('button3_clean.wav')
+        right()
+      }}
+    />
+    <ABPad
+      a={() => {
+        playSound('button_a_clean.wav')
+        a()
+      }}
+      b={() => {
+        playSound('button_cancel.wav')
+        b()
+      }}
+    />
   </Wrapper>
 )
 
