@@ -1,14 +1,15 @@
 import { useEffect, useCallback, useState } from 'react'
-import useWeb3 from './useWeb3'
+import { AlchemyProvider } from '@ethersproject/providers'
+import { HTTPRPC, Network } from '../../util/constants'
 
 const useEns = address => {
   const [ens, setEns] = useState()
-  const { provider } = useWeb3()
 
   const fetchEns = useCallback(async () => {
+    const provider = new AlchemyProvider(Network.name, HTTPRPC)
     const _ens = await provider.lookupAddress(address)
     setEns(_ens)
-  }, [address, provider])
+  }, [address])
 
   useEffect(() => {
     fetchEns()
