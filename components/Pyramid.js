@@ -26,8 +26,8 @@ const Pyramid = ({ backgroundColor = theme.colors.vibrantScreen }) => {
   const innerShapeBaseRadius = 6
   const innerShapeHeight = 7
   const innerShapeReflectionAlpha = 0.2
-  const cameraZ = 18
-  const cameraY = 5
+  const cameraZ = 19
+  const cameraY = 4
   const cameraNear = 1
   const cameraFar = 100
   const camaraFOV = 75
@@ -521,7 +521,7 @@ const Pyramid = ({ backgroundColor = theme.colors.vibrantScreen }) => {
       requestAnimationFrame(render)
     }
     requestAnimationFrame(render)
-  }, [])
+  }, [backgroundColor])
   return <Canvas ref={canvasRef} />
 }
 
