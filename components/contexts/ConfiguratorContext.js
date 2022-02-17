@@ -56,8 +56,7 @@ export const ConfiguratorProvider = ({ children }) => {
   }, [])
 
   const save = useCallback(async () => {
-    // TODO: add config details to signature message:
-    const message = 'Saving...'
+    const message = 'Sign to join the early access list!'
     const signature = await signer.signMessage(message, address)
     await fetch('/api/save-config', {
       method: 'POST',
@@ -67,12 +66,12 @@ export const ConfiguratorProvider = ({ children }) => {
         nftId,
         signature,
         message,
-        colorHue,
-        colorLightness,
+        colorHue: Number(colorHue),
+        colorLightness: Number(colorLightness),
       }),
     })
     setIsSaved(true)
-  }, [nftAddress, nftId, address, signer])
+  }, [nftAddress, nftId, address, signer, colorHue, colorLightness])
 
   const setStatusIndicator = useCallback(({ message }) => {
     setStatusMessage(message)

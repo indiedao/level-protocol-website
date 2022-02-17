@@ -53,6 +53,8 @@ type MemberConfig {
   nftId: String!
   message: String!
   signature: String!
+  colorHue: Int!
+  colorLightness: Int!
 }
 
 type Query {
