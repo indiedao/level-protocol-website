@@ -46,11 +46,11 @@ export const getCommunityByAdmin = async adminAddress => {
 
 export const createMemberConfig = async configParam => {
   try {
-    const { config } = await graphQLClient.request(
+    const { memberConfig } = await graphQLClient.request(
       CREATE_MEMBER_CONFIG,
       configParam,
     )
-    return config
+    return memberConfig
   } catch (error) {
     console.error(error)
   }
@@ -60,11 +60,10 @@ export const createMemberConfig = async configParam => {
 
 export const getMemberConfig = async memberAddress => {
   try {
-    const { config } = await graphQLClient.request(
-      GET_MEMBER_CONFIG,
-      { address: memberAddress },
-    )
-    return config
+    const { memberConfig } = await graphQLClient.request(GET_MEMBER_CONFIG, {
+      address: memberAddress,
+    })
+    return memberConfig
   } catch (error) {
     console.error(error)
   }

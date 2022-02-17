@@ -13,16 +13,15 @@ const Level = () => {
   const { address } = router.query
 
   const loadConfig = useCallback(async () => {
-    // TODO: load config from db:
-    const config = await fetch(`/api/members/${address}/config`, {
-      method: 'GET',
-    })
+    if (address) {
+      const memberConfig = await fetch(`/api/members/${address}/config`, {
+        method: 'GET',
+      })
 
-    console.log(config)
+      console.log(memberConfig)
 
-    // setConfig(_config)
-
-    setConfig(config)
+      setConfig(memberConfig)
+    }
   }, [address])
 
   useEffect(() => {

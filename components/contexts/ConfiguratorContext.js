@@ -59,9 +59,9 @@ export const ConfiguratorProvider = ({ children }) => {
     const message = 'Sign to join the early access list!'
     const signature = await signer.signMessage(message, address)
 
-    if (isNaN(colorHue)) {
+    if (Number.isNaN(colorHue)) {
       throw new Error('Provided colorHue is not a number')
-    } else if (isNaN(colorLightness)) {
+    } else if (Number.isNaN(colorLightness)) {
       throw new Error('Provided colorLightness is not a number')
     }
 

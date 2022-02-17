@@ -96,8 +96,7 @@ export const CREATE_MEMBER_CONFIG = gql`
 `
 
 export const GET_MEMBER_CONFIG = gql`
-  mutation GET_MEMBER_CONFIG(
-  ) {
+  query GET_MEMBER_CONFIG($address: String!) {
     memberConfig(address: $address) {
       ens
       nftAddress
