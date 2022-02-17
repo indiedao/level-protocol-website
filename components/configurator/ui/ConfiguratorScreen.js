@@ -14,6 +14,7 @@ const ConfiguratorScreen = ({ children }) => {
 }
 
 const Frame = styled.div`
+  justify-self: start;
   background-color: ${props => props.theme.colors.mutedGray};
   padding: 46px 17px 17px;
   box-shadow: inset 0px 0px 32px rgba(0, 0, 0, 0.75),
