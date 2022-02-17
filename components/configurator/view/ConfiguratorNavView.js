@@ -1,24 +1,27 @@
 import useConfigurator from '../../hooks/useConfigurator'
 import ConfiguratorNavContainer from '../ui/ConfiguratorNavContainer'
-import NavItem from '../ui/NavItem'
+import NavIcon from '../ui/NavIcon'
 
 const ConfiguratorNavView = () => {
   const { flow, currentStep, setStep } = useConfigurator()
 
   return (
     <ConfiguratorNavContainer>
-      <NavItem onClick={() => setStep('NFT')} active={currentStep === 'NFT'}>
-        pfp
-      </NavItem>
-      <NavItem
+      <NavIcon
+        iconName="Pfp"
+        isActive={currentStep === 'NFT'}
+        onClick={() => setStep('NFT')}
+      />
+      <NavIcon
+        iconName="Color"
+        isActive={currentStep === 'COLOR'}
         onClick={() => setStep('COLOR')}
-        active={currentStep === 'COLOR'}
-      >
-        color
-      </NavItem>
-      <NavItem onClick={() => setStep('SAVE')} active={currentStep === 'SAVE'}>
-        {flow === 'CONFIG' ? 'save' : 'mint'}
-      </NavItem>
+      />
+      <NavIcon
+        iconName={flow === 'CONFIG' ? 'Save' : 'Mint'}
+        isActive={currentStep === 'SAVE'}
+        onClick={() => setStep('SAVE')}
+      />
     </ConfiguratorNavContainer>
   )
 }
