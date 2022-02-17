@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { createAlchemyWeb3 } from '@alch/alchemy-web3'
+import styled from 'styled-components'
 import Pyramid from '../../Pyramid'
 import { HTTPRPC } from '../../../util/constants'
 import useEns from '../../hooks/useEns'
@@ -53,7 +54,9 @@ const TokenView = ({
     <PixelCard color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
       <TokenContainer ref={container} width={width} height={height}>
         <PFP src={nftSrc} />
-        <Body1>{ens || truncatedAddress}</Body1>
+        <EnsAddress color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
+          {ens || truncatedAddress}
+        </EnsAddress>
         <Pyramid
           width={width}
           height={height}
@@ -63,5 +66,9 @@ const TokenView = ({
     </PixelCard>
   )
 }
+
+const EnsAddress = styled(Body1)`
+  color: ${({ color }) => color};
+`
 
 export default TokenView
