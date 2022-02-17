@@ -67,6 +67,8 @@ export const ConfiguratorProvider = ({ children }) => {
         nftId,
         signature,
         message,
+        colorHue,
+        colorLightness,
       }),
     })
     setIsSaved(true)

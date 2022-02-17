@@ -8,18 +8,22 @@ import PFP from '../ui/PFP'
 import PixelCard from '../ui/PixelCard'
 import TokenContainer from '../ui/TokenContainer'
 import { Body1 } from '../../ui/Typography'
-import useConfigurator from '../../hooks/useConfigurator'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 
-const TokenView = ({ address, nftId, nftAddress }) => {
+const TokenView = ({
+  address,
+  nftId,
+  nftAddress,
+  colorHue,
+  colorLightness,
+}) => {
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
   const [nftSrc, setNftSrc] = useState('/nft-loading.gif')
   const { ens } = useEns(address)
   const { truncatedAddress } = useTruncatedAddress(address)
   const container = useRef()
-  const { colorHue, colorLightness } = useConfigurator()
 
   const fetchNft = useCallback(async () => {
     // Using lvl pfp:

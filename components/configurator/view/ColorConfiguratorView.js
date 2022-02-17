@@ -71,7 +71,13 @@ const ColorConfiguratorView = () => {
       <ConfiguratorScreen>
         <ConfiguratorNavView />
         <div>
-          <TokenView address={address} nftId={nftId} nftAddress={nftAddress} />
+          <TokenView
+            address={address}
+            nftId={nftId}
+            nftAddress={nftAddress}
+            colorHue={colorHue}
+            colorLightness={colorLightness}
+          />
         </div>
       </ConfiguratorScreen>
       <ConfiguratorControlsView
