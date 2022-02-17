@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import ConfiguratorView from '../components/configurator/view/ConfiguratorView'
 import { ConfiguratorProvider } from '../components/contexts/ConfiguratorContext'
 
-const MintPage = () => {
+const JoinPage = () => {
   return (
     <Layout>
       <ConfiguratorProvider>
@@ -18,4 +18,4 @@ const Layout = styled.div`
   justify-content: center;
 `
 
-export default MintPage
+export default JoinPage
