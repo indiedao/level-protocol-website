@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { H4, H2, Body1 } from '../ui/Typography'
+import { H4, H3 } from '../ui/Typography'
 import Button from '../ui/Button'
 import useCommunity from '../hooks/useCommunity'
 import useWeb3 from '../hooks/useWeb3'
 
-const IntegrationsHeader = styled.div`
-  margin-bottom: 3.6rem;
+const Wrapper = styled.div`
+  margin: 3.6rem 0;
 `
 
 const IpfsLink = styled.div`
@@ -67,12 +67,8 @@ const SourcecredView = () => {
       ? `https://ipfs.io/ipfs/${membersData.cid}/level.json`
       : null
 
-  const integrationsOptions = isAdmin ? (
-    <>
-      <IntegrationsHeader>
-        <H2>{currentCommunity.name} Sourecred Integration</H2>
-        <Button onClick={disconnect}>Disconnect</Button>
-      </IntegrationsHeader>
+  return (
+    <Wrapper>
       {ipfsUrl ? (
         <IpfsLink>
           <a href={ipfsUrl} target="_blank" rel="noreferrer">
@@ -86,15 +82,8 @@ const SourcecredView = () => {
           {loading && !ipfsUrl && <Spinner />}
         </>
       )}
-    </>
-  ) : (
-    <>
-      <Body1 color="white">You do not have enough permissions.</Body1>
-      <Button onClick={disconnect}>Disconnect</Button>
-    </>
+    </Wrapper>
   )
-
-  return integrationsOptions
 }
 
 export default SourcecredView

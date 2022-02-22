@@ -1,24 +1,17 @@
 import DaoLayout from '../../components/layouts/Dao'
-import Link from '../../components/ui/Link'
 import useCommunity from '../../components/hooks/useCommunity'
-import { Body1 } from '../../components/ui/Typography'
+import RestrictedAreaView from '../../components/views/RestrictedAreaView'
+import AdminView from '../../components/views/AdminView'
 
-const DaoIndex = () => {
+const IntegrationsIndex = () => {
   const { isAdmin } = useCommunity()
+
   return (
     <DaoLayout title="DAO">
-      <h2>Options</h2>
-      {isAdmin ? (
-        <ul>
-          <li>
-            <Link href="/dao/settings">Settings</Link>
-          </li>
-        </ul>
-      ) : (
-        <Body1>Admin permissions required</Body1>
-      )}
+      <h2>DAO Admin</h2>
+      {isAdmin ? <AdminView /> : <RestrictedAreaView />}
     </DaoLayout>
   )
 }
 
-export default DaoIndex
+export default IntegrationsIndex
