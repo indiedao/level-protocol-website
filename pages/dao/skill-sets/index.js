@@ -1,6 +1,7 @@
-import DaoLayout from '../../components/layouts/Dao'
-import useCommunity from '../../components/hooks/useCommunity'
-import RestrictedAreaView from '../../components/views/RestrictedAreaView'
+import DaoLayout from '../../../components/layouts/Dao'
+import useCommunity from '../../../components/hooks/useCommunity'
+import RestrictedAreaView from '../../../components/views/RestrictedAreaView'
+import Link from '../../../components/ui/Link'
 
 const SkillSets = () => {
   const { isAdmin } = useCommunity()

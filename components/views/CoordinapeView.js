@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { mapCoordinapeData } from '../../util/coordinape'
-import { H4, H3 } from '../ui/Typography'
+import { H4 } from '../ui/Typography'
 import FileUploader from '../ui/FileUploader'
 import Button from '../ui/Button'
-import useCommunity from '../hooks/useCommunity'
 
 const Wrapper = styled.div`
   margin: 3.6rem 0;
