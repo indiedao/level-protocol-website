@@ -10,6 +10,7 @@ const Container = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: min-content min-content 1fr;
   grid-gap: 2.4rem;
   padding: 2.4rem 2.4rem 3.6rem;
   color: white;
