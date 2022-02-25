@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 import { getNftContract } from '../../util/contract'
-import { createMemberConfig } from '../../util/fauna'
+import { createMemberConfig } from '../../models/memberConfig'
 
 async function verifyOwnership({ address, nftAddress, nftId }) {
   // Allow 0x0 for custom lvl PFP:

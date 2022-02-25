@@ -58,23 +58,19 @@ const IntegrationView = () => {
   }
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true)
-      setMembersData(null)
-      const res = await fetch('/api/webhooks/coordinape', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(csvData),
-      })
+    setLoading(true)
+    setMembersData(null)
+    const res = await fetch('/api/webhooks/coordinape', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(csvData),
+    })
 
-      const { updatedData } = await res.json()
-      setMembersData(updatedData)
-      setLoading(false)
-    } catch (error) {
-      console.error(error)
-    }
+    const { updatedData } = await res.json()
+    setMembersData(updatedData)
+    setLoading(false)
   }
 
   const ipfsUrl =

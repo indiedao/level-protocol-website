@@ -1,4 +1,4 @@
-import { getCommunityByAdmin } from '../../../util/fauna'
+import { getCommunityByAdmin } from '../../../models/community'
 
 export default async (req, res) => {
   if (req.method === 'GET') {
