@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import debounce from 'debounce'
 
 import Public from '../components/layouts/Public'
@@ -86,6 +87,7 @@ const Parallax = styled.div`
 `
 
 const Page = () => {
+  const router = useRouter()
   const section = useRef(null)
   const [availableWidth, setAvailableWidth] = useState(1)
 
@@ -118,10 +120,14 @@ const Page = () => {
       <main>
         <Public>
           <MenuBar>
-            <NextLink href="#join-community">join</NextLink>
-            <NextLink href="https://indiedao.gitbook.io/indiedao/products/lvl-protocol">
+            <NextLink href="/join">join</NextLink>
+            <a
+              href="https://indiedao.gitbook.io/indiedao/products/lvl-protocol"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               docs
-            </NextLink>
+            </a>
           </MenuBar>
           <PageContent>
             <LevelWindow
@@ -180,12 +186,8 @@ const Page = () => {
                     </Panel>
                     <Panel
                       button={
-                        <Button
-                          onClick={() =>
-                            openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
-                          }
-                        >
-                          Join Waitlist
+                        <Button onClick={() => router.push('/join')}>
+                          Mint Now
                         </Button>
                       }
                       smallIllustrationName="Member"
@@ -205,6 +207,10 @@ const Page = () => {
                           along with your growth
                         </li>
                       </ol>
+                      <Body1 color="mutedCream">
+                        Early minting is available and will hold your spot when
+                        lvl is fully integrated with your DAOs.
+                      </Body1>
                     </Panel>
                   </Section>
                   <Section balance="vertical" boundary="some">
