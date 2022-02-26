@@ -23,15 +23,15 @@ const etl = async address => {
     throw new Error('No configuration for Snapshot integration!')
 
   // Extract data:
-  const { memberVoteCounts } = await extract({
+  const extractedData = await extract({
     ens: config.integrations.snapshot.ens,
   })
 
   // Transform data:
-  const data = await transform({ memberVoteCounts })
+  const transformedData = await transform(extractedData)
 
   // Load data:
-  const updatedMembers = await load({ address, data })
+  const updatedMembers = await load(transformedData)
 
   // Update Community membersHash:
   const { IpfsHash } = await pinata.pinJSONToIPFS(updatedMembers)
