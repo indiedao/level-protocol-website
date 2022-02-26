@@ -1,6 +1,7 @@
 import { GraphQLClient } from 'graphql-request'
 
 import {
+  CREATE_COMMUNITY_MUTATION,
   FIND_COMMUNITY_BY_ADDRESS_QUERY,
   UPDATE_COMMUNITY_DATA_HASH_MUTATION,
   CREATE_MEMBER_CONFIG,
@@ -13,6 +14,12 @@ const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
   },
 })
 
+// TODO: validate inputs:
+export const createCommunity = async community => {
+  const resp = await graphQLClient.request(CREATE_COMMUNITY_MUTATION, community)
+  return resp.community
+}
+
 export const getCommunity = async address => {
   const resp = await graphQLClient.request(FIND_COMMUNITY_BY_ADDRESS_QUERY, {
     address,
@@ -20,6 +27,7 @@ export const getCommunity = async address => {
   return resp.findCommunityByAddress
 }
 
+// TODO: validate inputs:
 export const updateCommunityDataHash = async ({ id, membersHash }) => {
   const resp = await graphQLClient.request(
     UPDATE_COMMUNITY_DATA_HASH_MUTATION,
@@ -28,6 +36,7 @@ export const updateCommunityDataHash = async ({ id, membersHash }) => {
   return resp.community
 }
 
+// TODO: validate inputs:
 export const createMemberConfig = async configParam => {
   const resp = await graphQLClient.request(CREATE_MEMBER_CONFIG, configParam)
   return resp.memberConfig

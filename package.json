@@ -57,6 +57,7 @@
     "sourcecred": "^0.10.2",
     "styled-components": "^5.3.3",
     "three": "^0.133.1",
+    "validate.js": "^0.13.1",
     "web3": "^1.7.0",
     "web3.storage": "^3.5.1",
     "web3modal": "^1.9.4"

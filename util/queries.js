@@ -1,5 +1,22 @@
 import gql from 'graphql-tag'
 
+export const CREATE_COMMUNITY_MUTATION = gql`
+  mutation CREATE_COMMUNITY_MUTATION(
+    $address: String!
+    $name: String!
+    $membersHash: String!
+  ) {
+    createCommunity(
+      data: { address: $address, name: $name, membersHash: $membersHash }
+    ) {
+      _id
+      address
+      name
+      membersHash
+    }
+  }
+`
+
 export const FIND_COMMUNITY_BY_ADDRESS_QUERY = gql`
   query FIND_COMMUNITY_BY_ADDRESS_QUERY($address: String!) {
     findCommunityByAddress(address: $address) {
