@@ -1,49 +1,7 @@
-type CommunityMember {
-  username: String!
-  ens: String!
-  community: [Community!] @relation
-}
-
-type Integration {
-  cid: String!
-  community: Community!
-}
-
-type Skillset {
-  name: String!
-  description: String
-  community: Community!
-  skills: [Skill!] @relation
-}
-
-type Skill {
-  name: String!
-  description: String
-  skillsets: [Skillset!] @relation
-}
-
-type RollupConfig {
-  systemName: String!
-  skill: Skill!
-  functionName: String!
-  dataSourcesKeys: [String!]
-  community: Community!
-}
-
-type RollupCache {
-  cid: String!
-  rollupData: String!
-  community: Community!
-}
-
 type Community {
+  address: String! @unique
   name: String!
-  adminAddress: [String!]!
-  ens: String
-  members: [CommunityMember!] @relation
-  integrations: [Integration!] @relation
-  skillset: [Skillset!] @relation
-  rollupConfigs: [RollupConfig!] @relation
+  membersHash: String!
 }
 
 type MemberConfig {
@@ -57,33 +15,15 @@ type MemberConfig {
 }
 
 type Query {
-  allCommunities: [Community!]
-  community(ens: String!): Community
-  communityByAdmin(adminAddress: String!): Community
-  createCommunity(
-    name: String!
-    adminAddress: [String!]
-    ens: String
-  ): Community
-  allCommunityMembers: [CommunityMember!]
-  createCommunityMember(username: String!, ens: String): CommunityMember
-  allIntegrations: [Integration!]
-  createIntegration(cid: String!): Integration
-  allSkills: [Skill!]
-  skill(name: String!): Skill
-  createSkill(name: String!): Skill
-  rollupConfig(functionName: String!): [RollupConfig!]
-  createRollupConfig(functionName: String!): RollupConfig
-  createRollupCache(cid: String!): RollupCache
-  RollupCache(cid: String!): RollupCache
-  memberConfig(address: String!): MemberConfig
-  createConfig(
-    address: String!
-    nftAddress: String!
-    nftId: String!
-    message: String!
-    signature: String!
-    colorHue: Int!
-    colorLightness: Int!
-  ): MemberConfig
+  findCommunityByAddress(address: String!): Community
+}
+
+# This allows updates to single fields:
+# Side effect: create does not validate required fields, make sure to validate API-side!
+# TODO: switch to using partial update mutations (when ready)
+# https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
+input CommunityInput {
+  address: String
+  name: String
+  membersHash: String
 }

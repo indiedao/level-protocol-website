@@ -1,43 +1,24 @@
 import gql from 'graphql-tag'
 
-export const GET_COMMUNITY = gql`
-  query GET_COMMUNITY($ens: String!) {
-    community(ens: $ens) {
+export const FIND_COMMUNITY_BY_ADDRESS_QUERY = gql`
+  query FIND_COMMUNITY_BY_ADDRESS_QUERY($address: String!) {
+    findCommunityByAddress(address: $address) {
       _id
+      address
       name
-      ens
-      members {
-        data {
-          username
-          ens
-        }
-      }
-      integrations {
-        data {
-          cid
-        }
-      }
+      membersHash
     }
   }
 `
 
-export const GET_COMMUNITY_BY_ADMIN = gql`
-  query GET_COMMUNITY_BY_ADMIN($adminAddress: String!) {
-    communityByAdmin(adminAddress: $adminAddress) {
+export const UPDATE_COMMUNITY_DATA_HASH_MUTATION = gql`
+  mutation UPDATE_COMMUNITY_DATA_HASH_MUTATION(
+    $id: ID!
+    $membersHash: String!
+  ) {
+    updateCommunity(id: $id, data: { membersHash: $membersHash }) {
       _id
-      name
-      ens
-      members {
-        data {
-          username
-          ens
-        }
-      }
-      integrations {
-        data {
-          cid
-        }
-      }
+      membersHash
     }
   }
 `

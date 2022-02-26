@@ -1,9 +1,9 @@
 import { GraphQLClient } from 'graphql-request'
 
 import {
-  GET_COMMUNITY,
+  FIND_COMMUNITY_BY_ADDRESS_QUERY,
+  UPDATE_COMMUNITY_DATA_HASH_MUTATION,
   CREATE_MEMBER_CONFIG,
-  GET_COMMUNITY_BY_ADMIN,
   GET_MEMBER_CONFIG,
 } from './queries'
 
@@ -13,54 +13,29 @@ const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
   },
 })
 
-export const getCommunity = async ens => {
-  try {
-    const { community } = await graphQLClient.request(GET_COMMUNITY, {
-      ens,
-    })
-
-    return { community }
-  } catch (error) {
-    console.error(error)
-  }
-
-  return false
+export const getCommunity = async address => {
+  const resp = await graphQLClient.request(FIND_COMMUNITY_BY_ADDRESS_QUERY, {
+    address,
+  })
+  return resp.findCommunityByAddress
 }
 
-export const getCommunityByAdmin = async adminAddress => {
-  try {
-    const { communityByAdmin } = await graphQLClient.request(
-      GET_COMMUNITY_BY_ADMIN,
-      {
-        adminAddress,
-      },
-    )
-
-    return { community: communityByAdmin }
-  } catch (error) {
-    console.error(error)
-  }
-
-  return false
+export const updateCommunityDataHash = async ({ id, membersHash }) => {
+  const resp = await graphQLClient.request(
+    UPDATE_COMMUNITY_DATA_HASH_MUTATION,
+    { id, membersHash },
+  )
+  return resp.community
 }
 
 export const createMemberConfig = async configParam => {
-  const { memberConfig } = await graphQLClient.request(
-    CREATE_MEMBER_CONFIG,
-    configParam,
-  )
-  return memberConfig
+  const resp = await graphQLClient.request(CREATE_MEMBER_CONFIG, configParam)
+  return resp.memberConfig
 }
 
 export const getMemberConfig = async memberAddress => {
-  try {
-    const { memberConfig } = await graphQLClient.request(GET_MEMBER_CONFIG, {
-      address: memberAddress,
-    })
-    return memberConfig
-  } catch (error) {
-    console.error(error)
-  }
-
-  return undefined
+  const resp = await graphQLClient.request(GET_MEMBER_CONFIG, {
+    address: memberAddress,
+  })
+  return resp.memberConfig
 }
