@@ -20,7 +20,7 @@ export const createCommunity = async community => {
   return resp.community
 }
 
-export const getCommunity = async address => {
+export const findCommunityByAddress = async address => {
   const resp = await graphQLClient.request(FIND_COMMUNITY_BY_ADDRESS_QUERY, {
     address,
   })

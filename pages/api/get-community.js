@@ -1,12 +1,11 @@
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
-import { createCommunity } from '../../util/fauna'
+import { findCommunityByAddress } from '../../util/fauna'
 
 const handler = async (req, res, { auth: { address } }) => {
-  console.log('getting community')
-
+  const community = await findCommunityByAddress(address)
   res.statusCode = 200
-  return res.json({ success: true })
+  return res.json({ success: true, data: { community } })
 }
 
 export default withAuth(withMethods(['GET'], handler))
