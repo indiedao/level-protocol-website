@@ -3,7 +3,16 @@ import useWeb3 from '../../hooks/useWeb3'
 
 const CommunityDetail = () => {
   const [community, setCommunity] = useState()
+  const [members, setMembers] = useState([])
   const { bearerToken } = useWeb3()
+
+  const fetchMembersHashData = async membersHash => {
+    const resp = await fetch(
+      `https://indiedao.mypinata.cloud/ipfs/${membersHash}`,
+    )
+    const json = await resp.json()
+    setMembers(Object.keys(json))
+  }
 
   useEffect(() => {
     const fetchCommunityDetail = async () => {
@@ -16,6 +25,7 @@ const CommunityDetail = () => {
       })
       const json = await resp.json()
       setCommunity(json.data.community)
+      fetchMembersHashData(json.data.community.membersHash)
     }
 
     if (bearerToken) fetchCommunityDetail()
@@ -30,6 +40,12 @@ const CommunityDetail = () => {
         <li>Name: {community.name}</li>
         <li>Address: {community.address}</li>
         <li>Members Hash: {community.membersHash}</li>
+      </ul>
+      <h2>Members</h2>
+      <ul>
+        {members.map(member => (
+          <li key={member}>{member}</li>
+        ))}
       </ul>
     </div>
   )

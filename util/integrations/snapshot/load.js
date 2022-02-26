@@ -1,8 +1,8 @@
 import pinata from '../../pinata'
 
-export const load = async ({ dao, data }) => {
-  // TODO: get config for dao
-  console.log('loading config for dao:', dao)
+export const load = async ({ address, data }) => {
+  // TODO: get config for community address
+  console.log('loading config for community:', address)
   // TODO: pull current members index from IPFS (from config pointer)
 
   // Update each member file:

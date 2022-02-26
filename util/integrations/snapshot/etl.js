@@ -1,10 +1,10 @@
 import pinata from '../../pinata'
-import { getCommunity, updateCommunityDataHash } from '../../fauna'
+import { findCommunityByAddress, updateCommunityDataHash } from '../../fauna'
 import { extract } from './extract'
 import { transform } from './transform'
 import { load } from './load'
 
-const etl = async dao => {
+const etl = async address => {
   // Get DAO config:
   // TODO: stub into fauna
   const config = {
@@ -17,7 +17,7 @@ const etl = async dao => {
   }
 
   // Get Community:
-  const community = await getCommunity(dao)
+  const community = await findCommunityByAddress(address)
 
   if (!config.integrations.snapshot)
     throw new Error('No configuration for Snapshot integration!')
@@ -31,7 +31,7 @@ const etl = async dao => {
   const data = await transform({ memberVoteCounts })
 
   // Load data:
-  const updatedMembers = await load({ dao, data })
+  const updatedMembers = await load({ address, data })
 
   // Update Community membersHash:
   const { IpfsHash } = await pinata.pinJSONToIPFS(updatedMembers)

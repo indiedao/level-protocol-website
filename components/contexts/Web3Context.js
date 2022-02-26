@@ -107,6 +107,7 @@ export const Web3Provider = ({ children }) => {
         'lvlprotocol', // public key
       )
       setBearerToken(_bearerToken)
+      console.log('token:', _bearerToken)
 
       // Initialize contracts:
       setContracts({
