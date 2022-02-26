@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 import { useMemo, useCallback, useEffect, createContext, useState } from 'react'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ethers } from 'ethers'
@@ -30,6 +31,7 @@ export const Web3Provider = ({ children }) => {
   const [networkError, setNetworkError] = useState()
   const [hasLvlToken, setHasLvlToken] = useState(false)
   const [ens, setEns] = useState()
+  const [bearerToken, setBearerToken] = useState()
 
   useEffect(() => {
     setWeb3Modal(
@@ -93,6 +95,19 @@ export const Web3Provider = ({ children }) => {
       setNetworkId(_network.chainId)
       setAddress(_address)
 
+      // Prompt user to sign login message:
+      const sig = await _signer.signMessage(
+        `I am signing into lvl protocol as ${_address}`,
+      )
+      const _bearerToken = jwt.sign(
+        {
+          sig,
+          address: _address,
+        },
+        'lvlprotocol', // public key
+      )
+      setBearerToken(_bearerToken)
+
       // Initialize contracts:
       setContracts({
         ...contracts,
@@ -136,6 +151,7 @@ export const Web3Provider = ({ children }) => {
       provider,
       hasLvlToken,
       ens,
+      bearerToken,
     }
   }, [
     signer,
@@ -149,6 +165,7 @@ export const Web3Provider = ({ children }) => {
     disconnect,
     hasLvlToken,
     ens,
+    bearerToken,
   ])
 
   return (

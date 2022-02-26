@@ -2,6 +2,7 @@ import Head from 'next/head'
 import useWeb3 from '../components/hooks/useWeb3'
 
 import CreateCommunityForm from '../components/community/view/CreateCommunityForm'
+import CommunityDetail from '../components/community/view/CommunityDetail'
 
 const CommunityDashboardPage = () => {
   const { address, networkError, connect } = useWeb3()
@@ -23,6 +24,7 @@ const CommunityDashboardPage = () => {
         <h1>hi {address}</h1>
         <p>Community Dashboard will live here...</p>
         <CreateCommunityForm />
+        <CommunityDetail />
       </main>
     </div>
   )
