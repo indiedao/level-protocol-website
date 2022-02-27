@@ -24,6 +24,7 @@ export const FIND_COMMUNITY_BY_ADDRESS_QUERY = gql`
       address
       name
       membersHash
+      snapshotEns
     }
   }
 `
@@ -40,26 +41,11 @@ export const UPDATE_COMMUNITY_DATA_HASH_MUTATION = gql`
   }
 `
 
-export const GET_COMMUNITIES = gql`
-  query GET_COMMUNITIES {
-    allCommunities {
-      data {
-        _id
-        name
-        address
-        ens
-        members {
-          data {
-            username
-            ens
-          }
-        }
-        integrations {
-          data {
-            cid
-          }
-        }
-      }
+export const UPDATE_COMMUNITY_SNAPSHOT_ENS = gql`
+  mutation UPDATE_COMMUNITY_SNAPSHOT_ENS($id: ID!, $snapshotEns: String!) {
+    updateCommunity(id: $id, data: { snapshotEns: $snapshotEns }) {
+      _id
+      snapshotEns
     }
   }
 `

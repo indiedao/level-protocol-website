@@ -2,6 +2,7 @@ type Community {
   address: String! @unique
   name: String!
   membersHash: String!
+  snapshotEns: String
 }
 
 type MemberConfig {
@@ -26,4 +27,5 @@ input CommunityInput {
   address: String
   name: String
   membersHash: String
+  snapshotEns: String
 }

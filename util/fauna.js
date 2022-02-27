@@ -6,6 +6,7 @@ import {
   UPDATE_COMMUNITY_DATA_HASH_MUTATION,
   CREATE_MEMBER_CONFIG,
   GET_MEMBER_CONFIG,
+  UPDATE_COMMUNITY_SNAPSHOT_ENS,
 } from './queries'
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
@@ -33,6 +34,15 @@ export const updateCommunityDataHash = async ({ id, membersHash }) => {
     UPDATE_COMMUNITY_DATA_HASH_MUTATION,
     { id, membersHash },
   )
+  return resp.community
+}
+
+// TODO: validate inputs:
+export const updateCommunitySnapshotEns = async ({ id, snapshotEns }) => {
+  const resp = await graphQLClient.request(UPDATE_COMMUNITY_SNAPSHOT_ENS, {
+    id,
+    snapshotEns,
+  })
   return resp.community
 }
 

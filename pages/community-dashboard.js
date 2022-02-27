@@ -3,7 +3,7 @@ import useWeb3 from '../components/hooks/useWeb3'
 
 import CreateCommunityForm from '../components/community/view/CreateCommunityForm'
 import CommunityDetail from '../components/community/view/CommunityDetail'
-import SnapshotTrigger from '../components/triggers/view/SnapshotTrigger'
+import SnapshotIntegrationForm from '../components/integrations/view/SnapshotIntegrationForm'
 
 const CommunityDashboardPage = () => {
   const { address, networkError, connect } = useWeb3()
@@ -26,7 +26,7 @@ const CommunityDashboardPage = () => {
         <p>Community Dashboard will live here...</p>
         <CreateCommunityForm />
         <CommunityDetail />
-        <SnapshotTrigger />
+        <SnapshotIntegrationForm />
       </main>
     </div>
   )

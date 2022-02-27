@@ -5,26 +5,14 @@ import { transform } from './transform'
 import { load } from './load'
 
 const etl = async address => {
-  // Get DAO config:
-  // TODO: stub into fauna
-  const config = {
-    integrations: {
-      snapshot: {
-        // TODO: resolve ens from dao address above:
-        ens: 'indiedao.eth',
-      },
-    },
-  }
-
-  // Get Community:
   const community = await findCommunityByAddress(address)
 
-  if (!config.integrations.snapshot)
-    throw new Error('No configuration for Snapshot integration!')
+  if (!community.snapshotEns)
+    throw new Error('Missing configuration: snapshotEns!')
 
   // Extract data:
   const extractedData = await extract({
-    ens: config.integrations.snapshot.ens,
+    ens: community.snapshotEns,
   })
 
   // Transform data:
