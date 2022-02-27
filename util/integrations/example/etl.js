@@ -1,8 +1,8 @@
-import pinata from '../../../pinata'
-import { findCommunityByAddress, updateCommunityDataHash } from '../../../fauna'
-import { extract } from '../extract'
-import { transform } from '../transform'
-import { load } from '../load'
+import pinata from '../../pinata'
+import { findCommunityByAddress, updateCommunityDataHash } from '../../fauna'
+import { extract } from './extract'
+import { transform } from './transform'
+import { load } from './load'
 
 /**
  * Create your ETL (Extract/Transform/Load) package:

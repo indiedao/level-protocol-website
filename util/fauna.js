@@ -4,8 +4,8 @@ import {
   CREATE_COMMUNITY_MUTATION,
   FIND_COMMUNITY_BY_ADDRESS_QUERY,
   UPDATE_COMMUNITY_DATA_HASH_MUTATION,
-  CREATE_MEMBER_CONFIG,
-  GET_MEMBER_CONFIG,
+  CREATE_MEMBER_MUTATION,
+  FIND_MEMBER_BY_ADDRESS_QUERY,
   UPDATE_COMMUNITY_SNAPSHOT_ENS,
 } from './queries'
 
@@ -47,14 +47,14 @@ export const updateCommunitySnapshotEns = async ({ id, snapshotEns }) => {
 }
 
 // TODO: validate inputs:
-export const createMemberConfig = async configParam => {
-  const resp = await graphQLClient.request(CREATE_MEMBER_CONFIG, configParam)
-  return resp.memberConfig
+export const createMember = async member => {
+  const resp = await graphQLClient.request(CREATE_MEMBER_MUTATION, member)
+  return resp.member
 }
 
-export const getMemberConfig = async memberAddress => {
-  const resp = await graphQLClient.request(GET_MEMBER_CONFIG, {
-    address: memberAddress,
+export const findMemberByAddress = async address => {
+  const resp = await graphQLClient.request(FIND_MEMBER_BY_ADDRESS_QUERY, {
+    address,
   })
-  return resp.memberConfig
+  return resp.findMemberByAddress
 }

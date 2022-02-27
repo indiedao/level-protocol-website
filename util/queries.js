@@ -50,45 +50,39 @@ export const UPDATE_COMMUNITY_SNAPSHOT_ENS = gql`
   }
 `
 
-export const CREATE_MEMBER_CONFIG = gql`
-  mutation CREATE_MEMBER_CONFIG(
+export const CREATE_MEMBER_MUTATION = gql`
+  mutation CREATE_MEMBER_MUTATION(
     $address: String!
     $nftAddress: String!
     $nftId: String!
-    $message: String!
-    $signature: String!
     $colorHue: Int!
     $colorLightness: Int!
   ) {
-    createMemberConfig(
+    createMember(
       data: {
         address: $address
         nftAddress: $nftAddress
         nftId: $nftId
-        message: $message
-        signature: $signature
         colorHue: $colorHue
         colorLightness: $colorLightness
       }
     ) {
+      _id
+      address
       nftAddress
       nftId
-      message
-      signature
       colorHue
       colorLightness
     }
   }
 `
 
-export const GET_MEMBER_CONFIG = gql`
-  query GET_MEMBER_CONFIG($address: String!) {
-    memberConfig(address: $address) {
+export const FIND_MEMBER_BY_ADDRESS_QUERY = gql`
+  query FIND_MEMBER_BY_ADDRESS_QUERY($address: String!) {
+    findMemberByAddress(address: $address) {
       address
       nftAddress
       nftId
-      message
-      signature
       colorHue
       colorLightness
     }
