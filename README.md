@@ -45,6 +45,7 @@ Local development: set values in .env
 | SOURCECRED_URL          | ``      | Sourecred node url                                   |
 | PINATA_PUBLIC_API_KEY   | ``      | Public key for pinata data storage.                  |
 | PINATA_PRIVATE_API_KEY  | ``      | Private key for pinata data storage.                 |
+| GITHUB_CLIENT_SECRET    | ``      | Private key for Github OAuth client flow.            |
 
 #### System Environment Variables
 

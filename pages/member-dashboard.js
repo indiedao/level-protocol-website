@@ -2,6 +2,7 @@ import Head from 'next/head'
 import useWeb3 from '../components/hooks/useWeb3'
 
 import MemberDetail from '../components/member/view/MemberDetail'
+import LinkGithubForm from '../components/member/view/LinkGithubForm'
 
 const MemberDashboardPage = () => {
   const { address, networkError, connect } = useWeb3()
@@ -23,6 +24,7 @@ const MemberDashboardPage = () => {
         <h1>hi {address}</h1>
         <p>Member Dashboard will live here...</p>
         <MemberDetail />
+        <LinkGithubForm />
       </main>
     </div>
   )

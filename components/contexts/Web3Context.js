@@ -52,6 +52,17 @@ export const Web3Provider = ({ children }) => {
     }
   }, [networkId])
 
+  // Save JWT wallet sig (bearerToken) locally:
+  useEffect(() => {
+    if (bearerToken) localStorage.setItem('bearerToken', bearerToken)
+  }, [bearerToken])
+
+  // Read JWT wallet sig (bearerToken) on bootstrap:
+  useEffect(() => {
+    const _bearerToken = localStorage.getItem('bearerToken')
+    if (_bearerToken) setBearerToken(_bearerToken)
+  }, [])
+
   // Reload token data whenever deps change:
   useEffect(() => {
     let active = true
