@@ -86,6 +86,7 @@ export const FIND_MEMBER_BY_ADDRESS_QUERY = gql`
       nftId
       colorHue
       colorLightness
+      github
     }
   }
 `

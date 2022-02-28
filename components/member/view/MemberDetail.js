@@ -1,28 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
+import useMember from '../../hooks/useMember'
 import useWeb3 from '../../hooks/useWeb3'
 
 const MemberDetail = () => {
-  const [member, setMember] = useState()
   const { address } = useWeb3()
-
-  useEffect(() => {
-    const loadMember = async () => {
-      const resp = await fetch('/api/get-member', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address,
-        }),
-      })
-
-      const json = await resp.json()
-      setMember(json.data.member)
-    }
-
-    if (address) loadMember()
-  }, [address])
+  const { member } = useMember()
 
   if (!member) return <h2>Loading member...</h2>
 
