@@ -1,35 +1,7 @@
-import { useState, useEffect } from 'react'
-import useWeb3 from '../../hooks/useWeb3'
+import useCommunity from '../../hooks/useCommunity'
 
 const CommunityDetail = () => {
-  const [community, setCommunity] = useState()
-  const [membersMap, setMembersMap] = useState({})
-  const { bearerToken } = useWeb3()
-
-  const fetchMembersHashData = async membersHash => {
-    const resp = await fetch(
-      `https://indiedao.mypinata.cloud/ipfs/${membersHash}`,
-    )
-    const json = await resp.json()
-    setMembersMap(json)
-  }
-
-  useEffect(() => {
-    const fetchCommunityDetail = async () => {
-      const resp = await fetch('/api/get-community', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${bearerToken}`,
-        },
-      })
-      const json = await resp.json()
-      setCommunity(json.data.community)
-      fetchMembersHashData(json.data.community.membersHash)
-    }
-
-    if (bearerToken) fetchCommunityDetail()
-  }, [bearerToken])
+  const { community, members } = useCommunity()
 
   if (!community) return <h2>Loading community...</h2>
 
@@ -43,10 +15,10 @@ const CommunityDetail = () => {
       </ul>
       <h2>Members</h2>
       <ul>
-        {Object.keys(membersMap).map(address => (
+        {Object.keys(members).map(address => (
           <li key={address}>
             <a
-              href={`https://indiedao.mypinata.cloud/ipfs/${membersMap[address]}`}
+              href={`https://indiedao.mypinata.cloud/ipfs/${members[address]}`}
               target="_blank"
               rel="noreferrer"
             >
