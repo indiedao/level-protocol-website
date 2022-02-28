@@ -6,7 +6,8 @@ import {
   UPDATE_COMMUNITY_DATA_HASH_MUTATION,
   CREATE_MEMBER_MUTATION,
   FIND_MEMBER_BY_ADDRESS_QUERY,
-  UPDATE_COMMUNITY_SNAPSHOT_ENS,
+  UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION,
+  UPDATE_MEMBER_GITHUB_MUTATION,
 } from './queries'
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
@@ -39,10 +40,13 @@ export const updateCommunityDataHash = async ({ id, membersHash }) => {
 
 // TODO: validate inputs:
 export const updateCommunitySnapshotEns = async ({ id, snapshotEns }) => {
-  const resp = await graphQLClient.request(UPDATE_COMMUNITY_SNAPSHOT_ENS, {
-    id,
-    snapshotEns,
-  })
+  const resp = await graphQLClient.request(
+    UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION,
+    {
+      id,
+      snapshotEns,
+    },
+  )
   return resp.community
 }
 
@@ -57,4 +61,13 @@ export const findMemberByAddress = async address => {
     address,
   })
   return resp.findMemberByAddress
+}
+
+// TODO: validate inputs:
+export const updateMemberGithub = async ({ id, github }) => {
+  const resp = await graphQLClient.request(UPDATE_MEMBER_GITHUB_MUTATION, {
+    id,
+    github,
+  })
+  return resp.member
 }

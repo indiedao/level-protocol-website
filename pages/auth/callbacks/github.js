@@ -1,8 +1,9 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useWeb3 from '../../../components/hooks/useWeb3'
 
 const GithubCallback = () => {
+  const [loading, setLoading] = useState()
   const router = useRouter()
   const { bearerToken } = useWeb3()
 
@@ -34,6 +35,7 @@ const GithubCallback = () => {
   useEffect(() => {
     const handleCode = async () => {
       try {
+        setLoading(true)
         const code = await parseCode()
         console.log(code)
         await attest(code)
@@ -44,7 +46,7 @@ const GithubCallback = () => {
       }
     }
 
-    if (bearerToken) handleCode()
+    if (bearerToken && !loading) handleCode()
   }, [parseCode, attest, bearerToken])
 
   return <h1>Logging in...</h1>

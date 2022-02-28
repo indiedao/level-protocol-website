@@ -41,7 +41,7 @@ export const UPDATE_COMMUNITY_DATA_HASH_MUTATION = gql`
   }
 `
 
-export const UPDATE_COMMUNITY_SNAPSHOT_ENS = gql`
+export const UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION = gql`
   mutation UPDATE_COMMUNITY_SNAPSHOT_ENS($id: ID!, $snapshotEns: String!) {
     updateCommunity(id: $id, data: { snapshotEns: $snapshotEns }) {
       _id
@@ -80,11 +80,21 @@ export const CREATE_MEMBER_MUTATION = gql`
 export const FIND_MEMBER_BY_ADDRESS_QUERY = gql`
   query FIND_MEMBER_BY_ADDRESS_QUERY($address: String!) {
     findMemberByAddress(address: $address) {
+      _id
       address
       nftAddress
       nftId
       colorHue
       colorLightness
+    }
+  }
+`
+
+export const UPDATE_MEMBER_GITHUB_MUTATION = gql`
+  mutation UPDATE_MEMBER_GITHUB_MUTATION($id: ID!, $github: String!) {
+    updateMember(id: $id, data: { github: $github }) {
+      _id
+      github
     }
   }
 `
