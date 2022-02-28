@@ -1,6 +1,7 @@
 import { makeFileObjects, storeFiles } from '../../../util/web3Storage'
 import { getCommunity } from '../../../util/fauna'
 
+// TODO: Use etl flow like ./snapshot...
 export const aggregateThirdPartyData = async (
   communityMembers,
   sourceCredContributions,

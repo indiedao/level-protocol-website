@@ -1,5 +1,6 @@
 import { getSourcecredContributions } from '../../util/sourcecred'
 
+// TODO: migrate into api/triggers (like api/triggers/snapshot)...
 export default async (req, res) => {
   if (req.method === 'GET') {
     try {

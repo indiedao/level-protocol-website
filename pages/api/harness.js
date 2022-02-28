@@ -2,6 +2,7 @@ import { makeFileObjects, storeFiles } from '../../util/web3Storage'
 import { getCommunity } from '../../util/fauna'
 import { getSourcecredContributions } from '../../util/sourcecred'
 
+// TODO: replace with etl and IPFS/pinata hooks like (util/integrations/snapshot/...)...
 export const aggregateThirdPartyData = async (
   communityData,
   sourceCredContributions,

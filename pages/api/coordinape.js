@@ -1,6 +1,7 @@
 import { makeFileObjects, storeFiles } from '../../util/web3Storage'
 import { mapCoordinapeData } from '../../util/coordinape'
 
+// TODO: migrate into api/triggers (like api/triggers/snapshot)...
 export default async (req, res) => {
   try {
     if (req.method === 'POST') {
