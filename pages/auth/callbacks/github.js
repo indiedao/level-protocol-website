@@ -5,7 +5,7 @@ import useWeb3 from '../../../components/hooks/useWeb3'
 const GithubCallback = () => {
   const [loading, setLoading] = useState()
   const router = useRouter()
-  const { bearerToken } = useWeb3()
+  const { bearerToken, connect } = useWeb3()
 
   const parseCode = useCallback(async () => {
     const params = router.asPath.split('?')[1]
@@ -16,7 +16,7 @@ const GithubCallback = () => {
 
   const attest = useCallback(
     async code => {
-      const resp = await fetch('/api/attest/github', {
+      await fetch('/api/attest/github', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,8 +26,6 @@ const GithubCallback = () => {
           code,
         }),
       })
-      const json = await resp.json()
-      console.log(json)
     },
     [bearerToken],
   )
@@ -37,17 +35,17 @@ const GithubCallback = () => {
       try {
         setLoading(true)
         const code = await parseCode()
-        console.log(code)
         await attest(code)
-        // window.location = '/'
+        await connect()
+        router.push('/member-dashboard')
       } catch (e) {
         console.log(e) // eslint-disable-line no-console
-        // window.location = '/401'
+        window.location = '/401'
       }
     }
 
     if (bearerToken && !loading) handleCode()
-  }, [parseCode, attest, bearerToken])
+  }, [parseCode, attest, bearerToken, loading, router])
 
   return <h1>Logging in...</h1>
 }
