@@ -106,19 +106,17 @@ export const Web3Provider = ({ children }) => {
       setNetworkId(_network.chainId)
       setAddress(_address)
 
-      // Prompt user to sign login message:
-      const sig = await _signer.signMessage(
-        `I am signing into lvl protocol as ${_address}`,
-      )
-      const _bearerToken = jwt.sign(
-        {
-          sig,
-          address: _address,
-        },
-        'lvlprotocol', // public key
-      )
-      setBearerToken(_bearerToken)
-      console.log('token:', _bearerToken)
+      // Prompt user to sign login message (unless already cached):
+      if (!bearerToken) {
+        const sig = await _signer.signMessage(
+          `I am signing into lvl protocol as ${_address}`,
+        )
+        const _bearerToken = jwt.sign(
+          { sig, address: _address },
+          'lvlprotocol', // public key
+        )
+        setBearerToken(_bearerToken)
+      }
 
       // Initialize contracts:
       setContracts({
