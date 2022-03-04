@@ -28,15 +28,17 @@ const ConnectConfiguratorView = () => {
     content = (
       <ConfiguratorPrompt
         message={networkError.toLowerCase()}
-        action="switch"
+        actionA="switch"
       />
     )
   } else if (isLastStep) {
     // Connect:
-    content = <ConfiguratorPrompt message="do you accept?" action="connect" />
+    content = <ConfiguratorPrompt message="do you accept?" actionA="connect" />
   } else {
     // Message:
-    content = <ConfiguratorPrompt message={MESSAGE_STEPS[step]} action="next" />
+    content = (
+      <ConfiguratorPrompt message={MESSAGE_STEPS[step]} actionA="next" />
+    )
   }
 
   // Setup default status indicator message:
