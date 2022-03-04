@@ -1,52 +1,66 @@
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
+
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
-import Button from '../../ui/Button'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
-import { Body1 } from '../../ui/Typography'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
-import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
 import { playSound } from '../../../util/audio'
 
-const STATE_STATUS_MAP = {
-  CONFIG: 'saving...',
+const STEPS = {
+  READY: 'READY',
+  SAVE: 'SAVE',
+  PREMINT: 'PREMINT',
+  MINT: 'MINT',
+  CONFIRMATION: 'CONFIRMATION',
+  ERROR: 'ERROR',
+}
+
+const STEP_STATUS_MAP = {
+  READY: 'ready',
+  SAVE: 'saving...',
+  PREMINT: 'coming soon...',
   MINT: 'minting...',
   CONFIRMATION: 'connected',
+  ERROR: 'err',
 }
 
 const SaveConfiguratorView = () => {
-  const [state, setState] = useState('CONFIG')
+  const [step, setStep] = useState(STEPS.READY)
   const [donationAmount, setDonationAmount] = useState(
     ethers.utils.parseEther('0.01'),
   )
+  const [errorMessage, setErrorMessage] = useState('')
   const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
   const { address } = useWeb3()
 
   // Set status indicator message:
   useEffect(() => {
     setStatusIndicator({
-      message: STATE_STATUS_MAP[state],
+      message: STEP_STATUS_MAP[step],
     })
-  }, [setStatusIndicator, state])
+  }, [setStatusIndicator, step])
 
   const handleSave = async () => {
     try {
+      setStep(STEPS.SAVE)
       await save()
       playSound('page_turn.wav')
       if (flow === 'MINT') {
-        // Prompt user to mint:
-        setState('MINT')
+        setStep(STEPS.MINT)
       } else {
-        // Show confirmation:
-        setState('CONFIRMATION')
+        setStep(STEPS.CONFIRMATION)
       }
-    } catch (e) {
-      // Show error:
+    } catch (error) {
+      setErrorMessage(
+        error.message
+          ? error.message.toLowerCase()
+          : 'error: access list is probably full :(',
+      )
       playSound('button_cancel.wav')
-      setState('ERROR')
+      setStep(STEPS.ERROR)
     }
   }
 
@@ -56,7 +70,7 @@ const SaveConfiguratorView = () => {
       value: donationAmount.toString(),
     })
     */
-    setState('CONFIRMATION')
+    setStep(STEPS.CONFIRMATION)
   }
 
   const increaseDonation = () => {
@@ -75,64 +89,72 @@ const SaveConfiguratorView = () => {
     window.location = `https://twitter.com/intent/tweet?text=${content}`
   }
 
-  const handleTwitterView = () => {
-    window.location = 'https://twitter.com/lvlprotocol'
+  let controls = {}
+  switch (step) {
+    case STEPS.READY:
+    case STEPS.ERROR:
+      controls = {
+        a: handleSave,
+        b: previousStep,
+      }
+      break
+    case STEPS.PREMINT:
+      controls = {
+        up: increaseDonation,
+        down: decreaseDonation,
+        a: handleMint,
+        b: previousStep,
+      }
+      break
+    case STEPS.CONFIRMATION:
+      controls = {
+        a: handleTwitterShare,
+      }
+      break
+    case STEPS.SAVE:
+    case STEPS.MINT:
+    default:
   }
-
-  if (state === 'ERROR')
-    return (
-      <ConfiguratorContainer>
-        <ConfiguratorScreen>
-          <ConfiguratorNavView />
-          <ConfiguratorPrompt
-            message="error: access list is probably full :("
-            action="keep watch"
-          />
-        </ConfiguratorScreen>
-        <ConfiguratorControlsView a={handleTwitterView} />
-      </ConfiguratorContainer>
-    )
-
-  if (state === 'CONFIRMATION')
-    return (
-      <ConfiguratorContainer>
-        <ConfiguratorScreen>
-          <ConfiguratorNavView />
-          <ConfiguratorPrompt
-            message="well done, your journey will begin soon..."
-            action="bring a friend"
-          />
-        </ConfiguratorScreen>
-        <ConfiguratorControlsView a={handleTwitterShare} />
-      </ConfiguratorContainer>
-    )
-
-  if (state === 'CONFIG')
-    return (
-      <ConfiguratorContainer>
-        <ConfiguratorScreen>
-          <ConfiguratorNavView />
-          <ConfiguratorPrompt message="ready?" action="sign" />
-        </ConfiguratorScreen>
-        <ConfiguratorControlsView a={handleSave} b={previousStep} />
-      </ConfiguratorContainer>
-    )
 
   return (
     <ConfiguratorContainer>
       <ConfiguratorScreen>
-        <ConfiguratorNavView />
-        <div>
-          <Body1>Minting coming soon...</Body1>
-          <Button onClick={handleMint}>mint</Button>
-        </div>
+        {step === STEPS.READY ? (
+          <ConfiguratorPrompt
+            message="ready?"
+            actionA="sign"
+            actionB="go back"
+          />
+        ) : undefined}
+
+        {step === STEPS.SAVE ? (
+          <ConfiguratorPrompt message="saving..." />
+        ) : undefined}
+
+        {step === STEPS.PREMINT ? (
+          <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
+        ) : undefined}
+
+        {step === STEPS.MINT ? (
+          <ConfiguratorPrompt message="minting..." />
+        ) : undefined}
+
+        {step === STEPS.CONFIRMATION ? (
+          <ConfiguratorPrompt
+            message="well done, your journey will begin soon..."
+            actionA="bring a friend"
+          />
+        ) : undefined}
+
+        {step === STEPS.ERROR ? (
+          <ConfiguratorPrompt
+            message={errorMessage}
+            actionA="try again?"
+            actionB="go back"
+          />
+        ) : undefined}
       </ConfiguratorScreen>
-      <ConfiguratorControlsView
-        up={increaseDonation}
-        down={decreaseDonation}
-        a={handleMint}
-        b={previousStep}
-      />
+      <ConfiguratorControlsView {...controls} />
     </ConfiguratorContainer>
   )
 }

@@ -125,8 +125,7 @@ const NFTConfiguratorView = () => {
 
   return (
     <ConfiguratorContainer>
-      <ConfiguratorScreen>
-        <ConfiguratorNavView />
+      <ConfiguratorScreen withNav>
         <NFTArrowTokenViewContainer>
           <TokenView
             address={address}
