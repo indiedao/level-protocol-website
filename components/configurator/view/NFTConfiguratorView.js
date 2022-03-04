@@ -8,7 +8,6 @@ import ConfiguratorControlsView from './ConfiguratorControlsView'
 import TokenView from '../../token/view/TokenView'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
-import ConfiguratorNavView from './ConfiguratorNavView'
 import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
