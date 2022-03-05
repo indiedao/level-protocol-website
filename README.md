@@ -14,7 +14,7 @@ To use Vercel Next.js, you need the following tools:
 
 1. Clone the repo and change directory
    ```
-   git clone git@github.com:twos-complement/level-protocol-website.git && cd level-protocol-website.git
+   git clone git@github.com:twos-complement/level-protocol-website.git && cd level-protocol-website
    ```
 2. Use nvm to use the correct version of node
    ```
