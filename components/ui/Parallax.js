@@ -24,15 +24,25 @@ const Background = styled.div`
   right: 0;
   left: 0;
   height: var(--height);
-  background-image: url('/images/parallax.png');
-  background-size: cover;
   transform: translateY(var(--translateY));
   z-index: 0;
   transition: transform 50ms ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: inherit;
+    width: calc(var(--height) / 3);
+    background-image: url('/images/parallax.png');
+    background-size: contain;
+    transform: translate(-50%);
+  }
 `
 
-const BACKGROUND_HEIGHT_FACTOR = 0.8
-const BACKGROUND_MOVE_FACTOR = 0.4
+const BACKGROUND_HEIGHT_FACTOR = 1.5
+const BACKGROUND_MOVE_FACTOR = -0.5
 
 const Parallax = ({ children }) => {
   const wrapperRef = useRef(null)
