@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   left: 0;
   background-color: ${props => props.theme.colors.vibrantCream};
   box-shadow: 0 0.2rem 0 ${props => props.theme.colors.black};
-  z-index: 2;
+  z-index: 1000 !important;
 
   ${({ theme }) => theme.bp.mdPlus(' --menu-height: 4rem; ')}
 `
@@ -50,6 +50,10 @@ const sharedMenuItemStyles = css`
     filter: contrast(115%);
     background-color: ${props => props.theme.colors.vibrantCream};
   }
+
+  &:visited {
+    color: ${props => props.theme.colors.black};
+  }
 `
 
 const Menu = styled.nav`
@@ -66,6 +70,8 @@ const Menu = styled.nav`
 
     > *:nth-child(n + 2) {
       margin-left: 1.24rem;
+
+      ${({ theme }) => theme.bp.xs(' display: none; ')}
 
       ${({ theme }) => theme.bp.sm(' display: none; ')}
     }
@@ -97,6 +103,8 @@ const TrayItem = styled.li`
   border-left: 1px solid ${props => props.theme.colors.mutedBlack};
 
   &:last-child {
+    ${({ theme }) => theme.bp.xs(' display: none; ')}
+
     ${({ theme }) => theme.bp.sm(' display: none; ')}
   }
 `

@@ -62,6 +62,8 @@ const TitleBar = styled.div`
     )}
 
   > button:not(:first-child) {
+    ${props => props.theme.bp.xs(' display: none; ')}
+
     ${props => props.theme.bp.sm(' display: none; ')}
   }
 `

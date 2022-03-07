@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 
 import LvlV1ABI from '../../abi/contracts/LvlV1.sol/LvlV1.json'
-import { InfuraId, LvlV1Address, Network } from '../../util/constants'
+import { LvlV1Address, Network, HTTPRPC } from '../../util/constants'
 
 const Web3Context = createContext()
 
@@ -12,7 +12,9 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: InfuraId,
+      rpc: {
+        [Network.id]: HTTPRPC,
+      },
     },
   },
 }
@@ -26,11 +28,13 @@ export const Web3Provider = ({ children }) => {
   const [provider, setProvider] = useState()
   const [networkId, setNetworkId] = useState()
   const [networkError, setNetworkError] = useState()
+  const [hasLvlToken, setHasLvlToken] = useState(false)
+  const [ens, setEns] = useState()
 
   useEffect(() => {
     setWeb3Modal(
       new Web3Modal({
-        cacheProvider: false,
+        cacheProvider: true,
         providerOptions,
       }),
     )
@@ -45,6 +49,35 @@ export const Web3Provider = ({ children }) => {
       setNetworkError(false)
     }
   }, [networkId])
+
+  // Reload token data whenever deps change:
+  useEffect(() => {
+    let active = true
+
+    const refreshToken = async () => {
+      if (!contracts.LvlV1 || !address) return
+      try {
+        const balance = Number(await contracts.LvlV1.balanceOf(address))
+        if (active) setHasLvlToken(balance > 0)
+      } catch (e) {
+        if (active) setHasLvlToken(false)
+      }
+    }
+
+    const refreshEns = async () => {
+      if (!address || !provider) return
+      const _ens = await provider.lookupAddress(address)
+      if (active) setEns(_ens || false)
+    }
+
+    refreshToken()
+    refreshEns()
+
+    // Kill any async requests if deps change to avoid race conditions:
+    return () => {
+      active = false
+    }
+  }, [networkId, contracts.LvlV1, address, provider])
 
   const connect = useCallback(
     async function connect() {
@@ -63,24 +96,32 @@ export const Web3Provider = ({ children }) => {
       // Initialize contracts:
       setContracts({
         ...contracts,
-        LvlV1Contract: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
+        LvlV1: new ethers.Contract(LvlV1Address, LvlV1ABI, _signer),
       })
 
-      // Watch for address changes:
+      // Watch for provider network changes:
       _provider.on('network', newNetwork => {
         setNetworkId(newNetwork.chainId)
+      })
+
+      // Watch for wallet account change:
+      _web3.on('accountsChanged', async () => {
+        setSigner(_provider.getSigner())
+        setAddress(await _provider.getSigner().getAddress())
       })
     },
     [contracts, web3Modal],
   )
 
-  const disconnect = useCallback(
-    async function disconnect() {
-      await web3Modal.clearCachedProvider()
-      // TODO: clear account/provider
-    },
-    [web3Modal],
-  )
+  const disconnect = useCallback(async () => {
+    await web3Modal.clearCachedProvider()
+    setProvider(null)
+    setWeb3(null)
+    setSigner(null)
+    setNetworkId(null)
+    setAddress(null)
+    setContracts({})
+  }, [web3Modal])
 
   const memoizedData = useMemo(() => {
     return {
@@ -93,6 +134,8 @@ export const Web3Provider = ({ children }) => {
       web3,
       networkError,
       provider,
+      hasLvlToken,
+      ens,
     }
   }, [
     signer,
@@ -104,6 +147,8 @@ export const Web3Provider = ({ children }) => {
     web3,
     connect,
     disconnect,
+    hasLvlToken,
+    ens,
   ])
 
   return (

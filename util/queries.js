@@ -1,7 +1,112 @@
 import gql from 'graphql-tag'
 
-export const HELLO_WORLD_QUERY = gql`
-  query HELLO_WORLD_QUERY {
-    helloWorld
+export const GET_COMMUNITY = gql`
+  query GET_COMMUNITY($ens: String!) {
+    community(ens: $ens) {
+      _id
+      name
+      ens
+      members {
+        data {
+          username
+          ens
+        }
+      }
+      integrations {
+        data {
+          cid
+        }
+      }
+    }
+  }
+`
+
+export const GET_COMMUNITY_BY_ADMIN = gql`
+  query GET_COMMUNITY_BY_ADMIN($adminAddress: String!) {
+    communityByAdmin(adminAddress: $adminAddress) {
+      _id
+      name
+      ens
+      members {
+        data {
+          username
+          ens
+        }
+      }
+      integrations {
+        data {
+          cid
+        }
+      }
+    }
+  }
+`
+
+export const GET_COMMUNITIES = gql`
+  query GET_COMMUNITIES {
+    allCommunities {
+      data {
+        _id
+        name
+        address
+        ens
+        members {
+          data {
+            username
+            ens
+          }
+        }
+        integrations {
+          data {
+            cid
+          }
+        }
+      }
+    }
+  }
+`
+
+export const CREATE_MEMBER_CONFIG = gql`
+  mutation CREATE_MEMBER_CONFIG(
+    $address: String!
+    $nftAddress: String!
+    $nftId: String!
+    $message: String!
+    $signature: String!
+    $colorHue: Int!
+    $colorLightness: Int!
+  ) {
+    createMemberConfig(
+      data: {
+        address: $address
+        nftAddress: $nftAddress
+        nftId: $nftId
+        message: $message
+        signature: $signature
+        colorHue: $colorHue
+        colorLightness: $colorLightness
+      }
+    ) {
+      nftAddress
+      nftId
+      message
+      signature
+      colorHue
+      colorLightness
+    }
+  }
+`
+
+export const GET_MEMBER_CONFIG = gql`
+  query GET_MEMBER_CONFIG($address: String!) {
+    memberConfig(address: $address) {
+      address
+      nftAddress
+      nftId
+      message
+      signature
+      colorHue
+      colorLightness
+    }
   }
 `

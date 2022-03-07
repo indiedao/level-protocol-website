@@ -55,6 +55,12 @@ const GlobalStyles = createGlobalStyle`
     font-style: bold;
     font-display: swap;
   }
+  @font-face {
+    font-family: "Alagard";
+    src: url("/fonts/alagard.ttf");
+    font-style: normal;
+    font-display: swap;
+  }
 
   * {
     ${body1Styles}
