@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getSourcecredContributions } from '../../../util/sourcecred'
 
-export default async (req, res) => {
+const SourcecredWebhook = async (req, res) => {
   if (req.method === 'POST') {
     try {
       const contributions = await getSourcecredContributions()
@@ -11,9 +11,11 @@ export default async (req, res) => {
       })
       res.send({ data })
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
       // res.statusCode = 500
       // res.json({ error })
     }
   }
 }
+
+export default SourcecredWebhook

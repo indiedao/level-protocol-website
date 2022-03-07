@@ -19,14 +19,14 @@ const Level = () => {
       })
 
       const { memberConfig } = await resp.json()
-      console.log(memberConfig)
+      console.log(memberConfig) // eslint-disable-line no-console
       if (!memberConfig) {
         router.push('/404')
       }
 
       setConfig(memberConfig)
     }
-  }, [address])
+  }, [address, router])
 
   useEffect(() => {
     loadConfig()

@@ -21,7 +21,7 @@ export const getCommunity = async ens => {
 
     return { community }
   } catch (error) {
-    console.error(error)
+    console.error(error) // eslint-disable-line no-console
   }
 
   return false
@@ -38,7 +38,7 @@ export const getCommunityByAdmin = async adminAddress => {
 
     return { community: communityByAdmin }
   } catch (error) {
-    console.error(error)
+    console.error(error) // eslint-disable-line no-console
   }
 
   return false
@@ -59,7 +59,7 @@ export const getMemberConfig = async memberAddress => {
     })
     return memberConfig
   } catch (error) {
-    console.error(error)
+    console.error(error) // eslint-disable-line no-console
   }
 
   return undefined
