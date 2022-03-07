@@ -1,4 +1,4 @@
-import { getMemberConfig } from '../../../../util/fauna'
+import { getMemberConfig } from '../../../../models/memberConfig'
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {

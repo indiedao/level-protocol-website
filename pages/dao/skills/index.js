@@ -1,15 +1,13 @@
 import DaoLayout from '../../../components/layouts/Dao'
-import Link from '../../../components/ui/Link'
+import useCommunity from '../../../components/hooks/useCommunity'
+import RestrictedAreaView from '../../../components/views/RestrictedAreaView'
 
 const Skills = () => {
+  const { isAdmin } = useCommunity()
+
   return (
-    <DaoLayout title="Skills">
-      <h2>Options</h2>
-      <ul>
-        <li>
-          <Link href="/dao/skills/some-id">Skill Details</Link>
-        </li>
-      </ul>
+    <DaoLayout title="DAO">
+      {isAdmin ? <h2>Coming soon</h2> : <RestrictedAreaView />}
     </DaoLayout>
   )
 }

@@ -1,5 +1,5 @@
 import { makeFileObjects, storeFiles } from '../../../util/web3Storage'
-import { getCommunity } from '../../../util/fauna'
+import { getCommunity } from '../../../models/community'
 
 export const aggregateThirdPartyData = async (
   communityMembers,
