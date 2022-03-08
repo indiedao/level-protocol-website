@@ -19,7 +19,7 @@ export const aggregateThirdPartyData = async (
     }))
     .flat()
 
-export default async (req, res) => {
+const CoordinapeIntegrationAPI = async (req, res) => {
   if (req.method === 'POST') {
     try {
       // Address is temporary hardcoded until we have
@@ -44,9 +44,11 @@ export default async (req, res) => {
       res.statusCode = 200
       res.json({ updatedCommunity })
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
       res.statusCode = 500
       res.json({ error })
     }
   }
 }
+
+export default CoordinapeIntegrationAPI

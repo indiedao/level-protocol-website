@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default async (req, res) => {
+const CoordinapeWebhook = async (req, res) => {
   if (req.method === 'POST') {
     try {
       const contributions = req.body
@@ -10,9 +10,11 @@ export default async (req, res) => {
       })
       res.send({ data })
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
       res.statusCode = 500
       res.json({ error })
     }
   }
 }
+
+export default CoordinapeWebhook
