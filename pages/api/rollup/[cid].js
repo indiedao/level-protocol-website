@@ -1,6 +1,6 @@
 import { retrieveFilesData } from '../../../util/web3Storage'
 
-export default async (req, res) => {
+const RollupAPI = async (req, res) => {
   if (req.method === 'GET') {
     try {
       const { cid } = req.query
@@ -16,9 +16,11 @@ export default async (req, res) => {
       res.statusCode = 200
       res.json({ data })
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
       res.statusCode = 500
       res.json({ error })
     }
   }
 }
+
+export default RollupAPI

@@ -1,6 +1,6 @@
 import { getCommunityByAdmin } from '../../../util/fauna'
 
-export default async (req, res) => {
+const AddressAPI = async (req, res) => {
   if (req.method === 'GET') {
     const { address } = req.query
     const { community } = await getCommunityByAdmin(address)
@@ -12,3 +12,5 @@ export default async (req, res) => {
   }
   return false
 }
+
+export default AddressAPI
