@@ -77,7 +77,7 @@ const IntegrationView = () => {
       setMembersData(updatedData)
       setLoading(false)
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
     }
   }
 

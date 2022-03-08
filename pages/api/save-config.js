@@ -49,7 +49,7 @@ const saveConfig = async (req, res) => {
     res.statusCode = 200
     res.json({ success: true })
   } catch (error) {
-    console.log('~ file: save-config.js ~ line 12 ~ saveConfig ~ error', error)
+    console.log('~ file: save-config.js ~ line 12 ~ saveConfig ~ error', error) // eslint-disable-line no-console
     res.status(500).json({ error: 'Failed to save config!' })
   }
 }

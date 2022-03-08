@@ -8,26 +8,29 @@ export const CommunityProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false)
   const { address } = useWeb3()
 
-  const verifyAdmin = async () => {
-    if (address) {
-      const res = await fetch(`/api/admin/${address}`)
-      const { community } = await res.json()
+  useEffect(() => {
+    const verifyAdmin = async () => {
+      if (address) {
+        const res = await fetch(`/api/admin/${address}`)
+        const { community } = await res.json()
 
-      if (community && !currentCommunity) {
-        setCurrentCommunity(community)
-        setIsAdmin(true)
+        if (community && !currentCommunity) {
+          setCurrentCommunity(community)
+          setIsAdmin(true)
+        }
       }
     }
-  }
 
-  useEffect(() => {
     verifyAdmin()
-  }, [address])
+  }, [address, currentCommunity])
 
-  const communityData = useMemo(() => ({
-    currentCommunity,
-    isAdmin,
-  }))
+  const communityData = useMemo(
+    () => ({
+      currentCommunity,
+      isAdmin,
+    }),
+    [currentCommunity, isAdmin],
+  )
 
   return (
     <CommunityContext.Provider value={communityData}>
