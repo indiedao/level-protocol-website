@@ -1,6 +1,6 @@
 import validate from 'validate.js'
 
-const withMethods = (validationConfig, handler) => {
+const withValidParams = (validationConfig, handler) => {
   return async (req, res, opts = {}) => {
     const validationErrors = validate(req.body, validationConfig, {
       format: 'flat',
@@ -19,4 +19,4 @@ const withMethods = (validationConfig, handler) => {
   }
 }
 
-export default withMethods
+export default withValidParams
