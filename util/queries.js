@@ -127,3 +127,21 @@ export const GET_MEMBERS_BY_CREATED_AT_ASC = gql`
     }
   }
 `
+
+export const GET_MEMBERS_BY_CREATED_AT_DESC = gql`
+  query GET_MEMBERS_BY_CREATED_AT_DESC($size: Int, $cursor: String) {
+    getMembersByCreatedAtDesc(_size: $size, _cursor: $cursor) {
+      data {
+        _id
+        address
+        nftAddress
+        nftId
+        colorHue
+        colorLightness
+        github
+      }
+      after
+      before
+    }
+  }
+`

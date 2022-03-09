@@ -9,6 +9,7 @@ import {
   UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION,
   UPDATE_MEMBER_GITHUB_MUTATION,
   GET_MEMBERS_BY_CREATED_AT_ASC,
+  GET_MEMBERS_BY_CREATED_AT_DESC,
 } from './queries'
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
@@ -79,4 +80,11 @@ export const getAccessListFirst100 = async () => {
     size: 3,
   })
   return resp.getMembersByCreatedAtAsc.data
+}
+
+export const getAccessListMostRecent2 = async () => {
+  const resp = await graphQLClient.request(GET_MEMBERS_BY_CREATED_AT_DESC, {
+    size: 2,
+  })
+  return resp.getMembersByCreatedAtDesc.data
 }

@@ -22,7 +22,9 @@ type Query {
   findCommunityByAddress(address: String!): Community
   findMemberByAddress(address: String!): Member
   getMembersByCreatedAtAsc: [Member!]!
-    @resolver(name: "sort_members_by_created_at", paginated: true)
+    @resolver(name: "sort_members_by_created_at_asc", paginated: true)
+  getMembersByCreatedAtDesc: [Member!]!
+    @resolver(name: "sort_members_by_created_at_desc", paginated: true)
 }
 
 # This allows updates to single fields:
@@ -61,7 +63,7 @@ input MemberInput {
 # })
 
 # Update(
-#   Function('sort_members_by_created_at'),
+#   Function('sort_members_by_created_at_asc'),
 #   {
 #     'body': Query(
 #       Lambda(
@@ -69,6 +71,47 @@ input MemberInput {
 #         Let(
 #           {
 #             'match': Match(Index('all_members_sorted_by_created_at')),
+#             'page': If(
+#               Equals(Var('before'), null),
+#               If(
+#                 Equals(Var('after'), null),
+#                 Paginate(
+#                   Var('match'),
+#                   { 'size': Var('size') },
+#                 ),
+#                 Paginate(
+#                   Var('match'),
+#                   { 'size': Var('size'), 'after': Var('after') },
+#                 )
+#               ),
+#               Paginate(
+#                 Var('match'),
+#                 { 'size': Var('size'), 'before': Var('before') },
+#               ),
+#             ),
+#           },
+#           Map(
+#             Var('page'),
+#             Lambda(
+#               'values',
+#               Get(Select(1, Var('values')))
+#             )
+#           )
+#         )
+#       )
+#     ),
+#   }
+# )
+
+# Update(
+#   Function('sort_members_by_created_at_desc'),
+#   {
+#     'body': Query(
+#       Lambda(
+#         ['size', 'after', 'before'],
+#         Let(
+#           {
+#             'match': Reverse(Match(Index('all_members_sorted_by_created_at'))),
 #             'page': If(
 #               Equals(Var('before'), null),
 #               If(
