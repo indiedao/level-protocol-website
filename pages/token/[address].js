@@ -25,9 +25,7 @@ const Level = () => {
       })
       const json = await resp.json()
 
-      const { memberConfig } = await resp.json()
-      console.log(memberConfig) // eslint-disable-line no-console
-      if (!memberConfig) {
+      if (!json?.data?.member) {
         router.push('/404')
       }
 
