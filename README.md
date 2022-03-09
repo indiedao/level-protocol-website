@@ -26,7 +26,7 @@ To use Vercel Next.js, you need the following tools:
    ```
 4. Use development environment variables
    ```
-   cp .env.development .env && source .env
+   cp .env.development .env.local
    ```
 5. Run the Next.js app locally
    ```
