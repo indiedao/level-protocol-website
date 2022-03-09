@@ -3,14 +3,21 @@ import gql from 'graphql-tag'
 export const CREATE_COMMUNITY_MUTATION = gql`
   mutation CREATE_COMMUNITY_MUTATION(
     $address: String!
+    $createdAt: Time!
     $name: String!
     $membersHash: String!
   ) {
     createCommunity(
-      data: { address: $address, name: $name, membersHash: $membersHash }
+      data: {
+        address: $address
+        createdAt: $createdAt
+        name: $name
+        membersHash: $membersHash
+      }
     ) {
       _id
       address
+      createdAt
       name
       membersHash
     }
@@ -53,6 +60,7 @@ export const UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION = gql`
 export const CREATE_MEMBER_MUTATION = gql`
   mutation CREATE_MEMBER_MUTATION(
     $address: String!
+    $createdAt: Time!
     $nftAddress: String!
     $nftId: String!
     $colorHue: Int!
@@ -61,6 +69,7 @@ export const CREATE_MEMBER_MUTATION = gql`
     createMember(
       data: {
         address: $address
+        createdAt: $createdAt
         nftAddress: $nftAddress
         nftId: $nftId
         colorHue: $colorHue
@@ -69,6 +78,7 @@ export const CREATE_MEMBER_MUTATION = gql`
     ) {
       _id
       address
+      createdAt
       nftAddress
       nftId
       colorHue

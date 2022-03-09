@@ -1,5 +1,6 @@
 type Community {
   address: String! @unique
+  createdAt: Time!
   name: String!
   membersHash: String!
   snapshotEns: String
@@ -7,6 +8,7 @@ type Community {
 
 type Member {
   address: String! @unique
+  createdAt: Time!
   nftAddress: String!
   nftId: String!
   message: String!
@@ -26,7 +28,8 @@ type Query {
 # TODO: switch to using partial update mutations (when ready)
 # https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
 input CommunityInput {
-  address: String
+  address: String!
+  createdAt: Time
   name: String
   membersHash: String
   snapshotEns: String
@@ -37,7 +40,8 @@ input CommunityInput {
 # TODO: switch to using partial update mutations (when ready)
 # https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
 input MemberInput {
-  address: String
+  address: String!
+  createdAt: Time
   nftAddress: String
   nftId: String
   colorHue: Int

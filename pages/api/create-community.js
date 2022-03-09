@@ -10,8 +10,9 @@ const handler = async (req, res, { auth: { address } }) => {
 
   // Create Community:
   await createCommunity({
-    name: req.body.name,
     address,
+    createdAt: new Date(),
+    name: req.body.name,
     membersHash,
   })
 

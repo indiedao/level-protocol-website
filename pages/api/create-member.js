@@ -22,6 +22,7 @@ const handler = async (req, res, { auth: { address } }) => {
   await verifyOwnership({ address, nftAddress, nftId })
   await createMember({
     address,
+    createdAt: new Date(),
     nftId,
     nftAddress,
     colorHue,
