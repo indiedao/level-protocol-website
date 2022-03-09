@@ -12,8 +12,27 @@ To use Vercel Next.js, you need the following tools:
 
 - Node.js - [Install Node.js 14](https://nodejs.org/en/), including the npm package management tool. [NVM](https://github.com/nvm-sh/nvm) is recommended.
 
-1. Copy `.env.example` to `.env` and add values below, then source to shell.
-2. `npm run dev` - to run the Next.js app locally
+1. Clone the repo and change directory
+   ```
+   git clone git@github.com:twos-complement/level-protocol-website.git && cd level-protocol-website
+   ```
+2. Use nvm to use the correct version of node
+   ```
+   nvm use
+   ```
+3. Install node modules. Your package-lock.json should not change, if it did you are probably not using the correct node version. (See step 2)
+   ```
+   npm install
+   ```
+4. Use development environment variables
+   ```
+   cp .env.development .env.local
+   ```
+5. Run the Next.js app locally
+   ```
+   npm run dev
+   ```
+6. You should see the website running locally at: http://localhost:8080
 
 ### Storybook
 
@@ -65,3 +84,4 @@ and then go to the graphql option in the left manu and import the schema file fr
 `schemas/schema.gql`
 
 Create a secret in the security option for the database and make sure you're using the right url
+
