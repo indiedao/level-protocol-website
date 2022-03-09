@@ -1,7 +1,6 @@
 import { getSourcecredContributions } from '../../util/sourcecred'
 
-// TODO: migrate into api/triggers (like api/triggers/snapshot)...
-export default async (req, res) => {
+const SourcecredAPI = async (req, res) => {
   if (req.method === 'GET') {
     try {
       const data = await getSourcecredContributions()
@@ -10,9 +9,11 @@ export default async (req, res) => {
         data,
       })
     } catch (error) {
-      console.log(error)
+      console.log(error) // eslint-disable-line no-console
       res.statusCode = 500
       res.json({ error })
     }
   }
 }
+
+export default SourcecredAPI
