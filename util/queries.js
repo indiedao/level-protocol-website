@@ -109,3 +109,21 @@ export const UPDATE_MEMBER_GITHUB_MUTATION = gql`
     }
   }
 `
+
+export const GET_MEMBERS_BY_CREATED_AT_ASC = gql`
+  query GET_MEMBERS_BY_CREATED_AT_ASC($size: Int, $cursor: String) {
+    getMembersByCreatedAtAsc(_size: $size, _cursor: $cursor) {
+      data {
+        _id
+        address
+        nftAddress
+        nftId
+        colorHue
+        colorLightness
+        github
+      }
+      after
+      before
+    }
+  }
+`
