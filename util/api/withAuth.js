@@ -19,7 +19,7 @@ const withAuth = handler => {
       // Resume Handler:
       return handler(req, res, { ...opts, auth: { address } })
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
       res.statusCode = 500
       return res.json({ error: 'withAuth: Unknown Server Error' })
     }

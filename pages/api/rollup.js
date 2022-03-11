@@ -58,6 +58,7 @@ const handler = async (req, res, { auth: { address } }) => {
         allMembers: members,
         address: memberAddress,
       })
+      // eslint-disable-next-line no-console
       console.log(
         `member: [${memberAddress}] skill: [${skill}] rollup: [${MockRollupConfig[skill]}]: ${value}`,
       )

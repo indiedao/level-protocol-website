@@ -20,7 +20,7 @@ export const load = async data => {
     updatedMembers[addresses[i]] = IpfsHash
   }
 
-  console.log('updated Members', updatedMembers)
+  console.log('updated Members', updatedMembers) // eslint-disable-line no-console
 
   // TODO update member hashes
   return updatedMembers

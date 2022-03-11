@@ -21,7 +21,7 @@ async function getAccessToken(code) {
   const json = await resp.json()
 
   if (json.error) {
-    console.log(json)
+    console.log(json) // eslint-disable-line no-console
     throw new Error('Problem verifying with Github!')
   }
 

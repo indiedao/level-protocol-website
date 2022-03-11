@@ -135,7 +135,7 @@ export const Web3Provider = ({ children }) => {
         setAddress(await _provider.getSigner().getAddress())
       })
     },
-    [contracts, web3Modal],
+    [bearerToken, contracts, web3Modal],
   )
 
   const disconnect = useCallback(async () => {
