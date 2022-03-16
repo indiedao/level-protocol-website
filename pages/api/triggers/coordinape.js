@@ -1,5 +1,5 @@
 import { makeFileObjects, storeFiles } from '../../../util/web3Storage'
-import { getCommunity } from '../../../util/fauna'
+// import { getCommunity } from '../../../util/fauna'
 
 // TODO: Use etl flow like ./snapshot...
 export const aggregateThirdPartyData = async (
@@ -26,11 +26,11 @@ const CoordinapeIntegrationAPI = async (req, res) => {
       // Address is temporary hardcoded until we have
       // a proper way to get the address
       // from the user connect.
-      const { community } = await getCommunity('0x')
+      // const { community } = await getCommunity('0x')
       const { contributions } = req.body
 
       const result = await aggregateThirdPartyData(
-        community.members.data,
+        // community.members.data,
         contributions,
       )
 
@@ -38,7 +38,7 @@ const CoordinapeIntegrationAPI = async (req, res) => {
       const cid = await storeFiles(files)
 
       const updatedCommunity = {
-        ...community,
+        // ...community,
         cid,
       }
 

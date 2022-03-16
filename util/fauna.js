@@ -76,8 +76,7 @@ export const updateMemberGithub = async ({ id, github }) => {
 
 export const getAccessListFirst100 = async () => {
   const resp = await graphQLClient.request(GET_MEMBERS_BY_CREATED_AT_ASC, {
-    // TODO: change to 100
-    size: 3,
+    size: 100,
   })
   return resp.getMembersByCreatedAtAsc.data
 }

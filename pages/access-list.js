@@ -1,4 +1,4 @@
-import { getAccessListFirst100, getAccessListMostRecent2 } from '../util/fauna'
+// import { getAccessListFirst100, getAccessListMostRecent2 } from '../util/fauna'
 
 const AccessListPage = ({ first100, mostRecent }) => {
   return (
@@ -21,6 +21,7 @@ const AccessListPage = ({ first100, mostRecent }) => {
 }
 
 export async function getStaticProps() {
+  /*
   const first100 = await getAccessListFirst100()
   const mostRecent = await getAccessListMostRecent2()
 
@@ -28,6 +29,13 @@ export async function getStaticProps() {
     props: {
       first100,
       mostRecent,
+    },
+  }
+  */
+  return {
+    props: {
+      first100: [],
+      mostRecent: [],
     },
   }
 }

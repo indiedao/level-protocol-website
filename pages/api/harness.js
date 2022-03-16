@@ -1,5 +1,4 @@
 import { makeFileObjects, storeFiles } from '../../util/web3Storage'
-import { getCommunity } from '../../util/fauna'
 import { getSourcecredContributions } from '../../util/sourcecred'
 
 // TODO: replace with etl and IPFS/pinata hooks like (util/integrations/snapshot/...)...
@@ -31,12 +30,12 @@ const HarnessAPI = async (req, res) => {
       // Address is temporary hardcoded until we have
       // a proper way to get the address
       // from the user connect.
-      const communityData = await getCommunity('0x')
+      // const communityData = await getCommunity('0x')
       const contributions = await getSourcecredContributions()
       const coordinape = req.body
 
       const result = await aggregateThirdPartyData(
-        communityData,
+        // communityData,
         contributions,
         coordinape,
       )
@@ -45,7 +44,7 @@ const HarnessAPI = async (req, res) => {
       const cid = await storeFiles(files)
 
       const updatedData = {
-        ...communityData,
+        // ...communityData,
         cid,
       }
 
