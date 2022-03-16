@@ -1,48 +1,41 @@
 import { makeFileObjects, storeFiles } from '../../../util/web3Storage'
-import { getCommunity } from '../../../util/fauna'
+// import { getCommunity } from '../../../util/fauna'
 
+// TODO: Use etl flow like ./snapshot...
 export const aggregateThirdPartyData = async (
   communityMembers,
-  coordinapeEpoch,
+  sourceCredContributions,
 ) =>
   communityMembers
     .map(member => ({
       ...member,
-      coordinapeData: [
-        ...(member.coordinapeData ? member.coordinapeData : []),
-        coordinapeEpoch.find(
-          newEpoch =>
-            newEpoch.address &&
-            newEpoch.address.toLowerCase() === member.ens.toLowerCase(),
-        ),
-      ],
+      sourcredData: sourceCredContributions.filter(
+        contribution => contribution.name === member.username,
+      ),
     }))
     .flat()
 
-const CoordinapeIntegrationAPI = async (req, res) => {
+const SourcecredIntegrationAPI = async (req, res) => {
   if (req.method === 'POST') {
     try {
       // Address is temporary hardcoded until we have
       // a proper way to get the address
       // from the user connect.
-      const { community } = await getCommunity('0x')
-      const { contributions } = req.body
-
+      // const { community } = await getCommunity('0x')
+      const contributions = req.body.data || []
       const result = await aggregateThirdPartyData(
-        community.members.data,
+        // community.members.data,
         contributions,
       )
-
       const files = makeFileObjects(result)
       const cid = await storeFiles(files)
-
-      const updatedCommunity = {
-        ...community,
+      const updatedData = {
+        // ...community,
         cid,
       }
 
       res.statusCode = 200
-      res.json({ updatedCommunity })
+      res.json({ updatedData })
     } catch (error) {
       console.error(error) // eslint-disable-line no-console
       res.statusCode = 500
@@ -51,4 +44,4 @@ const CoordinapeIntegrationAPI = async (req, res) => {
   }
 }
 
-export default CoordinapeIntegrationAPI
+export default SourcecredIntegrationAPI

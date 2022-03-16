@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/dist/client/router'
 import TokenView from '../../components/token/view/TokenView'
@@ -8,29 +8,32 @@ import { A, H4 } from '../../components/ui/AltTypography'
 import theme from '../../util/theme'
 
 const Level = () => {
-  const [config, setConfig] = useState()
+  const [member, setMember] = useState()
   const router = useRouter()
   const { address } = router.query
 
-  const loadConfig = useCallback(async () => {
-    if (address) {
-      const resp = await fetch(`/api/members/${address}/config`, {
-        method: 'GET',
+  useEffect(() => {
+    const loadConfig = async () => {
+      const resp = await fetch('/api/get-member', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address,
+        }),
       })
+      const json = await resp.json()
 
-      const { memberConfig } = await resp.json()
-      console.log(memberConfig) // eslint-disable-line no-console
-      if (!memberConfig) {
+      if (!json?.data?.member) {
         router.push('/404')
       }
 
-      setConfig(memberConfig)
+      setMember(json.data.member)
     }
-  }, [address, router])
 
-  useEffect(() => {
-    loadConfig()
-  }, [address, loadConfig])
+    if (address) loadConfig()
+  }, [address, router])
 
   if (!address) return <Body1>Loading...</Body1>
 
@@ -43,13 +46,13 @@ const Level = () => {
       <main>
         <Layout>
           <Container>
-            {config && (
+            {member && (
               <TokenView
                 address={router.query.address}
-                nftId={config.nftId}
-                nftAddress={config.nftAddress}
-                colorHue={config.colorHue}
-                colorLightness={config.colorLightness}
+                nftId={member.nftId}
+                nftAddress={member.nftAddress}
+                colorHue={member.colorHue}
+                colorLightness={member.colorLightness}
                 backgroundColor={theme.colors.vibrantBlack}
               />
             )}

@@ -62,6 +62,9 @@ Local development: set values in .env
 | RINKEBY_RPC_PATH        | ``      | Alchemy or RPC path.                                 |
 | MAINNET_RPC_PATH        | ``      | Alchemy or RPC path.                                 |
 | SOURCECRED_URL          | ``      | Sourecred node url                                   |
+| PINATA_PUBLIC_API_KEY   | ``      | Public key for pinata data storage.                  |
+| PINATA_PRIVATE_API_KEY  | ``      | Private key for pinata data storage.                 |
+| GITHUB_CLIENT_SECRET    | ``      | Private key for Github OAuth client flow.            |
 
 #### System Environment Variables
 
