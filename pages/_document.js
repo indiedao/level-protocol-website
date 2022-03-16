@@ -87,12 +87,6 @@ export default class MyDocument extends Document {
             as="font"
             crossOrigin=""
           />
-          <link
-            rel="preload"
-            href="/fonts/Geneva-Regular.ttf"
-            as="font"
-            crossOrigin=""
-          />
           {['16x16', '32x32', '96x96'].map(size => (
             <link
               rel="icon"
