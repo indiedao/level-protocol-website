@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/dist/client/router'
 import TokenView from '../../components/token/view/TokenView'
