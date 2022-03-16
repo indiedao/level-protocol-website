@@ -1,89 +1,145 @@
-type CommunityMember {
-  username: String!
-  ens: String!
-  community: [Community!] @relation
-}
-
-type Integration {
-  cid: String!
-  community: Community!
-}
-
-type Skillset {
-  name: String!
-  description: String
-  community: Community!
-  skills: [Skill!] @relation
-}
-
-type Skill {
-  name: String!
-  description: String
-  skillsets: [Skillset!] @relation
-}
-
-type RollupConfig {
-  systemName: String!
-  skill: Skill!
-  functionName: String!
-  dataSourcesKeys: [String!]
-  community: Community!
-}
-
-type RollupCache {
-  cid: String!
-  rollupData: String!
-  community: Community!
-}
-
 type Community {
+  address: String! @unique
+  createdAt: Time!
   name: String!
-  adminAddress: [String!]!
-  ens: String
-  members: [CommunityMember!] @relation
-  integrations: [Integration!] @relation
-  skillset: [Skillset!] @relation
-  rollupConfigs: [RollupConfig!] @relation
+  membersHash: String!
+  snapshotEns: String
 }
 
-type MemberConfig {
+type Member {
   address: String! @unique
+  createdAt: Time!
   nftAddress: String!
   nftId: String!
   message: String!
   signature: String!
   colorHue: Int!
   colorLightness: Int!
+  github: String
 }
 
 type Query {
-  allCommunities: [Community!]
-  community(ens: String!): Community
-  communityByAdmin(adminAddress: String!): Community
-  createCommunity(
-    name: String!
-    adminAddress: [String!]
-    ens: String
-  ): Community
-  allCommunityMembers: [CommunityMember!]
-  createCommunityMember(username: String!, ens: String): CommunityMember
-  allIntegrations: [Integration!]
-  createIntegration(cid: String!): Integration
-  allSkills: [Skill!]
-  skill(name: String!): Skill
-  createSkill(name: String!): Skill
-  rollupConfig(functionName: String!): [RollupConfig!]
-  createRollupConfig(functionName: String!): RollupConfig
-  createRollupCache(cid: String!): RollupCache
-  RollupCache(cid: String!): RollupCache
-  memberConfig(address: String!): MemberConfig
-  createConfig(
-    address: String!
-    nftAddress: String!
-    nftId: String!
-    message: String!
-    signature: String!
-    colorHue: Int!
-    colorLightness: Int!
-  ): MemberConfig
+  findCommunityByAddress(address: String!): Community
+  findMemberByAddress(address: String!): Member
+  getMembersByCreatedAtAsc: [Member!]!
+    @resolver(name: "sort_members_by_created_at_asc", paginated: true)
+  getMembersByCreatedAtDesc: [Member!]!
+    @resolver(name: "sort_members_by_created_at_desc", paginated: true)
 }
+
+# This allows updates to single fields:
+# Side effect: create does not validate required fields, make sure to validate API-side!
+# TODO: switch to using partial update mutations (when ready)
+# https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
+input CommunityInput {
+  address: String!
+  createdAt: Time
+  name: String
+  membersHash: String
+  snapshotEns: String
+}
+
+# This allows updates to single fields:
+# Side effect: create does not validate required fields, make sure to validate API-side!
+# TODO: switch to using partial update mutations (when ready)
+# https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
+input MemberInput {
+  address: String!
+  createdAt: Time
+  nftAddress: String
+  nftId: String
+  colorHue: Int
+  colorLightness: Int
+  github: String
+}
+
+# CreateIndex({
+#   name: 'all_members_sorted_by_created_at',
+#   source: Collection('Member'),
+#   values: [
+#     { field: ['data', 'createdAt'] },
+#     { field: ['ref'] },
+#   ],
+# })
+
+# Update(
+#   Function('sort_members_by_created_at_asc'),
+#   {
+#     'body': Query(
+#       Lambda(
+#         ['size', 'after', 'before'],
+#         Let(
+#           {
+#             'match': Match(Index('all_members_sorted_by_created_at')),
+#             'page': If(
+#               Equals(Var('before'), null),
+#               If(
+#                 Equals(Var('after'), null),
+#                 Paginate(
+#                   Var('match'),
+#                   { 'size': Var('size') },
+#                 ),
+#                 Paginate(
+#                   Var('match'),
+#                   { 'size': Var('size'), 'after': Var('after') },
+#                 )
+#               ),
+#               Paginate(
+#                 Var('match'),
+#                 { 'size': Var('size'), 'before': Var('before') },
+#               ),
+#             ),
+#           },
+#           Map(
+#             Var('page'),
+#             Lambda(
+#               'values',
+#               Get(Select(1, Var('values')))
+#             )
+#           )
+#         )
+#       )
+#     ),
+#   }
+# )
+
+# Update(
+#   Function('sort_members_by_created_at_desc'),
+#   {
+#     'body': Query(
+#       Lambda(
+#         ['size', 'after', 'before'],
+#         Let(
+#           {
+#             'match': Reverse(Match(Index('all_members_sorted_by_created_at'))),
+#             'page': If(
+#               Equals(Var('before'), null),
+#               If(
+#                 Equals(Var('after'), null),
+#                 Paginate(
+#                   Var('match'),
+#                   { 'size': Var('size') },
+#                 ),
+#                 Paginate(
+#                   Var('match'),
+#                   { 'size': Var('size'), 'after': Var('after') },
+#                 )
+#               ),
+#               Paginate(
+#                 Var('match'),
+#                 { 'size': Var('size'), 'before': Var('before') },
+#               ),
+#             ),
+#           },
+#           Map(
+#             Var('page'),
+#             Lambda(
+#               'values',
+#               Get(Select(1, Var('values')))
+#             )
+#           )
+#         )
+#       )
+#     ),
+#   }
+# )
