@@ -14,7 +14,7 @@ export const ConfiguratorProvider = ({ children }) => {
   const [colorHue, setColorHue] = useState(860)
   const [colorLightness, setColorLightness] = useState(60)
   const [statusMessage, setStatusMessage] = useState('')
-  const { signer, address, hasLvlToken } = useWeb3()
+  const { bearerToken, hasLvlToken } = useWeb3()
 
   // Load existing configuration:
   useEffect(() => {
@@ -56,23 +56,21 @@ export const ConfiguratorProvider = ({ children }) => {
   }, [])
 
   const save = useCallback(async () => {
-    const message = 'Sign to join the early access list!'
-    const signature = await signer.signMessage(message, address)
-
     if (Number.isNaN(colorHue)) {
       throw new Error('Provided colorHue is not a number')
     } else if (Number.isNaN(colorLightness)) {
       throw new Error('Provided colorLightness is not a number')
     }
 
-    const resp = await fetch('/api/save-config', {
+    const resp = await fetch('/api/create-member', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${bearerToken}`,
+      },
       body: JSON.stringify({
-        address,
         nftAddress,
         nftId: nftId.toString(),
-        signature,
-        message,
         colorHue: Number(colorHue),
         colorLightness: Number(colorLightness),
       }),
@@ -81,7 +79,7 @@ export const ConfiguratorProvider = ({ children }) => {
     setIsSaved(true)
 
     if (resp.status !== 200) throw new Error('Failed to save config!')
-  }, [nftAddress, nftId, address, signer, colorHue, colorLightness])
+  }, [nftAddress, nftId, bearerToken, colorHue, colorLightness])
 
   const setStatusIndicator = useCallback(({ message }) => {
     setStatusMessage(message)

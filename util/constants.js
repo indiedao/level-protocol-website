@@ -11,5 +11,5 @@ export const Network = {
 }
 export const HTTPRPC = `https://eth-${Network.name}.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`
 export const WSRPC = `ws://eth-${Network.name}.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`
-
 export const AlchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY
+export const githubClientId = process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID

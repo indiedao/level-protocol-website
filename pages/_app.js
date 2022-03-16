@@ -5,7 +5,6 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { useApollo } from '../util/apolloClient'
 import { ScrollProvider } from '../components/contexts/ScrollContext'
 import { Web3Provider } from '../components/contexts/Web3Context'
-import { CommunityProvider } from '../components/contexts/CommunityContext'
 import theme from '../util/theme'
 import GlobalStyles from '../components/ui/GlobalStyles'
 
@@ -26,11 +25,9 @@ const MyApp = ({ Component, pageProps }) => {
         />
         <ApolloProvider client={apolloClient}>
           <Web3Provider>
-            <CommunityProvider>
-              <ScrollProvider>
-                <Component {...pageProps} />
-              </ScrollProvider>
-            </CommunityProvider>
+            <ScrollProvider>
+              <Component {...pageProps} />
+            </ScrollProvider>
           </Web3Provider>
         </ApolloProvider>
       </ThemeProvider>

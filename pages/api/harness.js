@@ -1,7 +1,7 @@
 import { makeFileObjects, storeFiles } from '../../util/web3Storage'
-import { getCommunity } from '../../util/fauna'
 import { getSourcecredContributions } from '../../util/sourcecred'
 
+// TODO: replace with etl and IPFS/pinata hooks like (util/integrations/snapshot/...)...
 export const aggregateThirdPartyData = async (
   communityData,
   sourceCredContributions,
@@ -24,18 +24,18 @@ export const aggregateThirdPartyData = async (
     }))
     .flat()
 
-export default async (req, res) => {
+const HarnessAPI = async (req, res) => {
   if (req.method === 'POST') {
     try {
       // Address is temporary hardcoded until we have
       // a proper way to get the address
       // from the user connect.
-      const communityData = await getCommunity('0x')
+      // const communityData = await getCommunity('0x')
       const contributions = await getSourcecredContributions()
       const coordinape = req.body
 
       const result = await aggregateThirdPartyData(
-        communityData,
+        // communityData,
         contributions,
         coordinape,
       )
@@ -44,16 +44,18 @@ export default async (req, res) => {
       const cid = await storeFiles(files)
 
       const updatedData = {
-        ...communityData,
+        // ...communityData,
         cid,
       }
 
       res.statusCode = 200
       res.json({ updatedData })
     } catch (error) {
-      console.error(error)
+      console.error(error) // eslint-disable-line no-console
       res.statusCode = 500
       res.json({ error })
     }
   }
 }
+
+export default HarnessAPI
