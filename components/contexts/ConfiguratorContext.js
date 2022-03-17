@@ -15,8 +15,10 @@ export const ConfiguratorProvider = ({ children }) => {
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()
   const [isSaved, setIsSaved] = useState(true)
-  const [colorHue, setColorHue] = useState(Math.floor(Math.random() * MAX_HUE ))
-  const [colorLightness, setColorLightness] = useState(Math.floor(Math.random() * (MAX_LIGHTNESS - MIN_LIGHTNESS) + MIN_LIGHTNESS))
+  const [colorHue, setColorHue] = useState(Math.floor(Math.random() * MAX_HUE))
+  const [colorLightness, setColorLightness] = useState(
+    Math.floor(Math.random() * (MAX_LIGHTNESS - MIN_LIGHTNESS) + MIN_LIGHTNESS),
+  )
   const [statusMessage, setStatusMessage] = useState('')
   const { bearerToken, hasLvlToken } = useWeb3()
 
