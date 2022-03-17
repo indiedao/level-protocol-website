@@ -5,14 +5,20 @@ const ConfiguratorContext = createContext()
 
 const STEPS = ['NFT', 'COLOR', 'SAVE']
 
+const MAX_HUE = 360
+const MAX_LIGHTNESS = 80
+const MIN_LIGHTNESS = 30
+
 export const ConfiguratorProvider = ({ children }) => {
   const [flow] = useState('CONFIG')
   const [currentStep, setCurrentStep] = useState(STEPS[0])
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()
   const [isSaved, setIsSaved] = useState(true)
-  const [colorHue, setColorHue] = useState(860)
-  const [colorLightness, setColorLightness] = useState(60)
+  const [colorHue, setColorHue] = useState(Math.floor(Math.random() * MAX_HUE))
+  const [colorLightness, setColorLightness] = useState(
+    Math.floor(Math.random() * (MAX_LIGHTNESS - MIN_LIGHTNESS) + MIN_LIGHTNESS),
+  )
   const [statusMessage, setStatusMessage] = useState('')
   const { bearerToken, hasLvlToken } = useWeb3()
 
