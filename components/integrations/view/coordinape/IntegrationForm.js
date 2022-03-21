@@ -2,10 +2,7 @@ import { useState } from 'react'
 
 import useWeb3 from '../../../hooks/useWeb3'
 import useCommunity from '../../../hooks/useCommunity'
-import {
-  CoordinapeCSVParseError,
-  parseCoordinapeCSV,
-} from '../../../../util/csv'
+import { parseCoordinapeCSV } from '../../../../util/csv'
 import Button from '../../../ui/Button'
 
 const CoordinapeIntegrationForm = () => {
@@ -34,7 +31,7 @@ const CoordinapeIntegrationForm = () => {
         try {
           const text = await file.text()
           const coordinapeData = parseCoordinapeCSV(text)
-          await fetch('/api/triggers/coordinape', {
+          const response = await fetch('/api/triggers/coordinape', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -42,12 +39,15 @@ const CoordinapeIntegrationForm = () => {
             },
             body: JSON.stringify(coordinapeData),
           })
-        } catch (error) {
-          console.log('error', error) // eslint-disable-line no-console
-          if (error instanceof CoordinapeCSVParseError) {
-            // TODO: handle this differently?
-            // TODO: error handling
+          if (response.status !== 200) {
+            const json = await response.json()
+            throw new Error(
+              'error' in json ? json.error : 'An unexpected error has occured.',
+            )
           }
+        } catch (error) {
+          // TODO: error handling
+          console.log('error', error) // eslint-disable-line no-console
         }
       }),
     )
