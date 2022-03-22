@@ -36,7 +36,7 @@ const GlobalStyles = createGlobalStyle`
   }
   @font-face {
     font-family: "Geneva";
-    src: url("/fonts/Geneval-Bold-Italic.ttf");
+    src: url("/fonts/Geneva-Bold-Italic.ttf");
     font-style: italic, oblique;
     font-weight: bold;
     font-display: swap;
