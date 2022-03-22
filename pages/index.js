@@ -14,6 +14,7 @@ import LevelWindow from '../components/ui/LevelWindow'
 import Hero from '../components/ui/Hero/Hero'
 import Footer from '../components/ui/Footer'
 import Section from '../components/ui/Section'
+import Parallax from '../components/ui/Parallax'
 import TextBlock from '../components/ui/TextBlock'
 import Panel from '../components/ui/Panel'
 import Token from '../components/ui/illustrations/Token'
@@ -35,10 +36,7 @@ const PageContent = styled.div`
 `
 
 const Article = styled.article`
-  padding: 0 5vw;
-
-  ${props => props.theme.bp.lg('padding: 0 6.4rem;')}
-  ${props => props.theme.bp.xl('padding: 0 16.6rem;')}
+  overflow: hidden;
 `
 
 const NFT = styled.div`
@@ -52,40 +50,6 @@ const NFT = styled.div`
   }
 `
 
-const Parallax = styled.div`
-  --parallax-top: 0;
-  --parallax-bottom: 0;
-
-  position: relative;
-
-  > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  &::before,
-  &:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    left: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    z-index: 0;
-  }
-
-  &::before {
-    top: var(--parallax-top);
-  }
-
-  &::after {
-    bottom: var(--parallax-bottom);
-    height: 356.4rem;
-    background-image: url('/images/parallax.png');
-  }
-`
-
 const Page = () => {
   const router = useRouter()
   const section = useRef(null)
@@ -93,8 +57,9 @@ const Page = () => {
 
   useEffect(() => {
     const resetWidth = debounce(() => {
-      if (section.current) {
-        const { width } = section.current.getBoundingClientRect()
+      if (section.current && section.current.firstElementChild) {
+        const { width } =
+          section.current.firstElementChild.getBoundingClientRect()
         if (width < 1024) {
           if (width !== availableWidth) {
             setAvailableWidth(width)
@@ -138,100 +103,97 @@ const Page = () => {
               }
               title="lvl protocol"
             >
-              <Parallax>
-                <Article>
-                  <Hero />
-                  <Section boundary="some" ref={section}>
-                    <TextBlock>
-                      <H2 color="vibrantGreen">lvl is a crypto resume</H2>
-                      <H4 color="trueWhite">
-                        lvl is an on-chain reputation and skills web3 resume
-                        that highlights all of your contributions across
-                        communities, DAOs, and metaverses
-                      </H4>
-                    </TextBlock>
-                  </Section>
-                  <Section
-                    alignment="start"
-                    balance="equal"
-                    boundary="little"
-                    id="join-community"
-                  >
-                    <Panel
-                      button={
-                        <Button
-                          onClick={() =>
-                            openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
-                          }
-                        >
-                          Join Waitlist
-                        </Button>
-                      }
-                      smallIllustrationName="Community"
-                      title="For communities"
-                    >
-                      <ol>
-                        <li>
-                          Define skills relevant for your community that members
-                          can earn
-                        </li>
-                        <li>
-                          Combine existing tools with your own community data
-                        </li>
-                        <li>
-                          Rollup all off-chain data from your community, DAO,
-                          game, or metaverse into members’ lvl tokens, on-chain
-                        </li>
-                      </ol>
-                    </Panel>
-                    <Panel
-                      button={
-                        <Button onClick={() => router.push('/join')}>
-                          Mint Now
-                        </Button>
-                      }
-                      smallIllustrationName="Member"
-                      title="For members"
-                    >
-                      <ol>
-                        <li>
-                          Mint your lvl token to start tracking your
-                          contribution, skills, and reputation
-                        </li>
-                        <li>
-                          Focus on building your contributions and reputation in
-                          your metaverses and level up your skills
-                        </li>
-                        <li>
-                          Watch your dynamic lvl NFT token shift and change
-                          along with your growth
-                        </li>
-                      </ol>
-                      <Body1 color="mutedCream">
-                        Early minting is available and will hold your spot when
-                        lvl is fully integrated with your DAOs.
-                      </Body1>
-                    </Panel>
-                  </Section>
-                  <Section balance="vertical" boundary="some">
-                    <NFT>
-                      <Token />
-                      <TextBlock>
-                        <H2 color="vibrantGreen">Dynamic NFTs</H2>
-                        <Body1>
-                          lvl Tokens are dynamic NFTs that showcase your earned
-                          skills in each community, combining data from any
-                          source, validated by the community, then stored
-                          on-chain so any smart contract can interact at your
-                          lvl.
-                        </Body1>
-                      </TextBlock>
-                      <Button anchor="#how-lvl-works">
-                        How does this work?
+              <Article>
+                <Hero />
+                <Section boundary="some" ref={section}>
+                  <TextBlock>
+                    <H2 color="vibrantGreen">lvl is a crypto resume</H2>
+                    <H4 color="trueWhite">
+                      lvl is an on-chain reputation and skills web3 resume that
+                      highlights all of your contributions across communities,
+                      DAOs, and metaverses
+                    </H4>
+                  </TextBlock>
+                </Section>
+                <Section
+                  alignment="start"
+                  balance="equal"
+                  boundary="little"
+                  id="join-community"
+                >
+                  <Panel
+                    button={
+                      <Button
+                        onClick={() =>
+                          openUrl('https://forms.gle/BUDbGYTQDBEMCw8dA')
+                        }
+                      >
+                        Join Waitlist
                       </Button>
-                    </NFT>
-                    <NFTIllustration availableWidth={availableWidth} />
-                  </Section>
+                    }
+                    smallIllustrationName="Community"
+                    title="For communities"
+                  >
+                    <ol>
+                      <li>
+                        Define skills relevant for your community that members
+                        can earn
+                      </li>
+                      <li>
+                        Combine existing tools with your own community data
+                      </li>
+                      <li>
+                        Rollup all off-chain data from your community, DAO,
+                        game, or metaverse into members’ lvl tokens, on-chain
+                      </li>
+                    </ol>
+                  </Panel>
+                  <Panel
+                    button={
+                      <Button onClick={() => router.push('/join')}>
+                        Pre-mint Now
+                      </Button>
+                    }
+                    smallIllustrationName="Member"
+                    title="For members"
+                  >
+                    <ol>
+                      <li>
+                        Mint your lvl token to start tracking your contribution,
+                        skills, and reputation
+                      </li>
+                      <li>
+                        Focus on building your contributions and reputation in
+                        your metaverses and level up your skills
+                      </li>
+                      <li>
+                        Watch your dynamic lvl NFT token shift and change along
+                        with your growth
+                      </li>
+                    </ol>
+                    <Body1 color="mutedCream">
+                      Pre-minting is available and will hold your spot when lvl
+                      is fully integrated with your DAOs.
+                    </Body1>
+                  </Panel>
+                </Section>
+                <Section balance="vertical" boundary="some">
+                  <NFT>
+                    <Token />
+                    <TextBlock>
+                      <H2 color="vibrantGreen">Dynamic NFTs</H2>
+                      <Body1>
+                        lvl Tokens are dynamic NFTs that showcase your earned
+                        skills in each community, combining data from any
+                        source, validated by the community, then stored on-chain
+                        so any smart contract can interact at your lvl.
+                      </Body1>
+                    </TextBlock>
+                    <Button anchor="#how-lvl-works">How does this work?</Button>
+                  </NFT>
+                  <NFTIllustration availableWidth={availableWidth} />
+                </Section>
+                <Parallax>
                   <Section id="how-lvl-works" boundary="lot">
                     <TextBlock>
                       <H2 color="vibrantGreen">How It Works</H2>
@@ -310,9 +272,9 @@ const Page = () => {
                     </TextBlock>
                     <BenefitsIllustration availableWidth={availableWidth} />
                   </Section>
-                </Article>
-                <Footer />
-              </Parallax>
+                  <Footer />
+                </Parallax>
+              </Article>
             </LevelWindow>
           </PageContent>
         </Public>

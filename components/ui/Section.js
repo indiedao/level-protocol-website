@@ -6,26 +6,33 @@ export const BALANCES = ['auto', 'equal', 'start', 'end', 'vertical']
 export const BOUNDARIES = ['none', 'little', 'some', 'lot']
 
 const Section = styled.section`
+  --horizontal-padding: 5vw;
+  --vertical-padding: 0;
+
   display: grid;
   align-items: ${({ alignment }) => alignment};
+  padding: var(--vertical-padding) var(--horizontal-padding);
 
+  ${props => props.theme.bp.lg(' --horizontal-padding: 6.4rem; ')}
+  ${props => props.theme.bp.xl(' --horizontal-padding: 16.6rem; ')}
+  
   ${({ boundary, theme }) => {
     switch (boundary) {
       case 'little':
         return css`
-          padding: 6.4rem 0;
+          --vertical-padding: 6.4rem;
         `
       case 'some':
         return css`
-          padding: 9rem 0;
+          --vertical-padding: 9rem;
 
-          ${theme.bp.lgPlus(' padding: 12rem 0; ')}
+          ${theme.bp.lgPlus('  --vertical-padding: 12rem; ')}
         `
       case 'lot':
         return css`
-          padding: 13.1rem 0;
+          --vertical-padding: 13.1rem;
 
-          ${theme.bp.lgPlus(' padding: 26.2rem 0; ')}
+          ${theme.bp.lgPlus(' --vertical-padding: 26.2rem; ')}
         `
       case 'none':
       default:

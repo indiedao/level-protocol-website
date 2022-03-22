@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
+import useScrollListener from '../hooks/useScrollListener'
 import { COLOR_NAMES } from '../../util/theme'
 import { H2 } from './Typography'
 import { CloseIcon, CollapseIcon, ZoomIcon } from './icons'
@@ -216,6 +217,8 @@ const LevelWindow = ({
   const [isVisible, setVisible] = useState(true)
   const [isZoomed, setZoomed] = useState(zoomed)
   const [isCollapsed, setCollapsed] = useState(collapsed)
+
+  useScrollListener(content)
 
   const closeWindow = () => {
     setVisible(!isVisible)
