@@ -22,6 +22,7 @@ const etl = async address => {
   const updatedMembers = await load(transformedData)
 
   // Update Community membersHash:
+  // eslint-disable-next-line import/no-named-as-default-member
   const { IpfsHash } = await pinata.pinJSONToIPFS(updatedMembers)
   await updateCommunityDataHash({
     id: community._id,

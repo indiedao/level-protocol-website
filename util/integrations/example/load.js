@@ -17,7 +17,7 @@ export const load = async data => {
     /**
      * Pin new member data files to IPFS, and track new members hash map:
      */
-    // eslint-disable-next-line no-await-in-loop
+    // eslint-disable-next-line no-await-in-loop, import/no-named-as-default-member
     const { IpfsHash } = await pinata.pinJSONToIPFS(data[addresses[i]])
     updatedMembers[addresses[i]] = IpfsHash
   }

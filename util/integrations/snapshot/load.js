@@ -15,7 +15,7 @@ export const load = async data => {
 
     memberFile.snapshot.votes += data.memberVoteCounts[addresses[i]]
 
-    // eslint-disable-next-line no-await-in-loop
+    // eslint-disable-next-line no-await-in-loop, import/no-named-as-default-member
     const { IpfsHash } = await pinata.pinJSONToIPFS(memberFile)
     updatedMembers[addresses[i]] = IpfsHash
   }
