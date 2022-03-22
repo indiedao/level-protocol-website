@@ -39,9 +39,13 @@ export const FIND_COMMUNITY_BY_ADDRESS_QUERY = gql`
 export const UPDATE_COMMUNITY_DATA_HASH_MUTATION = gql`
   mutation UPDATE_COMMUNITY_DATA_HASH_MUTATION(
     $id: ID!
+    $address: String!
     $membersHash: String!
   ) {
-    updateCommunity(id: $id, data: { membersHash: $membersHash }) {
+    updateCommunity(
+      id: $id
+      data: { address: $address, membersHash: $membersHash }
+    ) {
       _id
       membersHash
     }

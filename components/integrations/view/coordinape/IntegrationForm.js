@@ -26,31 +26,32 @@ const CoordinapeIntegrationForm = () => {
 
   const handleProcessFiles = async () => {
     setIsProcessing(true)
-    await Promise.all(
-      files.map(async file => {
-        try {
-          const text = await file.text()
-          const coordinapeData = parseCoordinapeCSV(text)
-          const response = await fetch('/api/triggers/coordinape', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Token ${bearerToken}`,
-            },
-            body: JSON.stringify(coordinapeData),
-          })
-          if (response.status !== 200) {
-            const json = await response.json()
-            throw new Error(
-              'error' in json ? json.error : 'An unexpected error has occured.',
-            )
-          }
-        } catch (error) {
-          // TODO: error handling
-          console.log('error', error) // eslint-disable-line no-console
+    Array.from(files).map(async file => {
+      try {
+        const text = await file.text()
+        const coordinapeData = parseCoordinapeCSV(text)
+        const response = await fetch('/api/triggers/coordinape', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${bearerToken}`,
+          },
+          body: JSON.stringify({
+            name: file.name,
+            contributions: coordinapeData,
+          }),
+        })
+        if (response.status !== 200) {
+          const json = await response.json()
+          throw new Error(
+            'error' in json ? json.error : 'An unexpected error has occured.',
+          )
         }
-      }),
-    )
+      } catch (error) {
+        // TODO: error handling
+        console.log('error', error) // eslint-disable-line no-console
+      }
+    })
     setIsProcessing(false)
   }
 
