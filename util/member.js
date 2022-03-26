@@ -6,11 +6,11 @@ const simpleMergeMethod = (existingData, newData) => ({
   ...newData,
 })
 
-export const updateMemberData = async (
+const updateMemberData = async (
   integrationName,
   newData,
+  mergeMethod,
   currentIpfsHash = null,
-  mergeMethod = simpleMergeMethod,
 ) => {
   // first get any past member data
   let memberData = {}
@@ -46,8 +46,8 @@ export const mergeMembersData = async (
       updateMemberData(
         integrationName,
         data[address],
-        membersDataHashes[address],
         mergeMethod,
+        membersDataHashes[address],
       ),
     ),
   )
