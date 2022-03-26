@@ -5,9 +5,25 @@ export class CoordinapeEpochTransformError extends Error {
   }
 }
 
-export const transform = async ({ contributions, name }) =>
-  contributions.reduce((data, contribution) => {
-    const { address } = contribution
+const totalGive = contributions =>
+  contributions.reduce((total, { sent, received }) => {
+    if (sent === 0 && received === 0) {
+      // this person either opted out or otherwise did not participate, so we will skip them
+      return total
+    }
+    return total + 100
+  }, 0)
+
+export const transform = async ({ contributions, name }) => {
+  const totalGivePossible = totalGive(contributions)
+  if (totalGivePossible === 0) {
+    throw new CoordinapeEpochTransformError(
+      'No member appears to have participated in this epoch; total GIVE given is zero.',
+    )
+  }
+
+  return contributions.reduce((data, contribution) => {
+    const { address, received, sent } = contribution
     if (address in data) {
       throw new CoordinapeEpochTransformError(
         `Found ${address} listed more than once in Coordinape epoch file ${name}.`,
@@ -17,7 +33,10 @@ export const transform = async ({ contributions, name }) =>
       ...data,
       [address]: {
         ...contribution,
+        participated: received > 0 || sent > 0,
+        percentageReceived: received / totalGivePossible,
         source: name,
       },
     }
   }, {})
+}
