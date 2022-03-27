@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import useWeb3 from '../../../hooks/useWeb3'
 import useCommunity from '../../../hooks/useCommunity'
@@ -11,22 +11,8 @@ const CoordinapeIntegrationForm = () => {
   const { bearerToken } = useWeb3()
   const { community } = useCommunity()
 
-  if (!community) return <h2>Loading community...</h2>
-
-  const handleFileChange = ({ currentTarget: { files: inputFiles } }) => {
-    const csvFiles = []
-    Array.from(inputFiles).forEach(file => {
-      const { type } = file
-      if (type === 'text/csv') {
-        csvFiles.push(file)
-      }
-    })
-    setFiles(csvFiles)
-  }
-
-  const handleProcessFiles = async () => {
-    setIsProcessing(true)
-    Array.from(files).map(async file => {
+  useEffect(() => {
+    const processFile = async file => {
       try {
         const text = await file.text()
         const coordinapeData = parseCoordinapeCSV(text)
@@ -47,12 +33,34 @@ const CoordinapeIntegrationForm = () => {
             'error' in json ? json.error : 'An unexpected error has occured.',
           )
         }
+        setFiles(files.slice(1))
       } catch (error) {
         // TODO: error handling
         console.log('error', error) // eslint-disable-line no-console
+        setIsProcessing(false)
+      }
+    }
+
+    if (isProcessing) {
+      if (files.length > 0) {
+        processFile(files[0])
+      } else {
+        setIsProcessing(false)
+      }
+    }
+  }, [bearerToken, files, isProcessing])
+
+  if (!community) return <h2>Loading community...</h2>
+
+  const handleFileChange = ({ currentTarget: { files: inputFiles } }) => {
+    const csvFiles = []
+    Array.from(inputFiles).forEach(file => {
+      const { type } = file
+      if (type === 'text/csv') {
+        csvFiles.push(file)
       }
     })
-    setIsProcessing(false)
+    setFiles(csvFiles)
   }
 
   return (
@@ -67,7 +75,7 @@ const CoordinapeIntegrationForm = () => {
           onChange={handleFileChange}
           type="file"
         />
-        <span>Upload You </span>
+        <span>Select Your Coordinape Epoch CSV Files</span>
       </label>
       {files.length ? (
         <>
@@ -82,9 +90,9 @@ const CoordinapeIntegrationForm = () => {
       <Button
         disabled={isProcessing}
         type="button"
-        onClick={() => handleProcessFiles()}
+        onClick={() => setIsProcessing(true)}
       >
-        Process Coordinape Data
+        {isProcessing ? 'Processing...' : 'Process Coordinape Data'}
       </Button>
     </div>
   )
