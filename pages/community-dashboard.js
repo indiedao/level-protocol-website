@@ -5,7 +5,7 @@ import useWeb3 from '../components/hooks/useWeb3'
 import useCommunity from '../components/hooks/useCommunity'
 import CreateCommunityForm from '../components/community/view/CreateCommunityForm'
 import CommunityDetail from '../components/community/view/CommunityDetail'
-import SnapshotIntegrationForm from '../components/integrations/view/SnapshotIntegrationForm'
+import SnapshotIntegrationForm from '../components/integrations/view/snapshot/SnapshotIntegrationForm'
 import CoordinapeIntegrationForm from '../components/integrations/view/coordinape/IntegrationForm'
 
 const STEPS = {

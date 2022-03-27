@@ -41,11 +41,16 @@ export const updateCommunityDataHash = async ({ address, id, membersHash }) => {
 }
 
 // TODO: validate inputs:
-export const updateCommunitySnapshotEns = async ({ id, snapshotEns }) => {
+export const updateCommunitySnapshotEns = async ({
+  address,
+  id,
+  snapshotEns,
+}) => {
   const resp = await graphQLClient.request(
     UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION,
     {
       id,
+      address,
       snapshotEns,
     },
   )

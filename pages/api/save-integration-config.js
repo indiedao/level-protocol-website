@@ -13,6 +13,7 @@ const handler = async (req, res, { auth: { address } }) => {
   // Create Community:
   await updateCommunitySnapshotEns({
     id: _id,
+    address,
     snapshotEns: req.body.config.ens,
   })
 

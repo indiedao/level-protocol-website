@@ -53,8 +53,15 @@ export const UPDATE_COMMUNITY_DATA_HASH_MUTATION = gql`
 `
 
 export const UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION = gql`
-  mutation UPDATE_COMMUNITY_SNAPSHOT_ENS($id: ID!, $snapshotEns: String!) {
-    updateCommunity(id: $id, data: { snapshotEns: $snapshotEns }) {
+  mutation UPDATE_COMMUNITY_SNAPSHOT_ENS(
+    $id: ID!
+    $address: String!
+    $snapshotEns: String!
+  ) {
+    updateCommunity(
+      id: $id
+      data: { address: $address, snapshotEns: $snapshotEns }
+    ) {
       _id
       snapshotEns
     }
