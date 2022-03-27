@@ -2,22 +2,23 @@ import { findCommunityByAddress, updateCommunityDataHash } from './fauna'
 import { pinJSONToIPFS } from './pinata'
 import { getIpfsData } from './ipfs'
 
-export const getCommunityMembersHashes = async address => {
-  const { membersHash } = await findCommunityByAddress(address)
+export const getCommunityWithMembersHashes = async address => {
+  const community = await findCommunityByAddress(address)
+  const { membersHash } = community
 
   let membersDataHashes = {}
   if (membersHash) {
     membersDataHashes = await getIpfsData(membersHash)
   }
 
-  return { membersHash, membersDataHashes }
+  return { ...community, membersDataHashes }
 }
 
 export const updateCommunityMembersHash = async (
-  address,
-  initialMembersHash,
+  community,
   updatedMembersDataHashes,
 ) => {
+  const { address, _id: id, membersHash: initialMembersHash } = community
   const { membersHash: confirmMembersHash } = await findCommunityByAddress(
     address,
   )
@@ -30,6 +31,7 @@ export const updateCommunityMembersHash = async (
   // Update Community membersHash:
   const { IpfsHash } = await pinJSONToIPFS(updatedMembersDataHashes)
   await updateCommunityDataHash({
+    id,
     address,
     membersHash: IpfsHash,
   })

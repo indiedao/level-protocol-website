@@ -1,5 +1,5 @@
 import {
-  getCommunityMembersHashes,
+  getCommunityWithMembersHashes,
   updateCommunityMembersHash,
 } from '../../community'
 import { transform } from './transform'
@@ -7,9 +7,8 @@ import { load } from './load'
 
 const etl = async (address, epochData) => {
   // Load existing community member data
-  const { membersHash, membersDataHashes } = await getCommunityMembersHashes(
-    address,
-  )
+  const community = await getCommunityWithMembersHashes(address)
+  const { membersDataHashes } = community
 
   // Extract data
   // When an API exists for Coordinape, we can add an extract method
@@ -24,11 +23,7 @@ const etl = async (address, epochData) => {
   )
 
   // Save updated community member data
-  await updateCommunityMembersHash(
-    address,
-    membersHash,
-    updatedMembersDataHashes,
-  )
+  await updateCommunityMembersHash(community, updatedMembersDataHashes)
 }
 
 export default etl
