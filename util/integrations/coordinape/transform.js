@@ -1,3 +1,5 @@
+import utils from 'web3-utils'
+
 export class CoordinapeEpochTransformError extends Error {
   constructor(message) {
     super(message)
@@ -23,7 +25,11 @@ export const transform = async ({ contributions, name }) => {
   }
 
   return contributions.reduce((data, contribution) => {
-    const { address, received, sent } = contribution
+    const { address: downcaseAddress, received, sent } = contribution
+
+    // Coordinape CSV addresses are downcased, we prefer Checksum
+    const address = utils.toChecksumAddress(downcaseAddress)
+
     if (address in data) {
       throw new CoordinapeEpochTransformError(
         `Found ${address} listed more than once in Coordinape epoch file ${name}.`,

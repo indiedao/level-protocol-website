@@ -59,6 +59,7 @@
     "three": "^0.133.1",
     "validate.js": "^0.13.1",
     "web3": "^1.7.0",
+    "web3-utils": "^1.7.1",
     "web3.storage": "^3.5.1",
     "web3modal": "^1.9.4"
   },
