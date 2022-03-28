@@ -1,33 +1,36 @@
-import pinata from '../../pinata'
-import { findCommunityByAddress, updateCommunityDataHash } from '../../fauna'
+import {
+  getCommunityWithMembersHashes,
+  updateCommunityMembersHash,
+} from '../../community'
 import { extract } from './extract'
 import { transform } from './transform'
 import { load } from './load'
 
 const etl = async address => {
-  const community = await findCommunityByAddress(address)
+  // Load existing community member data
+  const community = await getCommunityWithMembersHashes(address)
+  const { membersDataHashes, snapshotEns } = community
 
-  if (!community.snapshotEns)
+  if (!community.snapshotEns) {
     throw new Error('Missing configuration: snapshotEns!')
+  }
 
-  // Extract data:
+  // Extract data
   const extractedData = await extract({
-    ens: community.snapshotEns,
+    ens: snapshotEns,
   })
 
-  // Transform data:
-  const transformedData = await transform(extractedData)
+  // Transform member data
+  const transformedData = transform(extractedData)
 
-  // Load data:
-  const updatedMembers = await load(transformedData)
+  // Load member data
+  const updatedMembersDataHashes = await load(
+    membersDataHashes,
+    transformedData,
+  )
 
-  // Update Community membersHash:
-  // eslint-disable-next-line import/no-named-as-default-member
-  const { IpfsHash } = await pinata.pinJSONToIPFS(updatedMembers)
-  await updateCommunityDataHash({
-    id: community._id,
-    membersHash: IpfsHash,
-  })
+  // Save updated community member data
+  await updateCommunityMembersHash(community, updatedMembersDataHashes)
 }
 
 export default etl
