@@ -20,7 +20,7 @@ const etl = async address => {
     ens: snapshotEns,
   })
 
-  // Transform member data
+  // Transform data
   const transformedData = transform(extractedData)
 
   // Load member data

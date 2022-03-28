@@ -13,7 +13,7 @@ const etl = async (address, epochData) => {
   // Extract data
   // When an API exists for Coordinape, we can add an extract method
 
-  // Transform member data
+  // Transform data
   const transformedData = await transform(epochData)
 
   // Load member data
