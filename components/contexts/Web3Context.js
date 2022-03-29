@@ -32,6 +32,7 @@ export const Web3Provider = ({ children }) => {
   const [hasLvlToken, setHasLvlToken] = useState(false)
   const [ens, setEns] = useState()
   const [bearerToken, setBearerToken] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     setWeb3Modal(
@@ -92,6 +93,23 @@ export const Web3Provider = ({ children }) => {
     }
   }, [networkId, contracts.LvlV1, address, provider])
 
+  const resetBearerToken = () => {
+    setBearerToken(null)
+    setIsLoggedIn(false)
+    localStorage.removeItem('bearerToken')
+  }
+
+  const promptSignature = async ({ _signer, _address }) => {
+    const sig = await _signer.signMessage(
+      `I am signing into lvl protocol as ${_address}`,
+    )
+    const _bearerToken = jwt.sign(
+      { sig, address: _address },
+      'travelingcreature', // public key
+    )
+    setBearerToken(_bearerToken)
+  }
+
   const connect = useCallback(
     async function connect() {
       const _web3 = await web3Modal.connect()
@@ -108,14 +126,7 @@ export const Web3Provider = ({ children }) => {
 
       // Prompt user to sign login message (unless already cached):
       if (!bearerToken) {
-        const sig = await _signer.signMessage(
-          `I am signing into lvl protocol as ${_address}`,
-        )
-        const _bearerToken = jwt.sign(
-          { sig, address: _address },
-          'lvlprotocol', // public key
-        )
-        setBearerToken(_bearerToken)
+        await promptSignature({ _signer, _address })
       }
 
       // Initialize contracts:
@@ -131,11 +142,16 @@ export const Web3Provider = ({ children }) => {
 
       // Watch for wallet account change:
       _web3.on('accountsChanged', async () => {
+        resetBearerToken()
+        await promptSignature({ _signer, _address })
         setSigner(_provider.getSigner())
         setAddress(await _provider.getSigner().getAddress())
+        setIsLoggedIn(true)
       })
+
+      setIsLoggedIn(true)
     },
-    [contracts, web3Modal],
+    [contracts, web3Modal, bearerToken],
   )
 
   const disconnect = useCallback(async () => {
@@ -146,6 +162,7 @@ export const Web3Provider = ({ children }) => {
     setNetworkId(null)
     setAddress(null)
     setContracts({})
+    resetBearerToken()
   }, [web3Modal])
 
   const memoizedData = useMemo(() => {
@@ -162,6 +179,7 @@ export const Web3Provider = ({ children }) => {
       hasLvlToken,
       ens,
       bearerToken,
+      isLoggedIn,
     }
   }, [
     signer,
@@ -176,6 +194,7 @@ export const Web3Provider = ({ children }) => {
     hasLvlToken,
     ens,
     bearerToken,
+    isLoggedIn,
   ])
 
   return (
