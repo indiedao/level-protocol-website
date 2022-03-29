@@ -1,8 +1,12 @@
-// import { getAccessListFirst100, getAccessListMostRecent2 } from '../util/fauna'
+import { getAccessListFirst100, getAccessListMostRecent2 } from '../util/fauna'
+
+import Public from '../components/layouts/Public'
+import PublicMenuBar from '../components/ui/PublicMenuBar'
 
 const AccessListPage = ({ first100, mostRecent }) => {
   return (
-    <div>
+    <Public variant="light">
+      <PublicMenuBar />
       <h1>access list</h1>
       <h2>first 100</h2>
       <ul>
@@ -16,12 +20,11 @@ const AccessListPage = ({ first100, mostRecent }) => {
           <li key={member._id}>{member.address}</li>
         ))}
       </ul>
-    </div>
+    </Public>
   )
 }
 
 export async function getStaticProps() {
-  /*
   const first100 = await getAccessListFirst100()
   const mostRecent = await getAccessListMostRecent2()
 
@@ -29,13 +32,6 @@ export async function getStaticProps() {
     props: {
       first100,
       mostRecent,
-    },
-  }
-  */
-  return {
-    props: {
-      first100: [],
-      mostRecent: [],
     },
   }
 }
