@@ -105,7 +105,7 @@ export const Web3Provider = ({ children }) => {
     )
     const _bearerToken = jwt.sign(
       { sig, address: _address },
-      'travelingcreature', // public key
+      'lvlprotocol', // public key
     )
     setBearerToken(_bearerToken)
   }
