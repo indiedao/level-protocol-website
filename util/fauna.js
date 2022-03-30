@@ -74,16 +74,16 @@ export const updateMemberGithub = async ({ id, github }) => {
   return resp.member
 }
 
-export const getAccessListFirst100 = async () => {
+export const getAccessListFirst480 = async () => {
   const resp = await graphQLClient.request(GET_MEMBERS_BY_CREATED_AT_ASC, {
-    size: 100,
+    size: 480,
   })
   return resp.getMembersByCreatedAtAsc.data
 }
 
-export const getAccessListMostRecent2 = async () => {
+export const getAccessListMostRecent = async () => {
   const resp = await graphQLClient.request(GET_MEMBERS_BY_CREATED_AT_DESC, {
-    size: 2,
+    size: 1,
   })
   return resp.getMembersByCreatedAtDesc.data
 }

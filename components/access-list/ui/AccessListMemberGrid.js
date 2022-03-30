@@ -27,33 +27,45 @@ AccessListMemberGrid.propTypes = {
 
 const COLUMNS_BY_BP_BY_SIZE = {
   xl: {
-    large: 8,
+    large: 6,
+    medium: 10,
+    small: 20,
   },
   lg: {
     large: 6,
-    medium: 8,
-    small: 12,
+    medium: 10,
+    small: 20,
   },
   md: {
-    large: 4,
+    large: 3,
+    medium: 5,
+    small: 10,
   },
   sm: {
     large: 2,
+    medium: 3,
+    small: 7,
   },
+}
+
+const GAP_BY_SIZE = {
+  large: '2.4rem',
+  medium: '2.4rem',
+  small: '2rem',
 }
 
 const Grid = styled.div`
   display: grid;
   justify-items: center;
-  grid-column-gap: 2.4rem;
-  grid-row-gap: 3.2rem;
   margin: 0 auto;
-  padding: 60px 0;
+  padding: 20px 0;
+  grid-column-gap: ${({ size }) => GAP_BY_SIZE[size]};
+  grid-row-gap: ${({ size }) => GAP_BY_SIZE[size]};
 
   ${({ theme: { bp }, size }) => css`
     ${bp.xl(`
       grid-template-columns: repeat(${COLUMNS_BY_BP_BY_SIZE.xl[size]}, 1fr);
-      max-width: 1410px;
+      max-width: 1020px;
     `)}
 
     ${bp.lg(`

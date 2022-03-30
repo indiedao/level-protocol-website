@@ -13,14 +13,18 @@ const AccessListMember = ({ size, address, src }) => {
       return (
         <Wrapper>
           <Avatar src={src} size={size} />
-          <Address color="vibrantPixel">{ens || truncatedAddress}</Address>
+          <Address color="vibrantPixel" size={size}>
+            {ens || truncatedAddress}
+          </Address>
         </Wrapper>
       )
     case 'medium':
       return (
         <Wrapper>
           <Avatar src={src} size={size} />
-          <Address color="vibrantPixel">{ens || truncatedAddress}</Address>
+          <Address color="vibrantPixel" size={size}>
+            {ens || truncatedAddress}
+          </Address>
         </Wrapper>
       )
     case 'small':
@@ -42,16 +46,24 @@ AccessListMember.propTypes = {
 
 const Wrapper = styled.div``
 
+const SIZES = {
+  large: 15,
+  medium: 6.4,
+  small: 2.4,
+}
+
 const Address = styled(Body1)`
   text-shadow: 0px 2px 4px #000000;
   padding-top: 12px;
-`
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-const SIZES = {
-  large: 15,
-  medium: 10,
-  small: 5,
-}
+  ${({ size }) => css`
+    width: ${SIZES[size]}rem;
+  `}
+`
 
 const Avatar = styled.div`
   background: url(${({ src }) => src});
