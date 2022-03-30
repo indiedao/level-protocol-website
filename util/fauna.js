@@ -8,6 +8,7 @@ import {
   FIND_MEMBER_BY_ADDRESS_QUERY,
   UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION,
   UPDATE_MEMBER_GITHUB_MUTATION,
+  UPDATE_MEMBER_CACHE_MUTATION,
   GET_MEMBERS_BY_CREATED_AT_ASC,
   GET_MEMBERS_BY_CREATED_AT_DESC,
 } from './queries'
@@ -70,6 +71,16 @@ export const updateMemberGithub = async ({ id, github }) => {
   const resp = await graphQLClient.request(UPDATE_MEMBER_GITHUB_MUTATION, {
     id,
     github,
+  })
+  return resp.member
+}
+
+// TODO: validate inputs:
+export const updateMemberCache = async ({ id, nftSrc, ens }) => {
+  const resp = await graphQLClient.request(UPDATE_MEMBER_CACHE_MUTATION, {
+    id,
+    nftSrc,
+    ens,
   })
   return resp.member
 }

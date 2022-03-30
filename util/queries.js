@@ -97,6 +97,8 @@ export const FIND_MEMBER_BY_ADDRESS_QUERY = gql`
       colorHue
       colorLightness
       github
+      nftSrc
+      ens
     }
   }
 `
@@ -106,6 +108,20 @@ export const UPDATE_MEMBER_GITHUB_MUTATION = gql`
     updateMember(id: $id, data: { github: $github }) {
       _id
       github
+    }
+  }
+`
+
+export const UPDATE_MEMBER_CACHE_MUTATION = gql`
+  mutation UPDATE_MEMBER_CACHE_MUTATION(
+    $id: ID!
+    $nftSrc: String!
+    $ens: String!
+  ) {
+    updateMember(id: $id, data: { nftSrc: $nftSrc, ens: $ens }) {
+      _id
+      nftSrc
+      ens
     }
   }
 `
