@@ -6,9 +6,14 @@ const useEns = address => {
   const [ens, setEns] = useState()
 
   const fetchEns = useCallback(async () => {
-    const provider = new AlchemyProvider(Network.name, AlchemyApiKey)
-    const _ens = await provider.lookupAddress(address)
-    setEns(_ens)
+    try {
+      const provider = new AlchemyProvider(Network.name, AlchemyApiKey)
+      const _ens = await provider.lookupAddress(address)
+      setEns(_ens)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
   }, [address])
 
   useEffect(() => {

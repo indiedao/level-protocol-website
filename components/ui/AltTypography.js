@@ -64,6 +64,35 @@ export const H4 = styled.h4`
 H4.propTypes = { ...propTypesColor }
 H4.defaultProps = { color: 'trueBlack' }
 
+const sharedBodyStyles = css`
+  ${props => css`
+    margin: 0;
+    color: ${props.theme.colors[props.color]};
+    font-family: ${props.theme.fontStacks.alagard};
+    font-weight: 400;
+    line-height: 2.4rem;
+    ${props.theme.bp.mdPlus(' line-height: 2.8rem; ')}
+  `}
+`
+
+export const body1Styles = css`
+  ${sharedBodyStyles}
+  font-size: 1.8rem;
+`
+
+export const Body1 = styled.p`
+  ${body1Styles}
+`
+
+export const body2Styles = css`
+  ${sharedBodyStyles}
+  font-size: 1.6rem;
+`
+
+export const Body2 = styled.p`
+  ${body2Styles}
+`
+
 const sharedActionStyles = css`
   color: ${props => props.theme.colors[props.color]};
   font-family: ${props => props.theme.fontStacks.alagard};
