@@ -17,7 +17,7 @@ const handler = async (req, res) => {
     const ens = await provider.lookupAddress(address)
 
     // Update cached fields:
-    await updateMemberCache({ id: _id, nftSrc, ens })
+    await updateMemberCache({ id: _id, nftSrc, ens: ens || '' })
 
     res.statusCode = 200
     res.json({ success: true })

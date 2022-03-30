@@ -3,10 +3,8 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Body1 } from '../../ui/AltTypography'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
-import useEns from '../../hooks/useEns'
 
-const AccessListMember = ({ size, address, src }) => {
-  const { ens } = useEns(address)
+const AccessListMember = ({ size, address, src, ens }) => {
   const { truncatedAddress } = useTruncatedAddress(address)
 
   return (
@@ -27,6 +25,7 @@ AccessListMember.propTypes = {
   size: PropTypes.oneOf(['large', 'medium', 'small']).isRequired,
   address: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
+  ens: PropTypes.string.isRequired,
 }
 
 const Wrapper = styled.div`
