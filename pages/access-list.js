@@ -9,7 +9,7 @@ import AccessListMemberGrid from '../components/access-list/ui/AccessListMemberG
 const AccessListPage = ({ first480, mostRecent }) => {
   // Create string of repeating access list text:
   let accessListText = ''
-  for (let i = 0; i < 20; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     accessListText += 'ACCESS LIST—'
   }
   accessListText += 'ACCESS LIST'
@@ -23,7 +23,7 @@ const AccessListPage = ({ first480, mostRecent }) => {
     <Public variant="light">
       <PublicMenuBar />
       <Container>
-        <Marquee content={accessListText} />
+        <Marquee content={accessListText} duration={1000} />
         <AccessListsContianer>
           <AccessListMemberGrid members={first30} size="large" />
           <AccessListMemberGrid members={second100} size="medium" />

@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
+import Link from 'next/link'
 import { Body1 } from '../../ui/AltTypography'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
 import useEns from '../../hooks/useEns'
@@ -8,34 +9,18 @@ const AccessListMember = ({ size, address, src }) => {
   const { ens } = useEns(address)
   const { truncatedAddress } = useTruncatedAddress(address)
 
-  switch (size) {
-    case 'large':
-      return (
-        <Wrapper>
-          <Avatar src={src} size={size} />
+  return (
+    <Link href={`/token/${address}`} passHref>
+      <Wrapper>
+        <Avatar src={src} size={size} />
+        {size !== 'small' && (
           <Address color="vibrantPixel" size={size}>
             {ens || truncatedAddress}
           </Address>
-        </Wrapper>
-      )
-    case 'medium':
-      return (
-        <Wrapper>
-          <Avatar src={src} size={size} />
-          <Address color="vibrantPixel" size={size}>
-            {ens || truncatedAddress}
-          </Address>
-        </Wrapper>
-      )
-    case 'small':
-      return (
-        <Wrapper>
-          <Avatar src={src} size={size} />
-        </Wrapper>
-      )
-    default:
-      return <>Error: Unknown size.</>
-  }
+        )}
+      </Wrapper>
+    </Link>
+  )
 }
 
 AccessListMember.propTypes = {
@@ -44,7 +29,9 @@ AccessListMember.propTypes = {
   src: PropTypes.string.isRequired,
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  cursor: ${props => props.theme.cursors.select};
+`
 
 const SIZES = {
   large: 15,
@@ -65,15 +52,24 @@ const Address = styled(Body1)`
   `}
 `
 
+const DROP_SHADOW_BY_SIZE = {
+  large: '0.4rem',
+  medium: '0.2rem',
+  small: '0.1rem',
+}
+
 const Avatar = styled.div`
   background: url(${({ src }) => src});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  filter: drop-shadow(0.4rem 0.4rem 0.4rem #000000);
   border-radius: 1.6rem;
 
   ${({ size }) => css`
+    filter: drop-shadow(
+      ${DROP_SHADOW_BY_SIZE[size]} ${DROP_SHADOW_BY_SIZE[size]}
+        ${DROP_SHADOW_BY_SIZE[size]} #000000
+    );
     width: ${SIZES[size]}rem;
     height: ${SIZES[size]}rem;
   `}
