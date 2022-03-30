@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { Body1 } from '../../ui/AltTypography'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
@@ -12,8 +12,21 @@ const AccessListMember = ({ size, address, src }) => {
     case 'large':
       return (
         <Wrapper>
-          <Avatar src={src} />
+          <Avatar src={src} size={size} />
           <Address color="vibrantPixel">{ens || truncatedAddress}</Address>
+        </Wrapper>
+      )
+    case 'medium':
+      return (
+        <Wrapper>
+          <Avatar src={src} size={size} />
+          <Address color="vibrantPixel">{ens || truncatedAddress}</Address>
+        </Wrapper>
+      )
+    case 'small':
+      return (
+        <Wrapper>
+          <Avatar src={src} size={size} />
         </Wrapper>
       )
     default:
@@ -34,6 +47,12 @@ const Address = styled(Body1)`
   padding-top: 12px;
 `
 
+const SIZES = {
+  large: 15,
+  medium: 10,
+  small: 5,
+}
+
 const Avatar = styled.div`
   background: url(${({ src }) => src});
   background-size: contain;
@@ -41,8 +60,11 @@ const Avatar = styled.div`
   background-position: center;
   filter: drop-shadow(0.4rem 0.4rem 0.4rem #000000);
   border-radius: 1.6rem;
-  width: 15rem;
-  height: 15rem;
+
+  ${({ size }) => css`
+    width: ${SIZES[size]}rem;
+    height: ${SIZES[size]}rem;
+  `}
 `
 
 export default AccessListMember

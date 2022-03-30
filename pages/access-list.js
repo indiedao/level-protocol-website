@@ -19,9 +19,9 @@ const AccessListPage = ({ first100, mostRecent }) => {
       <PublicMenuBar />
       <Container>
         <Marquee content={accessListText} />
-        <AccessListMemberGrid members={first100} />
-        <h2>most recent 2</h2>
-        <AccessListMemberGrid members={mostRecent} />
+        <AccessListMemberGrid members={first100} size="large" />
+        <AccessListMemberGrid members={first100} size="medium" />
+        <AccessListMemberGrid members={first100} size="small" />
       </Container>
     </Public>
   )

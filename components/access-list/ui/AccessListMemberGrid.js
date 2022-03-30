@@ -1,15 +1,15 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import AccessListMember from './AccessListMember'
 
-const AccessListMemberGrid = ({ members }) => (
-  <Grid>
+const AccessListMemberGrid = ({ members, size }) => (
+  <Grid size={size}>
     {members.map(member => (
       <AccessListMember
         key={member._id}
         src="/images/illustrations/nft/nft.png"
         address={member.address}
-        size="large"
+        size={size}
       />
     ))}
   </Grid>
@@ -22,6 +22,24 @@ AccessListMemberGrid.propTypes = {
       address: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  size: PropTypes.oneOf(['large', 'medium', 'small']).isRequired,
+}
+
+const COLUMNS_BY_BP_BY_SIZE = {
+  xl: {
+    large: 8,
+  },
+  lg: {
+    large: 6,
+    medium: 8,
+    small: 12,
+  },
+  md: {
+    large: 4,
+  },
+  sm: {
+    large: 2,
+  },
 }
 
 const Grid = styled.div`
@@ -32,22 +50,26 @@ const Grid = styled.div`
   margin: 0 auto;
   padding: 60px 0;
 
-  grid-template-columns: repeat(8, 1fr);
-  max-width: 1410px;
+  ${({ theme: { bp }, size }) => css`
+    ${bp.xl(`
+      grid-template-columns: repeat(${COLUMNS_BY_BP_BY_SIZE.xl[size]}, 1fr);
+      max-width: 1410px;
+    `)}
 
-  ${({ theme }) => theme.bp.lg`
-    grid-template-columns: repeat(6, 1fr);
-    max-width: 1060px;
-  `}
+    ${bp.lg(`
+      grid-template-columns: repeat(${COLUMNS_BY_BP_BY_SIZE.lg[size]}, 1fr);
+      max-width: 1060px;
+    `)}
 
-  ${({ theme }) => theme.bp.md`
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 720px;
-  `}
+    ${bp.md(`
+      grid-template-columns: repeat(${COLUMNS_BY_BP_BY_SIZE.md[size]}, 1fr);
+      max-width: 720px;
+    `)}
 
-  ${({ theme }) => theme.bp.sm`
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 360px;
+    ${bp.sm(`
+      grid-template-columns: repeat(${COLUMNS_BY_BP_BY_SIZE.sm[size]}, 1fr);
+      max-width: 360px;
+    `)}
   `}
 `
 
