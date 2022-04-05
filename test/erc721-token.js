@@ -63,7 +63,7 @@ describe('(ERC-721) $LVL token', () => {
         expect(tokenId2).to.equal(1)
       })
 
-      it('should require that owner address owns a token', async () => {
+      it.skip('should require that owner address owns a token', async () => {
         await expect(contract.tokenOfOwner(addr1.address)).to.be.revertedWith(
           'Address does not own a token!',
         )
