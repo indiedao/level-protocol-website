@@ -79,12 +79,25 @@ To learn more about Next.js, take a look at the following resources:
 
 ## Database
 
-Create a database in FaunaDB following this guide
+1. Create a database in FaunaDB following this guide
 https://docs.fauna.com/fauna/current/learn/quick_start/gql_quick_start
 
-and then go to the graphql option in the left manu and import the schema file from
+2. Once your database is created, go to `GraphQL` menu item on the left nav bar.
 
-`schemas/schema.gql`
+3. You need to import your schema, you can accomplish it by clicking `Import Schema` button. You can apply further changes later by clicking `Replace Schema` button.
 
-Create a secret in the security option for the database and make sure you're using the right url
+![fauna](https://user-images.githubusercontent.com/2170871/160616923-d09099fd-9a4a-4ca1-88fc-1f7b4aa97a83.png)
 
+4. From here, you will access your database playground, where you can perform any type of read and write operations.
+
+5. Now, make sure to create extra indexes or functions, go to `schemas/schema.gql` file, then uncomment and copy any code under `# Shell Commands` line. These are usually to help support custom sorting or filtering. For example, `all_members_sorted_by_created_at` index and `sort_members_by_created_at_asc` are going to help us be able to sort and paginate data by created_at DESC order.
+
+6. In order to actually use your database in your application, create a secret key by going to `Security` menu item:
+
+![image](https://user-images.githubusercontent.com/2170871/160619958-a8b9277e-5142-4d00-94c4-180d26c53e4e.png)
+
+7. Copy the displayed value and paste it in your `.env` file in a variable named `FAUNADB_SECRET`. Note: make sure to reset your app to apply changes.
+
+![image](https://user-images.githubusercontent.com/2170871/160620425-d4f3a034-a696-4d8a-8b49-8003d0284dd6.png)
+
+8. Finally, you can see [this quick Loom](https://www.loom.com/share/c8456e177ed74f25811e428b3517ccf2) about how to do these.
