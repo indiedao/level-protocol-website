@@ -17,8 +17,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - name: Install dependencies
+        working-directory: ./
         run: npm install
-          shell: bash
-          working-directory: ./
       - name: Test
         run: npm run test
