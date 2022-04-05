@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import { getAccessListFirst480, getAccessListMostRecent } from '../util/fauna'
+import { getAccessList, getAccessListMostRecent } from '../util/fauna'
 
 import Public from '../components/layouts/Public'
 import PublicMenuBar from '../components/ui/PublicMenuBar'
 import Marquee from '../components/ui/Marquee'
 import AccessListMemberGrid from '../components/access-list/ui/AccessListMemberGrid'
 
+// eslint-disable-next-line no-unused-vars
 const AccessListPage = ({ first480, mostRecent }) => {
   // Create string of repeating access list text:
   let accessListText = ''
@@ -47,7 +48,7 @@ const AccessListsContianer = styled.div`
 `
 
 export async function getStaticProps() {
-  const first480 = await getAccessListFirst480()
+  const first480 = await getAccessList(480)
   const mostRecent = await getAccessListMostRecent()
 
   return {

@@ -20,6 +20,14 @@ type Member {
   ens: String
 }
 
+type MembersCounter {
+  counter: Int!
+}
+
+type CommunitiesCounter {
+  counter: Int!
+}
+
 type Query {
   findCommunityByAddress(address: String!): Community
   findMemberByAddress(address: String!): Member
@@ -27,6 +35,16 @@ type Query {
     @resolver(name: "sort_members_by_created_at_asc", paginated: true)
   getMembersByCreatedAtDesc: [Member!]!
     @resolver(name: "sort_members_by_created_at_desc", paginated: true)
+
+  allCommunities: [Community!]!
+
+  nextMembersCounter: MembersCounter! @resolver(name: "increment_members_counter")
+  previousMembersCounter: MembersCounter! @resolver(name: "decrement_members_counter")
+  membersCount: MembersCounter!
+
+  nextCommunitiesCounter: CommunitiesCounter! @resolver(name: "increment_communities_counter")
+  previousCommunitiesCounter: CommunitiesCounter! @resolver(name: "decrement_communities_counter")
+  communitiesCount: CommunitiesCounter!
 }
 
 # This allows updates to single fields:
@@ -146,4 +164,110 @@ input MemberInput {
 #       )
 #     ),
 #   }
+# )
+
+# Update(
+#   Function("increment_members_counter"), {
+#     body: Query(
+#       Lambda(
+#         [],
+#         Let(
+#           {
+#             counterRef: Ref(Collection("MembersCounter"), "1"),
+#             counter: Get(Var("counterRef")),
+#             counterValue: Select(["data", "counter"], Var("counter"))
+#           },
+#           Update(
+#             Var("counterRef"),
+#             {
+#               data: {
+#                 counter: Add(Var("counterValue"), 1)
+#               }
+#             }
+#           )
+#         )
+#       )
+#     )
+#   })
+
+# Update(
+#   Function("decrement_members_counter"), {
+#     body: Query(
+#       Lambda(
+#         [],
+#         Let(
+#           {
+#             counterRef: Ref(Collection("MembersCounter"), "1"),
+#             counter: Get(Var("counterRef")),
+#             counterValue: Select(["data", "counter"], Var("counter"))
+#           },
+#           Update(
+#             Var("counterRef"),
+#             {
+#               data: {
+#                 counter: Add(Var("counterValue"), -1)
+#               }
+#             }
+#           )
+#         )
+#       )
+#     )
+#   })
+
+# Create(
+#   Ref(Collection("MembersCounter"), "1"),
+#   { data: { counter: 0 } }
+# )
+
+# Update(
+#   Function("increment_communities_counter"), {
+#     body: Query(
+#       Lambda(
+#         [],
+#         Let(
+#           {
+#             counterRef: Ref(Collection("CommunitiesCounter"), "1"),
+#             counter: Get(Var("counterRef")),
+#             counterValue: Select(["data", "counter"], Var("counter"))
+#           },
+#           Update(
+#             Var("counterRef"),
+#             {
+#               data: {
+#                 counter: Add(Var("counterValue"), 1)
+#               }
+#             }
+#           )
+#         )
+#       )
+#     )
+#   })
+
+# Update(
+#   Function("decrement_communities_counter"), {
+#     body: Query(
+#       Lambda(
+#         [],
+#         Let(
+#           {
+#             counterRef: Ref(Collection("CommunitiesCounter"), "1"),
+#             counter: Get(Var("counterRef")),
+#             counterValue: Select(["data", "counter"], Var("counter"))
+#           },
+#           Update(
+#             Var("counterRef"),
+#             {
+#               data: {
+#                 counter: Add(Var("counterValue"), -1)
+#               }
+#             }
+#           )
+#         )
+#       )
+#     )
+#   })
+
+# Create(
+#   Ref(Collection("CommunitiesCounter"), "1"),
+#   { data: { counter: 0 } }
 # )
