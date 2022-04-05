@@ -1,27 +1,13 @@
-import pinata from '../../pinata'
+import { mergeMembersData } from '../../api/member'
 
-export const load = async data => {
-  // Get list of member addresses:
-  const addresses = Object.keys(data)
-  const updatedMembers = {}
+// You may specify a custom merge method that will be provided the existing
+// and new data in order to create a custom merge under the given integration key.
+//
+// When not specified, `mergeMembersData` uses a simple merge akin to the following:
+const simpleMergeMethod = (existingData, newData) => ({
+  ...existingData,
+  ...newData,
+})
 
-  // Update each member's data:
-  for (let i = 0; i < addresses.length; i += 1) {
-    /**
-     * (Optional)
-     * Load exising member data here if you want to merge old data into new:
-     */
-
-    // TODO: add example of loading existing member data file here:
-
-    /**
-     * Pin new member data files to IPFS, and track new members hash map:
-     */
-    // eslint-disable-next-line no-await-in-loop, import/no-named-as-default-member
-    const { IpfsHash } = await pinata.pinJSONToIPFS(data[addresses[i]])
-    updatedMembers[addresses[i]] = IpfsHash
-  }
-
-  // Return updated Members list so that ETL controller can update Community membersHash:
-  return updatedMembers
-}
+export const load = async (membersDataHashes, data) =>
+  mergeMembersData('coordinape', membersDataHashes, data, simpleMergeMethod)

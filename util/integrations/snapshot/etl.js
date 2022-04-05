@@ -1,7 +1,7 @@
 import {
   getCommunityWithMembersHashes,
   updateCommunityMembersHash,
-} from '../../community'
+} from '../../api/community'
 import { extract } from './extract'
 import { transform } from './transform'
 import { load } from './load'

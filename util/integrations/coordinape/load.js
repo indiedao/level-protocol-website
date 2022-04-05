@@ -1,4 +1,4 @@
-import { mergeMembersData } from '../../member'
+import { mergeMembersData } from '../../api/member'
 
 const mergeMethod = (existingData, newData) => {
   const {
