@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: npm install
           shell: bash
-          working-directory: .
+          working-directory: ./
       - name: Test
         run: npm run test
