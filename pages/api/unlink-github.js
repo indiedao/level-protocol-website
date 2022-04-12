@@ -1,6 +1,6 @@
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
-import { findMemberByAddress, updateMemberGithub } from '../../util/fauna'
+import { findMemberByAddress, updateMemberGithub } from '../../util/api/fauna'
 
 const handler = async (req, res, { auth: { address } }) => {
   const member = await findMemberByAddress(address)

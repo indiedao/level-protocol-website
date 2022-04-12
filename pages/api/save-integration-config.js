@@ -4,7 +4,7 @@ import withValidParams from '../../util/api/withValidParams'
 import {
   findCommunityByAddress,
   updateCommunitySnapshotEns,
-} from '../../util/fauna'
+} from '../../util/api/fauna'
 
 const handler = async (req, res, { auth: { address } }) => {
   // Get config:
@@ -13,6 +13,7 @@ const handler = async (req, res, { auth: { address } }) => {
   // Create Community:
   await updateCommunitySnapshotEns({
     id: _id,
+    address,
     snapshotEns: req.body.config.ens,
   })
 

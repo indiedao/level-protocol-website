@@ -151,7 +151,7 @@ export const Web3Provider = ({ children }) => {
 
       setIsLoggedIn(true)
     },
-    [contracts, web3Modal, bearerToken],
+    [bearerToken, contracts, web3Modal],
   )
 
   const disconnect = useCallback(async () => {

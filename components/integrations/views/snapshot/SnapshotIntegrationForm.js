@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import useCommunity from '../../hooks/useCommunity'
-import useIntegrationConfig from '../../hooks/useIntegrationConfig'
-import Button from '../../ui/Button'
+import useCommunity from '../../../hooks/useCommunity'
+import useIntegrationConfig from '../../../hooks/useIntegrationConfig'
+import Button from '../../../ui/Button'
 import SnapshotTrigger from './SnapshotTrigger'
 
 const SnapshotIntegrationForm = () => {
