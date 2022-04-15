@@ -71,8 +71,8 @@ const theme = {
   },
 
   cursors: {
-    default: `${defaultPointerUrl}, default`,
-    select: `${selectPointerUrl}, pointer`,
+    default: `${defaultPointerUrl} 6 0, default`,
+    select: `${selectPointerUrl} 16 7,pointer`,
     busy: `${busyPointerUrl}, wait`,
   },
 }
