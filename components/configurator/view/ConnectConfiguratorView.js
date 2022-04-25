@@ -27,8 +27,7 @@ const ConnectConfiguratorView = () => {
   let content
   if (loading) {
     content = <ConfiguratorLoading />
-  }
-  else if (isLastStep && networkError) {
+  } else if (isLastStep && networkError) {
     // Wrong network:
     content = (
       <ConfiguratorPrompt
