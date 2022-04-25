@@ -1,10 +1,20 @@
 import React from 'react'
+import styled from 'styled-components'
 import StoryGrid from './StoryGrid'
 import LoadingUI from '../components/ui/Loading'
 
+const LoadingExample = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+  background-color: #302F2C;
+`;
+
 const Template = () => (
   <StoryGrid columns={2}>
-    <LoadingUI />
+    <LoadingExample>
+      <LoadingUI />
+    </LoadingExample>
   </StoryGrid>
 )
 
