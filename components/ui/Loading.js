@@ -1,51 +1,45 @@
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+
+const size = 16
+const sizePx = `${size}px`
+const beforeAfterOffset = size * 2
+const defaultBackgroundColor = '#8f8d76'
+
+const flashKeyframes = percentages => keyframes`
+  ${percentages} {
+    background-color: #fffcd8;
+  }
+`
+
+const flash = percentages => css`
+  animation: ${flashKeyframes(percentages)} 1s steps(1, end) infinite normal;
+`
 
 const Loading = styled.div`
   position: relative;
-  width: 16px;
-  height: 16px;
-  background-color: #8f8d76;
-  margin: 0 16px;
-  animation: flashTwo 1s steps(1, end) infinite normal;
+  width: ${sizePx};
+  height: ${sizePx};
+  background-color: ${defaultBackgroundColor};
+  margin: 0 ${sizePx};
+  ${flash('50%, 100%')};
 
   &::before,
   &::after {
     position: absolute;
     content: '';
-    width: 16px;
-    height: 16px;
-    background-color: #8f8d76;
+    width: ${sizePx};
+    height: ${sizePx};
+    background-color: ${defaultBackgroundColor};
   }
 
   &::before {
-    left: -32px;
-    animation: flashOne 1s steps(1, end) infinite normal;
+    left: ${-beforeAfterOffset}px;
+    ${flash('25%, 100%')};
   }
 
   &::after {
-    left: 32px;
-    animation: flashThree 1s steps(1, end) infinite normal;
-  }
-
-  @keyframes flashOne {
-    25%,
-    100% {
-      background-color: #fffcd8;
-    }
-  }
-
-  @keyframes flashTwo {
-    50%,
-    100% {
-      background-color: #fffcd8;
-    }
-  }
-
-  @keyframes flashThree {
-    75%,
-    100% {
-      background-color: #fffcd8;
-    }
+    left: ${beforeAfterOffset}px;
+    ${flash('75%, 100%')};
   }
 `
 
