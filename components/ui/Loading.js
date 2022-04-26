@@ -1,44 +1,45 @@
 import styled, { css, keyframes } from 'styled-components'
 
-const size = 16
-const sizePx = `${size}px`
+const size = 1.6
+const sizeRem = `${size}rem`
 const beforeAfterOffset = size * 2
 const defaultBackgroundColor = '#8f8d76'
 
-const flashKeyframes = percentages => keyframes`
+const flashKeyframes = (props, percentages) => keyframes`
   ${percentages} {
-    background-color: #fffcd8;
+    background-color: ${props.theme.colors.vibrantPixel};
   }
 `
 
 const flash = percentages => css`
-  animation: ${flashKeyframes(percentages)} 1s steps(1, end) infinite normal;
+  animation: ${props => flashKeyframes(props, percentages)} 1s steps(1, end)
+    infinite normal;
 `
 
 const Loading = styled.div`
   position: relative;
-  width: ${sizePx};
-  height: ${sizePx};
+  width: ${sizeRem};
+  height: ${sizeRem};
   background-color: ${defaultBackgroundColor};
-  margin: 0 ${sizePx};
+  margin: 0 ${sizeRem};
   ${flash('50%, 100%')};
 
   &::before,
   &::after {
     position: absolute;
     content: '';
-    width: ${sizePx};
-    height: ${sizePx};
+    width: ${sizeRem};
+    height: ${sizeRem};
     background-color: ${defaultBackgroundColor};
   }
 
   &::before {
-    left: ${-beforeAfterOffset}px;
+    left: ${-beforeAfterOffset}rem;
     ${flash('25%, 100%')};
   }
 
   &::after {
-    left: ${beforeAfterOffset}px;
+    left: ${beforeAfterOffset}rem;
     ${flash('75%, 100%')};
   }
 `
