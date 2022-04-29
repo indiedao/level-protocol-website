@@ -12,6 +12,7 @@
     "test:hardhat": "NODE_ENV=test npx hardhat test",
     "dev": "next dev -p 8080",
     "build": "next build",
+    "build:vercel": "npm run fgu:vercel && npm run build",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -19,7 +20,8 @@
     "lint": "eslint './**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "compile": "npx hardhat compile",
-    "fgu": "fgu"
+    "fgu": "fgu",
+    "fgu:vercel": "fgu --config .fauna.vercel.json"
   },
   "dependencies": {
     "@alch/alchemy-web3": "^1.2.3",
