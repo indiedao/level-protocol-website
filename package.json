@@ -18,7 +18,8 @@
     "publish": "chromatic",
     "lint": "eslint './**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
-    "compile": "npx hardhat compile"
+    "compile": "npx hardhat compile",
+    "fgu": "fgu"
   },
   "dependencies": {
     "@alch/alchemy-web3": "^1.2.3",
@@ -91,6 +92,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-storybook": "^0.5.3",
     "ethereum-waffle": "^3.4.0",
+    "fauna-gql-upload": "^2.4.3",
     "faunadb": "^4.5.2",
     "hardhat": "^2.6.1",
     "hardhat-abi-exporter": "^2.6.1",
