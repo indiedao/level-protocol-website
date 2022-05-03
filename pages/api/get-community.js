@@ -1,6 +1,6 @@
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
-import { findCommunityByAddress } from '../../util/fauna'
+import { findCommunityByAddress } from '../../util/api/fauna'
 
 const handler = async (req, res, { auth: { address } }) => {
   const community = await findCommunityByAddress(address)

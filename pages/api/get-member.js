@@ -1,6 +1,6 @@
 import withMethods from '../../util/api/withMethods'
 import withValidParams from '../../util/api/withValidParams'
-import { findMemberByAddress } from '../../util/fauna'
+import { findMemberByAddress } from '../../util/api/fauna'
 
 const handler = async (req, res) => {
   const member = await findMemberByAddress(req.body.address)

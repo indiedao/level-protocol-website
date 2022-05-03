@@ -3,7 +3,10 @@ import withMethods from '../../../util/api/withMethods'
 import withAuth from '../../../util/api/withAuth'
 import withValidParams from '../../../util/api/withValidParams'
 import { githubClientId } from '../../../util/constants'
-import { findMemberByAddress, updateMemberGithub } from '../../../util/fauna'
+import {
+  findMemberByAddress,
+  updateMemberGithub,
+} from '../../../util/api/fauna'
 
 async function getAccessToken(code) {
   const resp = await fetch('https://github.com/login/oauth/access_token', {
@@ -21,7 +24,7 @@ async function getAccessToken(code) {
   const json = await resp.json()
 
   if (json.error) {
-    console.log(json)
+    console.log(json) // eslint-disable-line no-console
     throw new Error('Problem verifying with Github!')
   }
 

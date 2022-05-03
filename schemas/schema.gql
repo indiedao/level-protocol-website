@@ -53,6 +53,8 @@ input MemberInput {
   github: String
 }
 
+# Shell Commands
+
 # CreateIndex({
 #   name: 'all_members_sorted_by_created_at',
 #   source: Collection('Member'),

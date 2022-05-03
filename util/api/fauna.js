@@ -32,20 +32,25 @@ export const findCommunityByAddress = async address => {
 }
 
 // TODO: validate inputs:
-export const updateCommunityDataHash = async ({ id, membersHash }) => {
+export const updateCommunityDataHash = async ({ address, id, membersHash }) => {
   const resp = await graphQLClient.request(
     UPDATE_COMMUNITY_DATA_HASH_MUTATION,
-    { id, membersHash },
+    { address, id, membersHash },
   )
   return resp.community
 }
 
 // TODO: validate inputs:
-export const updateCommunitySnapshotEns = async ({ id, snapshotEns }) => {
+export const updateCommunitySnapshotEns = async ({
+  address,
+  id,
+  snapshotEns,
+}) => {
   const resp = await graphQLClient.request(
     UPDATE_COMMUNITY_SNAPSHOT_ENS_MUTATION,
     {
       id,
+      address,
       snapshotEns,
     },
   )

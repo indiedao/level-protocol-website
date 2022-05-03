@@ -15,19 +15,24 @@ const useCommunity = () => {
   }
 
   useEffect(() => {
-    const fetchCommunityDetail = async () => {
-      const resp = await fetch('/api/get-community', {
+    const fetchCommunityDetail = async () =>
+      fetch('/api/get-community', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Token ${bearerToken}`,
         },
       })
-      const json = await resp.json()
-      const _community = json.data.community
-      setCommunity(_community)
-      if (_community) fetchMembersHashData(json.data.community.membersHash)
-    }
+        .then(response => response.json())
+        .then(json => {
+          const _community = json.data?.community || null
+          setCommunity(_community)
+          if (_community) fetchMembersHashData(json.data.community.membersHash)
+        })
+        .catch(error => {
+          console.log(error) // eslint-disable-line no-console
+          setCommunity(undefined)
+        })
 
     if (bearerToken) fetchCommunityDetail()
   }, [bearerToken])
