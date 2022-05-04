@@ -10,6 +10,7 @@ const AccessListMemberGrid = ({ members, size }) => (
         src={member.nftSrc || '/images/illustrations/nft/nft.png'}
         address={member.ens || member.address}
         size={size}
+        color={`hsl(${member.colorHue}deg, 100%, ${member.colorLightness}%)`}
       />
     ))}
   </Grid>
@@ -59,7 +60,7 @@ const Grid = styled.div`
   display: grid;
   justify-items: center;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 2rem 0;
   grid-column-gap: ${({ size }) => GAP_BY_SIZE[size]};
   grid-row-gap: ${({ size }) => GAP_BY_SIZE[size]};
 

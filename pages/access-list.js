@@ -25,7 +25,9 @@ const AccessListPage = ({ first480 }) => {
     <Public variant="light">
       <PublicMenuBar />
       <Container>
-        <Marquee content={accessListText} duration={1000} />
+        {/*
+          <Marquee content={accessListText} duration={1000} />
+        */}
         <HeroContainer>
           <Body1>
             A limited number of access passes are available for early
