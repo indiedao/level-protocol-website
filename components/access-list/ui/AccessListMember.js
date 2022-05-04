@@ -38,8 +38,8 @@ const SIZES = {
 }
 
 const Address = styled(Body1)`
-  text-shadow: 0px 2px 4px #000000;
-  padding-top: 12px;
+  text-shadow: 0rem 0.2rem 0.4rem #000000;
+  padding-top: 1.2rem;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
