@@ -1,12 +1,14 @@
 import styled from 'styled-components'
+import Link from 'next/link'
 import { getAccessListFirst480, getAccessListMostRecent } from '../util/fauna'
-
 import Public from '../components/layouts/Public'
 import PublicMenuBar from '../components/ui/PublicMenuBar'
 import Marquee from '../components/ui/Marquee'
 import AccessListMemberGrid from '../components/access-list/ui/AccessListMemberGrid'
+import { Body1, H1 } from '../components/ui/AltTypography'
+import Button from '../components/ui/Button'
 
-const AccessListPage = ({ first480, mostRecent }) => {
+const AccessListPage = ({ first480 }) => {
   // Create string of repeating access list text:
   let accessListText = ''
   for (let i = 0; i < 100; i += 1) {
@@ -24,6 +26,25 @@ const AccessListPage = ({ first480, mostRecent }) => {
       <PublicMenuBar />
       <Container>
         <Marquee content={accessListText} duration={1000} />
+        <HeroContainer>
+          <Body1>
+            A limited number of access passes are available for early
+            supporters. To access the alpha launch, be sure to follow{' '}
+            <a
+              href="https://twitter.com/lvlprotocol"
+              target="_blank"
+              rel="noreferrer"
+            >
+              @lvlprotocol
+            </a>{' '}
+            on Twitter and create your access pass profile using the lvldex.
+          </Body1>
+          <Link href="/join" passHref>
+            <Button>sign up with the lvldex</Button>
+          </Link>
+          <H1>{first480.length}/480 Early Access Passes Claimed</H1>
+          <H1>XXX on Waitlist</H1>
+        </HeroContainer>
         <AccessListsContianer>
           <AccessListMemberGrid members={first30} size="large" />
           <AccessListMemberGrid members={second100} size="medium" />
@@ -40,6 +61,12 @@ const Container = styled.div`
   height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
+`
+
+const HeroContainer = styled.div`
+  padding: 20px 40px;
+  max-width: 60rem;
+  margin: 0 auto;
 `
 
 const AccessListsContianer = styled.div`

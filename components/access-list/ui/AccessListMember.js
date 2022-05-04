@@ -3,10 +3,8 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Body1 } from '../../ui/AltTypography'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
-import useEns from '../../hooks/useEns'
 
 const AccessListMember = ({ size, address, src }) => {
-  const { ens } = useEns(address)
   const { truncatedAddress } = useTruncatedAddress(address)
 
   return (
@@ -15,7 +13,7 @@ const AccessListMember = ({ size, address, src }) => {
         <Avatar src={src} size={size} />
         {size !== 'small' && (
           <Address color="vibrantPixel" size={size}>
-            {ens || truncatedAddress}
+            {truncatedAddress}
           </Address>
         )}
       </Wrapper>

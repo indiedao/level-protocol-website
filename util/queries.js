@@ -137,6 +137,8 @@ export const GET_MEMBERS_BY_CREATED_AT_ASC = gql`
         colorHue
         colorLightness
         github
+        nftSrc
+        ens
       }
       after
       before

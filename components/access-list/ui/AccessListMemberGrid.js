@@ -7,8 +7,8 @@ const AccessListMemberGrid = ({ members, size }) => (
     {members.map(member => (
       <AccessListMember
         key={member._id}
-        src="/images/illustrations/nft/nft.png"
-        address={member.address}
+        src={member.nftSrc || '/images/illustrations/nft/nft.png'}
+        address={member.ens || member.address}
         size={size}
       />
     ))}
@@ -20,6 +20,7 @@ AccessListMemberGrid.propTypes = {
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       address: PropTypes.string.isRequired,
+      nftSrc: PropTypes.string,
     }),
   ).isRequired,
   size: PropTypes.oneOf(['large', 'medium', 'small']).isRequired,
