@@ -14,7 +14,7 @@ const handler = async (req, res) => {
     const nftSrc = await fetchNFTSrc({ address: nftAddress, id: nftId })
 
     // Lookup ENS domain:
-    const ens = await provider.lookupAddress(address)
+    const ens = (await provider.lookupAddress(address)) || ''
 
     // Update cached fields:
     await updateMemberCache({ id: _id, nftSrc, ens })
