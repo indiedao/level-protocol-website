@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
@@ -31,15 +31,13 @@ const STEP_STATUS_MAP = {
 }
 
 const SaveConfiguratorView = () => {
-  const recaptchaRef = useRef()
   const [step, setStep] = useState(STEPS.HUMAN_VERIFY)
   const [donationAmount, setDonationAmount] = useState(
     ethers.utils.parseEther('0.01'),
   )
   const [errorMessage, setErrorMessage] = useState('')
   const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
-  const { address, bearerToken } = useWeb3()
-  const [recaptchaValidated, setRecaptchaValidated] = useState(false)
+  const { address } = useWeb3()
   const [isHuman, setIsHuman] = useState(false)
 
   // Set status indicator message:
@@ -49,53 +47,20 @@ const SaveConfiguratorView = () => {
     })
   }, [setStatusIndicator, step])
 
-  useEffect(() => {
-    if (!recaptchaValidated && recaptchaRef.current) {
-      console.log('ReCAPTCHA initializing') // eslint-disable-line no-console
-      recaptchaRef.current.execute()
-    }
-  }, [recaptchaValidated, recaptchaRef])
+  const handleReCAPTCHASuccess = () => {
+    setIsHuman(true)
+    setStep(STEPS.READY)
+  }
 
-  const onReCAPTCHAChange = async code => {
-    if (!code) {
-      throw new Error('ReCAPTCHA Failed!')
-    }
-
-    try {
-      const resp = await fetch('/api/verify-human', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${bearerToken}`,
-        },
-        body: JSON.stringify({
-          code,
-        }),
-      })
-
-      const data = await resp.json()
-      setRecaptchaValidated(data.success)
-      setIsHuman(data.success)
-
-      if (data.success) {
-        setStep(STEPS.READY)
-      } else {
-        setErrorMessage('error: are you human?')
-        playSound('button_cancel.wav')
-        setStep(STEPS.ERROR)
-      }
-    } catch (error) {
-      console.error('ReCAPTCHA signature failed', error) // eslint-disable-line no-console
-    } finally {
-      recaptchaRef.current?.reset()
-    }
+  const handleSubmitError = (error = 'are you human?') => {
+    setErrorMessage(`error: ${error}`)
+    playSound('button_cancel.wav')
+    setStep(STEPS.ERROR)
   }
 
   const handleSave = async () => {
     if (!isHuman) {
-      setErrorMessage('error: are you human?')
-      playSound('button_cancel.wav')
-      setStep(STEPS.ERROR)
+      handleSubmitError()
       return
     }
 
@@ -109,13 +74,11 @@ const SaveConfiguratorView = () => {
         setStep(STEPS.CONFIRMATION)
       }
     } catch (error) {
-      setErrorMessage(
+      handleSubmitError(
         error.message
           ? error.message.toLowerCase()
           : 'error: access list is probably full :(',
       )
-      playSound('button_cancel.wav')
-      setStep(STEPS.ERROR)
     }
   }
 
@@ -178,8 +141,8 @@ const SaveConfiguratorView = () => {
         {step === STEPS.HUMAN_VERIFY ? (
           <ConfiguratorWrapper>
             <ConfiguratorRecaptcha
-              recaptchaRef={recaptchaRef}
-              onReCAPTCHAChange={onReCAPTCHAChange}
+              onReCAPTCHASuccess={handleReCAPTCHASuccess}
+              onReCAPTCHAFail={handleSubmitError}
             />
           </ConfiguratorWrapper>
         ) : undefined}
