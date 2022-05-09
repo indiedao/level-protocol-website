@@ -38,7 +38,7 @@ const TokenView = ({
       contractAddress: nftAddress,
       tokenId: nftId,
     })
-    setNftSrc(nft.media[0].uri.raw)
+    setNftSrc(nft.media[0].raw)
   }, [nftId, nftAddress])
 
   useEffect(() => {
