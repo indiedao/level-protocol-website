@@ -3,16 +3,7 @@ import PropTypes from 'prop-types'
 
 import { H2, H4 } from '../../ui/AltTypography'
 import TypeItOut from '../../ui/TypeItOut'
-
-const Wrapper = styled.div`
-  align-self: center;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  grid-template-columns: 1fr;
-  grid-gap: 2.4rem;
-  text-align: center;
-`
+import ConfiguratorWrapper from './ConfiguratorWrapper'
 
 const ButtonIndicators = styled.div`
   display: grid;
@@ -52,7 +43,7 @@ const ButtonIndicator = styled.div`
 `
 
 const ConfiguratorPrompt = ({ message, actionA, actionB }) => (
-  <Wrapper>
+  <ConfiguratorWrapper>
     <H2 color="vibrantPixel">
       <TypeItOut message={message} />
     </H2>
@@ -76,7 +67,7 @@ const ConfiguratorPrompt = ({ message, actionA, actionB }) => (
         ) : undefined}
       </ButtonIndicators>
     ) : undefined}
-  </Wrapper>
+  </ConfiguratorWrapper>
 )
 
 ConfiguratorPrompt.propTypes = {

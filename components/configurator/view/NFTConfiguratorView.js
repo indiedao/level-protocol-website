@@ -43,16 +43,8 @@ const NFTConfiguratorView = () => {
     const resp = await web3.alchemy.getNfts({
       owner: address,
     })
-    const _nfts = []
-
-    for (let i = 0; i < resp.ownedNfts.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      const nft = await web3.alchemy.getNftMetadata({
-        contractAddress: resp.ownedNfts[i].contract.address,
-        tokenId: parseInt(resp.ownedNfts[i].id.tokenId, 16),
-      })
-      _nfts.push(nft)
-    }
+    const { ownedNfts } = resp
+    const _nfts = ownedNfts
 
     // Remove junk:
     const realNfts = _nfts.filter(nft => {
@@ -63,14 +55,13 @@ const NFTConfiguratorView = () => {
         nft.id.tokenId &&
         nft.media &&
         nft.media[0] &&
-        nft.media[0].uri &&
-        nft.media[0].uri.raw
+        nft.media[0].raw
       )
     })
 
     const formattedNfts = realNfts.map(nft => ({
       key: `${nft.contract.address}-${nft.id.tokenId}`,
-      src: nft?.media?.[0].uri.raw,
+      src: nft?.media?.[0].raw,
       address: nft.contract.address,
       id: nft.id.tokenId,
     }))
