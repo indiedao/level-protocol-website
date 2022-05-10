@@ -129,6 +129,7 @@ const SaveConfiguratorView = () => {
       break
     case STEPS.SAVE:
       prompt = <ConfiguratorPrompt message="saving..." />
+      break
     case STEPS.PREMINT:
       prompt = (
         <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
@@ -154,6 +155,8 @@ const SaveConfiguratorView = () => {
         />
       )
       break
+    default:
+    // leave prompt undefined
   }
 
   return (
