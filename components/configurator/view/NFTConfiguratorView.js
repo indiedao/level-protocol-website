@@ -6,7 +6,7 @@ import { HTTPRPC } from '../../../util/constants'
 import { Body1 } from '../../ui/Typography'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
 import TokenView from '../../token/view/TokenView'
-import ConfiguratorContainer from '../ui/ConfiguratorContainer'
+import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 
@@ -114,7 +114,7 @@ const NFTConfiguratorView = () => {
   }
 
   return (
-    <ConfiguratorContainer>
+    <Device>
       <ConfiguratorScreen withNav>
         <NFTArrowTokenViewContainer>
           <TokenView
@@ -130,7 +130,7 @@ const NFTConfiguratorView = () => {
         a={nextStep}
         b={previousStep}
       />
-    </ConfiguratorContainer>
+    </Device>
   )
 }
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const ConfiguratorContainer = styled.div`
+const Device = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -26,4 +26,4 @@ const ConfiguratorContainer = styled.div`
   }
 `
 
-export default ConfiguratorContainer
+export default Device

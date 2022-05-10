@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import useWeb3 from '../../hooks/useWeb3'
 import { Network } from '../../../util/constants'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
-import ConfiguratorContainer from '../ui/ConfiguratorContainer'
+import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
@@ -90,13 +90,13 @@ const ConnectConfiguratorView = () => {
   }
 
   return (
-    <ConfiguratorContainer>
+    <Device>
       <ConfiguratorScreen>
         <ConfiguratorNavView />
         {content}
       </ConfiguratorScreen>
       <ConfiguratorControlsView right={handleNext} a={handleNext} />
-    </ConfiguratorContainer>
+    </Device>
   )
 }
 

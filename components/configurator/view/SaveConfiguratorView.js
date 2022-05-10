@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
-import ConfiguratorContainer from '../ui/ConfiguratorContainer'
+import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
 import { playSound } from '../../../util/audio'
@@ -117,7 +117,7 @@ const SaveConfiguratorView = () => {
   }
 
   return (
-    <ConfiguratorContainer>
+    <Device>
       <ConfiguratorScreen>
         {step === STEPS.READY ? (
           <ConfiguratorPrompt
@@ -155,7 +155,7 @@ const SaveConfiguratorView = () => {
         ) : undefined}
       </ConfiguratorScreen>
       <ConfiguratorControlsView {...controls} />
-    </ConfiguratorContainer>
+    </Device>
   )
 }
 
