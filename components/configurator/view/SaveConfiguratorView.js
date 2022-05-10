@@ -3,7 +3,6 @@ import { ethers } from 'ethers'
 
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
 import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
@@ -117,7 +116,7 @@ const SaveConfiguratorView = () => {
   }
 
   return (
-    <Device>
+    <Device {...controls}>
       <ConfiguratorScreen>
         {step === STEPS.READY ? (
           <ConfiguratorPrompt
@@ -154,7 +153,6 @@ const SaveConfiguratorView = () => {
           />
         ) : undefined}
       </ConfiguratorScreen>
-      <ConfiguratorControlsView {...controls} />
     </Device>
   )
 }

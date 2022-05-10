@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import useWeb3 from '../../hooks/useWeb3'
 import { Network } from '../../../util/constants'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
 import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorNavView from './ConfiguratorNavView'
@@ -90,12 +89,11 @@ const ConnectConfiguratorView = () => {
   }
 
   return (
-    <Device>
+    <Device right={handleNext} a={handleNext}>
       <ConfiguratorScreen>
         <ConfiguratorNavView />
         {content}
       </ConfiguratorScreen>
-      <ConfiguratorControlsView right={handleNext} a={handleNext} />
     </Device>
   )
 }

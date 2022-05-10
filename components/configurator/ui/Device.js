@@ -1,6 +1,9 @@
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const Device = styled.div`
+import ConfiguratorControls from './ConfiguratorControls'
+
+const DeviceBox = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -8,22 +11,33 @@ const Device = styled.div`
   max-height: 900px;
   display: grid;
   justify-items: center;
-  grid-template-rows: 1fr 26rem;
-  grid-gap: 2.4rem;
+  grid-template-rows: 1fr min-content;
+  grid-gap: 0.8rem;
   border-radius: 40px;
   background: ${props => props.theme.colors.vibrantCream};
   padding: 3.2rem 4rem 3.2rem 3.2rem;
-  box-shadow: inset 0px 4px 4px 1px #d6d1be,
-    inset 0px -24px 10px 8px rgba(0, 0, 0, 0.25),
-    inset 0px -20px 32px 24px rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 0.4rem 0.4rem 0.1rem #d6d1be,
+    inset 0 -2.4rem 1rem 0.8rem rgba(0, 0, 0, 0.25),
+    inset 0 -2rem 3.2rem 2.4rem rgba(255, 255, 255, 0.25);
 
-  @media (max-width: 375px) {
-    grid-gap: 0.8rem;
-  }
-
-  @media (max-width: 420px) {
+  @media (min-width: 376px) {
     grid-gap: 1.2rem;
   }
+
+  @media (max-width: 421px) {
+    grid-gap: 2.4rem;
+  }
 `
+
+const Device = ({ children, ...controls }) => (
+  <DeviceBox>
+    {children}
+    <ConfiguratorControls {...controls} />
+  </DeviceBox>
+)
+
+Device.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 
 export default Device

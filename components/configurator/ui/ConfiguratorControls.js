@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import LvlSvg from '../assets/lvl.svg'
 import DPad from './DPad'
@@ -89,5 +90,23 @@ const ConfiguratorControls = ({ up, down, left, right, a, b }) => (
     </Wrapper>
   </ExternalWrap>
 )
+
+ConfiguratorControls.propTypes = {
+  up: PropTypes.func,
+  down: PropTypes.func,
+  left: PropTypes.func,
+  right: PropTypes.func,
+  a: PropTypes.func,
+  b: PropTypes.func,
+}
+
+ConfiguratorControls.defaultProps = {
+  up: () => null,
+  down: () => null,
+  left: () => null,
+  right: () => null,
+  a: () => null,
+  b: () => null,
+}
 
 export default ConfiguratorControls

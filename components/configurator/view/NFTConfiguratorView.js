@@ -4,7 +4,6 @@ import useWeb3 from '../../hooks/useWeb3'
 import useConfigurator from '../../hooks/useConfigurator'
 import { HTTPRPC } from '../../../util/constants'
 import { Body1 } from '../../ui/Typography'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
@@ -114,7 +113,7 @@ const NFTConfiguratorView = () => {
   }
 
   return (
-    <Device>
+    <Device right={handleRight} left={handleLeft} a={nextStep} b={previousStep}>
       <ConfiguratorScreen withNav>
         <NFTArrowTokenViewContainer>
           <TokenView
@@ -124,12 +123,6 @@ const NFTConfiguratorView = () => {
           />
         </NFTArrowTokenViewContainer>
       </ConfiguratorScreen>
-      <ConfiguratorControlsView
-        right={handleRight}
-        left={handleLeft}
-        a={nextStep}
-        b={previousStep}
-      />
     </Device>
   )
 }

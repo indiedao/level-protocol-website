@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import useConfigurator from '../../hooks/useConfigurator'
 import TokenView from '../../token/view/TokenView'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
 import Device from '../ui/Device'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import useWeb3 from '../../hooks/useWeb3'
@@ -66,7 +65,14 @@ const ColorConfiguratorView = () => {
   }
 
   return (
-    <Device>
+    <Device
+      up={handleUp}
+      down={handleDown}
+      right={handleRight}
+      left={handleLeft}
+      a={nextStep}
+      b={previousStep}
+    >
       <ConfiguratorScreen withNav>
         <div>
           <TokenView
@@ -78,14 +84,6 @@ const ColorConfiguratorView = () => {
           />
         </div>
       </ConfiguratorScreen>
-      <ConfiguratorControlsView
-        up={handleUp}
-        down={handleDown}
-        right={handleRight}
-        left={handleLeft}
-        a={nextStep}
-        b={previousStep}
-      />
     </Device>
   )
 }
