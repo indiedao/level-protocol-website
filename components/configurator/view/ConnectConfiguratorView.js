@@ -2,16 +2,14 @@ import { useState, useEffect } from 'react'
 import useWeb3 from '../../hooks/useWeb3'
 import { Network } from '../../../util/constants'
 import Device from '../ui/Device'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
-import ConfiguratorNavView from './ConfiguratorNavView'
-import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+import Screen from '../ui/Screen'
+import Prompt from '../ui/Prompt'
 import useConfigurator from '../../hooks/useConfigurator'
 import ConfiguratorLoading from '../ui/ConfiguratorLoading'
 
 const MESSAGE_STEPS = [
   'The time for us to rebuild is now...',
-  // eslint-disable-next-line quotes
-  "it's dangerous to go alone...",
+  'it’s dangerous to go alone...',
   'take this soulbound NFT and lvl up...',
 ]
 
@@ -28,20 +26,13 @@ const ConnectConfiguratorView = () => {
     content = <ConfiguratorLoading />
   } else if (isLastStep && networkError) {
     // Wrong network:
-    content = (
-      <ConfiguratorPrompt
-        message={networkError.toLowerCase()}
-        actionA="switch"
-      />
-    )
+    content = <Prompt message={networkError.toLowerCase()} actionA="switch" />
   } else if (isLastStep) {
     // Connect:
-    content = <ConfiguratorPrompt message="do you accept?" actionA="connect" />
+    content = <Prompt message="do you accept?" actionA="connect" />
   } else {
     // Message:
-    content = (
-      <ConfiguratorPrompt message={MESSAGE_STEPS[step]} actionA="next" />
-    )
+    content = <Prompt message={MESSAGE_STEPS[step]} actionA="next" />
   }
 
   // Setup default status indicator message:
@@ -90,10 +81,7 @@ const ConnectConfiguratorView = () => {
 
   return (
     <Device right={handleNext} a={handleNext}>
-      <ConfiguratorScreen>
-        <ConfiguratorNavView />
-        {content}
-      </ConfiguratorScreen>
+      <Screen>{content}</Screen>
     </Device>
   )
 }

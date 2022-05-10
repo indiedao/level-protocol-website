@@ -5,6 +5,30 @@ import { H2, H4 } from '../../ui/AltTypography'
 import TypeItOut from '../../ui/TypeItOut'
 import ConfiguratorWrapper from './ConfiguratorWrapper'
 
+const Message = styled(H2)`
+  font-size: min(10vw, 3.2rem);
+
+  @media (min-width: 320px) {
+    font-size: min(8vw, 3.2rem);
+  }
+
+  @media (min-width: 420px) {
+    font-size: min(5.333vw, 3.2rem);
+  }
+`
+
+const Action = styled(H4)`
+  font-size: min(5vw, 1.8rem);
+
+  @media (min-width: 320px) {
+    font-size: min(4.5vw, 1.8rem);
+  }
+
+  @media (min-width: 420px) {
+    font-size: min(4vw, 1.8rem);
+  }
+`
+
 const ButtonIndicators = styled.div`
   display: grid;
   justify-items: end;
@@ -28,8 +52,8 @@ const glow = keyframes`
 const ButtonIndicator = styled.div`
   background-color: ${({ theme, variant }) =>
     variant === 'A' ? theme.colors.mutedGreen : theme.colors.mutedRed};
-  width: 5rem;
-  height: 5rem;
+  width: min(16vw, 5rem);
+  height: min(16vw, 5rem);
   border-radius: 10rem;
   display: flex;
   align-items: center;
@@ -38,20 +62,21 @@ const ButtonIndicator = styled.div`
   animation: ${glow} 1.5s infinite forwards;
 
   > * {
-    transform: translate(0.2rem, 0.1rem);
+    font-size: min(10vw, 3.2rem);
+    transform: translate(min(0.333vw, 0.2rem), min(0.166vw, 0.1rem));
   }
 `
 
-const ConfiguratorPrompt = ({ message, actionA, actionB }) => (
+const Prompt = ({ message, actionA, actionB }) => (
   <ConfiguratorWrapper>
-    <H2 color="vibrantPixel">
+    <Message color="vibrantPixel">
       <TypeItOut message={message} />
-    </H2>
+    </Message>
     {actionA || actionB ? (
       <ButtonIndicators>
         {actionA ? (
           <>
-            <H4 color="vibrantPixel">{actionA}</H4>
+            <Action color="vibrantPixel">{actionA}</Action>
             <ButtonIndicator variant="A">
               <H2>A</H2>
             </ButtonIndicator>
@@ -59,7 +84,7 @@ const ConfiguratorPrompt = ({ message, actionA, actionB }) => (
         ) : undefined}
         {actionB ? (
           <>
-            <H4 color="vibrantPixel">{actionB}</H4>
+            <Action color="vibrantPixel">{actionB}</Action>
             <ButtonIndicator variant="B">
               <H2>B</H2>
             </ButtonIndicator>
@@ -70,15 +95,15 @@ const ConfiguratorPrompt = ({ message, actionA, actionB }) => (
   </ConfiguratorWrapper>
 )
 
-ConfiguratorPrompt.propTypes = {
+Prompt.propTypes = {
   message: PropTypes.string.isRequired,
   actionA: PropTypes.string,
   actionB: PropTypes.string,
 }
 
-ConfiguratorPrompt.defaultProps = {
+Prompt.defaultProps = {
   actionA: undefined,
   actionB: undefined,
 }
 
-export default ConfiguratorPrompt
+export default Prompt

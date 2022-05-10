@@ -3,10 +3,11 @@ import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 import useWeb3 from '../../hooks/useWeb3'
 import useConfigurator from '../../hooks/useConfigurator'
 import { HTTPRPC } from '../../../util/constants'
+import ConfiguratorNavView from './ConfiguratorNavView'
 import { Body1 } from '../../ui/Typography'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
+import Screen from '../ui/Screen'
 import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
@@ -114,7 +115,8 @@ const NFTConfiguratorView = () => {
 
   return (
     <Device right={handleRight} left={handleLeft} a={nextStep} b={previousStep}>
-      <ConfiguratorScreen withNav>
+      <Screen>
+        <ConfiguratorNavView />
         <NFTArrowTokenViewContainer>
           <TokenView
             address={address}
@@ -122,7 +124,7 @@ const NFTConfiguratorView = () => {
             nftAddress={nfts[selectedNftIndex].address}
           />
         </NFTArrowTokenViewContainer>
-      </ConfiguratorScreen>
+      </Screen>
     </Device>
   )
 }

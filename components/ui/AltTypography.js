@@ -28,7 +28,7 @@ H1.defaultProps = { color: 'trueBlack' }
 export const h2Styles = css`
   ${sharedHeaderStyles}
   font-size: 3.2rem;
-  line-height: 4rem;
+  line-height: calc(40 / 32);
 `
 
 export const H2 = styled.h2`
@@ -54,7 +54,7 @@ H3.defaultProps = { color: 'trueBlack' }
 export const h4Styles = css`
   ${sharedHeaderStyles}
   font-size: 1.8rem;
-  line-height: 2.4rem;
+  line-height: calc(24 / 18);
 `
 
 export const H4 = styled.h4`

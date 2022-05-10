@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import useConfigurator from '../../hooks/useConfigurator'
+import ConfiguratorNavView from './ConfiguratorNavView'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
+import Screen from '../ui/Screen'
 import useWeb3 from '../../hooks/useWeb3'
 import hslToHex from '../../../util/hslToHex'
 
@@ -73,7 +74,8 @@ const ColorConfiguratorView = () => {
       a={nextStep}
       b={previousStep}
     >
-      <ConfiguratorScreen withNav>
+      <Screen>
+        <ConfiguratorNavView />
         <div>
           <TokenView
             address={address}
@@ -83,7 +85,7 @@ const ColorConfiguratorView = () => {
             colorLightness={colorLightness}
           />
         </div>
-      </ConfiguratorScreen>
+      </Screen>
     </Device>
   )
 }

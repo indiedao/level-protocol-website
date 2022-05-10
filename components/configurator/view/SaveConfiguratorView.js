@@ -4,8 +4,8 @@ import { ethers } from 'ethers'
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
 import Device from '../ui/Device'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
-import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+import Screen from '../ui/Screen'
+import Prompt from '../ui/Prompt'
 import { playSound } from '../../../util/audio'
 
 const STEPS = {
@@ -117,42 +117,34 @@ const SaveConfiguratorView = () => {
 
   return (
     <Device {...controls}>
-      <ConfiguratorScreen>
+      <Screen>
         {step === STEPS.READY ? (
-          <ConfiguratorPrompt
-            message="ready?"
-            actionA="sign"
-            actionB="go back"
-          />
+          <Prompt message="ready?" actionA="sign" actionB="go back" />
         ) : undefined}
 
-        {step === STEPS.SAVE ? (
-          <ConfiguratorPrompt message="saving..." />
-        ) : undefined}
+        {step === STEPS.SAVE ? <Prompt message="saving..." /> : undefined}
 
         {step === STEPS.PREMINT ? (
-          <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
+          <Prompt message="Minting coming soon..." actionA="mint" />
         ) : undefined}
 
-        {step === STEPS.MINT ? (
-          <ConfiguratorPrompt message="minting..." />
-        ) : undefined}
+        {step === STEPS.MINT ? <Prompt message="minting..." /> : undefined}
 
         {step === STEPS.CONFIRMATION ? (
-          <ConfiguratorPrompt
+          <Prompt
             message="well done, your journey will begin soon..."
             actionA="bring a friend"
           />
         ) : undefined}
 
         {step === STEPS.ERROR ? (
-          <ConfiguratorPrompt
+          <Prompt
             message={errorMessage}
             actionA="try again?"
             actionB="go back"
           />
         ) : undefined}
-      </ConfiguratorScreen>
+      </Screen>
     </Device>
   )
 }
