@@ -26,11 +26,11 @@ const LCD = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 1fr;
-  grid-gap: 2.4rem;
-  background-color: ${props => props.theme.colors.vibrantScreen};
+  grid-gap: clamp(0.8rem, 5vw, 2.4rem);
   padding: clamp(0.4rem, 4vw, 2rem);
+  overflow: hidden;
+  background-color: ${props => props.theme.colors.vibrantScreen};
   box-shadow: inset 0 0 1.6rem #000000;
-  height: 100%;
 `
 
 const Screen = ({ children }) => {
