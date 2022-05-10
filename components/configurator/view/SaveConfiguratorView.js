@@ -7,7 +7,10 @@ import ConfiguratorControlsView from './ConfiguratorControlsView'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+import TokenView from '../../token/view/TokenView'
+import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 import { playSound } from '../../../util/audio'
+import ConfiguratorModal from '../ui/ConfiguratorModal'
 
 const STEPS = {
   READY: 'READY',
@@ -33,7 +36,8 @@ const SaveConfiguratorView = () => {
     ethers.utils.parseEther('0.01'),
   )
   const [errorMessage, setErrorMessage] = useState('')
-  const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
+  const { flow, nftAddress, nftId, previousStep, save, setStatusIndicator } =
+    useConfigurator()
   const { address } = useWeb3()
 
   // Set status indicator message:
@@ -116,43 +120,49 @@ const SaveConfiguratorView = () => {
     default:
   }
 
+  let prompt
+  switch (step) {
+    case STEPS.READY:
+      prompt = (
+        <ConfiguratorPrompt message="ready?" actionA="sign" actionB="go back" />
+      )
+      break
+    case STEPS.SAVE:
+      prompt = <ConfiguratorPrompt message="saving..." />
+    case STEPS.PREMINT:
+      prompt = (
+        <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
+      )
+      break
+    case STEPS.MINT:
+      prompt = <ConfiguratorPrompt message="minting..." />
+      break
+    case STEPS.CONFIRMATION:
+      prompt = (
+        <ConfiguratorPrompt
+          message="well done, your journey will begin soon..."
+          actionA="bring a friend"
+        />
+      )
+      break
+    case STEPS.ERROR:
+      prompt = (
+        <ConfiguratorPrompt
+          message={errorMessage}
+          actionA="try again?"
+          actionB="go back"
+        />
+      )
+      break
+  }
+
   return (
     <ConfiguratorContainer>
-      <ConfiguratorScreen>
-        {step === STEPS.READY ? (
-          <ConfiguratorPrompt
-            message="ready?"
-            actionA="sign"
-            actionB="go back"
-          />
-        ) : undefined}
-
-        {step === STEPS.SAVE ? (
-          <ConfiguratorPrompt message="saving..." />
-        ) : undefined}
-
-        {step === STEPS.PREMINT ? (
-          <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
-        ) : undefined}
-
-        {step === STEPS.MINT ? (
-          <ConfiguratorPrompt message="minting..." />
-        ) : undefined}
-
-        {step === STEPS.CONFIRMATION ? (
-          <ConfiguratorPrompt
-            message="well done, your journey will begin soon..."
-            actionA="bring a friend"
-          />
-        ) : undefined}
-
-        {step === STEPS.ERROR ? (
-          <ConfiguratorPrompt
-            message={errorMessage}
-            actionA="try again?"
-            actionB="go back"
-          />
-        ) : undefined}
+      <ConfiguratorScreen withNav>
+        <NFTArrowTokenViewContainer>
+          <TokenView address={address} nftId={nftId} nftAddress={nftAddress} />
+        </NFTArrowTokenViewContainer>
+        <ConfiguratorModal>{prompt}</ConfiguratorModal>
       </ConfiguratorScreen>
       <ConfiguratorControlsView {...controls} />
     </ConfiguratorContainer>
