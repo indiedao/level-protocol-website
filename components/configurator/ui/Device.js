@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import ConfiguratorControls from './ConfiguratorControls'
+import Controls from './Controls'
 
 const DeviceBox = styled.div`
   position: relative;
@@ -12,27 +12,26 @@ const DeviceBox = styled.div`
   display: grid;
   justify-items: center;
   grid-template-rows: 1fr min-content;
-  grid-gap: 0.8rem;
-  border-radius: 40px;
+  grid-gap: min(3vh, 2.4rem);
+  border-radius: min(6.666vw, 4rem);
   background: ${props => props.theme.colors.vibrantCream};
-  padding: 3.2rem 4rem 3.2rem 3.2rem;
-  box-shadow: inset 0 0.4rem 0.4rem 0.1rem #d6d1be,
-    inset 0 -2.4rem 1rem 0.8rem rgba(0, 0, 0, 0.25),
-    inset 0 -2rem 3.2rem 2.4rem rgba(255, 255, 255, 0.25);
+  padding: 1.6rem 2rem 1.6rem 1.6rem;
+  box-shadow: inset 0 min(0.666vw, 0.4rem) min(0.666vw, 0.4rem)
+      min(0.166vw, 0.1rem) #d6d1be,
+    inset 0 max(-4vw, -2.4rem) min(1.666vw, 1rem) min(1.333vw, 0.8rem)
+      rgba(0, 0, 0, 0.25),
+    inset 0 max(-3.333vw, -2rem) min(4.666vw, 3.2rem) min(4vw, 2.4rem)
+      rgba(255, 255, 255, 0.25);
 
-  @media (min-width: 376px) {
-    grid-gap: 1.2rem;
-  }
-
-  @media (max-width: 421px) {
-    grid-gap: 2.4rem;
+  @media (min-width: 320px) {
+    padding: 3.2rem 4rem 3.2rem 3.2rem;
   }
 `
 
 const Device = ({ children, ...controls }) => (
   <DeviceBox>
     {children}
-    <ConfiguratorControls {...controls} />
+    <Controls {...controls} />
   </DeviceBox>
 )
 
