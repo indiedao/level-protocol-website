@@ -3,7 +3,7 @@ import useWeb3 from '../hooks/useWeb3'
 
 const ConfiguratorContext = createContext()
 
-const STEPS = ['NFT', 'COLOR', 'SAVE']
+export const STEPS = ['NFT', 'COLOR', 'SAVE']
 
 const MAX_HUE = 360
 const MAX_LIGHTNESS = 80

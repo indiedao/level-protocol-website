@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import useConfigurator from '../../hooks/useConfigurator'
-import ConfiguratorNavView from './ConfiguratorNavView'
+import Nav from '../ui/Nav'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
 import useWeb3 from '../../hooks/useWeb3'
@@ -15,15 +15,18 @@ const MIN_LIGHTNESS = 30
 
 const ColorConfiguratorView = () => {
   const {
-    setColorHue,
-    setColorLightness,
+    currentStep,
     colorHue,
     colorLightness,
+    flow,
     nextStep,
-    previousStep,
-    nftId,
     nftAddress,
+    nftId,
+    previousStep,
+    setColorHue,
+    setColorLightness,
     setStatusIndicator,
+    setStep,
   } = useConfigurator()
   const { address } = useWeb3()
 
@@ -73,8 +76,7 @@ const ColorConfiguratorView = () => {
       a={nextStep}
       b={previousStep}
     >
-      <ConfiguratorNavView />
-      <div>
+      <Nav currentStep={currentStep} flow={flow} setStep={setStep}>
         <TokenView
           address={address}
           nftId={nftId}
@@ -82,7 +84,7 @@ const ColorConfiguratorView = () => {
           colorHue={colorHue}
           colorLightness={colorLightness}
         />
-      </div>
+      </Nav>
     </Device>
   )
 }

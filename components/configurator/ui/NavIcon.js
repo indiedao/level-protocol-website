@@ -22,8 +22,8 @@ export const ICON_NAMES = Object.keys(ICONS)
 const StyledIcon = styled.div`
   --fill: ${({ isActive }) => (isActive ? '#fffcd8' : '#8f8d76')};
 
-  width: 6.4rem;
-  height: 9.3rem;
+  width: clamp(2.2rem, 5.5vh, 6.4rem);
+  height: clamp(3.2rem, 8vh, 9.3rem);
   transition: fill 144ms ease;
 
   > svg {

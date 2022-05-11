@@ -3,7 +3,7 @@ import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 import useWeb3 from '../../hooks/useWeb3'
 import useConfigurator from '../../hooks/useConfigurator'
 import { HTTPRPC } from '../../../util/constants'
-import ConfiguratorNavView from './ConfiguratorNavView'
+import Nav from '../ui/Nav'
 import { Body1 } from '../../ui/Typography'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
@@ -26,8 +26,15 @@ const NFTConfiguratorView = () => {
   const [selectedNftIndex, setSelectedNftIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const { address } = useWeb3()
-  const { nextStep, previousStep, setNft, setStatusIndicator } =
-    useConfigurator()
+  const {
+    currentStep,
+    flow,
+    nextStep,
+    previousStep,
+    setNft,
+    setStatusIndicator,
+    setStep,
+  } = useConfigurator()
 
   useEffect(() => {
     const nft = nfts[selectedNftIndex]
@@ -114,14 +121,15 @@ const NFTConfiguratorView = () => {
 
   return (
     <Device right={handleRight} left={handleLeft} a={nextStep} b={previousStep}>
-      <ConfiguratorNavView />
-      <NFTArrowTokenViewContainer>
-        <TokenView
-          address={address}
-          nftId={nfts[selectedNftIndex].id}
-          nftAddress={nfts[selectedNftIndex].address}
-        />
-      </NFTArrowTokenViewContainer>
+      <Nav currentStep={currentStep} flow={flow} setStep={setStep}>
+        <NFTArrowTokenViewContainer>
+          <TokenView
+            address={address}
+            nftId={nfts[selectedNftIndex].id}
+            nftAddress={nfts[selectedNftIndex].address}
+          />
+        </NFTArrowTokenViewContainer>
+      </Nav>
     </Device>
   )
 }
