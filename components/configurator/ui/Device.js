@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import Screen from './Screen'
 import Controls from './Controls'
 
-const DeviceBox = styled.div`
+const Box = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -29,10 +30,10 @@ const DeviceBox = styled.div`
 `
 
 const Device = ({ children, ...controls }) => (
-  <DeviceBox>
-    {children}
+  <Box>
+    <Screen>{children}</Screen>
     <Controls {...controls} />
-  </DeviceBox>
+  </Box>
 )
 
 Device.propTypes = {

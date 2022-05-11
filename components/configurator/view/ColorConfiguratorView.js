@@ -3,7 +3,6 @@ import useConfigurator from '../../hooks/useConfigurator'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
-import Screen from '../ui/Screen'
 import useWeb3 from '../../hooks/useWeb3'
 import hslToHex from '../../../util/hslToHex'
 
@@ -74,18 +73,16 @@ const ColorConfiguratorView = () => {
       a={nextStep}
       b={previousStep}
     >
-      <Screen>
-        <ConfiguratorNavView />
-        <div>
-          <TokenView
-            address={address}
-            nftId={nftId}
-            nftAddress={nftAddress}
-            colorHue={colorHue}
-            colorLightness={colorLightness}
-          />
-        </div>
-      </Screen>
+      <ConfiguratorNavView />
+      <div>
+        <TokenView
+          address={address}
+          nftId={nftId}
+          nftAddress={nftAddress}
+          colorHue={colorHue}
+          colorLightness={colorLightness}
+        />
+      </div>
     </Device>
   )
 }

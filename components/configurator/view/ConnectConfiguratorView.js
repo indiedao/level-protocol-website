@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import useWeb3 from '../../hooks/useWeb3'
 import { Network } from '../../../util/constants'
 import Device from '../ui/Device'
-import Screen from '../ui/Screen'
 import Prompt from '../ui/Prompt'
 import useConfigurator from '../../hooks/useConfigurator'
 import ConfiguratorLoading from '../ui/ConfiguratorLoading'
@@ -81,7 +80,7 @@ const ConnectConfiguratorView = () => {
 
   return (
     <Device right={handleNext} a={handleNext}>
-      <Screen>{content}</Screen>
+      {content}
     </Device>
   )
 }
