@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import * as THREE from 'three'
 
-import { outerShapeFs, outerShapeVs } from '../../pyramid-shapes/outerShape'
-import { linesFs, linesVs } from '../../pyramid-shapes/lines'
-import { innerShapeFs, innerShapeVs } from '../../pyramid-shapes/innerShape'
+import { outerShapeFs, outerShapeVs } from './pyramid-shapes/outerShape'
+import { linesFs, linesVs } from './pyramid-shapes/lines'
+import { innerShapeFs, innerShapeVs } from './pyramid-shapes/innerShape'
 import {
   outerShapeBackFaceFs,
   outerShapeBackFaceVs,
-} from '../../pyramid-shapes/outerShapeBackFace'
+} from './pyramid-shapes/outerShapeBackFace'
 import { throttle } from '../../../util/throttle'
 import { clamp, cubicInterpolation, radians } from '../../../util/pyramid'
 import theme from '../../../util/theme'
