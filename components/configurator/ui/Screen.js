@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import useConfigurator from '../../hooks/useConfigurator'
 import StatusIndicator from './StatusIndicator'
@@ -26,7 +27,6 @@ const LCD = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 1fr;
-  grid-gap: clamp(0.8rem, 5vw, 2.4rem);
   padding: clamp(0.4rem, 4vw, 2rem);
   overflow: hidden;
   background-color: ${props => props.theme.colors.vibrantScreen};
@@ -42,6 +42,10 @@ const Screen = ({ children }) => {
       <StatusIndicator message={statusMessage} />
     </Frame>
   )
+}
+
+Screen.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export default Screen
