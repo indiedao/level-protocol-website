@@ -7,7 +7,7 @@ import Nav from '../ui/Nav'
 import { Body1 } from '../../ui/Typography'
 import TokenView from '../../token/view/TokenView'
 import Device from '../ui/Device'
-import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
+import NFTSelectorArrows from '../ui/NFTSelectorArrows'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 const DEFAULT_NFTS = []
@@ -122,13 +122,13 @@ const NFTConfiguratorView = () => {
   return (
     <Device right={handleRight} left={handleLeft} a={nextStep} b={previousStep}>
       <Nav currentStep={currentStep} flow={flow} setStep={setStep}>
-        <NFTArrowTokenViewContainer>
+        <NFTSelectorArrows>
           <TokenView
             address={address}
             nftId={nfts[selectedNftIndex].id}
             nftAddress={nfts[selectedNftIndex].address}
           />
-        </NFTArrowTokenViewContainer>
+        </NFTSelectorArrows>
       </Nav>
     </Device>
   )

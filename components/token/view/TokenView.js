@@ -1,16 +1,25 @@
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 import styled from 'styled-components'
+
 import Pyramid from '../../Pyramid'
 import { HTTPRPC } from '../../../util/constants'
 import useEns from '../../hooks/useEns'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
 import PFP from '../ui/PFP'
 import PixelCard from '../ui/PixelCard'
-import TokenContainer from '../ui/TokenContainer'
-import { Body1 } from '../../ui/Typography'
+import { H4 } from '../../ui/AltTypography'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
+
+const TokenContainer = styled.div`
+  position: relative;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr min-content;
+  padding-top: clamp(0.8rem, 2.666vw, 1.6rem);
+`
 
 const TokenView = ({
   address,
@@ -20,12 +29,12 @@ const TokenView = ({
   colorLightness,
   backgroundColor,
 }) => {
-  const [width, setWidth] = useState(0)
-  const [height, setHeight] = useState(0)
   const [nftSrc, setNftSrc] = useState('/nft-loading.gif')
   const { ens } = useEns(address)
   const { truncatedAddress } = useTruncatedAddress(address)
-  const container = useRef()
+  const color = colorHue
+    ? `hsl(${colorHue}deg, 100%, ${colorLightness}%)`
+    : undefined
 
   const fetchNft = useCallback(async () => {
     // Using lvl pfp:
@@ -42,44 +51,20 @@ const TokenView = ({
   }, [nftId, nftAddress])
 
   useEffect(() => {
-    setWidth(container.current.parentElement.clientWidth)
-    setHeight(container.current.parentElement.clientHeight)
-  }, [])
-
-  useEffect(() => {
     fetchNft()
   }, [nftId, nftAddress, fetchNft])
 
   return (
-    <PixelCard color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
-      <TokenContainer ref={container} height={height}>
+    <PixelCard color={color}>
+      <TokenContainer>
         <PFP src={nftSrc} />
-        <Pyramid
-          width={width}
-          height={height}
-          backgroundColor={backgroundColor}
-        />
-        <EnsAddress color={`hsl(${colorHue}deg, 100%, ${colorLightness}%)`}>
+        <Pyramid backgroundColor={backgroundColor} />
+        <H4 color="vibrantPixel" style={{ color }}>
           {ens || truncatedAddress}
-        </EnsAddress>
+        </H4>
       </TokenContainer>
     </PixelCard>
   )
 }
-
-const EnsAddress = styled(Body1)`
-  color: ${({ color }) => color};
-  background-color: ${props => props.theme.colors.vibrantScreen};
-  padding: 8px 10px;
-  height: 40px;
-  font-family: Alagard;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 24px;
-  border-radius: 8px;
-  position: absolute;
-  bottom: 25px;
-`
 
 export default TokenView

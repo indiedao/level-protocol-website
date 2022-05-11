@@ -1,15 +1,27 @@
 import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types'
+
+import theme from '../../../util/theme'
 
 const OuterGrid = styled.div`
+  --pixel-width: clamp(0.2rem, 0.666vw, 0.4rem);
+  --corner-width: calc(var(--pixel-width, 0.4rem) * 3);
+
   display: grid;
-  grid-template-columns: 1.2rem 1fr 1.2rem;
-  grid-template-rows: 1.2rem 1fr 1.2rem;
+  grid-template-columns: var(--corner-width, 1.2rem) 1fr var(
+      --corner-width,
+      1.2rem
+    );
+  grid-template-rows: var(--corner-width, 1.2rem) 1fr var(
+      --corner-width,
+      1.2rem
+    );
 `
 
 const CornerGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 33.333%);
+  grid-template-rows: repeat(3, 33.333%);
 
   ${({ corner }) =>
     corner === 2 &&
@@ -35,7 +47,7 @@ const Pixel = styled.div`
 `
 const Border = styled.div`
   ${props => css`
-    border-${props.side}: 4px solid ${props.color};
+    border-${props.side}: var(--pixel-width, 0.4rem) solid ${props.color};
   `}
 `
 
@@ -67,5 +79,13 @@ const PixelCard = ({ children, color }) => (
     <Corner corner={4} color={color} />
   </OuterGrid>
 )
+
+PixelCard.propTypes = {
+  color: PropTypes.string,
+}
+
+PixelCard.defaultProps = {
+  color: theme.colors.vibrantPixel,
+}
 
 export default PixelCard
