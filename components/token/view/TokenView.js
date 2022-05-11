@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 import styled from 'styled-components'
 
-import Pyramid from '../../Pyramid'
+import Pyramid from '../ui/Pyramid'
 import { HTTPRPC } from '../../../util/constants'
 import useEns from '../../hooks/useEns'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
