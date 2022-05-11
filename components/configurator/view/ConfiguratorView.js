@@ -5,7 +5,7 @@ import ColorConfiguratorView from './ColorConfiguratorView'
 import SaveConfiguratorView from './SaveConfiguratorView'
 import useWeb3 from '../../hooks/useWeb3'
 
-const ConfiguratorScreenView = () => {
+const ConfiguratorView = () => {
   const { currentStep } = useConfigurator()
   const { address, networkError } = useWeb3()
 
@@ -23,4 +23,4 @@ const ConfiguratorScreenView = () => {
   }
 }
 
-export default ConfiguratorScreenView
+export default ConfiguratorView
