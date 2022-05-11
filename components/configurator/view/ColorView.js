@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+
 import useConfigurator from '../../hooks/useConfigurator'
 import Nav from '../ui/Nav'
 import TokenView from '../../token/view/TokenView'
@@ -13,7 +14,7 @@ const LIGHTNESS_OFFSET = 5
 const MAX_LIGHTNESS = 80
 const MIN_LIGHTNESS = 30
 
-const ColorConfiguratorView = () => {
+const ColorView = () => {
   const {
     currentStep,
     colorHue,
@@ -89,4 +90,4 @@ const ColorConfiguratorView = () => {
   )
 }
 
-export default ColorConfiguratorView
+export default ColorView
