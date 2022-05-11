@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -6,7 +7,7 @@ import DPad from './DPad'
 import ABPad from './ABPad'
 import { playSound } from '../../../util/audio'
 
-const Controls = styled.div`
+const Pads = styled.div`
   position: relative;
   display: grid;
   align-items: center;
@@ -31,41 +32,87 @@ const Controls = styled.div`
   }
 `
 
-const ConfiguratorControls = ({ up, down, left, right, a, b }) => (
-  <Controls>
-    <LvlSvg />
-    <DPad
-      up={() => {
-        playSound('button3_clean.wav')
-        up()
-      }}
-      down={() => {
-        playSound('button3_clean.wav')
-        down()
-      }}
-      left={() => {
-        playSound('button3_clean.wav')
-        left()
-      }}
-      right={() => {
-        playSound('button3_clean.wav')
-        right()
-      }}
-    />
-    <ABPad
-      a={() => {
-        playSound('button_a_clean.wav')
-        a()
-      }}
-      b={() => {
-        playSound('button_cancel.wav')
-        b()
-      }}
-    />
-  </Controls>
-)
+const Controls = ({ up, down, left, right, a, b }) => {
+  const handleUp = useCallback(() => {
+    playSound('button3_clean.wav')
+    up()
+  }, [up])
 
-ConfiguratorControls.propTypes = {
+  const handleDown = useCallback(() => {
+    playSound('button3_clean.wav')
+    down()
+  }, [down])
+
+  const handleLeft = useCallback(() => {
+    playSound('button3_clean.wav')
+    left()
+  }, [left])
+
+  const handleRight = useCallback(() => {
+    playSound('button3_clean.wav')
+    right()
+  }, [right])
+
+  const handleA = useCallback(() => {
+    playSound('button3_clean.wav')
+    a()
+  }, [a])
+
+  const handleB = useCallback(() => {
+    playSound('button3_clean.wav')
+    b()
+  }, [b])
+
+  useEffect(() => {
+    const handler = e => {
+      switch (e.key) {
+        case 'ArrowUp':
+          handleUp()
+          break
+        case 'ArrowDown':
+          handleDown()
+          break
+        case 'ArrowLeft':
+          handleLeft()
+          break
+        case 'ArrowRight':
+          handleRight()
+          break
+        case 'Enter':
+        case 'a':
+          handleA()
+          break
+        case 'Backspace':
+        case 'b':
+          handleB()
+          break
+        default:
+        // no default
+      }
+    }
+
+    window.addEventListener('keydown', handler)
+
+    return () => {
+      window.removeEventListener('keydown', handler)
+    }
+  }, [handleA, handleB, handleDown, handleLeft, handleRight, handleUp])
+
+  return (
+    <Pads>
+      <LvlSvg />
+      <DPad
+        up={handleUp}
+        down={handleDown}
+        left={handleLeft}
+        right={handleRight}
+      />
+      <ABPad a={handleA} b={handleB} />
+    </Pads>
+  )
+}
+
+Controls.propTypes = {
   up: PropTypes.func,
   down: PropTypes.func,
   left: PropTypes.func,
@@ -74,7 +121,7 @@ ConfiguratorControls.propTypes = {
   b: PropTypes.func,
 }
 
-ConfiguratorControls.defaultProps = {
+Controls.defaultProps = {
   up: () => null,
   down: () => null,
   left: () => null,
@@ -83,4 +130,4 @@ ConfiguratorControls.defaultProps = {
   b: () => null,
 }
 
-export default ConfiguratorControls
+export default Controls
