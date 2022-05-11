@@ -34,6 +34,7 @@ const Indicator = styled.span`
 
 const Message = styled(H4)`
   font-size: min(5vw, 1.8rem);
+  transform: translateY(5%);
 
   @media (min-width: 320px) {
     font-size: min(4.5vw, 1.8rem);
