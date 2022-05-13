@@ -14,6 +14,7 @@ export const ConfiguratorProvider = ({ children }) => {
   const [currentStep, setCurrentStep] = useState(STEPS[0])
   const [nftId, setNftId] = useState()
   const [nftAddress, setNftAddress] = useState()
+  const [nftSrc, setNftSrc] = useState()
   const [isSaved, setIsSaved] = useState(true)
   const [colorHue, setColorHue] = useState(Math.floor(Math.random() * MAX_HUE))
   const [colorLightness, setColorLightness] = useState(
@@ -31,13 +32,14 @@ export const ConfiguratorProvider = ({ children }) => {
   // Mark unsaved changes when any deps change:
   useEffect(() => {
     setIsSaved(false)
-  }, [nftId, nftAddress])
+  }, [nftId, nftAddress, nftSrc])
 
-  const setNft = useCallback(({ id, address: _address }) => {
+  const setNft = useCallback(({ id, address: _address, src }) => {
     if (id === undefined || _address === undefined)
       throw new Error('Must include id and address when saving NFT!')
     setNftId(id)
     setNftAddress(_address)
+    setNftSrc(src)
   }, [])
 
   const nextStep = useCallback(() => {
@@ -97,6 +99,7 @@ export const ConfiguratorProvider = ({ children }) => {
       currentStep,
       nftId,
       nftAddress,
+      nftSrc,
       save,
       isSaved,
       nextStep,
@@ -117,6 +120,7 @@ export const ConfiguratorProvider = ({ children }) => {
     currentStep,
     nftId,
     nftAddress,
+    nftSrc,
     save,
     isSaved,
     nextStep,

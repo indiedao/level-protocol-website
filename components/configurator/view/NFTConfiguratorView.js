@@ -26,7 +26,7 @@ const NFTConfiguratorView = () => {
   const [nfts, setNfts] = useState(DEFAULT_NFTS)
   const [selectedNftIndex, setSelectedNftIndex] = useState(0)
   const [loading, setLoading] = useState(true)
-  const { address } = useWeb3()
+  const { address, ens } = useWeb3()
   const { nextStep, previousStep, setNft, setStatusIndicator } =
     useConfigurator()
 
@@ -119,8 +119,8 @@ const NFTConfiguratorView = () => {
         <NFTArrowTokenViewContainer>
           <TokenView
             address={address}
-            nftId={nfts[selectedNftIndex].id}
-            nftAddress={nfts[selectedNftIndex].address}
+            nftSrc={nfts[selectedNftIndex].src}
+            ens={ens}
           />
         </NFTArrowTokenViewContainer>
       </ConfiguratorScreen>
