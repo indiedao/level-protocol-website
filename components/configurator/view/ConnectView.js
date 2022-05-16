@@ -4,7 +4,7 @@ import { Network } from '../../../util/constants'
 import Device from '../ui/Device'
 import Prompt from '../ui/Prompt'
 import useConfigurator from '../../hooks/useConfigurator'
-import ConfiguratorLoading from '../ui/ConfiguratorLoading'
+import Loading from '../ui/Loading'
 
 const MESSAGE_STEPS = [
   'The time for us to rebuild is now...',
@@ -22,7 +22,7 @@ const ConnectConfiguratorView = () => {
 
   let content
   if (loading) {
-    content = <ConfiguratorLoading />
+    content = <Loading />
   } else if (isLastStep && networkError) {
     // Wrong network:
     content = <Prompt message={networkError.toLowerCase()} actionA="switch" />

@@ -33,6 +33,16 @@ const LCD = styled.div`
   box-shadow: inset 0 0 1.6rem #000000;
 `
 
+export const ScreenContent = styled.div`
+  align-self: center;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  grid-gap: 2.4rem;
+  text-align: center;
+`
+
 const Screen = ({ children }) => {
   const { statusMessage } = useConfigurator()
 

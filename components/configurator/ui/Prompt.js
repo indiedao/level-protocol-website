@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { H2, H4 } from '../../ui/AltTypography'
 import TypeItOut from '../../ui/TypeItOut'
-import ConfiguratorWrapper from './ConfiguratorWrapper'
+import { ScreenContent } from './Screen'
 
 const Message = styled(H2)`
   font-size: min(10vw, 3.2rem);
@@ -68,7 +68,7 @@ const ButtonIndicator = styled.div`
 `
 
 const Prompt = ({ message, actionA, actionB }) => (
-  <ConfiguratorWrapper>
+  <ScreenContent>
     <Message color="vibrantPixel">
       <TypeItOut message={message} />
     </Message>
@@ -92,7 +92,7 @@ const Prompt = ({ message, actionA, actionB }) => (
         ) : undefined}
       </ButtonIndicators>
     ) : undefined}
-  </ConfiguratorWrapper>
+  </ScreenContent>
 )
 
 Prompt.propTypes = {
