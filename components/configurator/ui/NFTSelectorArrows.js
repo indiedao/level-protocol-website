@@ -11,28 +11,25 @@ const Arrows = styled.div`
   display: grid;
   grid-template-columns: 1fr;
 
-  &::before {
-    content: '';
-    position: absolute;
-    background: url(/images/pixel-arrow.png);
-    top: var(--top, 5rem);
-    right: clamp(1.6rem, 5.333vw, 3.2rem);
-    height: 44px;
-    width: 24px;
-    transform: translateY(-50%);
-    z-index: 1;
-  }
-
+  &::before,
   &::after {
     content: '';
     position: absolute;
-    background: url(/images/pixel-arrow.png);
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAAOUlEQVRYw+3RsQ0AQAjDQKZmixcjQ/sD0HGRUluyo172/9geAGWaAGiiCYAmRwCUcM4555xzDrCyASm4w8APqimgAAAAAElFTkSuQmCC');
     top: var(--top, 5rem);
-    left: clamp(1.6rem, 5.333vw, 3.2rem);
     height: 44px;
     width: 24px;
-    transform: translateY(-50%) scaleX(-1);
     z-index: 1;
+  }
+
+  &::before {
+    right: clamp(1.6rem, 5.333vw, 3.2rem);
+    transform: translateY(-50%);
+  }
+
+  &::after {
+    left: clamp(1.6rem, 5.333vw, 3.2rem);
+    transform: translateY(-50%) scaleX(-1);
   }
 `
 
