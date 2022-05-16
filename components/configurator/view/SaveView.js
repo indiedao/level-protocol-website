@@ -5,12 +5,11 @@ import useWeb3 from '../../hooks/useWeb3'
 import Device from '../ui/Device'
 import Prompt from '../ui/Prompt'
 import { playSound } from '../../../util/audio'
-import ConfiguratorWrapper from '../ui/ConfiguratorWrapper'
-import ConfiguratorRecaptcha from '../ui/ConfiguratorRecaptcha'
+import Recaptcha from '../ui/Recaptcha'
 
 const STEPS = {
-  READY: 'READY',
   HUMAN_VERIFY: 'HUMAN_VERIFY',
+  READY: 'READY',
   SAVE: 'SAVE',
   PREMINT: 'PREMINT',
   MINT: 'MINT',
@@ -19,8 +18,8 @@ const STEPS = {
 }
 
 const STEP_STATUS_MAP = {
-  READY: 'ready',
   HUMAN_VERIFY: 'verifying human',
+  READY: 'ready',
   SAVE: 'saving...',
   PREMINT: 'coming soon...',
   MINT: 'minting...',
@@ -108,6 +107,10 @@ const SaveConfiguratorView = () => {
   let controls = {}
   switch (step) {
     case STEPS.HUMAN_VERIFY:
+      controls = {
+        b: previousStep,
+      }
+      break
     case STEPS.READY:
     case STEPS.ERROR:
       controls = {
@@ -135,17 +138,15 @@ const SaveConfiguratorView = () => {
 
   return (
     <Device {...controls}>
-      {step === STEPS.READY ? (
-        <Prompt message="ready?" actionA="sign" actionB="go back" />
+      {step === STEPS.HUMAN_VERIFY ? (
+        <Recaptcha
+          onReCAPTCHASuccess={handleReCAPTCHASuccess}
+          onReCAPTCHAFail={message => handleSubmitError(message)}
+        />
       ) : undefined}
 
-      {step === STEPS.HUMAN_VERIFY ? (
-        <ConfiguratorWrapper>
-          <ConfiguratorRecaptcha
-            onReCAPTCHASuccess={handleReCAPTCHASuccess}
-            onReCAPTCHAFail={handleSubmitError}
-          />
-        </ConfiguratorWrapper>
+      {step === STEPS.READY ? (
+        <Prompt message="ready?" actionA="sign" actionB="go back" />
       ) : undefined}
 
       {step === STEPS.SAVE ? <Prompt message="saving..." /> : undefined}
@@ -164,7 +165,11 @@ const SaveConfiguratorView = () => {
       ) : undefined}
 
       {step === STEPS.ERROR ? (
-        <Prompt message={errorMessage} actionA="try again?" actionB="go back" />
+        <Prompt
+          message={errorMessage}
+          actionA={!isHuman ? undefined : 'try again?'}
+          actionB="go back"
+        />
       ) : undefined}
     </Device>
   )
