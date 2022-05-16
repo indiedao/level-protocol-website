@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
-
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
 import Device from '../ui/Device'
 import Prompt from '../ui/Prompt'
 import { playSound } from '../../../util/audio'
+import ConfiguratorWrapper from '../ui/ConfiguratorWrapper'
+import ConfiguratorRecaptcha from '../ui/ConfiguratorRecaptcha'
 
 const STEPS = {
   READY: 'READY',
+  HUMAN_VERIFY: 'HUMAN_VERIFY',
   SAVE: 'SAVE',
   PREMINT: 'PREMINT',
   MINT: 'MINT',
@@ -18,6 +20,7 @@ const STEPS = {
 
 const STEP_STATUS_MAP = {
   READY: 'ready',
+  HUMAN_VERIFY: 'verifying human',
   SAVE: 'saving...',
   PREMINT: 'coming soon...',
   MINT: 'minting...',
@@ -26,13 +29,14 @@ const STEP_STATUS_MAP = {
 }
 
 const SaveConfiguratorView = () => {
-  const [step, setStep] = useState(STEPS.READY)
+  const [step, setStep] = useState(STEPS.HUMAN_VERIFY)
   const [donationAmount, setDonationAmount] = useState(
     ethers.utils.parseEther('0.01'),
   )
   const [errorMessage, setErrorMessage] = useState('')
   const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
   const { address } = useWeb3()
+  const [isHuman, setIsHuman] = useState(false)
 
   // Set status indicator message:
   useEffect(() => {
@@ -41,7 +45,23 @@ const SaveConfiguratorView = () => {
     })
   }, [setStatusIndicator, step])
 
+  const handleReCAPTCHASuccess = () => {
+    setIsHuman(true)
+    setStep(STEPS.READY)
+  }
+
+  const handleSubmitError = (error = 'are you human?') => {
+    setErrorMessage(`error: ${error}`)
+    playSound('button_cancel.wav')
+    setStep(STEPS.ERROR)
+  }
+
   const handleSave = async () => {
+    if (!isHuman) {
+      handleSubmitError()
+      return
+    }
+
     try {
       setStep(STEPS.SAVE)
       await save()
@@ -52,13 +72,11 @@ const SaveConfiguratorView = () => {
         setStep(STEPS.CONFIRMATION)
       }
     } catch (error) {
-      setErrorMessage(
+      handleSubmitError(
         error.message
           ? error.message.toLowerCase()
           : 'error: access list is probably full :(',
       )
-      playSound('button_cancel.wav')
-      setStep(STEPS.ERROR)
     }
   }
 
@@ -89,6 +107,7 @@ const SaveConfiguratorView = () => {
 
   let controls = {}
   switch (step) {
+    case STEPS.HUMAN_VERIFY:
     case STEPS.READY:
     case STEPS.ERROR:
       controls = {
@@ -118,6 +137,15 @@ const SaveConfiguratorView = () => {
     <Device {...controls}>
       {step === STEPS.READY ? (
         <Prompt message="ready?" actionA="sign" actionB="go back" />
+      ) : undefined}
+
+      {step === STEPS.HUMAN_VERIFY ? (
+        <ConfiguratorWrapper>
+          <ConfiguratorRecaptcha
+            onReCAPTCHASuccess={handleReCAPTCHASuccess}
+            onReCAPTCHAFail={handleSubmitError}
+          />
+        </ConfiguratorWrapper>
       ) : undefined}
 
       {step === STEPS.SAVE ? <Prompt message="saving..." /> : undefined}
