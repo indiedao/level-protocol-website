@@ -1,6 +1,6 @@
 import { query as q } from 'faunadb'
 
-export default {
+const SortMembersByCreatedAtAsc = {
   name: 'sort_members_by_created_at_asc',
   body: q.Query(
     q.Lambda(
@@ -32,3 +32,5 @@ export default {
     ),
   ),
 }
+
+export default SortMembersByCreatedAtAsc
