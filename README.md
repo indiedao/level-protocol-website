@@ -65,6 +65,7 @@ Local development: set values in .env
 | PINATA_PUBLIC_API_KEY   | ``      | Public key for pinata data storage.                  |
 | PINATA_PRIVATE_API_KEY  | ``      | Private key for pinata data storage.                 |
 | GITHUB_CLIENT_SECRET    | ``      | Private key for Github OAuth client flow.            |
+| RECAPTCHA_SECRET_KEY    | ``      | Secret env var for recaptcha.                        |
 
 #### System Environment Variables
 
