@@ -1,0 +1,4 @@
+{
+  "envPath": ".env.local",
+  "secretEnv": "FAUNADB_SECRET"
+}
