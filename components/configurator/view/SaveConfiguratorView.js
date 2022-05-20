@@ -10,7 +10,6 @@ import TokenView from '../../token/view/TokenView'
 import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 import { playSound } from '../../../util/audio'
 import ConfiguratorModal from '../ui/ConfiguratorModal'
-import ConfiguratorWrapper from '../ui/ConfiguratorWrapper'
 import ConfiguratorRecaptcha from '../ui/ConfiguratorRecaptcha'
 
 const STEPS = {
