@@ -7,6 +7,7 @@ import CreateCommunityForm from '../components/community/view/CreateCommunityFor
 import CommunityDetail from '../components/community/view/CommunityDetail'
 import SnapshotIntegrationForm from '../components/integrations/views/snapshot/SnapshotIntegrationForm'
 import CoordinapeIntegrationForm from '../components/integrations/views/coordinape/IntegrationForm'
+import PoapTrigger from '../components/integrations/views/poap/PoapTrigger'
 
 const STEPS = {
   CONNECT: 'CONNECT',
@@ -69,6 +70,7 @@ const CommunityDashboardPage = () => {
             <CommunityDetail />
             <SnapshotIntegrationForm />
             <CoordinapeIntegrationForm />
+            <PoapTrigger />
           </>
         ) : undefined}
         {step === STEPS.ERROR ? <h2>Error: {networkError}</h2> : undefined}
