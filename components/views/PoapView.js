@@ -4,6 +4,7 @@ import { H4, H2, Body1 } from '../ui/Typography'
 import Button from '../ui/Button'
 import useCommunity from '../hooks/useCommunity'
 import useWeb3 from '../hooks/useWeb3'
+import PoapTrigger from '../integrations/views/poap/PoapTrigger'
 
 const IntegrationsHeader = styled.div`
   margin-bottom: 3.6rem;
@@ -21,6 +22,7 @@ const PoapView = () => {
       <IntegrationsHeader>
         <H2>{community?.name} POAP Integration</H2>
         <Button onClick={disconnect}>Disconnect</Button>
+        <PoapTrigger />
       </IntegrationsHeader>
     </>
   ) : (
