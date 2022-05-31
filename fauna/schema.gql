@@ -4,6 +4,7 @@ type Community {
   name: String!
   membersHash: String!
   snapshotEns: String
+  events: [PoapEvent]! @relation(name: "community_poap_events")
 }
 
 type Member {
@@ -16,6 +17,18 @@ type Member {
   colorHue: Int!
   colorLightness: Int!
   github: String
+}
+
+type PoapEvent {
+  community: Community! @relation(name: "community_poap_events")
+  eventId: Int!
+  fancyId: String!
+  name: String!
+  description: String!
+  startDate: Date!
+  endDate: Date!
+  imageUrl: String!
+  url: String!
 }
 
 type Query {
