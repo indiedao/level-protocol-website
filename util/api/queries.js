@@ -186,3 +186,29 @@ export const CREATE_COMMUNITY_POAP_EVENT = gql`
     }
   }
 `
+
+export const GET_COMMUNITY_POAP_EVENTS = gql`
+  query GET_COMMUNITY_POAP_EVENTS($communityId: ID!) {
+    getCommunityPoapEvents(communityId: $communityId) {
+      data {
+        _id
+        eventId
+        fancyId
+        name
+        imageUrl
+        description
+        startDate
+        endDate
+        url
+      }
+    }
+  }
+`
+
+export const DELETE_COMMUNITY_POAP_EVENT = gql`
+  mutation DELETE_COMMUNITY_POAP_EVENT($id: ID!) {
+    deleteCommunityPoapEvent(id: $id) {
+      _id
+    }
+  }
+`

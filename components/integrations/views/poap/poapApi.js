@@ -29,23 +29,46 @@ export const useCreatePoapEvents = () => {
 export const usePoapEvents = () => {
   const [poapEvents, setPoapEvents] = useState([])
   const { bearerToken } = useWeb3()
+
+  const getPoapEvents = async () => {
+    try {
+      const resp = await fetch(`/api/get-poap-events`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${bearerToken}`,
+        },
+      })
+      const json = await resp.json()
+      setPoapEvents(json.events)
+    } catch (err) {
+      console.error(err)
+    }
+  }
   useEffect(() => {
-    ;(async () => {
-      try {
-        const resp = await fetch(`/api/get-poap-events`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${bearerToken}`,
-          },
-        })
-        const json = await resp.json()
-        setPoapEvents(json.data)
-      } catch (err) {
-        console.error(err)
-      }
-    })()
+    getPoapEvents()
   }, [])
 
   return { poapEvents, getPoapEvents }
+}
+
+export const useDeletePoapEvent = () => {
+  const { bearerToken } = useWeb3()
+
+  const deletePoapEvent = async id => {
+    try {
+      await fetch(`/api/delete-poap-event`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${bearerToken}`,
+        },
+        body: JSON.stringify({ id }),
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  return { deletePoapEvent }
 }

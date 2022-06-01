@@ -11,6 +11,8 @@ import {
   GET_MEMBERS_BY_CREATED_AT_ASC,
   GET_MEMBERS_BY_CREATED_AT_DESC,
   CREATE_COMMUNITY_POAP_EVENT,
+  GET_COMMUNITY_POAP_EVENTS,
+  DELETE_COMMUNITY_POAP_EVENT,
 } from './queries'
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
@@ -94,17 +96,6 @@ export const getAccessListMostRecent2 = async () => {
   return resp.getMembersByCreatedAtDesc.data
 }
 
-/*
-    $communityId: ID!
-    $eventId: Int!
-    $fancyId: String!
-    $name: String!
-    $imageUrl: String!
-    $description: String!
-    $startDate: Date!
-    $endDate: Date!
-    $url: String!
-*/
 export const createCommunityPoapEvent = async ({
   communityId,
   eventId,
@@ -128,4 +119,18 @@ export const createCommunityPoapEvent = async ({
     url,
   })
   return resp.createCommunityPoapEvent.data
+}
+
+export const getCommunityPoapEvents = async ({ communityId }) => {
+  const resp = await graphQLClient.request(GET_COMMUNITY_POAP_EVENTS, {
+    communityId,
+  })
+  return resp.getCommunityPoapEvents.data
+}
+
+export const deleteCommunityPoapEvent = async ({ id }) => {
+  const resp = await graphQLClient.request(DELETE_COMMUNITY_POAP_EVENT, {
+    id,
+  })
+  return resp.deleteCommunityPoapEvent.data
 }

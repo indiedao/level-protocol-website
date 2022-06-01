@@ -6,7 +6,12 @@ import useCommunity from '../../../hooks/useCommunity'
 import useWeb3 from '../../../hooks/useWeb3'
 import PoapTrigger from './PoapTrigger'
 import PoapEventInput from './PoapEventInput'
-import { useCreatePoapEvents } from './poapApi'
+import {
+  useCreatePoapEvents,
+  usePoapEvents,
+  useDeletePoapEvent,
+} from './poapApi'
+import PoapEventList from './PoapEventList'
 
 const IntegrationsHeader = styled.div`
   margin-bottom: 3.6rem;
@@ -17,10 +22,18 @@ const PoapView = () => {
   const { community } = useCommunity()
   const isAdmin = true // TODO: Temp
   const { disconnect } = useWeb3()
-  const { isCreatingPoapEvents, createPoapEvents } = useCreatePoapEvents()
+  const { createPoapEvents } = useCreatePoapEvents()
+  const { poapEvents, getPoapEvents } = usePoapEvents()
+  const { deletePoapEvent } = useDeletePoapEvent()
 
   const handleSubmitEventIds = async eventIds => {
-    createPoapEvents(community._id, eventIds)
+    await createPoapEvents(community._id, eventIds)
+    getPoapEvents()
+  }
+
+  const handleDelete = async id => {
+    await deletePoapEvent(id)
+    getPoapEvents()
   }
 
   const integrationsOptions = isAdmin ? (
@@ -29,9 +42,8 @@ const PoapView = () => {
         <H2>{community?.name} POAP Integration</H2>
         <Button onClick={disconnect}>Disconnect</Button>
         <PoapTrigger />
-        <div>
-          <PoapEventInput onSubmit={handleSubmitEventIds} />
-        </div>
+        <PoapEventInput onSubmit={handleSubmitEventIds} />
+        <PoapEventList events={poapEvents} onDelete={handleDelete} />
       </IntegrationsHeader>
     </>
   ) : (
