@@ -5,7 +5,11 @@ import withValidParams from '../../util/api/withValidParams'
 import { createCommunityPoapEvent } from '../../util/api/fauna'
 import { getPoapEvent } from '../../util/api/poap'
 
-const handler = async (req, res, { auth: { address } }) => {
+function _toFaunaDate(dateStr) {
+  return format(parse(dateStr, 'dd-MMM-yyyy', new Date()), 'yyyy-MM-dd')
+}
+
+const handler = async (req, res) => {
   const { communityId, eventIds } = req.body
 
   // Get POAP event data
@@ -29,10 +33,6 @@ const handler = async (req, res, { auth: { address } }) => {
 
   res.statusCode = 200
   return res.json({ success: true })
-}
-
-function _toFaunaDate(dateStr) {
-  return format(parse(dateStr, 'dd-MMM-yyyy', new Date()), 'yyyy-MM-dd')
 }
 
 export default withValidParams(

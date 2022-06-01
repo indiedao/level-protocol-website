@@ -9,13 +9,9 @@ export const getTokensWithEventIds = async eventIds => {
     `
     query TokensWithEventIds($eventIds: [String!]!) {
       tokens(where: { event_in: $eventIds}) {
-        id
         owner {
           id
         }
-        event {
-          id
-        } 
       }
     }
   `,

@@ -14,7 +14,7 @@ const PoapEventInput = ({ onSubmit }) => {
         placeholder="Enter event IDs, e.g. 46613, 46428"
         value={input}
         onChange={e => setInput(e.target.value)}
-      ></textarea>
+      />
       <Button onClick={handleSubmit}>Submit</Button>
     </div>
   )

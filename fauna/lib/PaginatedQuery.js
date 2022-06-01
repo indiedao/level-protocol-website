@@ -1,6 +1,6 @@
 import { query as q } from 'faunadb'
 
-export default function PaginatedQuery(args = [], match) {
+export default function PaginatedQuery(args, match) {
   return q.Query(
     q.Lambda(
       [...args, 'size', 'after', 'before'],

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import useWeb3 from '../../../hooks/useWeb3'
 
 export const useCreatePoapEvents = () => {
@@ -30,9 +30,9 @@ export const usePoapEvents = () => {
   const [poapEvents, setPoapEvents] = useState([])
   const { bearerToken } = useWeb3()
 
-  const getPoapEvents = async () => {
+  const getPoapEvents = useCallback(async () => {
     try {
-      const resp = await fetch(`/api/get-poap-events`, {
+      const resp = await fetch('/api/get-poap-events', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -42,12 +42,13 @@ export const usePoapEvents = () => {
       const json = await resp.json()
       setPoapEvents(json.events)
     } catch (err) {
-      console.error(err)
+      console.error(err) // eslint-disable-line no-console
     }
-  }
+  }, [setPoapEvents, bearerToken])
+
   useEffect(() => {
     getPoapEvents()
-  }, [])
+  }, [getPoapEvents])
 
   return { poapEvents, getPoapEvents }
 }
@@ -57,7 +58,7 @@ export const useDeletePoapEvent = () => {
 
   const deletePoapEvent = async id => {
     try {
-      await fetch(`/api/delete-poap-event`, {
+      await fetch('/api/delete-poap-event', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ export const useDeletePoapEvent = () => {
         body: JSON.stringify({ id }),
       })
     } catch (err) {
-      console.error(err)
+      console.error(err) // eslint-disable-line no-console
     }
   }
 

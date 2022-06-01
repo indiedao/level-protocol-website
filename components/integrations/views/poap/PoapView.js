@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import styled from 'styled-components'
-import { H4, H2, Body1 } from '../../../ui/Typography'
+import { H2, Body1 } from '../../../ui/Typography'
 import Button from '../../../ui/Button'
 import useCommunity from '../../../hooks/useCommunity'
 import useWeb3 from '../../../hooks/useWeb3'
@@ -37,15 +36,13 @@ const PoapView = () => {
   }
 
   const integrationsOptions = isAdmin ? (
-    <>
-      <IntegrationsHeader>
-        <H2>{community?.name} POAP Integration</H2>
-        <Button onClick={disconnect}>Disconnect</Button>
-        <PoapTrigger />
-        <PoapEventInput onSubmit={handleSubmitEventIds} />
-        <PoapEventList events={poapEvents} onDelete={handleDelete} />
-      </IntegrationsHeader>
-    </>
+    <IntegrationsHeader>
+      <H2>{community?.name} POAP Integration</H2>
+      <Button onClick={disconnect}>Disconnect</Button>
+      <PoapTrigger />
+      <PoapEventInput onSubmit={handleSubmitEventIds} />
+      <PoapEventList events={poapEvents} onDelete={handleDelete} />
+    </IntegrationsHeader>
   ) : (
     <>
       <Body1 color="white">You do not have enough permissions.</Body1>

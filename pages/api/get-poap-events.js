@@ -1,10 +1,8 @@
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
-import withValidParams from '../../util/api/withValidParams'
 import {
   findCommunityByAddress,
   getCommunityPoapEvents,
-  updateCommunitySnapshotEns,
 } from '../../util/api/fauna'
 
 const handler = async (req, res, { auth: { address } }) => {

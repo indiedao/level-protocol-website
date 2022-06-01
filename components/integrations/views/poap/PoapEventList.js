@@ -1,5 +1,5 @@
+import Image from 'next/image'
 import styled from 'styled-components'
-import { usePoapEvents } from './poapApi'
 
 const StyledTable = styled.table`
   &,
@@ -25,15 +25,21 @@ const PoapEventList = ({ events, onDelete }) => {
           <th>Description</th>
           <th>Start Date</th>
           <th>End Date</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {events.map(e => (
           <tr key={e._id}>
             <td>
-              <a href={e.url} target="_blank" noreferrer="true" noopener="true">
-                <img src={e.imageUrl} width={100} />
+              <a
+                href={e.url}
+                target="_blank"
+                noreferrer="true"
+                noopener="true"
+                rel="noreferrer"
+              >
+                <Image alt="Poap Image" src={e.imageUrl} width={100} />
               </a>
             </td>
             <td>{e.eventId}</td>
