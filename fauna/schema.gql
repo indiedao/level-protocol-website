@@ -4,7 +4,7 @@ type Community {
   name: String!
   membersHash: String!
   snapshotEns: String
-  events: [PoapEvent]! @relation(name: "community_poap_events")
+  events: [CommunityPoapEvent]! @relation(name: "community_poap_events")
 }
 
 type Member {
@@ -19,7 +19,7 @@ type Member {
   github: String
 }
 
-type PoapEvent {
+type CommunityPoapEvent {
   community: Community! @relation(name: "community_poap_events")
   eventId: Int!
   fancyId: String!
