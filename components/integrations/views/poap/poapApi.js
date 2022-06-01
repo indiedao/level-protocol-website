@@ -15,7 +15,6 @@ export const useCreatePoapEvents = () => {
         Authorization: `Token ${bearerToken}`,
       },
       body: JSON.stringify({
-        communityId,
         eventIds,
       }),
     })

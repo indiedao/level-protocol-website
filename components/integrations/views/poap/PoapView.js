@@ -17,7 +17,6 @@ const IntegrationsHeader = styled.div`
 `
 
 const PoapView = () => {
-  // const { isAdmin, currentCommunity } = useCommunity()
   const { community } = useCommunity()
   const isAdmin = true // TODO: Temp
   const { disconnect } = useWeb3()

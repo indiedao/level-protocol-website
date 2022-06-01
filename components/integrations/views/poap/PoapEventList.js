@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import styled from 'styled-components'
 
 const StyledTable = styled.table`
@@ -39,7 +38,8 @@ const PoapEventList = ({ events, onDelete }) => {
                 noopener="true"
                 rel="noreferrer"
               >
-                <Image alt="Poap Image" src={e.imageUrl} width={100} />
+                {/* eslint-disable-next-line */}
+                <img alt="Poap" src={e.imageUrl} width={100} />
               </a>
             </td>
             <td>{e.eventId}</td>
