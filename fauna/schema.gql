@@ -40,6 +40,8 @@ type Query {
     @resolver(name: "sort_members_by_created_at_asc", paginated: true)
   getMembersByCreatedAtDesc: [Member!]!
     @resolver(name: "sort_members_by_created_at_desc", paginated: true)
+  getCommunityPoapEvents(communityId: ID!): [CommunityPoapEvent!]!
+    @resolver(name: "get_community_poap_events", paginated: true)
 }
 
 # This allows updates to single fields:

@@ -1,13 +1,12 @@
 import { query as q } from 'faunadb'
 
-const CreateCommunityPoapEvents = {
-  name: 'sort_members_by_created_at_asc',
-  body: q.Query(
+export default function PaginatedQuery(args = [], match) {
+  return q.Query(
     q.Lambda(
-      ['size', 'after', 'before'],
+      [...args, 'size', 'after', 'before'],
       q.Let(
         {
-          match: q.Match(q.Index('all_members_sorted_by_created_at')),
+          match,
           page: q.If(
             q.Equals(q.Var('before'), null),
             q.If(
@@ -24,13 +23,8 @@ const CreateCommunityPoapEvents = {
             }),
           ),
         },
-        q.Map(
-          q.Var('page'),
-          q.Lambda('values', q.Get(q.Select(1, q.Var('values')))),
-        ),
+        q.Map(q.Var('page'), q.Lambda('value', q.Get(q.Var('value')))),
       ),
     ),
-  ),
+  )
 }
-
-export default CreateCommunityPoapEvents
