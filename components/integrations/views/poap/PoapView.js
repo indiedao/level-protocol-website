@@ -6,6 +6,7 @@ import useCommunity from '../../../hooks/useCommunity'
 import useWeb3 from '../../../hooks/useWeb3'
 import PoapTrigger from './PoapTrigger'
 import PoapEventInput from './PoapEventInput'
+import { useCreatePoapEvents } from './poapApi'
 
 const IntegrationsHeader = styled.div`
   margin-bottom: 3.6rem;
@@ -16,9 +17,10 @@ const PoapView = () => {
   const { community } = useCommunity()
   const isAdmin = true // TODO: Temp
   const { disconnect } = useWeb3()
+  const { isCreatingPoapEvents, createPoapEvents } = useCreatePoapEvents()
 
   const handleSubmitEventIds = async eventIds => {
-    console.log(eventIds)
+    createPoapEvents(community._id, eventIds)
   }
 
   const integrationsOptions = isAdmin ? (

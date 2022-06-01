@@ -156,3 +156,33 @@ export const GET_MEMBERS_BY_CREATED_AT_DESC = gql`
     }
   }
 `
+
+export const CREATE_POAP_EVENT = gql`
+  mutation CREATE_POAP_EVENT_MUTATION(
+    $communityId: ID!
+    $eventId: Int!
+    $fancyId: String!
+    $name: String!
+    $imageUrl: String!
+    $description: String!
+    $startDate: Date!
+    $endDate: Date!
+    $url: String!
+  ) {
+    createPoapEvent(
+      data: {
+        community: { connect: $communityId }
+        eventId: $eventId
+        fancyId: $fancyId
+        name: $name
+        imageUrl: $imageUrl
+        description: $description
+        startDate: $startDate
+        endDate: $endDate
+        url: $url
+      }
+    ) {
+      _id
+    }
+  }
+`
