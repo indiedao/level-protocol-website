@@ -1,13 +1,12 @@
-import { getTokenCount } from '../../api/poapSubgraph'
+import { getCommunityPoapEvents } from '../../api/fauna'
+import { getTokensWithEventIds } from '../../api/poapSubgraph'
 
-export const extract = async ({ addresses }) => {
-  // For each address, get POAP token count
-  const addressCounts = await Promise.all(
-    addresses.map(async address => ({
-      address,
-      count: await getTokenCount(address),
-    })),
-  )
+export const extract = async ({ communityId }) => {
+  // Get poap events for the community
+  const events = await getCommunityPoapEvents({ communityId })
+  const eventIds = events.map(event => event.eventId.toString())
 
-  return addressCounts
+  // Get tokens for the events
+  const tokens = await getTokensWithEventIds(eventIds)
+  return tokens
 }

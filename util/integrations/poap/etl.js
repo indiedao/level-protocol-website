@@ -9,17 +9,16 @@ import { transform } from './transform'
 const etl = async address => {
   // Load existing community member data
   const community = await getCommunityWithMembersHashes(address)
-  console.log({ community })
   // const { membersDataHashes } = community
 
   // Extract data
-  const extractedData = await extract({
-    addresses: ['0xf82793e75675b81b50c3101b2fdd584d946e09fd'],
-  })
+  const extractedData = await extract({ communityId: community._id })
 
-  // Transform data
-  const transformedData = transform(extractedData)
-  console.log({ transformedData })
+  console.log({ extractedData })
+
+  // // Transform data
+  // const transformedData = transform(extractedData)
+  // console.log({ transformedData })
 
   // // Load member data
   // const updatedMembersDataHashes = await load(

@@ -4,17 +4,23 @@ const graphQLClient = new GraphQLClient(
   'https://api.thegraph.com/subgraphs/name/poap-xyz/poap-xdai',
 )
 
-export const getTokenCount = async address => {
+export const getTokensWithEventIds = async eventIds => {
   const resp = await graphQLClient.request(
     `
-    query AccountTokensOwned($id: String!) {
-      account(id: $id) {
-        tokensOwned
+    query TokensWithEventIds($eventIds: [String!]!) {
+      tokens(where: { event_in: $eventIds}) {
+        id
+        owner {
+          id
+        }
+        event {
+          id
+        } 
       }
     }
   `,
-    { id: address },
+    { eventIds },
   )
 
-  return resp?.account?.tokensOwned
+  return resp?.tokens
 }
