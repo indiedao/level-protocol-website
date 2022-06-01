@@ -20,7 +20,9 @@ type Member {
 }
 
 type CommunityPoapEvent {
-  community: Community! @relation(name: "community_poap_events")
+  community: Community!
+    @relation(name: "community_poap_events")
+    @index(name: "community_poap_events_by_community")
   eventId: Int!
   fancyId: String!
   name: String!

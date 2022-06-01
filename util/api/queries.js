@@ -157,8 +157,8 @@ export const GET_MEMBERS_BY_CREATED_AT_DESC = gql`
   }
 `
 
-export const CREATE_POAP_EVENT = gql`
-  mutation CREATE_POAP_EVENT_MUTATION(
+export const CREATE_COMMUNITY_POAP_EVENT = gql`
+  mutation CREATE_COMMUNITY_POAP_EVENT_MUTATION(
     $communityId: ID!
     $eventId: Int!
     $fancyId: String!
@@ -169,7 +169,7 @@ export const CREATE_POAP_EVENT = gql`
     $endDate: Date!
     $url: String!
   ) {
-    createPoapEvent(
+    createCommunityPoapEvent(
       data: {
         community: { connect: $communityId }
         eventId: $eventId

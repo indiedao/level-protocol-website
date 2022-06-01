@@ -2,7 +2,7 @@ import { format, parse } from 'date-fns'
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
 import withValidParams from '../../util/api/withValidParams'
-import { createPoapEvent } from '../../util/api/fauna'
+import { createCommunityPoapEvent } from '../../util/api/fauna'
 import { getPoapEvent } from '../../util/api/poap'
 
 const handler = async (req, res, { auth: { address } }) => {
@@ -12,7 +12,7 @@ const handler = async (req, res, { auth: { address } }) => {
   await Promise.all(
     eventIds.map(async eventId => {
       const event = await getPoapEvent(eventId)
-      await createPoapEvent({
+      await createCommunityPoapEvent({
         communityId,
         eventId: event.id,
         fancyId: event.fancy_id,

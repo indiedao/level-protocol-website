@@ -10,7 +10,7 @@ import {
   UPDATE_MEMBER_GITHUB_MUTATION,
   GET_MEMBERS_BY_CREATED_AT_ASC,
   GET_MEMBERS_BY_CREATED_AT_DESC,
-  CREATE_POAP_EVENT,
+  CREATE_COMMUNITY_POAP_EVENT,
 } from './queries'
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
@@ -105,7 +105,7 @@ export const getAccessListMostRecent2 = async () => {
     $endDate: Date!
     $url: String!
 */
-export const createPoapEvent = async ({
+export const createCommunityPoapEvent = async ({
   communityId,
   eventId,
   fancyId,
@@ -116,7 +116,7 @@ export const createPoapEvent = async ({
   endDate,
   url,
 }) => {
-  const resp = await graphQLClient.request(CREATE_POAP_EVENT, {
+  const resp = await graphQLClient.request(CREATE_COMMUNITY_POAP_EVENT, {
     communityId,
     eventId,
     fancyId,
@@ -127,5 +127,5 @@ export const createPoapEvent = async ({
     endDate,
     url,
   })
-  return resp.createPoapEvent.data
+  return resp.createCommunityPoapEvent.data
 }
