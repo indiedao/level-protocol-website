@@ -45,7 +45,7 @@ const GithubCallback = () => {
     }
 
     if (bearerToken && !loading) handleCode()
-  }, [parseCode, attest, bearerToken, loading, router])
+  }, [parseCode, attest, bearerToken, loading, router, connect])
 
   return <h1>Logging in...</h1>
 }

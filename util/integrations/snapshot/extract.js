@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 
 const GET_PROPOSALS_QUERY = gql`
   query GET_PROPOSALS_QUERY($ens: String!) {
-    proposals(where: { space_in: [$ens] }) {
+    proposals(where: { space_in: [$ens], state: "closed" }) {
       id
     }
   }
@@ -15,7 +15,6 @@ const GET_VOTES_QUERY = gql`
       id
       voter
       created
-      choice
     }
   }
 `
@@ -28,24 +27,13 @@ export const extract = async ({ ens }) => {
     ens,
   })
 
-  // Fetch votes for each proposal:
-  let allVotes = []
-  for (let i = 0; i < proposals.length; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    const { votes } = await graphQLClient.request(GET_VOTES_QUERY, {
-      proposalId: proposals[i].id,
-    })
-    allVotes = [...allVotes, ...votes]
-  }
+  return Promise.all(
+    proposals.map(async ({ id: proposalId }) => {
+      const { votes } = await graphQLClient.request(GET_VOTES_QUERY, {
+        proposalId,
+      })
 
-  // Map reduce each member's vote count:
-  const memberVoteCounts = {}
-  allVotes.forEach(vote => {
-    if (!memberVoteCounts[vote.voter]) memberVoteCounts[vote.voter] = 0
-    memberVoteCounts[vote.voter] += 1
-  })
-
-  return {
-    memberVoteCounts,
-  }
+      return { id: proposalId, votes, ens }
+    }),
+  )
 }

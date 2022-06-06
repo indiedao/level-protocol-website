@@ -87,26 +87,17 @@ export default class MyDocument extends Document {
             as="font"
             crossOrigin=""
           />
-          {['16x16', '32x32', '96x96'].map(size => (
-            <link
-              rel="icon"
-              type="image/png"
-              href={`/images/favicons/favicon-${size}.png`}
-              sizes={size}
-              key={size}
-            />
-          ))}
-          {['120x120', '152x152', '167x167', '180x180', '512x512'].map(size => (
-            <link
-              rel="apple-touch-icon"
-              type="image/png"
-              href={`/images/favicons/apple-touch-icon-${size}.png`}
-              sizes={size}
-              key={size}
-            />
-          ))}
-          <meta name="msapplication-TileColor" content="#d7d7d7" />
-          <meta name="msapplication-TileImage" content="/browserconfig.xml" />
+          <link rel="icon" href="/images/favicons/favicon.ico" sizes="any" />
+          <link
+            rel="icon"
+            href="/images/favicons/favicon.svg"
+            type="image/svg+xml"
+          />
+          <link
+            rel="apple-touch-icon"
+            href="/images/favicons/apple-touch-icon.png"
+          />
+          <link rel="manifest" href="/manifest.webmanifest" />
           <meta
             name="twitter:image"
             content={`${origin}/images/favicons/share.png`}

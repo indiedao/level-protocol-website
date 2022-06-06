@@ -1,7 +1,7 @@
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
 import withValidParams from '../../util/api/withValidParams'
-import { createCommunity } from '../../util/fauna'
+import { createCommunity } from '../../util/api/fauna'
 
 const handler = async (req, res, { auth: { address } }) => {
   // Use placeholder members hash:

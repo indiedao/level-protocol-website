@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
-
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
 import ConfiguratorControlsView from './ConfiguratorControlsView'
 import ConfiguratorContainer from '../ui/ConfiguratorContainer'
 import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
+import TokenView from '../../token/view/TokenView'
+import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
 import { playSound } from '../../../util/audio'
+import ConfiguratorModal from '../ui/ConfiguratorModal'
+import ConfiguratorRecaptcha from '../ui/ConfiguratorRecaptcha'
 
 const STEPS = {
   READY: 'READY',
+  HUMAN_VERIFY: 'HUMAN_VERIFY',
   SAVE: 'SAVE',
   PREMINT: 'PREMINT',
   MINT: 'MINT',
@@ -20,6 +24,7 @@ const STEPS = {
 
 const STEP_STATUS_MAP = {
   READY: 'ready',
+  HUMAN_VERIFY: 'verifying human',
   SAVE: 'saving...',
   PREMINT: 'coming soon...',
   MINT: 'minting...',
@@ -28,13 +33,15 @@ const STEP_STATUS_MAP = {
 }
 
 const SaveConfiguratorView = () => {
-  const [step, setStep] = useState(STEPS.READY)
+  const [step, setStep] = useState(STEPS.HUMAN_VERIFY)
   const [donationAmount, setDonationAmount] = useState(
     ethers.utils.parseEther('0.01'),
   )
   const [errorMessage, setErrorMessage] = useState('')
-  const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
+  const { flow, nftAddress, nftId, previousStep, save, setStatusIndicator } =
+    useConfigurator()
   const { address } = useWeb3()
+  const [isHuman, setIsHuman] = useState(false)
 
   // Set status indicator message:
   useEffect(() => {
@@ -43,7 +50,23 @@ const SaveConfiguratorView = () => {
     })
   }, [setStatusIndicator, step])
 
+  const handleReCAPTCHASuccess = () => {
+    setIsHuman(true)
+    setStep(STEPS.READY)
+  }
+
+  const handleSubmitError = (error = 'are you human?') => {
+    setErrorMessage(`error: ${error}`)
+    playSound('button_cancel.wav')
+    setStep(STEPS.ERROR)
+  }
+
   const handleSave = async () => {
+    if (!isHuman) {
+      handleSubmitError()
+      return
+    }
+
     try {
       setStep(STEPS.SAVE)
       await save()
@@ -54,13 +77,11 @@ const SaveConfiguratorView = () => {
         setStep(STEPS.CONFIRMATION)
       }
     } catch (error) {
-      setErrorMessage(
+      handleSubmitError(
         error.message
           ? error.message.toLowerCase()
           : 'error: access list is probably full :(',
       )
-      playSound('button_cancel.wav')
-      setStep(STEPS.ERROR)
     }
   }
 
@@ -91,6 +112,7 @@ const SaveConfiguratorView = () => {
 
   let controls = {}
   switch (step) {
+    case STEPS.HUMAN_VERIFY:
     case STEPS.READY:
     case STEPS.ERROR:
       controls = {
@@ -116,43 +138,65 @@ const SaveConfiguratorView = () => {
     default:
   }
 
+  let prompt
+  switch (step) {
+    case STEPS.READY:
+      prompt = (
+        <ConfiguratorPrompt message="ready?" actionA="sign" actionB="go back" />
+      )
+      break
+    case STEPS.SAVE:
+      prompt = <ConfiguratorPrompt message="saving..." />
+      break
+    case STEPS.PREMINT:
+      prompt = (
+        <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
+      )
+      break
+    case STEPS.MINT:
+      prompt = <ConfiguratorPrompt message="minting..." />
+      break
+    case STEPS.CONFIRMATION:
+      prompt = (
+        <ConfiguratorPrompt
+          message="well done, your journey will begin soon..."
+          actionA="bring a friend"
+        />
+      )
+      break
+    case STEPS.ERROR:
+      prompt = (
+        <ConfiguratorPrompt
+          message={errorMessage}
+          actionA="try again?"
+          actionB="go back"
+        />
+      )
+      break
+    default:
+    // leave prompt undefined
+  }
+
   return (
     <ConfiguratorContainer>
-      <ConfiguratorScreen>
-        {step === STEPS.READY ? (
-          <ConfiguratorPrompt
-            message="ready?"
-            actionA="sign"
-            actionB="go back"
+      <ConfiguratorScreen withNav>
+        {step === STEPS.HUMAN_VERIFY ? (
+          <ConfiguratorRecaptcha
+            onReCAPTCHASuccess={handleReCAPTCHASuccess}
+            onReCAPTCHAFail={handleSubmitError}
           />
-        ) : undefined}
-
-        {step === STEPS.SAVE ? (
-          <ConfiguratorPrompt message="saving..." />
-        ) : undefined}
-
-        {step === STEPS.PREMINT ? (
-          <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
-        ) : undefined}
-
-        {step === STEPS.MINT ? (
-          <ConfiguratorPrompt message="minting..." />
-        ) : undefined}
-
-        {step === STEPS.CONFIRMATION ? (
-          <ConfiguratorPrompt
-            message="well done, your journey will begin soon..."
-            actionA="bring a friend"
-          />
-        ) : undefined}
-
-        {step === STEPS.ERROR ? (
-          <ConfiguratorPrompt
-            message={errorMessage}
-            actionA="try again?"
-            actionB="go back"
-          />
-        ) : undefined}
+        ) : (
+          <>
+            <NFTArrowTokenViewContainer>
+              <TokenView
+                address={address}
+                nftId={nftId}
+                nftAddress={nftAddress}
+              />
+            </NFTArrowTokenViewContainer>
+            <ConfiguratorModal>{prompt}</ConfiguratorModal>
+          </>
+        )}
       </ConfiguratorScreen>
       <ConfiguratorControlsView {...controls} />
     </ConfiguratorContainer>

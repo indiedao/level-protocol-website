@@ -65,6 +65,7 @@ Local development: set values in .env
 | PINATA_PUBLIC_API_KEY   | ``      | Public key for pinata data storage.                  |
 | PINATA_PRIVATE_API_KEY  | ``      | Private key for pinata data storage.                 |
 | GITHUB_CLIENT_SECRET    | ``      | Private key for Github OAuth client flow.            |
+| RECAPTCHA_SECRET_KEY    | ``      | Secret env var for recaptcha.                        |
 
 #### System Environment Variables
 
@@ -79,12 +80,27 @@ To learn more about Next.js, take a look at the following resources:
 
 ## Database
 
-Create a database in FaunaDB following this guide
-https://docs.fauna.com/fauna/current/learn/quick_start/gql_quick_start
+### Create a New Database for Local Development
 
-and then go to the graphql option in the left manu and import the schema file from
+1. Create a database in FaunaDB following this guide
+   https://docs.fauna.com/fauna/current/learn/quick_start/gql_quick_start
 
-`schemas/schema.gql`
+2. In order to actually use your database in your application, create a secret key by going to `Security` menu item:
 
-Create a secret in the security option for the database and make sure you're using the right url
+![image](https://user-images.githubusercontent.com/2170871/160619958-a8b9277e-5142-4d00-94c4-180d26c53e4e.png)
 
+3. Copy the displayed value and paste it in your `.env.local` file in a variable named `FAUNADB_SECRET`. Note: make sure to reset your app to apply changes.
+
+![image](https://user-images.githubusercontent.com/2170871/160620425-d4f3a034-a696-4d8a-8b49-8003d0284dd6.png)
+
+4. In your terminal run `npm run fgu` to upload Fauna schema, functions and other resources (see `Manage Database Resouces` below for more info).
+
+### Manage Database Resources
+
+[fauna-gql-upload](https://fgu-docs.com/) manages Fauna GraphQL schema, functions, indexes and more.
+
+All Fauna resources are defined in the `/fauna` directory.
+
+To update your database with the latest schema and resources, run `npm run fgu` in your terminal.
+
+Updates will automatically be applied to preview, dev and production databases in CI via the `npm run fgu:vercel` command.
