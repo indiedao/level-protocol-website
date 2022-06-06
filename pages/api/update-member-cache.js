@@ -1,7 +1,7 @@
 import { fetchNFTSrc, provider } from '../../util/api/alchemy'
 import withMethods from '../../util/api/withMethods'
 import withValidParams from '../../util/api/withValidParams'
-import { findMemberByAddress, updateMemberCache } from '../../util/fauna'
+import { findMemberByAddress, updateMemberCache } from '../../util/api/fauna'
 
 const handler = async (req, res) => {
   const { address } = req.body

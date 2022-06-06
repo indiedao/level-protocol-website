@@ -1,21 +1,16 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-import { getAccessListFirst480, getAccessListMostRecent } from '../util/fauna'
+import {
+  getAccessListFirst480,
+  getAccessListMostRecent,
+} from '../util/api/fauna'
 import Public from '../components/layouts/Public'
 import PublicMenuBar from '../components/ui/PublicMenuBar'
-import Marquee from '../components/ui/Marquee'
 import AccessListMemberGrid from '../components/access-list/ui/AccessListMemberGrid'
 import { Body1, H1 } from '../components/ui/AltTypography'
 import Button from '../components/ui/Button'
 
 const AccessListPage = ({ first480 }) => {
-  // Create string of repeating access list text:
-  let accessListText = ''
-  for (let i = 0; i < 100; i += 1) {
-    accessListText += 'ACCESS LIST—'
-  }
-  accessListText += 'ACCESS LIST'
-
   // Split up first three access list groups:
   const first30 = first480.slice(0, 30)
   const second100 = first480.slice(30, 100)
@@ -25,9 +20,6 @@ const AccessListPage = ({ first480 }) => {
     <Public variant="light">
       <PublicMenuBar />
       <Container>
-        {/*
-          <Marquee content={accessListText} duration={1000} />
-        */}
         <HeroContainer>
           <Body1>
             A limited number of access passes are available for early
