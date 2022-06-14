@@ -67,6 +67,7 @@ const Menu = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: ${props => props.theme.cursors.select};
 
     > *:nth-child(n + 2) {
       margin-left: 1.24rem;

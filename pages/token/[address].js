@@ -6,6 +6,7 @@ import TokenView from '../../components/token/view/TokenView'
 import { Body1 } from '../../components/ui/Typography'
 import { A, H4 } from '../../components/ui/AltTypography'
 import theme from '../../util/theme'
+import RefreshTokenButtonView from '../../components/token/view/RefreshTokenButtonView'
 
 const Level = () => {
   const [member, setMember] = useState()
@@ -47,6 +48,9 @@ const Level = () => {
         <Layout>
           <Container>
             {member && (
+              <RefreshTokenButtonView address={router.query.address} />
+            )}
+            {member && (
               <TokenView
                 address={router.query.address}
                 nftId={member.nftId}
@@ -84,7 +88,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 600px;
   display: grid;
-  grid-template-rows: auto 60px;
+  grid-template-rows: 80px auto 60px;
   padding: 80px 50px;
 `
 
