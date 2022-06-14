@@ -9,7 +9,7 @@ import Public from '../components/layouts/Public'
 import { H2, H3, H4, Body1 } from '../components/ui/Typography'
 import Button from '../components/ui/Button'
 import Link from '../components/ui/Link'
-import MenuBar from '../components/ui/MenuBar'
+import PublicMenuBar from '../components/ui/PublicMenuBar'
 import LevelWindow from '../components/ui/LevelWindow'
 import Hero from '../components/ui/Hero/Hero'
 import Footer from '../components/ui/Footer'
@@ -119,7 +119,7 @@ const Page = () => {
       </Head>
       <main>
         <Public>
-          <MenuBar>
+          <PublicMenuBar>
             <NextLink href="/join">join</NextLink>
             <a
               href="https://indiedao.gitbook.io/indiedao/products/lvl-protocol"
@@ -128,7 +128,7 @@ const Page = () => {
             >
               docs
             </a>
-          </MenuBar>
+          </PublicMenuBar>
           <PageContent>
             <LevelWindow
               backgroundColor="vibrantBlack"

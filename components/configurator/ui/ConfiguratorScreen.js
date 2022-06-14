@@ -17,6 +17,7 @@ const Frame = styled.div`
 `
 
 const Screen = styled.div`
+  position: relative;
   display: grid;
   grid-template-rows: ${({ withNav }) =>
     withNav ? 'min-content auto' : 'auto'};

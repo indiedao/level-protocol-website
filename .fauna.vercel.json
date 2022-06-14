@@ -1,0 +1,3 @@
+{
+  "secretEnv": "FAUNADB_SECRET"
+}
