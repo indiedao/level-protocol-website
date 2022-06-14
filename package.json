@@ -67,6 +67,7 @@
     "web3": "^1.7.0",
     "web3-utils": "^1.7.1",
     "web3.storage": "^3.5.1",
+    "node-fetch": "^2.6.7",
     "web3modal": "^1.9.4"
   },
   "devDependencies": {
@@ -102,7 +103,6 @@
     "hardhat-abi-exporter": "^2.6.1",
     "hardhat-gas-reporter": "^1.0.4",
     "jest": "^27.4.4",
-    "node-fetch": "^2.6.7",
     "prettier": "^2.5.1",
     "react-is": "^17.0.1"
   }

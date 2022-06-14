@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
 import withValidParams from '../../util/api/withValidParams'
