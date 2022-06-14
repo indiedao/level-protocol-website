@@ -34,7 +34,7 @@ type Query {
 # TODO: switch to using partial update mutations (when ready)
 # https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
 input CommunityInput {
-  address: String!
+  address: String
   createdAt: Time
   name: String
   membersHash: String
@@ -46,7 +46,7 @@ input CommunityInput {
 # TODO: switch to using partial update mutations (when ready)
 # https://docs.fauna.com/fauna/current/api/graphql/previews/partial_update_mutation
 input MemberInput {
-  address: String!
+  address: String
   createdAt: Time
   nftAddress: String
   nftId: String
