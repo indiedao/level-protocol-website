@@ -7,6 +7,7 @@ import ConfiguratorScreen from '../ui/ConfiguratorScreen'
 import ConfiguratorNavView from './ConfiguratorNavView'
 import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
 import useConfigurator from '../../hooks/useConfigurator'
+import ConfiguratorLoading from '../ui/ConfiguratorLoading'
 
 const MESSAGE_STEPS = [
   'The time for us to rebuild is now...',
@@ -19,11 +20,14 @@ const ConnectConfiguratorView = () => {
   const [step, setStep] = useState(0)
   const { connect, networkError, web3 } = useWeb3()
   const { setStatusIndicator } = useConfigurator()
+  const [loading, setLoading] = useState(false)
 
   const isLastStep = step === MESSAGE_STEPS.length
 
   let content
-  if (isLastStep && networkError) {
+  if (loading) {
+    content = <ConfiguratorLoading />
+  } else if (isLastStep && networkError) {
     // Wrong network:
     content = (
       <ConfiguratorPrompt
@@ -68,7 +72,8 @@ const ConnectConfiguratorView = () => {
         console.log(e) // eslint-disable-line no-console
       }
     } else {
-      connect()
+      setLoading(true)
+      connect().finally(() => setLoading(false))
     }
   }
 

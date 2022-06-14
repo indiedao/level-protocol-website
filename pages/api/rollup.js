@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import withAuth from '../../util/api/withAuth'
 import withMethods from '../../util/api/withMethods'
-import { findCommunityByAddress } from '../../util/fauna'
+import { findCommunityByAddress } from '../../util/api/fauna'
 
 // TODO: break out into a set of util functions:
 const ROLLUP_FUNCTIONS = {
@@ -58,6 +58,7 @@ const handler = async (req, res, { auth: { address } }) => {
         allMembers: members,
         address: memberAddress,
       })
+      // eslint-disable-next-line no-console
       console.log(
         `member: [${memberAddress}] skill: [${skill}] rollup: [${MockRollupConfig[skill]}]: ${value}`,
       )

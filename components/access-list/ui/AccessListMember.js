@@ -73,11 +73,11 @@ const BORDER_RADIUS_BY_SIZE = {
 
 const Avatar = styled.div`
   ${({ size }) => css`
-    ${size == 'small' &&
+    ${size === 'small' &&
     css`
       background-color: ${({ backgroundColor }) => backgroundColor};
     `}
-    ${size != 'small' &&
+    ${size !== 'small' &&
     css`
       background: url(${({ src }) => src});
       background-size: contain;

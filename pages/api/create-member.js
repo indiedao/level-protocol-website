@@ -2,7 +2,7 @@ import withMethods from '../../util/api/withMethods'
 import withAuth from '../../util/api/withAuth'
 import withValidParams from '../../util/api/withValidParams'
 import { getNftContract } from '../../util/contract'
-import { createMember } from '../../util/fauna'
+import { createMember } from '../../util/api/fauna'
 
 async function verifyOwnership({ address, nftAddress, nftId }) {
   // Allow 0x0 for custom lvl PFP:
