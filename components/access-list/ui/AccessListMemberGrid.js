@@ -8,7 +8,8 @@ const AccessListMemberGrid = ({ members, size }) => (
       <AccessListMember
         key={member._id}
         src={member.nftSrc || '/images/illustrations/nft/nft.png'}
-        address={member.ens || member.address}
+        displayAddress={member.ens || member.address}
+        fullAddress={member.address}
         size={size}
         color={`hsl(${member.colorHue}deg, 100%, ${member.colorLightness}%)`}
       />

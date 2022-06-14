@@ -4,11 +4,17 @@ import Link from 'next/link'
 import { Body1 } from '../../ui/AltTypography'
 import useTruncatedAddress from '../../hooks/useTruncatedAddress'
 
-const AccessListMember = ({ size, address, src, color }) => {
-  const { truncatedAddress } = useTruncatedAddress(address)
+const AccessListMember = ({
+  size,
+  displayAddress,
+  fullAddress,
+  src,
+  color,
+}) => {
+  const { truncatedAddress } = useTruncatedAddress(displayAddress)
 
   return (
-    <Link href={`/token/${address}`} passHref>
+    <Link href={`/token/${fullAddress}`} passHref>
       <Wrapper>
         <Avatar
           src={src}
@@ -27,7 +33,8 @@ const AccessListMember = ({ size, address, src, color }) => {
 
 AccessListMember.propTypes = {
   size: PropTypes.oneOf(['large', 'medium', 'small']).isRequired,
-  address: PropTypes.string.isRequired,
+  displayAddress: PropTypes.string.isRequired,
+  fullAddress: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   color: PropTypes.string,
 }
