@@ -174,3 +174,59 @@ export const GET_MEMBERS_BY_CREATED_AT_DESC = gql`
     }
   }
 `
+
+export const CREATE_COMMUNITY_POAP_EVENT = gql`
+  mutation CREATE_COMMUNITY_POAP_EVENT_MUTATION(
+    $communityId: ID!
+    $eventId: Int!
+    $fancyId: String!
+    $name: String!
+    $imageUrl: String!
+    $description: String!
+    $startDate: Date!
+    $endDate: Date!
+    $url: String!
+  ) {
+    createCommunityPoapEvent(
+      data: {
+        community: { connect: $communityId }
+        eventId: $eventId
+        fancyId: $fancyId
+        name: $name
+        imageUrl: $imageUrl
+        description: $description
+        startDate: $startDate
+        endDate: $endDate
+        url: $url
+      }
+    ) {
+      _id
+    }
+  }
+`
+
+export const GET_COMMUNITY_POAP_EVENTS = gql`
+  query GET_COMMUNITY_POAP_EVENTS($communityId: ID!) {
+    getCommunityPoapEvents(communityId: $communityId) {
+      data {
+        _id
+        eventId
+        fancyId
+        name
+        imageUrl
+        description
+        startDate
+        endDate
+        url
+      }
+    }
+  }
+`
+
+export const DELETE_COMMUNITY_POAP_EVENT = gql`
+  mutation DELETE_COMMUNITY_POAP_EVENT($id: ID!) {
+    deleteCommunityPoapEvent(id: $id) {
+      _id
+    }
+  }
+`
