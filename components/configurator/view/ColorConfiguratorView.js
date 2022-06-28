@@ -22,11 +22,10 @@ const ColorConfiguratorView = () => {
     colorLightness,
     nextStep,
     previousStep,
-    nftId,
-    nftAddress,
+    nftSrc,
     setStatusIndicator,
   } = useConfigurator()
-  const { address } = useWeb3()
+  const { address, ens } = useWeb3()
 
   // Update status indicator with color:
   useEffect(() => {
@@ -71,8 +70,8 @@ const ColorConfiguratorView = () => {
         <div>
           <TokenView
             address={address}
-            nftId={nftId}
-            nftAddress={nftAddress}
+            nftSrc={nftSrc}
+            ens={ens}
             colorHue={colorHue}
             colorLightness={colorLightness}
           />
