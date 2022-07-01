@@ -35,6 +35,14 @@ type CommunityPoapEvent {
   url: String!
 }
 
+type MembersCounter {
+  counter: Int!
+}
+
+type CommunitiesCounter {
+  counter: Int!
+}
+
 type Query {
   findCommunityByAddress(address: String!): Community
   findMemberByAddress(address: String!): Member
@@ -44,6 +52,16 @@ type Query {
     @resolver(name: "sort_members_by_created_at_desc", paginated: true)
   getCommunityPoapEvents(communityId: ID!): [CommunityPoapEvent!]!
     @resolver(name: "get_community_poap_events", paginated: true)
+
+  allCommunities: [Community!]!
+
+  nextMembersCounter: MembersCounter! @resolver(name: "increment_members_counter")
+  previousMembersCounter: MembersCounter! @resolver(name: "decrement_members_counter")
+  membersCount: MembersCounter!
+
+  nextCommunitiesCounter: CommunitiesCounter! @resolver(name: "increment_communities_counter")
+  previousCommunitiesCounter: CommunitiesCounter! @resolver(name: "decrement_communities_counter")
+  communitiesCount: CommunitiesCounter!
 }
 
 # This allows updates to single fields:
