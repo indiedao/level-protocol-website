@@ -21,15 +21,14 @@ const ColorView = () => {
     colorLightness,
     flow,
     nextStep,
-    nftAddress,
-    nftId,
+    nftSrc,
     previousStep,
     setColorHue,
     setColorLightness,
     setStatusIndicator,
     setStep,
   } = useConfigurator()
-  const { address } = useWeb3()
+  const { address, ens } = useWeb3()
 
   // Update status indicator with color:
   useEffect(() => {
@@ -80,8 +79,8 @@ const ColorView = () => {
       <Nav currentStep={currentStep} flow={flow} setStep={setStep}>
         <TokenView
           address={address}
-          nftId={nftId}
-          nftAddress={nftAddress}
+          nftSrc={nftSrc}
+          ens={ens}
           colorHue={colorHue}
           colorLightness={colorLightness}
         />

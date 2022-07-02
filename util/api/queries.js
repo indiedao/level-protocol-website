@@ -108,6 +108,8 @@ export const FIND_MEMBER_BY_ADDRESS_QUERY = gql`
       colorHue
       colorLightness
       github
+      nftSrc
+      ens
     }
   }
 `
@@ -117,6 +119,20 @@ export const UPDATE_MEMBER_GITHUB_MUTATION = gql`
     updateMember(id: $id, data: { github: $github }) {
       _id
       github
+    }
+  }
+`
+
+export const UPDATE_MEMBER_CACHE_MUTATION = gql`
+  mutation UPDATE_MEMBER_CACHE_MUTATION(
+    $id: ID!
+    $nftSrc: String!
+    $ens: String!
+  ) {
+    updateMember(id: $id, data: { nftSrc: $nftSrc, ens: $ens }) {
+      _id
+      nftSrc
+      ens
     }
   }
 `
@@ -132,6 +148,8 @@ export const GET_MEMBERS_BY_CREATED_AT_ASC = gql`
         colorHue
         colorLightness
         github
+        nftSrc
+        ens
       }
       after
       before
@@ -153,6 +171,62 @@ export const GET_MEMBERS_BY_CREATED_AT_DESC = gql`
       }
       after
       before
+    }
+  }
+`
+
+export const CREATE_COMMUNITY_POAP_EVENT = gql`
+  mutation CREATE_COMMUNITY_POAP_EVENT_MUTATION(
+    $communityId: ID!
+    $eventId: Int!
+    $fancyId: String!
+    $name: String!
+    $imageUrl: String!
+    $description: String!
+    $startDate: Date!
+    $endDate: Date!
+    $url: String!
+  ) {
+    createCommunityPoapEvent(
+      data: {
+        community: { connect: $communityId }
+        eventId: $eventId
+        fancyId: $fancyId
+        name: $name
+        imageUrl: $imageUrl
+        description: $description
+        startDate: $startDate
+        endDate: $endDate
+        url: $url
+      }
+    ) {
+      _id
+    }
+  }
+`
+
+export const GET_COMMUNITY_POAP_EVENTS = gql`
+  query GET_COMMUNITY_POAP_EVENTS($communityId: ID!) {
+    getCommunityPoapEvents(communityId: $communityId) {
+      data {
+        _id
+        eventId
+        fancyId
+        name
+        imageUrl
+        description
+        startDate
+        endDate
+        url
+      }
+    }
+  }
+`
+
+export const DELETE_COMMUNITY_POAP_EVENT = gql`
+  mutation DELETE_COMMUNITY_POAP_EVENT($id: ID!) {
+    deleteCommunityPoapEvent(id: $id) {
+      _id
     }
   }
 `
