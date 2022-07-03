@@ -3,12 +3,11 @@ import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 import useWeb3 from '../../hooks/useWeb3'
 import useConfigurator from '../../hooks/useConfigurator'
 import { HTTPRPC } from '../../../util/constants'
+import Nav from '../ui/Nav'
 import { Body1 } from '../../ui/Typography'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
 import TokenView from '../../token/view/TokenView'
-import ConfiguratorContainer from '../ui/ConfiguratorContainer'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
-import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
+import Device from '../ui/Device'
+import NFTSelectorArrows from '../ui/NFTSelectorArrows'
 
 const web3 = createAlchemyWeb3(HTTPRPC)
 const DEFAULT_NFTS = []
@@ -27,8 +26,15 @@ const NFTConfiguratorView = () => {
   const [selectedNftIndex, setSelectedNftIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const { address, ens } = useWeb3()
-  const { nextStep, previousStep, setNft, setStatusIndicator } =
-    useConfigurator()
+  const {
+    currentStep,
+    flow,
+    nextStep,
+    previousStep,
+    setNft,
+    setStatusIndicator,
+    setStep,
+  } = useConfigurator()
 
   useEffect(() => {
     const nft = nfts[selectedNftIndex]
@@ -114,23 +120,17 @@ const NFTConfiguratorView = () => {
   }
 
   return (
-    <ConfiguratorContainer>
-      <ConfiguratorScreen withNav>
-        <NFTArrowTokenViewContainer>
+    <Device right={handleRight} left={handleLeft} a={nextStep} b={previousStep}>
+      <Nav currentStep={currentStep} flow={flow} setStep={setStep}>
+        <NFTSelectorArrows>
           <TokenView
             address={address}
             nftSrc={nfts[selectedNftIndex].src}
             ens={ens}
           />
-        </NFTArrowTokenViewContainer>
-      </ConfiguratorScreen>
-      <ConfiguratorControlsView
-        right={handleRight}
-        left={handleLeft}
-        a={nextStep}
-        b={previousStep}
-      />
-    </ConfiguratorContainer>
+        </NFTSelectorArrows>
+      </Nav>
+    </Device>
   )
 }
 

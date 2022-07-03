@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 import Button from './Button'
 
 const StyledArrowPad = styled.div`
+  align-self: center;
+  justify-self: start;
   display: grid;
   align-items: center;
   justify-items: center;
-  grid-template-columns: 6rem 1.2rem 4.8rem 1.2rem 6rem;
-  grid-template-rows: 6rem 1.2rem 4.8rem 1.2rem 6rem;
+  grid-template-columns: 5fr 1fr 4fr 1fr 5fr;
+  grid-template-rows: 5fr 1fr 4fr 1fr 5fr;
 
   > * {
     &:nth-child(1) {

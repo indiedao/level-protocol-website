@@ -5,27 +5,35 @@ import ASvg from '../assets/a.svg'
 import BSvg from '../assets/b.svg'
 import Button from './Button'
 
-const Wrapper = styled.div`
-  align-self: center;
+const StyledABPad = styled.div`
+  align-self: end;
+  justify-self: end;
   display: grid;
   justify-items: center;
-  grid-gap: 0.4rem;
+  grid-gap: min(0.666vw, 0.4rem);
+  margin: auto max(-0.333vw, -0.2rem) min(5vw, 3rem) auto;
   transform: rotate(-45deg) translate(7%, -5%);
+  transform-origin: center;
 `
 
 const Labels = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 15.5rem;
+  margin: 0 auto;
+  width: min(25.833vw, 15.5rem);
+
+  > svg {
+    height: min(4.666vw, 2.8rem);
+  }
 `
 
-const StyledABPad = styled.div`
+const Pad = styled.div`
   display: grid;
   align-items: center;
   justify-items: center;
   grid-template-columns: repeat(2, min-content);
-  grid-gap: 2rem;
-  padding: 1.6rem 2rem;
+  grid-gap: min(3.333vw, 2rem);
+  padding: min(2.666vw, 1.6rem) min(3.333vw, 2rem);
   background: linear-gradient(
       180deg,
       rgba(214, 209, 190, 0) 0.95%,
@@ -33,7 +41,7 @@ const StyledABPad = styled.div`
     ),
     linear-gradient(0deg, rgba(214, 209, 190, 0.08) 74.73%, #d6d1be 99.33%),
     #f1eed8;
-  border-radius: 50rem;
+  border-radius: 1000rem;
 
   > button {
     transform: rotate(45deg);
@@ -41,16 +49,16 @@ const StyledABPad = styled.div`
 `
 
 const ABPad = ({ a, b }) => (
-  <Wrapper>
+  <StyledABPad>
     <Labels>
-      <BSvg height={28} />
-      <ASvg height={28} />
+      <BSvg />
+      <ASvg />
     </Labels>
-    <StyledABPad>
+    <Pad>
       <Button onClick={b} text="B" variant="b" />
       <Button onClick={a} text="A" variant="a" />
-    </StyledABPad>
-  </Wrapper>
+    </Pad>
+  </StyledABPad>
 )
 
 ABPad.propTypes = {

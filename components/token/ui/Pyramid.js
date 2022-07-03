@@ -9,11 +9,19 @@ import {
   outerShapeBackFaceFs,
   outerShapeBackFaceVs,
 } from './pyramid-shapes/outerShapeBackFace'
-import { throttle } from '../util/throttle'
-import { clamp, cubicInterpolation, radians } from '../util/pyramid'
-import theme from '../util/theme'
+import { throttle } from '../../../util/throttle'
+import { clamp, cubicInterpolation, radians } from '../../../util/pyramid'
+import theme from '../../../util/theme'
 
 const ROTATION_INTERVAL = 2500
+
+const Canvas = styled.canvas`
+  display: block;
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  max-height: 70vw;
+`
 
 const Pyramid = ({ backgroundColor = theme.colors.vibrantScreen }) => {
   const canvasRef = useRef(null)
@@ -524,11 +532,5 @@ const Pyramid = ({ backgroundColor = theme.colors.vibrantScreen }) => {
   }, [backgroundColor])
   return <Canvas ref={canvasRef} />
 }
-
-const Canvas = styled.canvas`
-  width: 100%;
-  height: 100%;
-  display: block;
-`
 
 export default Pyramid

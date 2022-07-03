@@ -2,19 +2,14 @@ import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
-import ConfiguratorContainer from '../ui/ConfiguratorContainer'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
-import ConfiguratorPrompt from '../ui/ConfiguratorPrompt'
-import TokenView from '../../token/view/TokenView'
-import NFTArrowTokenViewContainer from '../ui/NFTArrowTokenViewContainer'
+import Device from '../ui/Device'
+import Prompt from '../ui/Prompt'
 import { playSound } from '../../../util/audio'
-import ConfiguratorModal from '../ui/ConfiguratorModal'
-import ConfiguratorRecaptcha from '../ui/ConfiguratorRecaptcha'
+import Recaptcha from '../ui/Recaptcha'
 
 const STEPS = {
-  READY: 'READY',
   HUMAN_VERIFY: 'HUMAN_VERIFY',
+  READY: 'READY',
   SAVE: 'SAVE',
   PREMINT: 'PREMINT',
   MINT: 'MINT',
@@ -23,8 +18,8 @@ const STEPS = {
 }
 
 const STEP_STATUS_MAP = {
-  READY: 'ready',
   HUMAN_VERIFY: 'verifying human',
+  READY: 'ready',
   SAVE: 'saving...',
   PREMINT: 'coming soon...',
   MINT: 'minting...',
@@ -38,8 +33,7 @@ const SaveConfiguratorView = () => {
     ethers.utils.parseEther('0.01'),
   )
   const [errorMessage, setErrorMessage] = useState('')
-  const { flow, nftAddress, nftId, previousStep, save, setStatusIndicator } =
-    useConfigurator()
+  const { flow, previousStep, save, setStatusIndicator } = useConfigurator()
   const { address } = useWeb3()
   const [isHuman, setIsHuman] = useState(false)
 
@@ -113,6 +107,10 @@ const SaveConfiguratorView = () => {
   let controls = {}
   switch (step) {
     case STEPS.HUMAN_VERIFY:
+      controls = {
+        b: previousStep,
+      }
+      break
     case STEPS.READY:
     case STEPS.ERROR:
       controls = {
@@ -138,68 +136,42 @@ const SaveConfiguratorView = () => {
     default:
   }
 
-  let prompt
-  switch (step) {
-    case STEPS.READY:
-      prompt = (
-        <ConfiguratorPrompt message="ready?" actionA="sign" actionB="go back" />
-      )
-      break
-    case STEPS.SAVE:
-      prompt = <ConfiguratorPrompt message="saving..." />
-      break
-    case STEPS.PREMINT:
-      prompt = (
-        <ConfiguratorPrompt message="Minting coming soon..." actionA="mint" />
-      )
-      break
-    case STEPS.MINT:
-      prompt = <ConfiguratorPrompt message="minting..." />
-      break
-    case STEPS.CONFIRMATION:
-      prompt = (
-        <ConfiguratorPrompt
+  return (
+    <Device {...controls}>
+      {step === STEPS.HUMAN_VERIFY ? (
+        <Recaptcha
+          onReCAPTCHASuccess={handleReCAPTCHASuccess}
+          onReCAPTCHAFail={message => handleSubmitError(message)}
+        />
+      ) : undefined}
+
+      {step === STEPS.READY ? (
+        <Prompt message="ready?" actionA="sign" actionB="go back" />
+      ) : undefined}
+
+      {step === STEPS.SAVE ? <Prompt message="saving..." /> : undefined}
+
+      {step === STEPS.PREMINT ? (
+        <Prompt message="Minting coming soon..." actionA="mint" />
+      ) : undefined}
+
+      {step === STEPS.MINT ? <Prompt message="minting..." /> : undefined}
+
+      {step === STEPS.CONFIRMATION ? (
+        <Prompt
           message="well done, your journey will begin soon..."
           actionA="bring a friend"
         />
-      )
-      break
-    case STEPS.ERROR:
-      prompt = (
-        <ConfiguratorPrompt
+      ) : undefined}
+
+      {step === STEPS.ERROR ? (
+        <Prompt
           message={errorMessage}
-          actionA="try again?"
+          actionA={!isHuman ? undefined : 'try again?'}
           actionB="go back"
         />
-      )
-      break
-    default:
-    // leave prompt undefined
-  }
-
-  return (
-    <ConfiguratorContainer>
-      <ConfiguratorScreen withNav>
-        {step === STEPS.HUMAN_VERIFY ? (
-          <ConfiguratorRecaptcha
-            onReCAPTCHASuccess={handleReCAPTCHASuccess}
-            onReCAPTCHAFail={handleSubmitError}
-          />
-        ) : (
-          <>
-            <NFTArrowTokenViewContainer>
-              <TokenView
-                address={address}
-                nftId={nftId}
-                nftAddress={nftAddress}
-              />
-            </NFTArrowTokenViewContainer>
-            <ConfiguratorModal>{prompt}</ConfiguratorModal>
-          </>
-        )}
-      </ConfiguratorScreen>
-      <ConfiguratorControlsView {...controls} />
-    </ConfiguratorContainer>
+      ) : undefined}
+    </Device>
   )
 }
 

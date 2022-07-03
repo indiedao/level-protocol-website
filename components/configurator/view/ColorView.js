@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
+
 import useConfigurator from '../../hooks/useConfigurator'
+import Nav from '../ui/Nav'
 import TokenView from '../../token/view/TokenView'
-import ConfiguratorControlsView from './ConfiguratorControlsView'
-import ConfiguratorContainer from '../ui/ConfiguratorContainer'
-import ConfiguratorScreen from '../ui/ConfiguratorScreen'
+import Device from '../ui/Device'
 import useWeb3 from '../../hooks/useWeb3'
 import hslToHex from '../../../util/hslToHex'
 
@@ -14,16 +14,19 @@ const LIGHTNESS_OFFSET = 5
 const MAX_LIGHTNESS = 80
 const MIN_LIGHTNESS = 30
 
-const ColorConfiguratorView = () => {
+const ColorView = () => {
   const {
-    setColorHue,
-    setColorLightness,
+    currentStep,
     colorHue,
     colorLightness,
+    flow,
     nextStep,
-    previousStep,
     nftSrc,
+    previousStep,
+    setColorHue,
+    setColorLightness,
     setStatusIndicator,
+    setStep,
   } = useConfigurator()
   const { address, ens } = useWeb3()
 
@@ -65,28 +68,25 @@ const ColorConfiguratorView = () => {
   }
 
   return (
-    <ConfiguratorContainer>
-      <ConfiguratorScreen withNav>
-        <div>
-          <TokenView
-            address={address}
-            nftSrc={nftSrc}
-            ens={ens}
-            colorHue={colorHue}
-            colorLightness={colorLightness}
-          />
-        </div>
-      </ConfiguratorScreen>
-      <ConfiguratorControlsView
-        up={handleUp}
-        down={handleDown}
-        right={handleRight}
-        left={handleLeft}
-        a={nextStep}
-        b={previousStep}
-      />
-    </ConfiguratorContainer>
+    <Device
+      up={handleUp}
+      down={handleDown}
+      right={handleRight}
+      left={handleLeft}
+      a={nextStep}
+      b={previousStep}
+    >
+      <Nav currentStep={currentStep} flow={flow} setStep={setStep}>
+        <TokenView
+          address={address}
+          nftSrc={nftSrc}
+          ens={ens}
+          colorHue={colorHue}
+          colorLightness={colorLightness}
+        />
+      </Nav>
+    </Device>
   )
 }
 
-export default ColorConfiguratorView
+export default ColorView

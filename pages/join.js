@@ -1,6 +1,17 @@
 import styled from 'styled-components'
+
 import ConfiguratorView from '../components/configurator/view/ConfiguratorView'
 import { ConfiguratorProvider } from '../components/contexts/ConfiguratorContext'
+
+const Layout = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+`
 
 const JoinPage = () => {
   return (
@@ -11,11 +22,5 @@ const JoinPage = () => {
     </Layout>
   )
 }
-
-const Layout = styled.div`
-  margin: 0 auto;
-  display: grid;
-  justify-content: center;
-`
 
 export default JoinPage
