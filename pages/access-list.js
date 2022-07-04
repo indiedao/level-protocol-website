@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-import {
-  getAccessListFirst480,
-  getAccessListMostRecent,
-} from '../util/api/fauna'
+import { getAccessList, getAccessListMostRecent } from '../util/api/fauna'
 import Public from '../components/layouts/Public'
 import PublicMenuBar from '../components/ui/PublicMenuBar'
 import AccessListMemberGrid from '../components/access-list/ui/AccessListMemberGrid'
@@ -68,7 +65,7 @@ const AccessListsContianer = styled.div`
 `
 
 export async function getStaticProps() {
-  const first480 = await getAccessListFirst480()
+  const first480 = await getAccessList(480)
   const mostRecent = await getAccessListMostRecent()
 
   return {

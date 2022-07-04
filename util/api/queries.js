@@ -230,3 +230,87 @@ export const DELETE_COMMUNITY_POAP_EVENT = gql`
     }
   }
 `
+
+export const INCREMENT_MEMBERS_COUNT = gql`
+  query INCREMENT_MEMBERS_COUNT {
+    nextMembersCounter {
+      counter
+    }
+  }
+`
+
+export const INCREMENT_COMMUNITIES_COUNT = gql`
+  query INCREMENT_COMMUNITIES_COUNT {
+    nextCommunitiesCounter {
+      counter
+    }
+  }
+`
+
+export const DECREMENT_MEMBERS_COUNT = gql`
+  query DECREMENT_MEMBERS_COUNT {
+    previousMembersCounter {
+      counter
+    }
+  }
+`
+
+export const DECREMENT_COMMUNITIES_COUNT = gql`
+  query DECREMENT_COMMUNITIES_COUNT {
+    previousCommunitiesCounter {
+      counter
+    }
+  }
+`
+
+export const MEMBERS_COUNT = gql`
+  query MEMBERS_COUNT {
+    membersCount {
+      _id
+      counter
+    }
+  }
+`
+
+export const COMMUNITIES_COUNT = gql`
+  query COMMUNITIES_COUNT {
+    communitiesCount {
+      _id
+      counter
+    }
+  }
+`
+
+export const UPDATE_MEMBERS_COUNTER = gql`
+  mutation UPDATE_MEMBERS_COUNTER($id: ID!, $counter: Int!) {
+    updateMembersCounter(id: $id, data: { counter: $counter }) {
+      _id
+      counter
+    }
+  }
+`
+
+export const UPDATE_COMMUNITIES_COUNTER = gql`
+  mutation UPDATE_COMMUNITIES_COUNTER($id: ID!, $counter: Int!) {
+    updateCommunitiesCounter(id: $id, data: { counter: $counter }) {
+      _id
+      counter
+    }
+  }
+`
+
+export const GET_ALL_COMMUNITIES = gql`
+  query GET_ALL_COMMUNITIES($size: Int, $cursor: String) {
+    allCommunities(_size: $size, _cursor: $cursor) {
+      data {
+        _id
+        address
+        createdAt
+        name
+        membersHash
+      }
+      after
+      before
+    }
+  }
+`
