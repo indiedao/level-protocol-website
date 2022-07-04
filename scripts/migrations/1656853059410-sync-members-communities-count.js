@@ -64,9 +64,57 @@ const getCommunityPages = async _after => {
   return data
 }
 
-const updateMemberCounter = async membersCount => {
+const upsertMemberCounter = async () => {
+  const {
+    data: [existing],
+  } = await client.query(
+    q.Paginate(q.Match(q.Index('membersCount')), {
+      size: 2,
+    }),
+  )
+
+  if (existing) {
+    return existing
+  }
+
+  return (
+    await client.query(
+      q.Create(q.Ref(q.Collection('MembersCounter'), '1'), {
+        data: {
+          counter: 0,
+        },
+      }),
+    )
+  ).ref
+}
+
+const upsertCommunityCounter = async () => {
+  const {
+    data: [existing],
+  } = await client.query(
+    q.Paginate(q.Match(q.Index('communitiesCount')), {
+      size: 2,
+    }),
+  )
+
+  if (existing) {
+    return existing
+  }
+
+  return (
+    await client.query(
+      q.Create(q.Ref(q.Collection('CommunitiesCounter'), '1'), {
+        data: {
+          counter: 0,
+        },
+      }),
+    )
+  ).ref
+}
+
+const updateMemberCounter = async (id, membersCount) => {
   return client.query(
-    q.Update(q.Collection('MembersCounter'), {
+    q.Update(q.Ref(q.Collection('MembersCounter'), id), {
       data: {
         counter: membersCount,
       },
@@ -74,9 +122,9 @@ const updateMemberCounter = async membersCount => {
   )
 }
 
-const updateCommunityCounter = async communitiesCount => {
+const updateCommunityCounter = async (id, communitiesCount) => {
   return client.query(
-    q.Update(q.Collection('CommunitiesCounter'), {
+    q.Update(q.Ref(q.Collection('CommunitiesCounter'), id), {
       data: {
         counter: communitiesCount,
       },
@@ -85,16 +133,22 @@ const updateCommunityCounter = async communitiesCount => {
 }
 
 async function main() {
+  const membersCounterRef = await upsertMemberCounter()
   console.log('Fetching members paginated data...')
   const memberRecords = await getMemberPages()
   console.log(`Updating members counter to ${memberRecords.length}`)
-  const newMembersCounter = await updateMemberCounter(memberRecords.length)
+  const newMembersCounter = await updateMemberCounter(
+    membersCounterRef.id,
+    memberRecords.length,
+  )
   console.log(`New communities counter: ${newMembersCounter.data.counter}`)
 
+  const communitiesCounterRef = await upsertCommunityCounter()
   console.log('Fetching communities paginated data...')
   const communityRecords = await getCommunityPages()
   console.log(`Updating communities counter to ${communityRecords.length}`)
   const newCommunitiesCounter = await updateCommunityCounter(
+    communitiesCounterRef.id,
     communityRecords.length,
   )
   console.log(`New communities counter: ${newCommunitiesCounter.data.counter}`)

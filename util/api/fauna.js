@@ -78,6 +78,7 @@ export const updateCommunitySnapshotEns = async ({
 export const createMember = async member => {
   const resp = await graphQLClient.request(CREATE_MEMBER_MUTATION, member)
 
+  console.log('🚀 ~ file: fauna.js ~ line 82 ~ resp.member', resp.member)
   if (resp.member) {
     await graphQLClient.request(INCREMENT_MEMBERS_COUNT)
     return resp.member
