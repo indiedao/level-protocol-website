@@ -33,9 +33,9 @@ const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_FAUNA_URL, {
 export const createCommunity = async community => {
   const resp = await graphQLClient.request(CREATE_COMMUNITY_MUTATION, community)
 
-  if (resp.community) {
+  if (resp.createCommunity) {
     await graphQLClient.request(INCREMENT_COMMUNITIES_COUNT)
-    return resp.community
+    return resp.createCommunity
   }
 
   return undefined
@@ -78,10 +78,9 @@ export const updateCommunitySnapshotEns = async ({
 export const createMember = async member => {
   const resp = await graphQLClient.request(CREATE_MEMBER_MUTATION, member)
 
-  console.log('🚀 ~ file: fauna.js ~ line 82 ~ resp.member', resp.member)
-  if (resp.member) {
+  if (resp.createMember) {
     await graphQLClient.request(INCREMENT_MEMBERS_COUNT)
-    return resp.member
+    return resp.createMember
   }
 
   return undefined

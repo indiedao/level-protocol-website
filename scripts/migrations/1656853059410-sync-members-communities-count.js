@@ -141,7 +141,7 @@ async function main() {
     membersCounterRef.id,
     memberRecords.length,
   )
-  console.log(`New communities counter: ${newMembersCounter.data.counter}`)
+  console.log(`New members counter: ${newMembersCounter.data.counter}`)
 
   const communitiesCounterRef = await upsertCommunityCounter()
   console.log('Fetching communities paginated data...')
