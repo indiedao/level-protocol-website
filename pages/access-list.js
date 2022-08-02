@@ -1,77 +1,72 @@
 import styled from 'styled-components'
-import Link from 'next/link'
-import { getAccessList, getAccessListMostRecent } from '../util/api/fauna'
+
+import { getAccessList } from '../util/api/fauna'
 import Public from '../components/layouts/Public'
 import PublicMenuBar from '../components/ui/PublicMenuBar'
-import AccessListMemberGrid from '../components/access-list/ui/AccessListMemberGrid'
-import { Body1, H1 } from '../components/ui/AltTypography'
-import Button from '../components/ui/Button'
+import AccessListContainer from '../components/access-list/ui/Container'
+import Hero from '../components/access-list/ui/Hero'
+import Toast from '../components/access-list/ui/Toast'
+import Header from '../components/access-list/ui/Header'
+import Icon from '../components/access-list/ui/Icon'
 
-const AccessListPage = ({ first480 }) => {
-  // Split up first three access list groups:
-  const first30 = first480.slice(0, 30)
-  const second100 = first480.slice(30, 100)
-  const third350 = first480.slice(130, 350)
-
-  return (
-    <Public variant="light">
-      <PublicMenuBar />
-      <Container>
-        <HeroContainer>
-          <Body1>
-            A limited number of access passes are available for early
-            supporters. To access the alpha launch, be sure to follow{' '}
-            <a
-              href="https://twitter.com/lvlprotocol"
-              target="_blank"
-              rel="noreferrer"
-            >
-              @lvlprotocol
-            </a>{' '}
-            on Twitter and create your access pass profile using the lvldex.
-          </Body1>
-          <Link href="/join" passHref>
-            <Button>sign up with the lvldex</Button>
-          </Link>
-          <H1>{first480.length}/480 Early Access Passes Claimed</H1>
-          <H1>XXX on Waitlist</H1>
-        </HeroContainer>
-        <AccessListsContianer>
-          <AccessListMemberGrid members={first30} size="large" />
-          <AccessListMemberGrid members={second100} size="medium" />
-          <AccessListMemberGrid members={third350} size="small" />
-        </AccessListsContianer>
-      </Container>
-    </Public>
-  )
-}
+const ALPHA_LIST_MAXIMUM = 100
+const LIST_MAXIMUM = 10000
 
 const Container = styled.div`
-  padding-top: 130px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+  padding: clamp(6rem, 8.203vw, 10.5rem) clamp(2rem, 5.078vw, 6.5rem);
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
 `
 
-const HeroContainer = styled.div`
-  padding: 20px 40px;
-  max-width: 60rem;
-  margin: 0 auto;
-`
+const AccessListPage = ({ accessList }) => {
+  const alphaList = accessList.slice(0, ALPHA_LIST_MAXIMUM)
+  const waitList = accessList.slice(ALPHA_LIST_MAXIMUM)
 
-const AccessListsContianer = styled.div`
-  padding: 60px 0;
-`
+  return (
+    <Public variant="light">
+      <PublicMenuBar />
+      <Container>
+        <Toast
+          buttonText="Join"
+          href="/join"
+          icon={<Icon iconName="envelope" />}
+          subText="Join the waitlist for the next available spot."
+          title="100 Alpha Spots Claimed!"
+        />
+        <Hero totalReserved={accessList.length} />
+        <Header
+          count={alphaList.length}
+          maximum={ALPHA_LIST_MAXIMUM}
+          title="Alpha List"
+          variant="primary"
+        />
+        <AccessListContainer members={alphaList} variant="primary" />
+        {waitList.length ? (
+          <>
+            <Header
+              count={waitList.length}
+              title="Waitlist"
+              variant="secondary"
+            />
+            <AccessListContainer members={waitList} variant="secondary" />
+          </>
+        ) : null}
+      </Container>
+    </Public>
+  )
+}
 
 export async function getStaticProps() {
-  const first480 = await getAccessList(480)
-  const mostRecent = await getAccessListMostRecent()
+  const accessList = await getAccessList(LIST_MAXIMUM)
 
   return {
     props: {
-      first480,
-      mostRecent,
+      accessList,
     },
   }
 }
