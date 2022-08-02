@@ -43,6 +43,7 @@ const Avatar = styled.div`
 `
 
 const Address = styled(Body1)`
+  font-size: clamp(1.2rem, 2.344vw, 1.8rem);
   line-height: 1;
   text-shadow: 0 0.2rem 0.4rem #000000;
   white-space: nowrap;
