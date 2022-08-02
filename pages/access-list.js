@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { getAccessList, getAccessListMostRecent } from '../util/api/fauna'
+import { getAccessList } from '../util/api/fauna'
 import Public from '../components/layouts/Public'
 import PublicMenuBar from '../components/ui/PublicMenuBar'
 import AccessListContainer from '../components/access-list/ui/Container'
@@ -10,6 +10,7 @@ import Header from '../components/access-list/ui/Header'
 import Icon from '../components/access-list/ui/Icon'
 
 const ALPHA_LIST_MAXIMUM = 100
+const LIST_MAXIMUM = 10000
 
 const Container = styled.div`
   display: grid;
@@ -22,9 +23,9 @@ const Container = styled.div`
   overflow-y: scroll;
 `
 
-const AccessListPage = ({ first480 }) => {
-  const alphaList = first480.slice(0, ALPHA_LIST_MAXIMUM)
-  const waitList = first480.slice(ALPHA_LIST_MAXIMUM)
+const AccessListPage = ({ accessList }) => {
+  const alphaList = accessList.slice(0, ALPHA_LIST_MAXIMUM)
+  const waitList = accessList.slice(ALPHA_LIST_MAXIMUM)
 
   return (
     <Public variant="light">
@@ -37,7 +38,7 @@ const AccessListPage = ({ first480 }) => {
           subText="Join the waitlist for the next available spot."
           title="100 Alpha Spots Claimed!"
         />
-        <Hero totalReserved={first480.length} />
+        <Hero totalReserved={accessList.length} />
         <Header
           count={alphaList.length}
           maximum={ALPHA_LIST_MAXIMUM}
@@ -61,13 +62,11 @@ const AccessListPage = ({ first480 }) => {
 }
 
 export async function getStaticProps() {
-  const first480 = await getAccessList(480)
-  const mostRecent = await getAccessListMostRecent()
+  const accessList = await getAccessList(LIST_MAXIMUM)
 
   return {
     props: {
-      first480,
-      mostRecent,
+      accessList,
     },
   }
 }
