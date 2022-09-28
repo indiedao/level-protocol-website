@@ -1,4 +1,5 @@
 import { useMemo, useCallback, useEffect, createContext, useState } from 'react'
+import { NotUniqueError } from '../../util/errors/notUniqueError'
 import useWeb3 from '../hooks/useWeb3'
 
 const ConfiguratorContext = createContext()
@@ -86,7 +87,13 @@ export const ConfiguratorProvider = ({ children }) => {
 
     setIsSaved(true)
 
-    if (resp.status !== 200) throw new Error('Failed to save config!')
+    if (!resp.success) {
+      const responseBody = await resp.json()
+      if (responseBody?.data?.address) {
+        throw new NotUniqueError('Already minted!')
+      }
+      throw new Error('Failed to save config!')
+    }
   }, [nftAddress, nftId, bearerToken, colorHue, colorLightness])
 
   const setStatusIndicator = useCallback(({ message }) => {

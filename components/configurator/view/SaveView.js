@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
+import { useRouter } from 'next/router'
 import useConfigurator from '../../hooks/useConfigurator'
 import useWeb3 from '../../hooks/useWeb3'
 import Device from '../ui/Device'
@@ -15,6 +16,7 @@ const STEPS = {
   MINT: 'MINT',
   CONFIRMATION: 'CONFIRMATION',
   ERROR: 'ERROR',
+  EXISTING_TOKEN: 'EXISTING_TOKEN',
 }
 
 const STEP_STATUS_MAP = {
@@ -25,9 +27,11 @@ const STEP_STATUS_MAP = {
   MINT: 'minting...',
   CONFIRMATION: 'connected',
   ERROR: 'err',
+  EXISTING_TOKEN: 'existing token',
 }
 
 const SaveConfiguratorView = () => {
+  const router = useRouter()
   const [step, setStep] = useState(STEPS.HUMAN_VERIFY)
   const [donationAmount, setDonationAmount] = useState(
     ethers.utils.parseEther('0.01'),
@@ -49,10 +53,13 @@ const SaveConfiguratorView = () => {
     setStep(STEPS.READY)
   }
 
-  const handleSubmitError = (error = 'are you human?') => {
+  const handleSubmitError = (
+    error = 'are you human?',
+    nextStep = STEPS.ERROR,
+  ) => {
     setErrorMessage(`error: ${error}`)
     playSound('button_cancel.wav')
-    setStep(STEPS.ERROR)
+    setStep(nextStep)
   }
 
   const handleSave = async () => {
@@ -75,6 +82,7 @@ const SaveConfiguratorView = () => {
         error.message
           ? error.message.toLowerCase()
           : 'error: access list is probably full :(',
+        error.name === 'NotUniqueError' ? STEPS.EXISTING_TOKEN : STEPS.ERROR,
       )
     }
   }
@@ -104,6 +112,10 @@ const SaveConfiguratorView = () => {
     window.location = `https://twitter.com/intent/tweet?text=${content}`
   }
 
+  const handleExistingToken = () => {
+    router.push(`/token/${address}`)
+  }
+
   let controls = {}
   switch (step) {
     case STEPS.HUMAN_VERIFY:
@@ -129,6 +141,11 @@ const SaveConfiguratorView = () => {
     case STEPS.CONFIRMATION:
       controls = {
         a: handleTwitterShare,
+      }
+      break
+    case STEPS.EXISTING_TOKEN:
+      controls = {
+        a: handleExistingToken,
       }
       break
     case STEPS.SAVE:
@@ -161,6 +178,13 @@ const SaveConfiguratorView = () => {
         <Prompt
           message="well done, your journey will begin soon..."
           actionA="bring a friend"
+        />
+      ) : undefined}
+
+      {step === STEPS.EXISTING_TOKEN ? (
+        <Prompt
+          message="you already have a LVL token..."
+          actionA="check your token"
         />
       ) : undefined}
 
