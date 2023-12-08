@@ -8,6 +8,7 @@ import theme from '../util/theme'
 import GlobalStyles from '../components/ui/GlobalStyles'
 
 const MyApp = ({ Component, pageProps }) => {
+  // forcing vercel to deploy app changes: 1
   const apolloClient = useApollo(pageProps)
   return (
     <>
